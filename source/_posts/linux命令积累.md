@@ -1,0 +1,24 @@
+---
+title:  linux命令积累
+tags:  [linux,开发]
+categories: 
+toc: true
+grammar_cjkRuby: true
+---
+简单linux命令
+<!-- more -->
+`nohup   & `后台运行
+## 文件查找
+`find / -type f -size +10G`
+在Linux下如何让文件让按大小单位为M,G等易读格式，S size大小排序。  `ls -lhS`
+`du -h * | sort -n `  
+当然您也可以结合管道文件夹内最大的几个文件  ` du -h * | sort -n|head`
+动态显示机器各端口的链接情况`while :; do netstat -apn | grep ":80" | wc -l; sleep 1; done`
+![测试图片](https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/5/10/1525939436696.jpg)
+## sed
+更改第一行 `sed -i '1s/.*//'`     sed -i '1s/.*/想更改的内容/'
+删除第一行`sed -i '1d'  `     sed -i '1d' 文件名
+插入第一行 `sed -i '1i\' `       sed -i ‘1i\内容‘ 文件名
+## cpu
+`cat /proc/cpuinfo | grep processor | wc -l`
+`lscpu`
