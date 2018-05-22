@@ -1,1 +1,1 @@
-http://gangtieguo.cn/2018/05/21/转移Github博客到云服务器/
+http://gangtieguo.cn/2018/05/22/博客源文件提交到仓库/
