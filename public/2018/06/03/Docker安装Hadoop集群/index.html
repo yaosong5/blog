@@ -6,20 +6,25 @@
     <meta charset="utf-8">
     
 
-    <title>源文件提交到仓库 | 钢铁锅</title>
+    <title>Docker安装Hadoop集群 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="将博客源文件加入到仓库  git add .git commit -m “ “git push origin mastergit push origin master -f">
-<meta name="keywords" content="Hexo,git">
+    <meta name="description" content="Docker配置Hadoop集群环境 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。 拉取镜像 sudo docker pull kiwenlau/hadoop-master:0.1.0sudo docker pull kiwenlau/hadoop-slave:0.1.0sudo docker pull kiwenlau/hadoop-base:0.1.0sudo docker">
+<meta name="keywords" content="Docker,Hadooop">
 <meta property="og:type" content="article">
-<meta property="og:title" content="源文件提交到仓库">
-<meta property="og:url" content="http://gangtieguo.cn/2018/05/22/博客源文件提交到仓库/index.html">
+<meta property="og:title" content="Docker安装Hadoop集群">
+<meta property="og:url" content="http://gangtieguo.cn/2018/06/03/Docker安装Hadoop集群/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="将博客源文件加入到仓库  git add .git commit -m “ “git push origin mastergit push origin master -f">
+<meta property="og:description" content="Docker配置Hadoop集群环境 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。 拉取镜像 sudo docker pull kiwenlau/hadoop-master:0.1.0sudo docker pull kiwenlau/hadoop-slave:0.1.0sudo docker pull kiwenlau/hadoop-base:0.1.0sudo docker">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-21T17:44:03.947Z">
+<meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038081307.jpg">
+<meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038513960.jpg">
+<meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528039457334.jpg">
+<meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528039642562.jpg">
+<meta property="og:updated_time" content="2018-06-04T01:33:15.648Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="源文件提交到仓库">
-<meta name="twitter:description" content="将博客源文件加入到仓库  git add .git commit -m “ “git push origin mastergit push origin master -f">
+<meta name="twitter:title" content="Docker安装Hadoop集群">
+<meta name="twitter:description" content="Docker配置Hadoop集群环境 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。 拉取镜像 sudo docker pull kiwenlau/hadoop-master:0.1.0sudo docker pull kiwenlau/hadoop-slave:0.1.0sudo docker pull kiwenlau/hadoop-base:0.1.0sudo docker">
+<meta name="twitter:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038081307.jpg">
     
 
     
@@ -244,7 +249,7 @@ var _hmt = _hmt || [];
 </aside>
 
             
-            <section id="main"><article id="post-博客源文件提交到仓库" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Docker安装Hadoop集群" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -252,7 +257,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            源文件提交到仓库
+            Docker安装Hadoop集群
         </h1>
     
 
@@ -261,8 +266,8 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/05/22/博客源文件提交到仓库/">
-            <time datetime="2018-05-21T17:43:07.025Z" itemprop="datePublished">2018-05-22</time>
+        <a href="/2018/06/03/Docker安装Hadoop集群/">
+            <time datetime="2018-06-03T06:36:21.404Z" itemprop="datePublished">2018-06-03</time>
         </a>
     </div>
 
@@ -270,13 +275,13 @@ var _hmt = _hmt || [];
                         
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/博客/">博客</a>
+        <a class="article-category-link" href="/categories/环境配置/">环境配置</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Hexo/">Hexo</a>, <a class="tag-link" href="/tags/git/">git</a>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Hadooop/">Hadooop</a>
     </div>
 
                     </div>
@@ -301,7 +306,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#拉取镜像"><span class="toc-number">1.</span> <span class="toc-text">拉取镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看下载的镜像"><span class="toc-number">1.1.</span> <span class="toc-text">查看下载的镜像</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在github中拉取源代码"><span class="toc-number">2.</span> <span class="toc-text">在github中拉取源代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#运行容器"><span class="toc-number">3.</span> <span class="toc-text">运行容器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看root目录下文件"><span class="toc-number">3.1.</span> <span class="toc-text">查看root目录下文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试容器是否正常运行"><span class="toc-number">3.2.</span> <span class="toc-text">测试容器是否正常运行</span></a></li></ol></li></ol>
             </div>
 
 
@@ -328,11 +333,30 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p>将博客源文件加入到仓库</p>
-<blockquote>
-<p>git add .<br>git commit -m “ “<br>git push origin master<br>git push origin master -f</p>
+                <p> Docker配置Hadoop集群环境<br> 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。</p>
+<h1 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h1><blockquote>
+<p>sudo docker pull kiwenlau/hadoop-master:0.1.0<br>sudo docker pull kiwenlau/hadoop-slave:0.1.0<br>sudo docker pull kiwenlau/hadoop-base:0.1.0<br>sudo docker pull kiwenlau/serf-dnsmasq:0.1.0</p>
 </blockquote>
-<a id="more"></a>
+<h2 id="查看下载的镜像"><a href="#查看下载的镜像" class="headerlink" title="查看下载的镜像"></a>查看下载的镜像</h2><p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038081307.jpg" alt="下载的镜像"></p>
+<blockquote>
+<p>sudo docker images</p>
+</blockquote>
+<h1 id="在github中拉取源代码"><a href="#在github中拉取源代码" class="headerlink" title="在github中拉取源代码"></a>在github中拉取源代码</h1><p>(或者在oschina中拉取)<br>git clone <a href="https://github.com/kiwenlau/hadoop-cluster-docker" target="_blank" rel="noopener">https://github.com/kiwenlau/hadoop-cluster-docker</a><br>开源中国<br>git clone <a href="http://git.oschina.net/kiwenlau/hadoop-cluster-docker" target="_blank" rel="noopener">http://git.oschina.net/kiwenlau/hadoop-cluster-docker</a></p>
+<h1 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h1><p>拉取镜像后，打开源代码文件夹，并且运行脚本</p>
+<blockquote>
+<p>cd hadoop-cluster-docker</p>
+</blockquote>
+<p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038513960.jpg" alt="源包下文件"></p>
+<p>注意：运行脚本时,需要先启动docker服务</p>
+<blockquote>
+<p>./start-container.sh<br><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528039457334.jpg" alt="enter description here"></p>
+</blockquote>
+<p>一共开启了 3 个容器，1 个 master, 2 个 slave。开启容器后就进入了 master 容器 root 用户的根目录（/root）</p>
+<h2 id="查看root目录下文件"><a href="#查看root目录下文件" class="headerlink" title="查看root目录下文件"></a>查看root目录下文件</h2><p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528039642562.jpg" alt="enter description here"></p>
+<h2 id="测试容器是否正常运行"><a href="#测试容器是否正常运行" class="headerlink" title="测试容器是否正常运行"></a>测试容器是否正常运行</h2><p><code>serf members</code><br><a id="more"></a></p>
+<hr>
+<p>参考：<a href="http://dockone.io/article/395" target="_blank" rel="noopener">基于 Docker 快速搭建多节点 Hadoop 集群</a></p>
+
             
 
         </div>
@@ -410,7 +434,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/05/22/博客源文件提交到仓库/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/06/03/Docker安装Hadoop集群/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -419,19 +443,10 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/05/24/搭建dockerHadoop记录/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    搭建DockerHadoop记录
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/05/21/转移Github博客到云服务器/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/05/31/大数据命令积累/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">部署博客到云服务器</div>
+            <div class="article-nav-title">命令积累</div>
         </a>
     
 </nav>
