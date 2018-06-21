@@ -1,7 +1,7 @@
 ---
 title:  Centos7上搭建Jenkins
 date: 2018年06月21日 22时15分52秒
-tags:  [Jenkins,]
+tags:  [Jenkins]
 categories: 部署安装
 toc: true
 ---
@@ -36,6 +36,9 @@ toc: true
    启动 jenkins:  `   nohup ./start_jenkins.sh > jenkins.log 2>& 1& `               
 # 3 访问 jenkins
    输入 http:// 服务器地址: 8000
+   
+注意：在启动日志中会出现初始密码，这个用来首次登陆Jenkins使用
+![初始密码](https://markdown.xiaoshujiang.com/img/spinner.gif "[[[1529590960879]]]" )
    
 参考
 [在 Centos7 上搭建 jenkins](https://blog.csdn.net/python_tty/article/details/52884314)
