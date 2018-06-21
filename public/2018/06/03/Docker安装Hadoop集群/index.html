@@ -8,22 +8,22 @@
 
     <title>Docker安装Hadoop集群 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Docker配置Hadoop集群环境 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。 拉取镜像 sudo docker pull kiwenlau/hadoop-master:0.1.0sudo docker pull kiwenlau/hadoop-slave:0.1.0sudo docker pull kiwenlau/hadoop-base:0.1.0sudo docker">
+    <meta name="description" content="Docker配置Hadoop集群环境 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。">
 <meta name="keywords" content="Docker,Hadooop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker安装Hadoop集群">
 <meta property="og:url" content="http://gangtieguo.cn/2018/06/03/Docker安装Hadoop集群/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="Docker配置Hadoop集群环境 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。 拉取镜像 sudo docker pull kiwenlau/hadoop-master:0.1.0sudo docker pull kiwenlau/hadoop-slave:0.1.0sudo docker pull kiwenlau/hadoop-base:0.1.0sudo docker">
+<meta property="og:description" content="Docker配置Hadoop集群环境 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038081307.jpg">
 <meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038513960.jpg">
 <meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528039457334.jpg">
 <meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528039642562.jpg">
-<meta property="og:updated_time" content="2018-06-04T01:33:15.648Z">
+<meta property="og:updated_time" content="2018-06-21T11:37:36.360Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker安装Hadoop集群">
-<meta name="twitter:description" content="Docker配置Hadoop集群环境 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。 拉取镜像 sudo docker pull kiwenlau/hadoop-master:0.1.0sudo docker pull kiwenlau/hadoop-slave:0.1.0sudo docker pull kiwenlau/hadoop-base:0.1.0sudo docker">
+<meta name="twitter:description" content="Docker配置Hadoop集群环境 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。">
 <meta name="twitter:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038081307.jpg">
     
 
@@ -333,7 +333,7 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p> Docker配置Hadoop集群环境<br> 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。</p>
+                <p> Docker配置Hadoop集群环境<br> 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。<br><a id="more"></a></p>
 <h1 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h1><blockquote>
 <p>sudo docker pull kiwenlau/hadoop-master:0.1.0<br>sudo docker pull kiwenlau/hadoop-slave:0.1.0<br>sudo docker pull kiwenlau/hadoop-base:0.1.0<br>sudo docker pull kiwenlau/serf-dnsmasq:0.1.0</p>
 </blockquote>
@@ -353,7 +353,7 @@ var _hmt = _hmt || [];
 </blockquote>
 <p>一共开启了 3 个容器，1 个 master, 2 个 slave。开启容器后就进入了 master 容器 root 用户的根目录（/root）</p>
 <h2 id="查看root目录下文件"><a href="#查看root目录下文件" class="headerlink" title="查看root目录下文件"></a>查看root目录下文件</h2><p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528039642562.jpg" alt="enter description here"></p>
-<h2 id="测试容器是否正常运行"><a href="#测试容器是否正常运行" class="headerlink" title="测试容器是否正常运行"></a>测试容器是否正常运行</h2><p><code>serf members</code><br><a id="more"></a></p>
+<h2 id="测试容器是否正常运行"><a href="#测试容器是否正常运行" class="headerlink" title="测试容器是否正常运行"></a>测试容器是否正常运行</h2><p><code>serf members</code><br><!-- more --></p>
 <hr>
 <p>参考：<a href="http://dockone.io/article/395" target="_blank" rel="noopener">基于 Docker 快速搭建多节点 Hadoop 集群</a></p>
 

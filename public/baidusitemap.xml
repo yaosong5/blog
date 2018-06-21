@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://gangtieguo.cn/2018/06/03/Docker%E5%AE%89%E8%A3%85Hadoop%E9%9B%86%E7%BE%A4/</loc>
-    <lastmod>2018-06-04T01:33:15.648Z</lastmod>
+    <lastmod>2018-06-21T11:37:36.360Z</lastmod>
     <data>
         <display>
         <title>Docker安装Hadoop集群</title>
@@ -161,9 +161,9 @@
         
         <tag>Java</tag>
          
-        <tag>技术</tag>
-         
         <tag>开发</tag>
+         
+        <tag>技术</tag>
          
          
            
@@ -185,9 +185,9 @@
         <title>linux命令积累</title>
         <pubTime>2018-05-10T07:37:28.983Z</pubTime>
         
-        <tag>开发</tag>
-         
         <tag>linux</tag>
+         
+        <tag>开发</tag>
          
          
            

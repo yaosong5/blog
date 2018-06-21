@@ -7,7 +7,7 @@ toc: true
 ---
  Docker配置Hadoop集群环境
  在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。
-
+<!--more-->
 # 拉取镜像
 >sudo docker pull kiwenlau/hadoop-master:0.1.0
 sudo docker pull kiwenlau/hadoop-slave:0.1.0

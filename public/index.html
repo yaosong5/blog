@@ -287,27 +287,7 @@ var _hmt = _hmt || [];
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><p> Docker配置Hadoop集群环境<br> 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。</p>
-<h1 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h1><blockquote>
-<p>sudo docker pull kiwenlau/hadoop-master:0.1.0<br>sudo docker pull kiwenlau/hadoop-slave:0.1.0<br>sudo docker pull kiwenlau/hadoop-base:0.1.0<br>sudo docker pull kiwenlau/serf-dnsmasq:0.1.0</p>
-</blockquote>
-<h2 id="查看下载的镜像"><a href="#查看下载的镜像" class="headerlink" title="查看下载的镜像"></a>查看下载的镜像</h2><p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038081307.jpg" alt="下载的镜像"></p>
-<blockquote>
-<p>sudo docker images</p>
-</blockquote>
-<h1 id="在github中拉取源代码"><a href="#在github中拉取源代码" class="headerlink" title="在github中拉取源代码"></a>在github中拉取源代码</h1><p>(或者在oschina中拉取)<br>git clone <a href="https://github.com/kiwenlau/hadoop-cluster-docker" target="_blank" rel="noopener">https://github.com/kiwenlau/hadoop-cluster-docker</a><br>开源中国<br>git clone <a href="http://git.oschina.net/kiwenlau/hadoop-cluster-docker" target="_blank" rel="noopener">http://git.oschina.net/kiwenlau/hadoop-cluster-docker</a></p>
-<h1 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h1><p>拉取镜像后，打开源代码文件夹，并且运行脚本</p>
-<blockquote>
-<p>cd hadoop-cluster-docker</p>
-</blockquote>
-<p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038513960.jpg" alt="源包下文件"></p>
-<p>注意：运行脚本时,需要先启动docker服务</p>
-<blockquote>
-<p>./start-container.sh<br><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528039457334.jpg" alt="enter description here"></p>
-</blockquote>
-<p>一共开启了 3 个容器，1 个 master, 2 个 slave。开启容器后就进入了 master 容器 root 用户的根目录（/root）</p>
-<h2 id="查看root目录下文件"><a href="#查看root目录下文件" class="headerlink" title="查看root目录下文件"></a>查看root目录下文件</h2><p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528039642562.jpg" alt="enter description here"></p>
-<h2 id="测试容器是否正常运行"><a href="#测试容器是否正常运行" class="headerlink" title="测试容器是否正常运行"></a>测试容器是否正常运行</h2><p><code>serf members</code><br></p>
+            <p><p> Docker配置Hadoop集群环境<br> 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。<br></p>
             <p class="article-more-link">
                 <a href="/2018/06/03/Docker安装Hadoop集群/#more">查看更多</a>
             </p>
@@ -1082,6 +1062,113 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
 
 
+    <article id="post-spring集成权限校验" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/05/08/spring集成权限校验/">spring集成权限校验</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/05/08/spring集成权限校验/">
+            <time datetime="2018-05-08T10:34:55.000Z" itemprop="datePublished">2018-05-08</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spring/">Spring</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Java/">Java</a>, <a class="tag-link" href="/tags/开发/">开发</a>, <a class="tag-link" href="/tags/技术/">技术</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h1 id="shiro简介"><a href="#shiro简介" class="headerlink" title="shiro简介"></a>shiro简介</h1><p>shiro是权限控制的一个框架<br>是一个强大易用的Java安全框架，提供了认证、授权、加密和会话管理功能，可为任何应用提供安全保障 - 从命令行应用、移动应用到大型网络及企业应用。<br></p>
+            <p class="article-more-link">
+                <a href="/2018/05/08/spring集成权限校验/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/05/08/spring集成权限校验/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-博客修改备份" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -1202,113 +1289,6 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
             
     
         <a href="http://gangtieguo.cn/2018/05/08/博客修改备份/#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-spring集成权限校验" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/05/08/spring集成权限校验/">spring集成权限校验</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/05/08/spring集成权限校验/">
-            <time datetime="2018-05-08T10:34:55.000Z" itemprop="datePublished">2018-05-08</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Spring/">Spring</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Java/">Java</a>, <a class="tag-link" href="/tags/开发/">开发</a>, <a class="tag-link" href="/tags/技术/">技术</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-       
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><h1 id="shiro简介"><a href="#shiro简介" class="headerlink" title="shiro简介"></a>shiro简介</h1><p>shiro是权限控制的一个框架<br>是一个强大易用的Java安全框架，提供了认证、授权、加密和会话管理功能，可为任何应用提供安全保障 - 从命令行应用、移动应用到大型网络及企业应用。<br></p>
-            <p class="article-more-link">
-                <a href="/2018/05/08/spring集成权限校验/#more">查看更多</a>
-            </p>
-        
-
-        </div>
-
-        <footer class="article-footer">
-
-        
-            <div class="share-container">
-
-
-    <div class="bdsharebuttonbox">
-    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
-    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
-    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
-</div>
-<script>
-window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-<style>
-    .bdshare_popup_box {
-        border-radius: 4px;
-        border: #e1e1e1 solid 1px;
-    }
-    .bdshare-button-style0-16 a,
-    .bdshare-button-style0-16 .bds_more {
-        padding-left: 20px;
-        margin: 6px 10px 6px 0;
-    }
-    .bdshare_dialog_list a,
-    .bdshare_popup_list a,
-    .bdshare_popup_bottom a {
-        font-family: 'Microsoft Yahei';
-    }
-    .bdshare_popup_top {
-        display: none;
-    }
-    .bdshare_popup_bottom {
-        height: auto;
-        padding: 5px;
-    }
-</style>
-
-
-</div>
-
-            
-    
-        <a href="http://gangtieguo.cn/2018/05/08/spring集成权限校验/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
