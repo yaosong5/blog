@@ -5,6 +5,7 @@ tags:  [Jenkins]
 categories: 部署安装
 toc: true
 ---
+![Jenkins](https://markdown.xiaoshujiang.com/img/spinner.gif "[[[1529592059717]]]" )
 之前用yum模式安装，总是启动报错，解决了一番，未找到解决方案，后直接下载war包进行安装部署
 
 默认安装了Java
@@ -38,7 +39,10 @@ toc: true
    输入 http:// 服务器地址: 8000
    
 注意：在启动日志中会出现初始密码，这个用来首次登陆Jenkins使用
-![初始密码](https://markdown.xiaoshujiang.com/img/spinner.gif "[[[1529590960879]]]" )
+![初始密码](https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/21/1529590960879.jpg)
+
+
+![初次登陆的界面](https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/21/1529591748025.jpg)
    
 参考
 [在 Centos7 上搭建 jenkins](https://blog.csdn.net/python_tty/article/details/52884314)

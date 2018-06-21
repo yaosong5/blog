@@ -17,7 +17,9 @@
 <meta property="og:description" content="之前用yum模式安装，总是启动报错，解决了一番，未找到解决方案，后直接下载war包进行安装部署 默认安装了Java">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://markdown.xiaoshujiang.com/img/spinner.gif">
-<meta property="og:updated_time" content="2018-06-21T14:23:07.100Z">
+<meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/21/1529590960879.jpg">
+<meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/21/1529591748025.jpg">
+<meta property="og:updated_time" content="2018-06-21T14:41:04.807Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Centos7上搭建Jenkins">
 <meta name="twitter:description" content="之前用yum模式安装，总是启动报错，解决了一番，未找到解决方案，后直接下载war包进行安装部署 默认安装了Java">
@@ -330,14 +332,15 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p>之前用yum模式安装，总是启动报错，解决了一番，未找到解决方案，后直接下载war包进行安装部署</p>
+                <p><img src="https://markdown.xiaoshujiang.com/img/spinner.gif" alt="Jenkins" title="[[[1529592059717]]]"><br>之前用yum模式安装，总是启动报错，解决了一番，未找到解决方案，后直接下载war包进行安装部署</p>
 <p>默认安装了Java<br><a id="more"></a></p>
 <h1 id="1-安装-jenkins"><a href="#1-安装-jenkins" class="headerlink" title="1. 安装 jenkins"></a>1. 安装 jenkins</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt</span><br><span class="line">mkdir /jenkins</span><br><span class="line"><span class="built_in">cd</span> jenkins</span><br><span class="line">mkdir jenkins_home</span><br><span class="line">mkdir jenkins_node</span><br><span class="line">wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war</span><br></pre></td></tr></table></figure>
 <h1 id="2-编写可执行文件"><a href="#2-编写可执行文件" class="headerlink" title="2. 编写可执行文件"></a>2. 编写可执行文件</h1><p>  <code>vim start_jenkins.sh</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">JENKINS_ROOT=/opt/jenkins</span><br><span class="line"><span class="built_in">export</span> JENKINS_HOME=<span class="variable">$JENKINS_ROOT</span>/jenkins_home</span><br><span class="line">java -jar <span class="variable">$JENKINS_ROOT</span>/jenkins.war --httpPort=8000</span><br></pre></td></tr></table></figure></p>
 <p>   修改文件的权限： <code>chmod  a+x   start_jenkins.sh</code></p>
 <p>   启动 jenkins:  <code>nohup ./start_jenkins.sh &gt; jenkins.log 2&gt;&amp; 1&amp;</code>               </p>
 <h1 id="3-访问-jenkins"><a href="#3-访问-jenkins" class="headerlink" title="3 访问 jenkins"></a>3 访问 jenkins</h1><p>   输入 http:// 服务器地址: 8000</p>
-<p>注意：在启动日志中会出现初始密码，这个用来首次登陆Jenkins使用<br><img src="https://markdown.xiaoshujiang.com/img/spinner.gif" alt="初始密码" title="[[[1529590960879]]]"></p>
+<p>注意：在启动日志中会出现初始密码，这个用来首次登陆Jenkins使用<br><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/21/1529590960879.jpg" alt="初始密码"></p>
+<p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/21/1529591748025.jpg" alt="初次登陆的界面"></p>
 <p>参考<br><a href="https://blog.csdn.net/python_tty/article/details/52884314" target="_blank" rel="noopener">在 Centos7 上搭建 jenkins</a></p>
 
             
