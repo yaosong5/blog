@@ -1,0 +1,41 @@
+---
+title:  Centos7上搭建Jenkins
+date: 2018年06月21日 22时15分52秒
+tags:  [Jenkins,]
+categories: 部署安装
+toc: true
+---
+之前用yum模式安装，总是启动报错，解决了一番，未找到解决方案，后直接下载war包进行安装部署
+
+默认安装了Java
+<!-- more -->
+
+# 1. 安装 jenkins
+
+``` bash
+   cd /opt
+   mkdir /jenkins
+   cd jenkins
+   mkdir jenkins_home
+   mkdir jenkins_node
+   wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war
+```
+
+
+# 2. 编写可执行文件
+
+  ` vim start_jenkins.sh`
+```bash
+     #!/bin/bash
+     JENKINS_ROOT=/opt/jenkins
+     export JENKINS_HOME=$JENKINS_ROOT/jenkins_home
+     java -jar $JENKINS_ROOT/jenkins.war --httpPort=8000
+```
+   修改文件的权限： ` chmod  a+x   start_jenkins.sh`
+
+   启动 jenkins:  `   nohup ./start_jenkins.sh > jenkins.log 2>& 1& `               
+# 3 访问 jenkins
+   输入 http:// 服务器地址: 8000
+   
+参考
+[在 Centos7 上搭建 jenkins](https://blog.csdn.net/python_tty/article/details/52884314)
