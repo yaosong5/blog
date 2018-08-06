@@ -1,7 +1,7 @@
 ---
 title:  linux命令积累
 tags:  [linux,开发]
-categories: 
+categories: Linux
 toc: true
 grammar_cjkRuby: true
 ---
@@ -14,7 +14,6 @@ grammar_cjkRuby: true
 `du -h * | sort -n `  
 当然您也可以结合管道文件夹内最大的几个文件  ` du -h * | sort -n|head`
 动态显示机器各端口的链接情况`while :; do netstat -apn | grep ":80" | wc -l; sleep 1; done`
-![测试图片](https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/5/10/1525939436696.jpg)
 ## sed
 更改第一行 `sed -i '1s/.*//'`     sed -i '1s/.*/想更改的内容/'
 删除第一行`sed -i '1d'  `     sed -i '1d' 文件名

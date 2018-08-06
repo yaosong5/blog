@@ -13,7 +13,7 @@ toc: true
 `docker run -itd  --net=br  --name hue --hostname  hue yaosong5/centosbase:1.0 &> /dev/null`
 <!--more-->
 ## 拷贝源包
-将ant、hue4.0.0、ant、maven等下载到本地结业后，再拷贝到容器（这样更快速）
+将ant、hue4.0.0、ant、maven等下载到本地解压后，再拷贝到容器（这样更快速）
 
 	docker cp  /Users/yaosong/Yao/ant   4115ea59088e:/
 	docker cp  /Users/yaosong/Yao/maven  4115ea59088e:/

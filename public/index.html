@@ -310,7 +310,7 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">yum install -y mysql-server</span><br><span class="line">chkconfig --add mysqld</span><br><span class="line">chkconfig mysqld on</span><br><span class="line">chkconfig --list mysqld</span><br><span class="line">service mysqld start</span><br><span class="line">&lt;!--more--&gt;</span><br><span class="line">mysql -u root -p</span><br><span class="line">Enter password:           //默认密码为空，输入后回车即可</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@localhost=password(<span class="string">'root'</span>); 　　密码设置为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@=password(<span class="string">'root'</span>);</span><br><span class="line">默认情况下Mysql只允许本地登录，所以只需配置root@localhost就好</span><br><span class="line">设置所有ip访问密码为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@%=password(<span class="string">'root'</span>); 　　　　　　密码设置为root （其实这一步可以不配）</span><br><span class="line">设置master访问密码为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@master=password(<span class="string">'root'</span>); 　　密码设置为root （其实这一步可以不配）</span><br><span class="line">查询密码</span><br><span class="line">select user,host,password from mysql.user;  　　查看密码是否设置成功</span><br><span class="line">设置所有ip可以通过root访问</span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">'root'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'root'</span> WITH GRANT OPTION;</span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">'hive'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'hive'</span> WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+                <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">yum install -y mysql-server</span><br><span class="line">chkconfig --add mysqld</span><br><span class="line">chkconfig mysqld on</span><br><span class="line">chkconfig --list mysqld</span><br><span class="line">service mysqld start</span><br><span class="line">mysql -u root -p</span><br><span class="line">Enter password:           //默认密码为空，输入后回车即可</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@localhost=password(<span class="string">'root'</span>); 　　密码设置为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@=password(<span class="string">'root'</span>);</span><br><span class="line">默认情况下Mysql只允许本地登录，所以只需配置root@localhost就好</span><br><span class="line">设置所有ip访问密码为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@%=password(<span class="string">'root'</span>); 　　　　　　密码设置为root （其实这一步可以不配）</span><br><span class="line">设置master访问密码为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@master=password(<span class="string">'root'</span>); 　　密码设置为root （其实这一步可以不配）</span><br><span class="line">查询密码</span><br><span class="line">select user,host,password from mysql.user;  　　查看密码是否设置成功</span><br><span class="line">设置所有ip可以通过root访问</span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">'root'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'root'</span> WITH GRANT OPTION;</span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">'hive'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'hive'</span> WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
 
             
 
@@ -589,7 +589,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
 
 
-    <article id="post-docker构建免密登录镜像" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Docker构建免密登录镜像" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -597,7 +597,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/07/20/docker构建免密登录镜像/">docker构建免密ssh登录镜像</a>
+            <a class="article-title" href="/2018/07/20/Docker构建免密登录镜像/">docker构建免密ssh登录镜像</a>
         </h1>
     
 
@@ -606,7 +606,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/07/20/docker构建免密登录镜像/">
+        <a href="/2018/07/20/Docker构建免密登录镜像/">
             <time datetime="2018-07-19T18:49:08.996Z" itemprop="datePublished">2018-07-20</time>
         </a>
     </div>
@@ -632,150 +632,9 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <script type="text/javascript">
-                            function showBtn(){
-                             if($('.toc-article').hasClass('hidden')){
-                                    $('.toc-article').removeClass('hidden');
-                                }else{
-                                    $('.toc-article').addClass('hidden');
-                                }
-                                 $('.show-toc-btn').removeClass('hidden');  
-                            };
-                            function showToc(){
-                              if($('.show-toc-btn').hasClass('hidden')){
-                                      $('.show-toc-btn').removeClass('hidden');
-
-
-                                  }else{
-                                      $('.show-toc-btn').addClass('hidden');
-
-                                  }
-                                   $('.toc-article').removeClass('hidden');
-                            };
-             </script>
-
-                <h2 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h2><p>参考的是<a href="http://www.shushilvshe.com/data/docker-ssh.html" target="_blank" rel="noopener">http://www.shushilvshe.com/data/docker-ssh.html</a><br>文中涉及命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install openssh-server openssh-clients</span><br><span class="line">ssh-keygen -t rsa</span><br><span class="line">cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys</span><br><span class="line">chmod 700 ~/.ssh</span><br><span class="line">   chmod 600 ~/.ssh/authorized_keys</span><br><span class="line">   vi /etc/ssh/sshd_config</span><br><span class="line">　　找到以下内容，并去掉注释符”<span class="comment">#“</span></span><br><span class="line">　　RSAAuthentication yes</span><br><span class="line">　　PubkeyAuthentication yes</span><br><span class="line">　　AuthorizedKeysFile      .ssh/authorized_keys</span><br><span class="line"></span><br><span class="line">vim /etc/ssh/ssh_config</span><br><span class="line">Host *</span><br><span class="line">	StrictHostKeyChecking no</span><br><span class="line">	UserKnownHostsFile=/dev/null</span><br><span class="line"></span><br><span class="line">	此文也可参考 http://www.voidcn.com/article/p-gxkeusey-ma.html</span><br></pre></td></tr></table></figure></p>
-<p>&lt;!—more—&gt;</p>
-<p><a href="https://blog.csdn.net/a85820069/article/details/78745899" target="_blank" rel="noopener">https://blog.csdn.net/a85820069/article/details/78745899</a><br>坑<br>使用 docker run -i -t –name c1 centos6.6:basic /bin/bash 运行容器，sshd 服务是不开启的，必须先 - d 在用 exec 切入。</p>
-<p><a href="https://www.cnblogs.com/aiweixiao/p/5516974.html" target="_blank" rel="noopener">https://www.cnblogs.com/aiweixiao/p/5516974.html</a></p>
-<p>1.【查看是否启动】</p>
-<p>　　启动 SSH 服务 “/etc/init.d/sshd start”。然后用 netstat -antulp | grep ssh 看是否能看到相关信息就可以了。</p>
-<p>2.【设置自动启动】</p>
-<p>　　如何设置把 ssh 等一些服务随系统开机自动启动？</p>
-<pre><code>方法一：[root@localhost ~]# vi /etc/rc.local
-</code></pre><p>　　　　　　加入：service sshd start 或  /etc/init.d/sshd start</p>
-<p>chmod 777 /etc/ssh/ssh_host_ecdsa_key</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 免密登录</span><br><span class="line"></span><br><span class="line">mkdir -p /root/.ssh  </span><br><span class="line">touch /root/.ssh/config  </span><br><span class="line">echo &quot;StrictHostKeyChecking no&quot; &gt; /root/.ssh/config  </span><br><span class="line">sed -i &quot;a UserKnownHostsFile /dev/null&quot; /root/.ssh/config </span><br><span class="line"></span><br><span class="line"># 开机启动</span><br><span class="line"></span><br><span class="line">RUN yum install -y openssh-server sudo  </span><br><span class="line">RUN sed -i &apos;s/UsePAM yes/UsePAM no/g&apos; /etc/ssh/sshd_config  </span><br><span class="line"></span><br><span class="line"># 下面这两句比较特殊，在centos6上必须要有，否则创建出来的容器sshd不能登录</span><br><span class="line"></span><br><span class="line">RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key  </span><br><span class="line">RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key</span><br></pre></td></tr></table></figure>
-<h2 id="ssh服务文章当中的"><a href="#ssh服务文章当中的" class="headerlink" title="ssh服务文章当中的"></a>ssh服务文章当中的</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">curl http://mirrors.aliyun.com/repo/Centos-6.repo &gt; /etc/yum.repos.d/CentOS-Base-6-aliyun.repo</span><br><span class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak</span><br><span class="line">yum makecache</span><br><span class="line">yum install -y net-tools <span class="built_in">which</span> openssh-clients openssh-server iproute.x86_64 wget</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">service sshd start</span><br><span class="line"></span><br><span class="line">sed -i <span class="string">'s/UsePAM yes/UsePAM no/g'</span> /etc/ssh/sshd_config</span><br><span class="line">sed -ri <span class="string">'s/session required pam_loginuid.so/#session required pam_loginuid.so/g'</span> /etc/pam.d/sshd</span><br><span class="line"></span><br><span class="line">chkconfig sshd on</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ~;ssh-keygen -t rsa -P <span class="string">''</span> -f ~/.ssh/id_dsa;<span class="built_in">cd</span> .ssh;cat id_dsa.pub &gt;&gt; authorized_keys</span><br></pre></td></tr></table></figure>
-
-            
-
-        </div>
-
-        <footer class="article-footer">
-
-        
-            <div class="share-container">
-
-
-    <div class="bdsharebuttonbox">
-    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
-    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
-    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
-</div>
-<script>
-window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-<style>
-    .bdshare_popup_box {
-        border-radius: 4px;
-        border: #e1e1e1 solid 1px;
-    }
-    .bdshare-button-style0-16 a,
-    .bdshare-button-style0-16 .bds_more {
-        padding-left: 20px;
-        margin: 6px 10px 6px 0;
-    }
-    .bdshare_dialog_list a,
-    .bdshare_popup_list a,
-    .bdshare_popup_bottom a {
-        font-family: 'Microsoft Yahei';
-    }
-    .bdshare_popup_top {
-        display: none;
-    }
-    .bdshare_popup_bottom {
-        height: auto;
-        padding: 5px;
-    }
-</style>
-
-
-</div>
-
-            
-    
-        <a href="http://gangtieguo.cn/2018/07/20/docker构建免密登录镜像/#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-docker搭建hue" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/07/20/docker搭建hue/">Docker搭建hue容器</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/07/20/docker搭建hue/">
-            <time datetime="2018-07-19T18:19:08.144Z" itemprop="datePublished">2018-07-20</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/部署安装/">部署安装</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Hue/">Hue</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-       
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>[TOC]<br><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/7/20/1532025321846.jpg" alt="enter description here"></p>
-<h1 id="本次采用的ant-maven来编译hue"><a href="#本次采用的ant-maven来编译hue" class="headerlink" title="本次采用的ant maven来编译hue"></a>本次采用的ant maven来编译hue</h1><h2 id="启动一个基础容器"><a href="#启动一个基础容器" class="headerlink" title="启动一个基础容器"></a>启动一个基础容器</h2><p><code>docker run -itd  --net=br  --name hue --hostname  hue yaosong5/centosbase:1.0 &amp;&gt; /dev/null</code><br></p>
+            <p><h2 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h2><p>参考的是<a href="http://www.shushilvshe.com/data/docker-ssh.html" target="_blank" rel="noopener">http://www.shushilvshe.com/data/docker-ssh.html</a><br>文中涉及命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install openssh-server openssh-clients</span><br><span class="line">ssh-keygen -t rsa</span><br><span class="line">cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys</span><br><span class="line">chmod 700 ~/.ssh</span><br><span class="line">chmod 600 ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></p></p>
             <p class="article-more-link">
-                <a href="/2018/07/20/docker搭建hue/#more">查看更多</a>
+                <a href="/2018/07/20/Docker构建免密登录镜像/#more">查看更多</a>
             </p>
         
 
@@ -827,7 +686,115 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/07/20/docker搭建hue/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/20/Docker构建免密登录镜像/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Docker搭建hue" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/07/20/Docker搭建hue/">Docker搭建hue容器</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/07/20/Docker搭建hue/">
+            <time datetime="2018-07-19T18:19:08.144Z" itemprop="datePublished">2018-07-20</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/部署安装/">部署安装</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Hue/">Hue</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]<br><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/7/20/1532025321846.jpg" alt="enter description here"></p>
+<h1 id="本次采用的ant-maven来编译hue"><a href="#本次采用的ant-maven来编译hue" class="headerlink" title="本次采用的ant maven来编译hue"></a>本次采用的ant maven来编译hue</h1><h2 id="启动一个基础容器"><a href="#启动一个基础容器" class="headerlink" title="启动一个基础容器"></a>启动一个基础容器</h2><p><code>docker run -itd  --net=br  --name hue --hostname  hue yaosong5/centosbase:1.0 &amp;&gt; /dev/null</code><br></p>
+            <p class="article-more-link">
+                <a href="/2018/07/20/Docker搭建hue/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/07/20/Docker搭建hue/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -1452,7 +1419,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/07/20/docker构建免密登录镜像/" class="thumbnail">
+                            <a href="/2018/07/20/Docker构建免密登录镜像/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -1463,7 +1430,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Docker/">Docker</a></p>
-                            <p class="item-title"><a href="/2018/07/20/docker构建免密登录镜像/" class="title">docker构建免密ssh登录镜像</a></p>
+                            <p class="item-title"><a href="/2018/07/20/Docker构建免密登录镜像/" class="title">docker构建免密ssh登录镜像</a></p>
                             <p class="item-date"><time datetime="2018-07-19T18:49:08.996Z" itemprop="datePublished">2018-07-20</time></p>
                         </div>
                     </li>
@@ -1471,7 +1438,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/07/20/docker搭建hue/" class="thumbnail">
+                            <a href="/2018/07/20/Docker搭建hue/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -1482,7 +1449,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/部署安装/">部署安装</a></p>
-                            <p class="item-title"><a href="/2018/07/20/docker搭建hue/" class="title">Docker搭建hue容器</a></p>
+                            <p class="item-title"><a href="/2018/07/20/Docker搭建hue/" class="title">Docker搭建hue容器</a></p>
                             <p class="item-date"><time datetime="2018-07-19T18:19:08.144Z" itemprop="datePublished">2018-07-20</time></p>
                         </div>
                     </li>
@@ -1505,7 +1472,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elk/">elk</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装/">安装</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/部署安装/">部署安装</a><span class="category-list-count">4</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elk/">elk</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装/">安装</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/部署安装/">部署安装</a><span class="category-list-count">4</span></li></ul>
         </div>
     </div>
 

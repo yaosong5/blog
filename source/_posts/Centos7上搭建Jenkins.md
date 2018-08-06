@@ -19,12 +19,12 @@ toc: true
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=480580003&auto=1&height=66"></iframe>
 
 ``` bash
-   cd /opt
-   mkdir /jenkins
-   cd jenkins
-   mkdir jenkins_home
-   mkdir jenkins_node
-   wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war
+cd /opt
+mkdir /jenkins
+cd jenkins
+mkdir jenkins_home
+mkdir jenkins_node
+wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war
 ```
 
 
@@ -42,12 +42,12 @@ toc: true
    启动 jenkins:  `   nohup ./start_jenkins.sh > jenkins.log 2>& 1& `               
 # 3 访问 jenkins
    输入 http:// 服务器地址: 8000
-   
+
 注意：在启动日志中会出现初始密码，这个用来首次登陆Jenkins使用
 ![初始密码](https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/21/1529590960879.jpg)
 
 
 ![初次登陆的界面](https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/21/1529591748025.jpg)
-   
+
 参考
 [在 Centos7 上搭建 jenkins](https://blog.csdn.net/python_tty/article/details/52884314)

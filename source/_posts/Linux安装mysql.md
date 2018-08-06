@@ -12,7 +12,6 @@ chkconfig --add mysqld
 chkconfig mysqld on
 chkconfig --list mysqld
 service mysqld start
-<!--more-->
 mysql -u root -p
 Enter password:           //默认密码为空，输入后回车即可
 set password for root@localhost=password('root'); 　　密码设置为root
