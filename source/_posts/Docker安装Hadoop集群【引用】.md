@@ -1,7 +1,7 @@
 ---
 title:  Docker安装Hadoop集群【引用】
 date: 2018年06月03日 14时36分28秒
-tags:  [Docker,Hadooop]
+tags:  [Docker,Hadoop]
 categories: 环境配置
 toc: true
 ---
