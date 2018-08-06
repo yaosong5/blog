@@ -4,11 +4,10 @@ date: 2018年08月06日 22时15分52秒
 tags:  [elk]
 categories: elk
 toc: true
+typora-copy-images-to: ipic
 ---
 
 [TOC]
-
-
 
 # elk容器的搭建
 
