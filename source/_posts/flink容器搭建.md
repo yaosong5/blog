@@ -1,3 +1,15 @@
+---
+title:  flink容器的搭建
+date: 2018年08月06日 22时15分52秒
+tags:  [elk]
+categories: elk
+toc: true
+typora-copy-images-to: ipic
+---
+
+[TOC]
+
+
 
 # 创建flk1.0的操作
 
@@ -91,7 +103,7 @@ server.3=zk3:2888:3888
 
 **需要在yarn-site.xml中配置**
 
-```
+```xml
 <property>
  	<name>yarn.resourcemanager.am.max-attempts</name>
 	<value>4</value>
@@ -106,29 +118,22 @@ server.3=zk3:2888:3888
 
     docker commit -m "bigdata:flink,hadoop"  --author="yaosong"  flk  yao/flinkonyarn:1.0
 
-
-
 ##   获得flk 容器
 
 	 docker run -itd --net=br --name flk1 --hostname flk1 yao/flinkonyarn:1.0 &> /dev/null
 	 docker run -itd --net=br --name flk2 --hostname flk2 yao/flinkonyarn:1.0 &> /dev/null
 	 docker run -itd --net=br --name flk3 --hostname flk3 yao/flinkonyarn:1.0 &> /dev/null
 
-
-
 ### 停止/删除flk 容器
 
- 		docker stop flk1
- 		docker stop flk2
- 		docker stop flk3
-
-
-
- 		docker rm flk1
- 		docker rm flk2
- 		docker rm flk3
-
-
+```
+docker stop flk1
+docker stop flk2
+docker stop flk3
+docker rm flk1
+docker rm flk2
+docker rm flk3
+```
 
 ## 官方：wordcount
 

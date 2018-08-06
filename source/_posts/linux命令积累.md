@@ -21,3 +21,7 @@ grammar_cjkRuby: true
 ## cpu
 `cat /proc/cpuinfo | grep processor | wc -l`
 `lscpu`
+
+## sz rz与服务器交互上传下载文件
+
+sudo yum install lrzsz -y
