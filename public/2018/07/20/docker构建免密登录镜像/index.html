@@ -6,23 +6,20 @@
     <meta charset="utf-8">
     
 
-    <title>钢铁锅</title>
+    <title>docker构建免密ssh登录镜像 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="title:  jsontool使用date: 2018年06月21日 22时15分52秒tags:  []categories:  toc: truejson-tool使用：java -jar json-tool.jar &amp;quot;json文件目录&amp;quot; &amp;quot;jsonPath路径&amp;quot;示例： 1java -jar /Users/yaosong/Documents/json">
-<meta name="keywords" content="Nothing">
+    <meta name="description" content="免密登录参考的是http://www.shushilvshe.com/data/docker-ssh.html文中涉及命令1234567891011121314151617sudo yum -y install openssh-server openssh-clientsssh-keygen -t rsacp /root/.ssh/id_rsa.pub /root/.ssh/authorized_">
+<meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="钢铁锅">
-<meta property="og:url" content="http://gangtieguo.cn/2018/05/30/json-tool使用/index.html">
+<meta property="og:title" content="docker构建免密ssh登录镜像">
+<meta property="og:url" content="http://gangtieguo.cn/2018/07/20/docker构建免密登录镜像/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="title:  jsontool使用date: 2018年06月21日 22时15分52秒tags:  []categories:  toc: truejson-tool使用：java -jar json-tool.jar &amp;quot;json文件目录&amp;quot; &amp;quot;jsonPath路径&amp;quot;示例： 1java -jar /Users/yaosong/Documents/json">
+<meta property="og:description" content="免密登录参考的是http://www.shushilvshe.com/data/docker-ssh.html文中涉及命令1234567891011121314151617sudo yum -y install openssh-server openssh-clientsssh-keygen -t rsacp /root/.ssh/id_rsa.pub /root/.ssh/authorized_">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/5/30/1527644586687.jpg">
-<meta property="og:image" content="http://gangtieguo.cn/2018/05/30/json-tool使用/attachments/json-tool.jar">
-<meta property="og:updated_time" content="2018-08-06T16:34:42.126Z">
+<meta property="og:updated_time" content="2018-08-06T16:39:26.917Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="钢铁锅">
-<meta name="twitter:description" content="title:  jsontool使用date: 2018年06月21日 22时15分52秒tags:  []categories:  toc: truejson-tool使用：java -jar json-tool.jar &amp;quot;json文件目录&amp;quot; &amp;quot;jsonPath路径&amp;quot;示例： 1java -jar /Users/yaosong/Documents/json">
-<meta name="twitter:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/5/30/1527644586687.jpg">
+<meta name="twitter:title" content="docker构建免密ssh登录镜像">
+<meta name="twitter:description" content="免密登录参考的是http://www.shushilvshe.com/data/docker-ssh.html文中涉及命令1234567891011121314151617sudo yum -y install openssh-server openssh-clientsssh-keygen -t rsacp /root/.ssh/id_rsa.pub /root/.ssh/authorized_">
     
 
     
@@ -247,14 +244,67 @@ var _hmt = _hmt || [];
 </aside>
 
             
-            <section id="main"><article id="post-json-tool使用" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-docker构建免密登录镜像" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            docker构建免密ssh登录镜像
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/07/20/docker构建免密登录镜像/">
+            <time datetime="2018-07-19T18:49:08.996Z" itemprop="datePublished">2018-07-20</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Docker/">Docker</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>
+    </div>
+
+                    </div>
+                
+            </header>
         
        
         
         <div class="article-entry" itemprop="articleBody">
         
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article "  class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#免密登录"><span class="toc-number">1.</span> <span class="toc-text">免密登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ssh服务文章当中的"><span class="toc-number">2.</span> <span class="toc-text">ssh服务文章当中的</span></a></li></ol>
+            </div>
+
+
             
             <script type="text/javascript">
                             function showBtn(){
@@ -278,11 +328,19 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <hr>
-<p>title:  jsontool使用<br>date: 2018年06月21日 22时15分52秒<br>tags:  []<br>categories: </p>
-<h2 id="toc-true"><a href="#toc-true" class="headerlink" title="toc: true"></a>toc: true</h2><p>json-tool使用：<code>java -jar json-tool.jar &quot;json文件目录&quot; &quot;jsonPath路径&quot;</code><br>示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar /Users/yaosong/Documents/json-tool.jar &quot;/Users/yaosong/tmp/access_report_data_by_token.json&quot;  &quot;$.report_data.behavior_check[?(@.check_point_cn == &apos;朋友圈在哪里&apos;)].evidence&quot;</span><br></pre></td></tr></table></figure>
-<p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/5/30/1527644586687.jpg" alt="示例截图"><br><img src="./attachments/json-tool.jar" alt="json-tool jar包" title="json-tool"></p>
+                <h2 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h2><p>参考的是<a href="http://www.shushilvshe.com/data/docker-ssh.html" target="_blank" rel="noopener">http://www.shushilvshe.com/data/docker-ssh.html</a><br>文中涉及命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install openssh-server openssh-clients</span><br><span class="line">ssh-keygen -t rsa</span><br><span class="line">cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys</span><br><span class="line">chmod 700 ~/.ssh</span><br><span class="line">   chmod 600 ~/.ssh/authorized_keys</span><br><span class="line">   vi /etc/ssh/sshd_config</span><br><span class="line">　　找到以下内容，并去掉注释符”<span class="comment">#“</span></span><br><span class="line">　　RSAAuthentication yes</span><br><span class="line">　　PubkeyAuthentication yes</span><br><span class="line">　　AuthorizedKeysFile      .ssh/authorized_keys</span><br><span class="line"></span><br><span class="line">vim /etc/ssh/ssh_config</span><br><span class="line">Host *</span><br><span class="line">	StrictHostKeyChecking no</span><br><span class="line">	UserKnownHostsFile=/dev/null</span><br><span class="line"></span><br><span class="line">	此文也可参考 http://www.voidcn.com/article/p-gxkeusey-ma.html</span><br></pre></td></tr></table></figure></p>
+<p>&lt;!—more—&gt;</p>
+<p><a href="https://blog.csdn.net/a85820069/article/details/78745899" target="_blank" rel="noopener">https://blog.csdn.net/a85820069/article/details/78745899</a><br>坑<br>使用 docker run -i -t –name c1 centos6.6:basic /bin/bash 运行容器，sshd 服务是不开启的，必须先 - d 在用 exec 切入。</p>
+<p><a href="https://www.cnblogs.com/aiweixiao/p/5516974.html" target="_blank" rel="noopener">https://www.cnblogs.com/aiweixiao/p/5516974.html</a></p>
+<p>1.【查看是否启动】</p>
+<p>　　启动 SSH 服务 “/etc/init.d/sshd start”。然后用 netstat -antulp | grep ssh 看是否能看到相关信息就可以了。</p>
+<p>2.【设置自动启动】</p>
+<p>　　如何设置把 ssh 等一些服务随系统开机自动启动？</p>
+<pre><code>方法一：[root@localhost ~]# vi /etc/rc.local
+</code></pre><p>　　　　　　加入：service sshd start 或  /etc/init.d/sshd start</p>
+<p>chmod 777 /etc/ssh/ssh_host_ecdsa_key</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 免密登录</span><br><span class="line"></span><br><span class="line">mkdir -p /root/.ssh  </span><br><span class="line">touch /root/.ssh/config  </span><br><span class="line">echo &quot;StrictHostKeyChecking no&quot; &gt; /root/.ssh/config  </span><br><span class="line">sed -i &quot;a UserKnownHostsFile /dev/null&quot; /root/.ssh/config </span><br><span class="line"></span><br><span class="line"># 开机启动</span><br><span class="line"></span><br><span class="line">RUN yum install -y openssh-server sudo  </span><br><span class="line">RUN sed -i &apos;s/UsePAM yes/UsePAM no/g&apos; /etc/ssh/sshd_config  </span><br><span class="line"></span><br><span class="line"># 下面这两句比较特殊，在centos6上必须要有，否则创建出来的容器sshd不能登录</span><br><span class="line"></span><br><span class="line">RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key  </span><br><span class="line">RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key</span><br></pre></td></tr></table></figure>
+<h2 id="ssh服务文章当中的"><a href="#ssh服务文章当中的" class="headerlink" title="ssh服务文章当中的"></a>ssh服务文章当中的</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">curl http://mirrors.aliyun.com/repo/Centos-6.repo &gt; /etc/yum.repos.d/CentOS-Base-6-aliyun.repo</span><br><span class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak</span><br><span class="line">yum makecache</span><br><span class="line">yum install -y net-tools <span class="built_in">which</span> openssh-clients openssh-server iproute.x86_64 wget</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">service sshd start</span><br><span class="line"></span><br><span class="line">sed -i <span class="string">'s/UsePAM yes/UsePAM no/g'</span> /etc/ssh/sshd_config</span><br><span class="line">sed -ri <span class="string">'s/session required pam_loginuid.so/#session required pam_loginuid.so/g'</span> /etc/pam.d/sshd</span><br><span class="line"></span><br><span class="line">chkconfig sshd on</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ~;ssh-keygen -t rsa -P <span class="string">''</span> -f ~/.ssh/id_dsa;<span class="built_in">cd</span> .ssh;cat id_dsa.pub &gt;&gt; authorized_keys</span><br></pre></td></tr></table></figure>
 
             
 
@@ -361,7 +419,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/05/30/json-tool使用/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/20/docker构建免密登录镜像/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -370,19 +428,19 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/05/31/大数据命令积累/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/07/20/Docker中hadoop spark集群搭建/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    命令积累
+                    Docker中hadoop，spark镜像搭建
                 
             </div>
         </a>
     
     
-        <a href="/2018/05/24/搭建dockerHadoop记录/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/07/20/docker搭建hue/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">搭建DockerHadoop记录</div>
+            <div class="article-nav-title">Docker搭建hue容器</div>
         </a>
     
 </nav>

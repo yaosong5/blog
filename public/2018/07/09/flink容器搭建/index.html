@@ -8,21 +8,18 @@
 
     <title>钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="title:  jsontool使用date: 2018年06月21日 22时15分52秒tags:  []categories:  toc: truejson-tool使用：java -jar json-tool.jar &amp;quot;json文件目录&amp;quot; &amp;quot;jsonPath路径&amp;quot;示例： 1java -jar /Users/yaosong/Documents/json">
+    <meta name="description" content="创建flk1.0的操作来源容器  flk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这">
 <meta name="keywords" content="Nothing">
 <meta property="og:type" content="article">
 <meta property="og:title" content="钢铁锅">
-<meta property="og:url" content="http://gangtieguo.cn/2018/05/30/json-tool使用/index.html">
+<meta property="og:url" content="http://gangtieguo.cn/2018/07/09/flink容器搭建/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="title:  jsontool使用date: 2018年06月21日 22时15分52秒tags:  []categories:  toc: truejson-tool使用：java -jar json-tool.jar &amp;quot;json文件目录&amp;quot; &amp;quot;jsonPath路径&amp;quot;示例： 1java -jar /Users/yaosong/Documents/json">
+<meta property="og:description" content="创建flk1.0的操作来源容器  flk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/5/30/1527644586687.jpg">
-<meta property="og:image" content="http://gangtieguo.cn/2018/05/30/json-tool使用/attachments/json-tool.jar">
-<meta property="og:updated_time" content="2018-08-06T16:34:42.126Z">
+<meta property="og:updated_time" content="2018-08-06T16:46:01.509Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="钢铁锅">
-<meta name="twitter:description" content="title:  jsontool使用date: 2018年06月21日 22时15分52秒tags:  []categories:  toc: truejson-tool使用：java -jar json-tool.jar &amp;quot;json文件目录&amp;quot; &amp;quot;jsonPath路径&amp;quot;示例： 1java -jar /Users/yaosong/Documents/json">
-<meta name="twitter:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/5/30/1527644586687.jpg">
+<meta name="twitter:description" content="创建flk1.0的操作来源容器  flk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这">
     
 
     
@@ -247,7 +244,7 @@ var _hmt = _hmt || [];
 </aside>
 
             
-            <section id="main"><article id="post-json-tool使用" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-flink容器搭建" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -278,11 +275,53 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <hr>
-<p>title:  jsontool使用<br>date: 2018年06月21日 22时15分52秒<br>tags:  []<br>categories: </p>
-<h2 id="toc-true"><a href="#toc-true" class="headerlink" title="toc: true"></a>toc: true</h2><p>json-tool使用：<code>java -jar json-tool.jar &quot;json文件目录&quot; &quot;jsonPath路径&quot;</code><br>示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar /Users/yaosong/Documents/json-tool.jar &quot;/Users/yaosong/tmp/access_report_data_by_token.json&quot;  &quot;$.report_data.behavior_check[?(@.check_point_cn == &apos;朋友圈在哪里&apos;)].evidence&quot;</span><br></pre></td></tr></table></figure>
-<p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/5/30/1527644586687.jpg" alt="示例截图"><br><img src="./attachments/json-tool.jar" alt="json-tool jar包" title="json-tool"></p>
+                <h1 id="创建flk1-0的操作"><a href="#创建flk1-0的操作" class="headerlink" title="创建flk1.0的操作"></a>创建flk1.0的操作</h1><h2 id="来源容器-flk"><a href="#来源容器-flk" class="headerlink" title="来源容器  flk"></a>来源容器  flk</h2><p>新建容器，为减少工作量，引用的是有ssh服务的Docker镜像<strong>kinogmt/centos-ssh:6.7</strong>，生成容器os为基准。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小bug</p>
+</blockquote>
+<a id="more"></a>
+<p>在容器中下载需要的elk的源包。做解压就不赘述，很多案例教程。</p>
+<blockquote>
+<p>我是采用的下载到宿主机，解压后，用 “docker cp 解压包目录  os:/usr/loca/“来传到容器内，比在容器内下载速度更快</p>
+<h2 id="复制源包"><a href="#复制源包" class="headerlink" title="复制源包"></a>复制源包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; docker cp /Users/yaosong/Yao/hadoop  flk:/usr/</span><br><span class="line">&gt; docker cp /Users/yaosong/Yao/flink  flk:/usr/</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="配置home"><a href="#配置home" class="headerlink" title="配置home"></a>配置home</h2><pre><code>export JAVA_HOME=/usr/java/jdk1.8.0_144/
+export PATH=$JAVA_HOME/bin:$PATH
+export FLINK_HOME=/usr/flink
+export HADOOP_HOME=/usr/hadoop
+export HADOOP_CONFIG_HOME=$HADOOP_HOME/etc/hadoop
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export PATH=$PATH:$HADOOP_HOME/bin
+export PATH=$PATH:$HADOOP_HOME/sbin
+export PATH=$PATH:$FLINK_HOME/bin
+</code></pre><p><strong>配置hadoop</strong>  参考：</p>
+<p>[]: <a href="http://gangtieguo.cn/2018/07/20/Docker%E4%B8%ADhadoop%20spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/">http://gangtieguo.cn/2018/07/20/Docker%E4%B8%ADhadoop%20spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</a>    “Docker 中 hadoop，spark 镜像搭建”</p>
+<p><strong>flink.yml</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> high-availability: zookeeper</span><br><span class="line"></span><br><span class="line"># The path where metadata for master recovery is persisted. While ZooKeeper stores</span><br><span class="line"># the small ground truth for checkpoint and leader election, this location stores</span><br><span class="line"># the larger objects, like persisted dataflow graphs.</span><br><span class="line"># </span><br><span class="line"># Must be a durable file system that is accessible from all nodes</span><br><span class="line"># (like HDFS, S3, Ceph, nfs, ...) </span><br><span class="line">#</span><br><span class="line"> high-availability.storageDir: hdfs:///flink/ha/</span><br><span class="line"></span><br><span class="line"># The list of ZooKeeper quorum peers that coordinate the high-availability</span><br><span class="line"># setup. This must be a list of the form:</span><br><span class="line"># &quot;host1:clientPort,host2:clientPort,...&quot; (default clientPort: 2181)</span><br><span class="line">#</span><br><span class="line">high-availability.zookeeper.quorum: zk1:2181,zk2:2181,zk3:2181</span><br></pre></td></tr></table></figure>
+<p><strong>Master</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">master:8081</span><br></pre></td></tr></table></figure>
+<p><strong>slave</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slave01</span><br><span class="line">slave02</span><br></pre></td></tr></table></figure>
+<p><strong>zoo.cfg</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server.1=zk1:2888:3888</span><br><span class="line">server.2=zk2:2888:3888</span><br><span class="line">server.3=zk3:2888:3888</span><br></pre></td></tr></table></figure>
+<p><strong>需要在yarn-site.xml中配置</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line"> 	&lt;name&gt;yarn.resourcemanager.am.max-attempts&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;4&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;yarn.nodemanager.resource.cpu-vcores&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;8&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="保存镜像"><a href="#保存镜像" class="headerlink" title="保存镜像"></a>保存镜像</h2><pre><code>docker commit -m &quot;bigdata:flink,hadoop&quot;  --author=&quot;yaosong&quot;  flk  yao/flinkonyarn:1.0
+</code></pre><h2 id="获得flk-容器"><a href="#获得flk-容器" class="headerlink" title="获得flk 容器"></a>获得flk 容器</h2><pre><code>docker run -itd --net=br --name flk1 --hostname flk1 yao/flinkonyarn:1.0 &amp;&gt; /dev/null
+docker run -itd --net=br --name flk2 --hostname flk2 yao/flinkonyarn:1.0 &amp;&gt; /dev/null
+docker run -itd --net=br --name flk3 --hostname flk3 yao/flinkonyarn:1.0 &amp;&gt; /dev/null
+</code></pre><h3 id="停止-删除flk-容器"><a href="#停止-删除flk-容器" class="headerlink" title="停止/删除flk 容器"></a>停止/删除flk 容器</h3><pre><code>docker stop flk1
+docker stop flk2
+docker stop flk3
+
+
+
+docker rm flk1
+docker rm flk2
+docker rm flk3
+</code></pre><h2 id="官方：wordcount"><a href="#官方：wordcount" class="headerlink" title="官方：wordcount"></a>官方：wordcount</h2><h3 id="flink测试命令"><a href="#flink测试命令" class="headerlink" title="flink测试命令"></a>flink测试命令</h3><p>flink run -m yarn-cluster $FLINK_HOME/examples/batch/WordCount.jar<br>flink run -m yarn-cluster -yn 4  $FLINK_HOME/examples/batch/WordCount.jar<br>flink run -m yarn-cluster -yn 6  $FLINK_HOME/examples/batch/WordCount.jar</p>
+<p>flink run -m yarn-cluster -yn 8  $FLINK_HOME/examples/batch/WordCount.jar<br>flink run -m yarn-cluster -yn 10  $FLINK_HOME/examples/batch/WordCount.jar<br>flink run -m yarn-cluster -ynd 2 $FLINK_HOME/examples/batch/WordCount.jar</p>
 
             
 
@@ -361,7 +400,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/05/30/json-tool使用/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/09/flink容器搭建/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -370,19 +409,19 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/05/31/大数据命令积累/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/07/20/docker搭建hue/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    命令积累
+                    Docker搭建hue容器
                 
             </div>
         </a>
     
     
-        <a href="/2018/05/24/搭建dockerHadoop记录/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/07/08/elk容器的搭建/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">搭建DockerHadoop记录</div>
+            <div class="article-nav-title">elk容器的搭建</div>
         </a>
     
 </nav>

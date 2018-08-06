@@ -16,7 +16,7 @@ typora-copy-images-to: ipic
 新建容器，为减少工作量，引用的是有ssh服务的Docker镜像**kinogmt/centos-ssh:6.7**，生成容器os为基准。
 
 ```
-docker run -itd  --name os --hostname os kinogmt/centos-ssh:6.7 &> /dev/null
+docker run -itd  --name elk --hostname elk kinogmt/centos-ssh:6.7 &> /dev/null
 ```
 
 > 注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小bug
