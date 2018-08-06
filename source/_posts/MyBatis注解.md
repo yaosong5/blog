@@ -1,8 +1,8 @@
 ---
 title: MyBatis相关注解
 date: 2018-05-17 20:09:55
-tags: [Java]
-categories: 
+tags: [Java,SSH]
+categories: 框架
 toc: true
 top: true
 ---

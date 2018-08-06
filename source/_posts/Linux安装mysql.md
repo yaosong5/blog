@@ -1,8 +1,8 @@
 ---
 title:  Linux安装mysql
 date: 2018年06月21日 22时15分52秒
-tags:  [Linux,mysql]
-categories: 安装
+tags:  [Linux,Mysql]
+categories: 部署安装
 toc: true
 ---
 

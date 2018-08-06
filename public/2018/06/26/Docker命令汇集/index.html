@@ -6,19 +6,19 @@
     <meta charset="utf-8">
     
 
-    <title>钢铁锅</title>
+    <title>Docker常用命令汇集 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name slav">
-<meta name="keywords" content="Nothing">
+<meta name="keywords" content="Dokcer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="钢铁锅">
+<meta property="og:title" content="Docker常用命令汇集">
 <meta property="og:url" content="http://gangtieguo.cn/2018/06/26/Docker命令汇集/index.html">
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name slav">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-06T07:11:17.736Z">
+<meta property="og:updated_time" content="2018-08-06T17:33:16.880Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="钢铁锅">
+<meta name="twitter:title" content="Docker常用命令汇集">
 <meta name="twitter:description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name slav">
     
 
@@ -206,11 +206,11 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                20
+                27
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                21
+                29
                 <span>标签</span>
             </div>
         </div>
@@ -248,10 +248,63 @@ var _hmt = _hmt || [];
     <div class="article-inner">
         
         
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Docker常用命令汇集
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/06/26/Docker命令汇集/">
+            <time datetime="2018-06-26T02:33:37.714Z" itemprop="datePublished">2018-06-26</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Docker/">Docker</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Dokcer/">Dokcer</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
        
         
         <div class="article-entry" itemprop="articleBody">
         
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article "  class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker源配置"><span class="toc-number">1.</span> <span class="toc-text">Docker源配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建容器"><span class="toc-number">1.1.</span> <span class="toc-text">创建容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容器挂载目录"><span class="toc-number">1.2.</span> <span class="toc-text">容器挂载目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除所有未用的-Data-volumes"><span class="toc-number">1.3.</span> <span class="toc-text">删除所有未用的 Data volumes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#run-命令解释"><span class="toc-number">1.4.</span> <span class="toc-text">run 命令解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exec-进入后台容器"><span class="toc-number">1.5.</span> <span class="toc-text">exec 进入后台容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#logs查看容器启动日志"><span class="toc-number">1.6.</span> <span class="toc-text">logs查看容器启动日志</span></a></li></ol></li></ol>
+            </div>
+
+
             
             <script type="text/javascript">
                             function showBtn(){
@@ -312,14 +365,13 @@ docker exec -it 容器名 bash
 <p>docker commit -m “centos-6.9 with spark 2.2.0 and hadoop 2.8.0”  os   centos:hadoop-spark</p>
 <p>docker commit -m “bigdata:spark,hadoop,hive,mysql and shell  foundation”   –author=”yaosong”  master   yao/os/bigdata:2.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">## Docker用DockerFile创建镜像</span><br><span class="line"></span><br><span class="line">	docker build -t hadoop:v1- &lt;Dockerfile</span><br><span class="line">	docker build -t=&quot;hadoop:v1&quot; .  （.表示是当前文件夹，也就是dockerfile所在文件夹）</span><br><span class="line">	docker build -f Dockerfile -t hadoop:v1 . 此命令也可</span><br><span class="line"></span><br><span class="line">## 一键启动docker-compose.yml编排的所有服务</span><br></pre></td></tr></table></figure></p>
 <p>docker-compose -f docker-compose.yml up d<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## Docker改变标签</span><br><span class="line"></span><br><span class="line">docker tag IMAGEID(镜像id) REPOSITORY:TAG（仓库：标签）</span><br><span class="line"></span><br><span class="line">`docker tag  b7a66cb0e8ba yaosong5/bigdata:1.0`</span><br><span class="line"></span><br><span class="line">## 搜索docker镜像</span><br></pre></td></tr></table></figure></p>
-<p>docker search yaosong5<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 登录docker账户</span><br><span class="line"></span><br><span class="line">`docker login` 登录docker hub中注册的账户</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 上传仓库</span><br><span class="line"></span><br><span class="line">`docker push yaosong5/elk:1.0`</span><br><span class="line"></span><br><span class="line">## 容器保存为镜像，加载本地镜像 引用</span><br><span class="line"></span><br><span class="line">	docker save imageID &gt; filename</span><br><span class="line">	docker load &lt;filename</span><br><span class="line">	如：</span><br><span class="line">	docker save 4f9e92e56941&gt;  /Users/yaosong/centosSparkHadoop.tar</span><br><span class="line">	docker load &lt;/Users/yaosong/centosSparkHadoop.tar</span><br><span class="line">	</span><br><span class="line">	通过 image 保存的镜像会保存操作历史，可以回滚到历史版本。</span><br><span class="line"></span><br><span class="line">## 保存，加载容器命令：</span><br><span class="line">	docker export containID &gt; filename</span><br><span class="line">	docker import filename [newname]</span><br><span class="line">通过容器保存的镜像不会保存操作历史，所以文件小一点。</span><br><span class="line">如果要运行通过容器加载的镜像， 需要在运行的时候加上相关命令。</span><br><span class="line"></span><br><span class="line">#  Docker-machine命令</span><br><span class="line">	docker-machine rm default</span><br><span class="line">	docker-machine ls</span><br><span class="line">	</span><br><span class="line">	开启虚拟机</span><br><span class="line">	docker-machine start default</span><br><span class="line">	</span><br><span class="line">	关闭虚拟机</span><br><span class="line">	docker-machine stop default</span><br><span class="line">	</span><br><span class="line">	重启虚拟机</span><br><span class="line">	docker-machine restart default</span><br><span class="line">	</span><br><span class="line">	设置环境比变量docker-machine</span><br><span class="line">	eval $(docker-machine env default) # Setup the environment</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># mac宿主机和docker容器网络互通</span><br></pre></td></tr></table></figure></p>
-<p>VBoxManage hostonlyif ipconfig vboxnet0 –ip 192.168.33.253 –netmask 255.255.255.0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## hadoop镜像对应的IP</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 顺序执行下面</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.33.253 --netmask 255.255.255.0</span><br><span class="line"></span><br><span class="line">	vagrant ssh</span><br><span class="line"></span><br><span class="line">	vagrant ssh-config</span><br><span class="line"></span><br><span class="line">	scp ~/.vagrant.d/boxes/dolbager-VAGRANTSLASH-centos-7-docker/0.2/virtualbox/vagrant_private_key .vagrant/machines/default/virtualbox/private_key</span><br><span class="line"></span><br><span class="line">	docker-machine create \</span><br><span class="line">	 --driver &quot;generic&quot; \</span><br><span class="line">	 --generic-ip-address 192.168.33.1 \</span><br><span class="line">	 --generic-ssh-user vagrant \</span><br><span class="line">	 --generic-ssh-key .vagrant/machines/default/virtualbox/private_key \</span><br><span class="line">	 --generic-ssh-port 22 \</span><br><span class="line">	 default</span><br><span class="line"></span><br><span class="line">需要的话，删除 （如之间创建失败）   docker-machine rm default</span><br><span class="line"></span><br><span class="line">登录查看网桥更改后情况</span><br><span class="line"></span><br><span class="line"> 	vagrant ssh</span><br><span class="line"></span><br><span class="line"> 	ip -4 addr</span><br></pre></td></tr></table></figure></p>
-<p> sudo docker network create \<br>–driver bridge \<br>–subnet=192.168.33.0/24 \<br>–gateway=192.168.33.1 \<br>–opt “com.docker.network.bridge.enable_icc”=”true” \<br>–opt “com.docker.network.bridge.enable_ip_masquerade”=”true” \<br>–opt “com.docker.network.bridge.name”=”docker1” \<br>–opt “com.docker.network.driver.mtu”=”1500” \<br>br<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">sudo vi /etc/sysconfig/network-scripts/ifcfg-docker1</span><br><span class="line"></span><br><span class="line">	DEVICE=docker1</span><br><span class="line">	TYPE=Bridge</span><br><span class="line">	BOOTPROTO=static</span><br><span class="line">	ONBOOT=yes</span><br><span class="line">	STP=on</span><br><span class="line">	IPADDR=</span><br><span class="line">	NETMASK=</span><br><span class="line">	GATEWAY=</span><br><span class="line">	DNS1=</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	sudo vi /etc/sysconfig/network-scripts/ifcfg-eth1</span><br><span class="line">	DEVICE=eth1</span><br><span class="line">	BOOTPROTO=static</span><br><span class="line">	HWADDR=</span><br><span class="line">	ONBOOT=yes</span><br><span class="line">	NETMASK=</span><br><span class="line">	GATEWAY=</span><br><span class="line">	BRIDGE=docker1</span><br><span class="line">	TYPE=Ethernet</span><br><span class="line"></span><br><span class="line">sudo reboot now</span><br><span class="line"></span><br><span class="line">vagrant ssh</span><br><span class="line">### 设置环境变量docker-machine</span><br></pre></td></tr></table></figure></p>
-<p>eval $(docker-machine env default) </p>
-<h1 id="Setup-the-environment"><a href="#Setup-the-environment" class="headerlink" title="Setup the environment"></a>Setup the environment</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 其他参考</span><br><span class="line"></span><br><span class="line">ip -4 addr</span><br><span class="line"></span><br><span class="line">chkconfig sshd on</span><br><span class="line"></span><br><span class="line">rpm -qa|grep ssh。</span><br><span class="line"></span><br><span class="line">为了快速实现我们就不自己装 SSH 服务了，hub.docker.com 上的 kinogmt/centos-ssh:6.7 这个镜像就能满足我们的要求</span><br></pre></td></tr></table></figure>
-<p>docker run  -itd –net=br  –name centos-6.9   centos:6 /bin/bash<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">以原始容器ip启动</span><br></pre></td></tr></table></figure></p>
-<p>docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 –name master -h master –add-host slave01:172.17.0.3 –add-host slave02:172.17.0.4 centos:ssh-spark-hadoop<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
-<p>docker run -itd  –net=br –ip=192.168.33.61 –name tt1 –hostname tt1 centos:tt /bin/bash<br>docker run -itd  –net=br –ip=192.168.33.62 –name tt2 –hostname tt2 centos:tt /bin/bash<br><code>`</code></p>
+<p>docker search yaosong5<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 登录docker账户</span><br><span class="line"></span><br><span class="line">`docker login` 登录docker hub中注册的账户</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 上传仓库</span><br><span class="line"></span><br><span class="line">`docker push yaosong5/elk:1.0`</span><br><span class="line"></span><br><span class="line">## 容器保存为镜像，加载本地镜像 引用</span><br><span class="line"></span><br><span class="line">	docker save imageID &gt; filename</span><br><span class="line">	docker load &lt;filename</span><br><span class="line">	如：</span><br><span class="line">	docker save 4f9e92e56941&gt;  /Users/yaosong/centosSparkHadoop.tar</span><br><span class="line">	docker load &lt;/Users/yaosong/centosSparkHadoop.tar</span><br><span class="line">	</span><br><span class="line">	通过 image 保存的镜像会保存操作历史，可以回滚到历史版本。</span><br><span class="line"></span><br><span class="line">## 保存，加载容器命令：</span><br><span class="line">	docker export containID &gt; filename</span><br><span class="line">	docker import filename [newname]</span><br><span class="line">通过容器保存的镜像不会保存操作历史，所以文件小一点。</span><br><span class="line">如果要运行通过容器加载的镜像， 需要在运行的时候加上相关命令。</span><br><span class="line"></span><br><span class="line">#  Docker-machine命令</span><br><span class="line">## 列出docker-machine</span><br></pre></td></tr></table></figure></p>
+<p>docker-machine ls<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 开启虚拟机</span><br></pre></td></tr></table></figure></p>
+<p>docker-machine start default<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 关闭虚拟机</span><br></pre></td></tr></table></figure></p>
+<p>docker-machine stop default<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 重启虚拟机</span><br></pre></td></tr></table></figure></p>
+<p>docker-machine restart default<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 删除虚拟机</span><br></pre></td></tr></table></figure></p>
+<p>docker-machine rm default<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 设置环境变量docker-machine</span><br></pre></td></tr></table></figure></p>
+<p>eval $(docker-machine env default) # Setup the environment<br><code>`</code></p>
 
             
 
@@ -411,7 +463,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    elk容器的搭建
+                    ELK容器的搭建
                 
             </div>
         </a>
@@ -461,7 +513,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/安装/">安装</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/部署安装/">部署安装</a></p>
                             <p class="item-title"><a href="/2018/07/24/Linux安装mysql/" class="title">Linux安装mysql</a></p>
                             <p class="item-date"><time datetime="2018-07-24T15:42:18.647Z" itemprop="datePublished">2018-07-24</time></p>
                         </div>
@@ -480,8 +532,8 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/部署安装/">部署安装</a></p>
-                            <p class="item-title"><a href="/2018/07/20/Docker-machine的搭建(与宿主机在同一ip段下)/" class="title">Docker-machine的创建</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/Docker部署安装/">Docker部署安装</a></p>
+                            <p class="item-title"><a href="/2018/07/20/Docker-machine的搭建(与宿主机在同一ip段下)/" class="title">Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下</a></p>
                             <p class="item-date"><time datetime="2018-07-19T19:02:08.124Z" itemprop="datePublished">2018-07-20</time></p>
                         </div>
                     </li>
@@ -508,6 +560,25 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2018/07/20/hive搭建/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/部署安装/">部署安装</a></p>
+                            <p class="item-title"><a href="/2018/07/20/hive搭建/" class="title">HIVE搭建</a></p>
+                            <p class="item-date"><time datetime="2018-07-19T18:51:21.978Z" itemprop="datePublished">2018-07-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2018/07/20/Docker构建免密登录镜像/" class="thumbnail">
     
     
@@ -524,25 +595,6 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/20/Docker搭建hue/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/部署安装/">部署安装</a></p>
-                            <p class="item-title"><a href="/2018/07/20/Docker搭建hue/" class="title">Docker搭建hue容器</a></p>
-                            <p class="item-date"><time datetime="2018-07-19T18:19:08.144Z" itemprop="datePublished">2018-07-20</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -552,7 +604,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-archive"></i>归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
         </div>
     </div>
 
@@ -561,7 +613,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elk/">elk</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装/">安装</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/部署安装/">部署安装</a><span class="category-list-count">4</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker部署安装/">Docker部署安装</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FLINK/">FLINK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/部署安装/">部署安装</a><span class="category-list-count">6</span></li></ul>
         </div>
     </div>
 
@@ -570,7 +622,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadooop/">Hadooop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elk/">elk</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOCKER/">DOCKER</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dokcer/">Dokcer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HIVE/">HIVE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadooop/">Hadooop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kakfa/">Kakfa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -579,7 +631,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-tags"></i>标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/Hadooop/" style="font-size: 10px;">Hadooop</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 16.67px;">Hexo</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/elk/" style="font-size: 13.33px;">elk</a> <a href="/tags/git/" style="font-size: 13.33px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/开发/" style="font-size: 13.33px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a>
+            <a href="/tags/DOCKER/" style="font-size: 13.33px;">DOCKER</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/Dokcer/" style="font-size: 13.33px;">Dokcer</a> <a href="/tags/ELK/" style="font-size: 10px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HIVE/" style="font-size: 10px;">HIVE</a> <a href="/tags/Hadooop/" style="font-size: 10px;">Hadooop</a> <a href="/tags/Hadoop/" style="font-size: 13.33px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 16.67px;">Hexo</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Kakfa/" style="font-size: 10px;">Kakfa</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Spark/" style="font-size: 13.33px;">Spark</a> <a href="/tags/git/" style="font-size: 13.33px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/命令/" style="font-size: 10px;">命令</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/开发/" style="font-size: 13.33px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a>
         </div>
     </div>
 

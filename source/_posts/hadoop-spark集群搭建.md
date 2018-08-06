@@ -1,8 +1,8 @@
 ---
 title:  hadoop-spark组合容器的搭建
 date: 2018年08月06日 22时15分52秒
-tags:  [elk]
-categories: elk
+tags:  [Docker,Spark,Hadoop]
+categories: 部署安装
 toc: true
 typora-copy-images-to: ipic
 ---

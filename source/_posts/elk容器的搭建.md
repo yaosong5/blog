@@ -1,15 +1,15 @@
 ---
-title:  elk容器的搭建
+title:  ELK容器的搭建
 date: 2018年08月06日 22时15分52秒
-tags:  [elk]
-categories: elk
+tags:  [ELK,Dokcer]
+categories: ELK
 toc: true
 typora-copy-images-to: ipic
 ---
 
 [TOC]
 
-# elk容器的搭建
+
 
 ## 来源容器  elk
 

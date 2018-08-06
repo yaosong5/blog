@@ -1,3 +1,14 @@
+---
+title:  Docker常用命令汇集
+date: 2018年08月06日 22时15分52秒
+tags:  [Dokcer]
+categories: Docker
+toc: true
+typora-copy-images-to: ipic
+---
+
+
+
 [TOC]
 
 
@@ -164,136 +175,41 @@ docker search yaosong5
 如果要运行通过容器加载的镜像， 需要在运行的时候加上相关命令。
 
 #  Docker-machine命令
-	docker-machine rm default
-	docker-machine ls
-	
-	开启虚拟机
-	docker-machine start default
-	
-	关闭虚拟机
-	docker-machine stop default
-	
-	重启虚拟机
-	docker-machine restart default
-	
-	设置环境比变量docker-machine
-	eval $(docker-machine env default) # Setup the environment
-
-
-
-
-# mac宿主机和docker容器网络互通
+## 列出docker-machine
 
 ```
-VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.33.253 --netmask 255.255.255.0
+docker-machine ls
 ```
 
-## hadoop镜像对应的IP
-
-
-
-
-## 顺序执行下面
-
-
-	VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.33.253 --netmask 255.255.255.0
-
-	vagrant ssh
-
-	vagrant ssh-config
-
-	scp ~/.vagrant.d/boxes/dolbager-VAGRANTSLASH-centos-7-docker/0.2/virtualbox/vagrant_private_key .vagrant/machines/default/virtualbox/private_key
-
-	docker-machine create \
-	 --driver "generic" \
-	 --generic-ip-address 192.168.33.1 \
-	 --generic-ssh-user vagrant \
-	 --generic-ssh-key .vagrant/machines/default/virtualbox/private_key \
-	 --generic-ssh-port 22 \
-	 default
-
-需要的话，删除 （如之间创建失败）   docker-machine rm default
-
-登录查看网桥更改后情况
-
- 	vagrant ssh
-
- 	ip -4 addr
+## 开启虚拟机
 
 ```
- sudo docker network create \
---driver bridge \
---subnet=192.168.33.0/24 \
---gateway=192.168.33.1 \
---opt "com.docker.network.bridge.enable_icc"="true" \
---opt "com.docker.network.bridge.enable_ip_masquerade"="true" \
---opt "com.docker.network.bridge.name"="docker1" \
---opt "com.docker.network.driver.mtu"="1500" \
-br
+docker-machine start default
+```
+
+## 关闭虚拟机
+
+```
+docker-machine stop default
+```
+
+## 重启虚拟机
+
+```
+docker-machine restart default
+```
+
+## 删除虚拟机
+
+```
+docker-machine rm default
+```
+
+## 设置环境变量docker-machine
+
+```
+eval $(docker-machine env default) # Setup the environment
 ```
 
 
-sudo vi /etc/sysconfig/network-scripts/ifcfg-docker1
-
-	DEVICE=docker1
-	TYPE=Bridge
-	BOOTPROTO=static
-	ONBOOT=yes
-	STP=on
-	IPADDR=
-	NETMASK=
-	GATEWAY=
-	DNS1=
-
-
-	sudo vi /etc/sysconfig/network-scripts/ifcfg-eth1
-	DEVICE=eth1
-	BOOTPROTO=static
-	HWADDR=
-	ONBOOT=yes
-	NETMASK=
-	GATEWAY=
-	BRIDGE=docker1
-	TYPE=Ethernet
-
-sudo reboot now
-
-vagrant ssh
-### 设置环境变量docker-machine
-
-```
-eval $(docker-machine env default) 
-# Setup the environment
-```
-
-
-
-
-
-# 其他参考
-
-ip -4 addr
-
-chkconfig sshd on
-
-rpm -qa|grep ssh。
-
-为了快速实现我们就不自己装 SSH 服务了，hub.docker.com 上的 kinogmt/centos-ssh:6.7 这个镜像就能满足我们的要求
-
-```
-docker run  -itd --net=br  –name centos-6.9   centos:6 /bin/bash
-```
-
-以原始容器ip启动
-
-```
-docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 --name master -h master --add-host slave01:172.17.0.3 --add-host slave02:172.17.0.4 centos:ssh-spark-hadoop
-```
-
-
-
-```
-docker run -itd  --net=br --ip=192.168.33.61 --name tt1 --hostname tt1 centos:tt /bin/bash
-docker run -itd  --net=br --ip=192.168.33.62 --name tt2 --hostname tt2 centos:tt /bin/bash
-```
 

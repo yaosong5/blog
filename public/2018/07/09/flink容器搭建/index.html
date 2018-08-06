@@ -6,20 +6,20 @@
     <meta charset="utf-8">
     
 
-    <title>flink容器的搭建 | 钢铁锅</title>
+    <title>FLINK容器的搭建 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="[TOC] 创建flk1.0的操作来源容器  flk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务">
-<meta name="keywords" content="elk">
+    <meta name="description" content="[TOC] 来源容器  flk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小">
+<meta name="keywords" content="DOCKER,FLINK">
 <meta property="og:type" content="article">
-<meta property="og:title" content="flink容器的搭建">
+<meta property="og:title" content="FLINK容器的搭建">
 <meta property="og:url" content="http://gangtieguo.cn/2018/07/09/flink容器搭建/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] 创建flk1.0的操作来源容器  flk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务">
+<meta property="og:description" content="[TOC] 来源容器  flk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-06T17:03:20.992Z">
+<meta property="og:updated_time" content="2018-08-06T17:26:35.801Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="flink容器的搭建">
-<meta name="twitter:description" content="[TOC] 创建flk1.0的操作来源容器  flk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务">
+<meta name="twitter:title" content="FLINK容器的搭建">
+<meta name="twitter:description" content="[TOC] 来源容器  flk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小">
     
 
     
@@ -206,11 +206,11 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                20
+                27
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                21
+                29
                 <span>标签</span>
             </div>
         </div>
@@ -252,7 +252,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            flink容器的搭建
+            FLINK容器的搭建
         </h1>
     
 
@@ -270,13 +270,13 @@ var _hmt = _hmt || [];
                         
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/elk/">elk</a>
+        <a class="article-category-link" href="/categories/FLINK/">FLINK</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/elk/">elk</a>
+        <a class="tag-link" href="/tags/DOCKER/">DOCKER</a>, <a class="tag-link" href="/tags/FLINK/">FLINK</a>
     </div>
 
                     </div>
@@ -301,7 +301,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#创建flk1-0的操作"><span class="toc-number">1.</span> <span class="toc-text">创建flk1.0的操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#来源容器-flk"><span class="toc-number">1.1.</span> <span class="toc-text">来源容器  flk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复制源包"><span class="toc-number">1.2.</span> <span class="toc-text">复制源包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置home"><span class="toc-number">1.3.</span> <span class="toc-text">配置home</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存镜像"><span class="toc-number">1.4.</span> <span class="toc-text">保存镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获得flk-容器"><span class="toc-number">1.5.</span> <span class="toc-text">获得flk 容器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#停止-删除flk-容器"><span class="toc-number">1.5.1.</span> <span class="toc-text">停止/删除flk 容器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#官方：wordcount"><span class="toc-number">1.6.</span> <span class="toc-text">官方：wordcount</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#flink测试命令"><span class="toc-number">1.6.1.</span> <span class="toc-text">flink测试命令</span></a></li></ol></li></ol></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#来源容器-flk"><span class="toc-number">1.</span> <span class="toc-text">来源容器  flk</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#复制源包"><span class="toc-number">1.1.</span> <span class="toc-text">复制源包</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置home"><span class="toc-number">2.</span> <span class="toc-text">配置home</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#保存镜像"><span class="toc-number">3.</span> <span class="toc-text">保存镜像</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#获得flk-容器"><span class="toc-number">4.</span> <span class="toc-text">获得flk 容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#停止-删除flk-容器"><span class="toc-number">5.</span> <span class="toc-text">停止/删除flk 容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#官方：wordcount"><span class="toc-number">6.</span> <span class="toc-text">官方：wordcount</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#flink测试命令"><span class="toc-number">6.0.1.</span> <span class="toc-text">flink测试命令</span></a></li></ol></li></ol></li></ol>
             </div>
 
 
@@ -329,7 +329,7 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
-<h1 id="创建flk1-0的操作"><a href="#创建flk1-0的操作" class="headerlink" title="创建flk1.0的操作"></a>创建flk1.0的操作</h1><h2 id="来源容器-flk"><a href="#来源容器-flk" class="headerlink" title="来源容器  flk"></a>来源容器  flk</h2><p>新建容器，为减少工作量，引用的是有ssh服务的Docker镜像<strong>kinogmt/centos-ssh:6.7</strong>，生成容器os为基准。</p>
+<h1 id="来源容器-flk"><a href="#来源容器-flk" class="headerlink" title="来源容器  flk"></a>来源容器  flk</h1><p>新建容器，为减少工作量，引用的是有ssh服务的Docker镜像<strong>kinogmt/centos-ssh:6.7</strong>，生成容器os为基准。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小bug</p>
@@ -340,7 +340,7 @@ var _hmt = _hmt || [];
 <p>我是采用的下载到宿主机，解压后，用 “docker cp 解压包目录  os:/usr/loca/“来传到容器内，比在容器内下载速度更快</p>
 <h2 id="复制源包"><a href="#复制源包" class="headerlink" title="复制源包"></a>复制源包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; docker cp /Users/yaosong/Yao/hadoop  flk:/usr/</span><br><span class="line">&gt; docker cp /Users/yaosong/Yao/flink  flk:/usr/</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
-<h2 id="配置home"><a href="#配置home" class="headerlink" title="配置home"></a>配置home</h2><pre><code>export JAVA_HOME=/usr/java/jdk1.8.0_144/
+<h1 id="配置home"><a href="#配置home" class="headerlink" title="配置home"></a>配置home</h1><pre><code>export JAVA_HOME=/usr/java/jdk1.8.0_144/
 export PATH=$JAVA_HOME/bin:$PATH
 export FLINK_HOME=/usr/flink
 export HADOOP_HOME=/usr/hadoop
@@ -361,13 +361,11 @@ export PATH=$PATH:$FLINK_HOME/bin
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server.1=zk1:2888:3888</span><br><span class="line">server.2=zk2:2888:3888</span><br><span class="line">server.3=zk3:2888:3888</span><br></pre></td></tr></table></figure>
 <p><strong>需要在yarn-site.xml中配置</strong></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"> 	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.am.max-attempts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>4<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.cpu-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>8<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="保存镜像"><a href="#保存镜像" class="headerlink" title="保存镜像"></a>保存镜像</h2><pre><code>docker commit -m &quot;bigdata:flink,hadoop&quot;  --author=&quot;yaosong&quot;  flk  yao/flinkonyarn:1.0
-</code></pre><h2 id="获得flk-容器"><a href="#获得flk-容器" class="headerlink" title="获得flk 容器"></a>获得flk 容器</h2><pre><code>docker run -itd --net=br --name flk1 --hostname flk1 yao/flinkonyarn:1.0 &amp;&gt; /dev/null
-docker run -itd --net=br --name flk2 --hostname flk2 yao/flinkonyarn:1.0 &amp;&gt; /dev/null
-docker run -itd --net=br --name flk3 --hostname flk3 yao/flinkonyarn:1.0 &amp;&gt; /dev/null
-</code></pre><h3 id="停止-删除flk-容器"><a href="#停止-删除flk-容器" class="headerlink" title="停止/删除flk 容器"></a>停止/删除flk 容器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker stop flk1</span><br><span class="line">docker stop flk2</span><br><span class="line">docker stop flk3</span><br><span class="line">docker rm flk1</span><br><span class="line">docker rm flk2</span><br><span class="line">docker rm flk3</span><br></pre></td></tr></table></figure>
-<h2 id="官方：wordcount"><a href="#官方：wordcount" class="headerlink" title="官方：wordcount"></a>官方：wordcount</h2><h3 id="flink测试命令"><a href="#flink测试命令" class="headerlink" title="flink测试命令"></a>flink测试命令</h3><p>flink run -m yarn-cluster $FLINK_HOME/examples/batch/WordCount.jar<br>flink run -m yarn-cluster -yn 4  $FLINK_HOME/examples/batch/WordCount.jar<br>flink run -m yarn-cluster -yn 6  $FLINK_HOME/examples/batch/WordCount.jar</p>
-<p>flink run -m yarn-cluster -yn 8  $FLINK_HOME/examples/batch/WordCount.jar<br>flink run -m yarn-cluster -yn 10  $FLINK_HOME/examples/batch/WordCount.jar<br>flink run -m yarn-cluster -ynd 2 $FLINK_HOME/examples/batch/WordCount.jar</p>
+<h1 id="保存镜像"><a href="#保存镜像" class="headerlink" title="保存镜像"></a>保存镜像</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit -m <span class="string">"bigdata:flink,hadoop"</span>  --author=<span class="string">"yaosong"</span>  flk  yao/flinkonyarn:1.0</span><br></pre></td></tr></table></figure>
+<h1 id="获得flk-容器"><a href="#获得flk-容器" class="headerlink" title="获得flk 容器"></a>获得flk 容器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd --net=br --name flk1 --hostname flk1 yao/flinkonyarn:1.0 &amp;&gt; /dev/null</span><br><span class="line">docker run -itd --net=br --name flk2 --hostname flk2 yao/flinkonyarn:1.0 &amp;&gt; /dev/null</span><br><span class="line">docker run -itd --net=br --name flk3 --hostname flk3 yao/flinkonyarn:1.0 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
+<h1 id="停止-删除flk-容器"><a href="#停止-删除flk-容器" class="headerlink" title="停止/删除flk 容器"></a>停止/删除flk 容器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker stop flk1</span><br><span class="line">docker stop flk2</span><br><span class="line">docker stop flk3</span><br><span class="line">docker rm flk1</span><br><span class="line">docker rm flk2</span><br><span class="line">docker rm flk3</span><br></pre></td></tr></table></figure>
+<h1 id="官方：wordcount"><a href="#官方：wordcount" class="headerlink" title="官方：wordcount"></a>官方：wordcount</h1><h3 id="flink测试命令"><a href="#flink测试命令" class="headerlink" title="flink测试命令"></a>flink测试命令</h3><p>由于在本地搭建，机器配置有限，故设置不同参数命令来运行官方wordcount</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">flink run -m yarn-cluster <span class="variable">$FLINK_HOME</span>/examples/batch/WordCount.jar</span><br><span class="line"></span><br><span class="line">flink run -m yarn-cluster -ynd 2 <span class="variable">$FLINK_HOME</span>/examples/batch/WordCount.jar</span><br><span class="line"></span><br><span class="line">flink run -m yarn-cluster -yn 4  <span class="variable">$FLINK_HOME</span>/examples/batch/WordCount.jar</span><br><span class="line"></span><br><span class="line">flink run -m yarn-cluster -yn 6  <span class="variable">$FLINK_HOME</span>/examples/batch/WordCount.jar</span><br><span class="line"></span><br><span class="line">flink run -m yarn-cluster -yn 8  <span class="variable">$FLINK_HOME</span>/examples/batch/WordCount.jar</span><br><span class="line"></span><br><span class="line">flink run -m yarn-cluster -yn 10  <span class="variable">$FLINK_HOME</span>/examples/batch/WordCount.jar</span><br></pre></td></tr></table></figure>
 
             
 
@@ -455,19 +453,19 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/07/20/Docker搭建hue/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/07/09/hbasezk容器的搭建/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    Docker搭建hue容器
+                    (no title)
                 
             </div>
         </a>
     
     
-        <a href="/2018/07/08/elk容器的搭建/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/07/08/kafka启动脚本/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">elk容器的搭建</div>
+            <div class="article-nav-title">kafka的启动及命令</div>
         </a>
     
 </nav>
@@ -509,7 +507,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/安装/">安装</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/部署安装/">部署安装</a></p>
                             <p class="item-title"><a href="/2018/07/24/Linux安装mysql/" class="title">Linux安装mysql</a></p>
                             <p class="item-date"><time datetime="2018-07-24T15:42:18.647Z" itemprop="datePublished">2018-07-24</time></p>
                         </div>
@@ -528,8 +526,8 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/部署安装/">部署安装</a></p>
-                            <p class="item-title"><a href="/2018/07/20/Docker-machine的搭建(与宿主机在同一ip段下)/" class="title">Docker-machine的创建</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/Docker部署安装/">Docker部署安装</a></p>
+                            <p class="item-title"><a href="/2018/07/20/Docker-machine的搭建(与宿主机在同一ip段下)/" class="title">Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下</a></p>
                             <p class="item-date"><time datetime="2018-07-19T19:02:08.124Z" itemprop="datePublished">2018-07-20</time></p>
                         </div>
                     </li>
@@ -556,6 +554,25 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2018/07/20/hive搭建/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/部署安装/">部署安装</a></p>
+                            <p class="item-title"><a href="/2018/07/20/hive搭建/" class="title">HIVE搭建</a></p>
+                            <p class="item-date"><time datetime="2018-07-19T18:51:21.978Z" itemprop="datePublished">2018-07-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2018/07/20/Docker构建免密登录镜像/" class="thumbnail">
     
     
@@ -572,25 +589,6 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/20/Docker搭建hue/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/部署安装/">部署安装</a></p>
-                            <p class="item-title"><a href="/2018/07/20/Docker搭建hue/" class="title">Docker搭建hue容器</a></p>
-                            <p class="item-date"><time datetime="2018-07-19T18:19:08.144Z" itemprop="datePublished">2018-07-20</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -600,7 +598,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-archive"></i>归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
         </div>
     </div>
 
@@ -609,7 +607,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elk/">elk</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装/">安装</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/部署安装/">部署安装</a><span class="category-list-count">4</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker部署安装/">Docker部署安装</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FLINK/">FLINK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/部署安装/">部署安装</a><span class="category-list-count">6</span></li></ul>
         </div>
     </div>
 
@@ -618,7 +616,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadooop/">Hadooop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elk/">elk</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOCKER/">DOCKER</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dokcer/">Dokcer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HIVE/">HIVE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadooop/">Hadooop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kakfa/">Kakfa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -627,7 +625,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-tags"></i>标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/Hadooop/" style="font-size: 10px;">Hadooop</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 16.67px;">Hexo</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/elk/" style="font-size: 13.33px;">elk</a> <a href="/tags/git/" style="font-size: 13.33px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/开发/" style="font-size: 13.33px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a>
+            <a href="/tags/DOCKER/" style="font-size: 13.33px;">DOCKER</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/Dokcer/" style="font-size: 13.33px;">Dokcer</a> <a href="/tags/ELK/" style="font-size: 10px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HIVE/" style="font-size: 10px;">HIVE</a> <a href="/tags/Hadooop/" style="font-size: 10px;">Hadooop</a> <a href="/tags/Hadoop/" style="font-size: 13.33px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 16.67px;">Hexo</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Kakfa/" style="font-size: 10px;">Kakfa</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Spark/" style="font-size: 13.33px;">Spark</a> <a href="/tags/git/" style="font-size: 13.33px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/命令/" style="font-size: 10px;">命令</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/开发/" style="font-size: 13.33px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a>
         </div>
     </div>
 

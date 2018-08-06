@@ -24,4 +24,15 @@ grammar_cjkRuby: true
 
 ## sz rz与服务器交互上传下载文件
 
-sudo yum install lrzsz -y
+`sudo yum install lrzsz -y`
+
+## 挂载
+
+ `sshfs  root@192.168.73.12:/home/ /csdn/win10/`
+
+即：sshfs 用户名@远程主机IP:远程主机路径 本地挂载点
+sshfs  root@master:/usr/hadoop  /usr/hive/hadoop
+
+## 查看端口是否被监听
+
+`netstat -nl|grep 10000`

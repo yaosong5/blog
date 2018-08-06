@@ -1,8 +1,8 @@
 ---
-title:  Docker-machine的创建
+title:  Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下
 date: 2018年07月20日 03时02分26秒
 tags:  [Docker,Docker-machine]
-categories: 部署安装
+categories: Docker部署安装
 toc: true
 typora-copy-images-to: ipic
 ---
