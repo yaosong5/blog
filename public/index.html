@@ -287,48 +287,12 @@ var _hmt = _hmt || [];
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <script type="text/javascript">
-                            function showBtn(){
-                             if($('.toc-article').hasClass('hidden')){
-                                    $('.toc-article').removeClass('hidden');
-                                }else{
-                                    $('.toc-article').addClass('hidden');
-                                }
-                                 $('.show-toc-btn').removeClass('hidden');  
-                            };
-                            function showToc(){
-                              if($('.show-toc-btn').hasClass('hidden')){
-                                      $('.show-toc-btn').removeClass('hidden');
-
-
-                                  }else{
-                                      $('.show-toc-btn').addClass('hidden');
-
-                                  }
-                                   $('.toc-article').removeClass('hidden');
-                            };
-             </script>
-
-                <p>[TOC]<br>在usr目录下下载zk包，并且解压到/usr/目录，改名为zk，所以$ZK_HOME为/usr/zk</p>
-<h1 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /usr/zk/data</span><br><span class="line">mkdir -p /usr/zk/logs</span><br><span class="line">touch /usr/zk/data/myid</span><br></pre></td></tr></table></figure>
-<h1 id="更改配置文件"><a href="#更改配置文件" class="headerlink" title="更改配置文件"></a>更改配置文件</h1><p><code>vim  $ZK_HOME/conf/zoo.cfg</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dataDir=/usr/zk/data</span><br><span class="line">dataLogDir=/usr/zk/logs</span><br><span class="line">server.1=zk1:2888:3888</span><br><span class="line">server.2=zk2:2888:3888</span><br><span class="line">server.3=zk3:2888:3888</span><br></pre></td></tr></table></figure>
-<p>zookeeper需要全部左右节点都启动才会选举leader，follower</p>
-<p>所有节点启动的脚本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> 1 &gt; <span class="variable">$ZK_HOME</span>/data/myid</span><br><span class="line"><span class="variable">$ZK_HOME</span>/bin/zkServer.sh start</span><br><span class="line">ssh root@zk2 <span class="string">"echo 2 &gt; /usr/zk/data/myid"</span></span><br><span class="line">ssh root@zk2 <span class="string">"/usr/zk/bin/zkServer.sh start"</span></span><br><span class="line">ssh root@zk3 <span class="string">"echo 3 &gt; /usr/zk/data/myid"</span></span><br><span class="line">ssh root@zk3 <span class="string">"/usr/zk/bin/zkServer.sh start"</span></span><br></pre></td></tr></table></figure>
-<h1 id="zk问题"><a href="#zk问题" class="headerlink" title="zk问题"></a>zk问题</h1><p>1、由于 zk 运行一段时间后，会产生大量的日志文件，把磁盘空间占满，导致整个机器进程都不能活动了，所以需要定期清理这些日志文件，方法如下：</p>
-<p>1）、写一个脚本文件 cleanup.sh 内容如下：</p>
-<p> java -cp zookeeper.jar:lib/slf4j-api-1.6.1.jar:lib/slf4j-log4j12-1.6.1.jar:lib/log4j-1.2.15.jar:conf org.apache.zookeeper.server.PurgeTxnLog <datadir> <snapdir> -n <count><br> 其中：</count></snapdir></datadir></p>
-<p>　　dataDir：即上面配置的 dataDir 的目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snapDir：即上面配置的 dataLogDir 的目录</span><br></pre></td></tr></table></figure>
-<p>　　count：保留前几个日志文件，默认为 3</p>
-<p>2）、通过 crontab 写定时任务，来完成定时清理日志的需求</p>
-<p>crontab -e 0 0 <em> </em>  /opt/zookeeper-3.4.10/bin/cleanup.sh</p>
-<p>HBase Master 高可用（HA）（<a href="http://www.cnblogs.com/captainlucky/p/4710642.html）" target="_blank" rel="noopener">http://www.cnblogs.com/captainlucky/p/4710642.html）</a><br>HMaster 没有单点问题，HBase 中可以启动多个 HMaster，通过 Zookeeper 的 Master Election 机制保证总有一个 Master 运行。</p>
-<p>所以这里要配置 HBase 高可用的话，只需要启动两个 HMaster，让 Zookeeper 自己去选择一个 Master Acitve。</p>
-
-            
+            <p><p>[TOC]<br>在usr目录下下载zk包，并且解压到/usr/目录，改名为zk，所以$ZK_HOME为/usr/zk</p>
+<h1 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /usr/zk/data</span><br><span class="line">mkdir -p /usr/zk/logs</span><br><span class="line">touch /usr/zk/data/myid</span><br></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2018/08/07/zookeeper配置/#more">查看更多</a>
+            </p>
+        
 
         </div>
 

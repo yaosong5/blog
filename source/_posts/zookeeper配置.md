@@ -18,6 +18,8 @@ mkdir -p /usr/zk/logs
 touch /usr/zk/data/myid
 ```
 
+<!--more -->
+
 # 更改配置文件
 
 `vim  $ZK_HOME/conf/zoo.cfg`
