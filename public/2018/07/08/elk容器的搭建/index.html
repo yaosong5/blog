@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta name="baidu-site-verification"content="WHXmBFaAkY"/>
+    <meta name="google-site-verification" content="vDyi3jVPymP4jOpfzY4F1zG4-FXD1T-A5unnDJuNxhs" />
+    <meta charset="utf-8">
+    
+
+    <title>钢铁锅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="elk容器的搭建来源容器  elk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name os --hostname os kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小">
+<meta name="keywords" content="Nothing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="钢铁锅">
+<meta property="og:url" content="http://gangtieguo.cn/2018/07/08/elk容器的搭建/index.html">
+<meta property="og:site_name" content="钢铁锅">
+<meta property="og:description" content="elk容器的搭建来源容器  elk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name os --hostname os kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-06T15:20:57.781Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="钢铁锅">
+<meta name="twitter:description" content="elk容器的搭建来源容器  elk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name os --hostname os kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/Basketball-icon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+     <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">钢铁锅</span>
+            </a>
+            <nav id="main-nav">
+            <a class="main-nav-link" href="/."><i class="fa fa-home"></i>主页</a>
+            <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i>归档</a>
+            <a class="main-nav-link" href="/categories"><i class="fa fa-folder"></i>分类</a>
+            <a class="main-nav-link" href="/tags"><i class="fa fa-tags"></i>标签</a>
+            <a class="main-nav-link" href="/about"><i class="fa fa-user"></i>关于</a>
+
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/.">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     主页  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/archives">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     归档  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/categories">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     分类  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/tags">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     标签  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/about">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     关于  -->
+               <!--     </a>  -->
+               <!--   -->
+
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/badboygq.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+         <!-- <button type="submit" class="search-form-submit"></button> -->
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/badboygq.jpg" />
+            <h2 id="name">GTG</h2>
+            <h3 id="title">Nothing</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>四海为家</span>
+            <a id="follow" target="_blank" href="https://weibo.com/gangtieguo/">关注我</a>
+        </div>
+      <div class="article-info profile-block">
+            <div class="article-info-block">
+                17
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                18
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/yaosong5" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/gangtieguo/" target="_blank" title="weibo" class=tooltip>
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+
+        
+        
+    </div>
+
+
+</aside>
+
+            
+            <section id="main"><article id="post-elk容器的搭建" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <h1 id="elk容器的搭建"><a href="#elk容器的搭建" class="headerlink" title="elk容器的搭建"></a>elk容器的搭建</h1><h2 id="来源容器-elk"><a href="#来源容器-elk" class="headerlink" title="来源容器  elk"></a>来源容器  elk</h2><p>新建容器，为减少工作量，引用的是有ssh服务的Docker镜像<strong>kinogmt/centos-ssh:6.7</strong>，生成容器os为基准。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --name os --hostname os kinogmt/centos-ssh:6.7 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小bug</p>
+</blockquote>
+<p>在容器中下载需要的elk的源包。做解压就不赘述，很多案例教程。</p>
+<blockquote>
+<p>我是采用的下载到宿主机，解压后，用 “docker cp 解压包目录  os:/usr/loca/“来传到容器内，比在容器内下载速度更快</p>
+</blockquote>
+<h2 id="设置Home"><a href="#设置Home" class="headerlink" title="设置Home"></a>设置Home</h2><p> <code>vim   ~/bashrc</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> ES_HOME=/usr/es</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$ES_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> KIBANA_HOME=/usr/kibana</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$KIBANA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> LOGSTASH_HOME=/usr/logstash</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$LOGSTASH_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> NODE_HOME=/usr/node</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$NODE_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> NODE_PATH=<span class="variable">$NODE_HOME</span>/lib/node_modules</span><br></pre></td></tr></table></figure>
+<p><code>source ~/.bashrc</code></p>
+<h2 id="安装插件header"><a href="#安装插件header" class="headerlink" title="安装插件header"></a>安装插件header</h2><h3 id="安装nodejs"><a href="#安装nodejs" class="headerlink" title="安装nodejs"></a>安装nodejs</h3><p>一般预装的版本不对</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum erase nodejs npm -y   # 卸载旧版本的nodejs</span><br><span class="line">rpm -qa &apos;node|npm&apos; | grep -v nodesource # 确认nodejs是否卸载干净</span><br><span class="line">yum install nodejs -y # 安装npm 安装的版本会有不对</span><br></pre></td></tr></table></figure>
+<p>下载合适版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr</span><br><span class="line">wget https://npm.taobao.org/mirrors/node/latest-v4.x/node-v4.4.7-llinux-x64.tar.gz</span><br><span class="line">tar -zxvf node-v4.4.7-linux-x64.tar.gz</span><br><span class="line">mv node-v8.9.1-linux-x64 node</span><br></pre></td></tr></table></figure>
+<p>直接将node目录配置到home即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export NODE_HOME=/usr/node</span><br><span class="line">export PATH=$NODE_HOME/bin:$PATH</span><br></pre></td></tr></table></figure>
+<h3 id="下载-header，安装grunt"><a href="#下载-header，安装grunt" class="headerlink" title="下载 header，安装grunt"></a>下载 header，安装grunt</h3><p>（所有命令在hear的所在目录执行）</p>
+<p><code>wget https://github.com/mobz/elasticsearch-head/archive/master.zip</code></p>
+<p><code>unzip master.zip</code></p>
+<p>看当前 head 插件目录下有无 node_modules/grunt 目录：<br>没有：执行命令创建：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install grunt --save</span><br></pre></td></tr></table></figure>
+<p>安装 grunt：<br>grunt 是基于 Node.js 的项目构建工具，可以进行打包压缩、测试、执行等等的工作，head 插件就是通过 grunt 启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g grunt-cli</span><br></pre></td></tr></table></figure>
+<p>参考<a href="https://blog.csdn.net/ggwxk1990/article/details/78698648" target="_blank" rel="noopener">https://blog.csdn.net/ggwxk1990/article/details/78698648</a></p>
+<p> npm install 安装所下载的header包 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<h2 id="header启动"><a href="#header启动" class="headerlink" title="header启动"></a>header启动</h2><p>在 elasticsearch-head-master 目录下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grunt server  或者 npm run start</span><br></pre></td></tr></table></figure>
+<h2 id="els不能通过root启动，创建用户"><a href="#els不能通过root启动，创建用户" class="headerlink" title="els不能通过root启动，创建用户"></a>els不能通过root启动，创建用户</h2><pre><code>useradd elk
+groupadd elk
+usermod -a -G elk elk
+
+echo elk | passwd --stdin elk
+</code></pre><p>将elk添加到sudoers</p>
+<pre><code>echo &quot;elk ALL = (root) NOPASSWD:ALL&quot; | tee /etc/sudoers.d/elk
+chmod 0440 /etc/sudoers.d/elk
+</code></pre><p>解决sudo: sorry, you must have a tty to run sudo问题，在/etc/sudoer注释掉 Default requiretty 一行<br>    sudo sed -i ‘s/Defaults requiretty/Defaults:elk !requiretty/‘ /etc/sudoers</p>
+<h3 id="修改文件所有者"><a href="#修改文件所有者" class="headerlink" title="修改文件所有者"></a>修改文件所有者</h3><p><code>chown -R elk:elk /usr/es/</code></p>
+<p><strong>设置资源参数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim  /etc/security/limits.d/90-nproc.conf</span><br></pre></td></tr></table></figure>
+<p><strong>添加</strong><br>     elk        soft    nproc     4096<br>   <!-- 更改docker-machine的资源 --><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker-machine ssh</span><br><span class="line">sysctl -w vm.max_map_count=655360</span><br></pre></td></tr></table></figure></p>
+<h3 id="es启动脚本"><a href="#es启动脚本" class="headerlink" title="es启动脚本"></a>es启动脚本</h3><pre><code>单机 su elk -c &quot;$ES_HOME/bin/elasticsearch -d&quot;
+ssh elk@elk1 &quot; $ES_HOME/bin/elasticsearch -d&quot;
+ssh root@elk1 &quot; su elk -c  $ES_HOME/bin/elasticsearch &quot;
+</code></pre><h3 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h3><h4 id="elasticSearch"><a href="#elasticSearch" class="headerlink" title="elasticSearch"></a>elasticSearch</h4><p>脚本 <code>vim  es-start.sh</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">sed -i <span class="string">'6c node.name: es1 '</span></span><br><span class="line"><span class="variable">$ES_HOME</span>/config/elasticsearch.yml</span><br><span class="line">su - elk -c  <span class="string">"<span class="variable">$ES_HOME</span>/bin/elasticsearch -d"</span></span><br><span class="line">ssh root@elk2 <span class="string">"sed -i '6c node.name: es2 ' <span class="variable">$ES_HOME</span>/config/elasticsearch.yml"</span></span><br><span class="line">ssh root@elk2 <span class="string">' su - elk -c  "$ES_HOME/bin/elasticsearch -d" '</span></span><br><span class="line">ssh root@elk3 <span class="string">"sed -i '6c node.name: es3 ' <span class="variable">$ES_HOME</span>/config/elasticsearch.yml"</span></span><br><span class="line">ssh root@elk3 <span class="string">' su - elk -c  "$ES_HOME/bin/elasticsearch -d" '</span></span><br></pre></td></tr></table></figure>
+<h4 id="kibana"><a href="#kibana" class="headerlink" title="kibana"></a>kibana</h4><p>启动单机（只需要启动单机） <code>bin/kibana</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">sed -i <span class="string">'3c http://elk1:9200 '</span></span><br><span class="line"><span class="variable">$KIBANA_HOME</span>/config/kibana.yml</span><br><span class="line">nohup <span class="variable">$KIBANA_HOME</span>/bin/kibana  &amp;</span><br><span class="line">ssh root@elk2 <span class="string">"sed -i '3c http://elk2:9200 ' <span class="variable">$KIBANA_HOME</span>/config/kibana.yml"</span></span><br><span class="line">ssh root@elk2 <span class="string">"nohup <span class="variable">$KIBANA_HOME</span>/bin/kibana &amp; "</span></span><br><span class="line">ssh root@elk3 <span class="string">"sed -i '3c   http://elk3:9200 ' <span class="variable">$KIBANA_HOME</span>/config/kibana.yml"</span></span><br><span class="line">ssh root@elk3 <span class="string">"nohup <span class="variable">$KIBANA_HOME</span>/bin/kibana &amp; "</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="logstash"><a href="#logstash" class="headerlink" title="logstash"></a>logstash</h4><p>单机启动   <code>$LOGSTASH_HOME/bin/logstash -f logstash.conf</code><br> <code>$LOGSTASH_HOME/bin/logstash -f 配置文件的目录</code><br></p>
+<p>集群启动脚本 <strong>logstash-start.sh</strong><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">nohup $LOGSTASH_HOME/bin/logstash -f  $LOGSTASH_HOME/conf/$1  &amp;</span><br><span class="line">ssh root@elk2 "nohup $LOGSTASH_HOME/bin/logstash -f  $LOGSTASH_HOME/conf/$1 &amp; "</span><br><span class="line">ssh root@elk3 "nohup $LOGSTASH_HOME/bin/logstash -f  $LOGSTASH_HOME/conf/$1 &amp; "</span><br></pre></td></tr></table></figure></p>
+<h2 id="保存容器为镜像"><a href="#保存容器为镜像" class="headerlink" title="保存容器为镜像"></a>保存容器为镜像</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit -m <span class="string">"elk镜像"</span>  --author=<span class="string">"yaosong"</span>  os  yaosong5/elk:1.0</span><br></pre></td></tr></table></figure>
+<h2 id="生成elk-容器"><a href="#生成elk-容器" class="headerlink" title="生成elk 容器"></a>生成elk 容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd --net=br --name elk1 --hostname elk1 yaosong5/elk:1.0 &amp;&gt; /dev/null</span><br><span class="line">docker run -itd --net=br --name elk2 --hostname elk2 yaosong5/elk:1.0 &amp;&gt; /dev/null</span><br><span class="line">docker run -itd --net=br --name elk3 --hostname elk3 yaosong5/elk:1.0 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
+<h3 id="停止-删除elk-容器"><a href="#停止-删除elk-容器" class="headerlink" title="停止/删除elk 容器"></a>停止/删除elk 容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker stop elk1</span><br><span class="line">docker stop elk2</span><br><span class="line">docker stop elk3</span><br><span class="line"></span><br><span class="line">docker rm elk1</span><br><span class="line">docker rm elk2</span><br><span class="line">docker rm elk3</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><h2 id="elk-操作命令"><a href="#elk-操作命令" class="headerlink" title="elk 操作命令"></a>elk 操作命令</h2><h3 id="es操作命令"><a href="#es操作命令" class="headerlink" title="es操作命令"></a>es操作命令</h3><p><a href="http://www.yfshare.vip/2017/11/04/%E9%83%A8%E7%BD%B2FileBeat-logstash-elasticsearch%E9%9B%86%E7%BE%A4-kibana/#%E9%85%8D%E7%BD%AE-filebeart" target="_blank" rel="noopener">http://www.yfshare.vip/2017/11/04/%E9%83%A8%E7%BD%B2FileBeat-logstash-elasticsearch%E9%9B%86%E7%BE%A4-kibana/#%E9%85%8D%E7%BD%AE-filebeart</a></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>yum erase nodejs npm -y   # 卸载旧版本的nodejs<br>rpm -qa ‘node|npm’ | grep -v nodesource # 确认nodejs是否卸载干净<br>yum install nodejs -y</p>
+
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+        <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           如果您觉得文章不错，就请我看场ufc直播🤓🤓🤓🤓🤓！
+        </span>
+        <br>
+      </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 支付宝打赏图案 -->
+        <img src="/css/images/alipay.jpg" alt="支付宝打赏" > 
+        <!-- 微信打赏图案 -->
+        <img src="/css/images/wechatpay.jpg" alt="微信打赏" >  
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            if($('#donate_guide').hasClass('hidden')){
+                $('#donate_guide').removeClass('hidden');
+            }else{
+                $('#donate_guide').addClass('hidden');
+            }
+        }
+    </script>
+</div>
+<! -- 添加捐赠图标 -->
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/07/08/elk容器的搭建/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/07/20/docker搭建hue/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Docker搭建hue
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/06/21/各种快捷键/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">各种快捷键</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="lv-container" data-id="city" data-uid=MTAyMC8zNjM2MS8xMjg5Ng==></div>
+</section>
+    
+
+</section>
+            
+            
+        </div>
+        <footer id="footer">
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol ==='https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 GTG<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+    </div>
+</footer>
+        
+    
+    
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+
+         if (typeof LivereTower === 'function') { return; }
+
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+    </script>
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+  <!-- City版安装代码已完成 -->
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
