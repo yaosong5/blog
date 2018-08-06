@@ -287,52 +287,12 @@ var _hmt = _hmt || [];
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <script type="text/javascript">
-                            function showBtn(){
-                             if($('.toc-article').hasClass('hidden')){
-                                    $('.toc-article').removeClass('hidden');
-                                }else{
-                                    $('.toc-article').addClass('hidden');
-                                }
-                                 $('.show-toc-btn').removeClass('hidden');  
-                            };
-                            function showToc(){
-                              if($('.show-toc-btn').hasClass('hidden')){
-                                      $('.show-toc-btn').removeClass('hidden');
-
-
-                                  }else{
-                                      $('.show-toc-btn').addClass('hidden');
-
-                                  }
-                                   $('.toc-article').removeClass('hidden');
-                            };
-             </script>
-
-                <a id="more"></a>
-<p>此文纯属命令记录，后续更新原理解说</p>
-<h1 id="更改virtual0的ip"><a href="#更改virtual0的ip" class="headerlink" title="更改virtual0的ip"></a>更改virtual0的ip</h1><p> VBoxManage hostonlyif ipconfig vboxnet0 –ip 192.168.33.253 –netmask 255.255.255.0</p>
-<h1 id="ifconfig-查看"><a href="#ifconfig-查看" class="headerlink" title="ifconfig 查看"></a>ifconfig 查看</h1><p>创建虚拟机配置文件  Vagrantfile</p>
-<p>也可以vagrant init  会生成一个空白的Vagrantfile</p>
-<h1 id="vi-Vagrantfile"><a href="#vi-Vagrantfile" class="headerlink" title="vi Vagrantfile"></a>vi Vagrantfile</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Vagrant.configure(2) do |config|</span><br><span class="line">	 config.vm.box = "dolbager/centos-7-docker"</span><br><span class="line">	 config.vm.hostname = "default"</span><br><span class="line">	  config.vm.network "private_network", ip: "192.168.33.1",netmask: "255.255.255.0"</span><br><span class="line">	 config.vm.provider "virtualbox" do |v|</span><br><span class="line">	   v.name = "default"</span><br><span class="line">	   v.memory = "2048"</span><br><span class="line">	   # Change the network adapter type and promiscuous mode</span><br><span class="line">	   v.customize ['modifyvm', :id, '--nictype1', 'Am79C973']</span><br><span class="line">	   v.customize ['modifyvm', :id, '--nicpromisc1', 'allow-all']</span><br><span class="line">	   v.customize ['modifyvm', :id, '--nictype2', 'Am79C973']</span><br><span class="line">	   v.customize ['modifyvm', :id, '--nicpromisc2', 'allow-all']</span><br><span class="line">	 end</span><br><span class="line"><span class="meta">	 #</span><span class="bash"> Install bridge-utils</span></span><br><span class="line">	 config.vm.provision "shell", inline: &lt;&lt;-SHELL</span><br><span class="line">	    curl -o /etc/yum.repos.d/CentOS-Base.repohttp://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line">	    curl -o /etc/yum.repos.d/epel.repohttp://mirrors.aliyun.com/repo/epel-7.repo</span><br><span class="line">	   yum clean all</span><br><span class="line">	   yum makecache</span><br><span class="line">	   yum update -y</span><br><span class="line">	   yum install bridge-utils net-tools -y</span><br><span class="line">	 SHELL</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<p>vagrant up<br>vagrant ssh</p>
-<p>vagrant ssh-config</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp ~/.vagrant.d/boxes/dolbager-VAGRANTSLASH-centos-7-docker/0.2/virtualbox/vagrant_private_key .vagrant/machines/default/virtualbox/private_key</span><br></pre></td></tr></table></figure>
-<p><code>vagrant exit</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker-machine create \</span><br><span class="line"> --driver <span class="string">"generic"</span> \</span><br><span class="line"> --generic-ip-address 192.168.33.1 \</span><br><span class="line"> --generic-ssh-user vagrant \</span><br><span class="line"> --generic-ssh-key .vagrant/machines/default/virtualbox/private_key \</span><br><span class="line"> --generic-ssh-port 22 \</span><br><span class="line"> default</span><br></pre></td></tr></table></figure>
-<p>创建网桥docker1 和 docker network br<br>通过vagrant 从虚拟机的 eth0 登录到虚拟机</p>
-<p>vagrant ssh<br>ip -4 addr</p>
-<p>创建 docker network br</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo docker network create \</span><br><span class="line">    --driver bridge \</span><br><span class="line">    --subnet=192.168.33.0/24 \</span><br><span class="line">    --gateway=192.168.33.1 \</span><br><span class="line">    --opt <span class="string">"com.docker.network.bridge.enable_icc"</span>=<span class="string">"true"</span> \</span><br><span class="line">    --opt <span class="string">"com.docker.network.bridge.enable_ip_masquerade"</span>=<span class="string">"true"</span> \</span><br><span class="line">    --opt <span class="string">"com.docker.network.bridge.name"</span>=<span class="string">"docker1"</span> \</span><br><span class="line">    --opt <span class="string">"com.docker.network.driver.mtu"</span>=<span class="string">"1500"</span> \</span><br><span class="line">    br</span><br></pre></td></tr></table></figure>
-<p>创建网桥配置文件docker1</p>
-<p><code>vim /etc/sysconfig/network-scripts/ifcfg-docker1</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DEVICE=docker1</span><br><span class="line">TYPE=Bridge</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">ONBOOT=yes</span><br><span class="line">STP=on</span><br><span class="line">IPADDR=</span><br><span class="line">NETMASK=</span><br><span class="line">GATEWAY=</span><br><span class="line">DNS1=</span><br></pre></td></tr></table></figure>
-<h2 id="修改网卡配置-eth1"><a href="#修改网卡配置-eth1" class="headerlink" title="修改网卡配置 eth1 :"></a>修改网卡配置 eth1 :</h2><p><code>sudo vi /etc/sysconfig/network-scripts/ifcfg-eth1</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DEVICE=eth1</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">HWADDR=</span><br><span class="line">ONBOOT=yes</span><br><span class="line">NETMASK=</span><br><span class="line">GATEWAY=</span><br><span class="line">BRIDGE=docker1</span><br><span class="line">TYPE=Ethernet</span><br></pre></td></tr></table></figure>
-<p>参考：<a href="https://github.com/SixQuant/engineering-excellence/blob/master/docker/docker-install-mac-vm-centos.md" target="_blank" rel="noopener">https://github.com/SixQuant/engineering-excellence/blob/master/docker/docker-install-mac-vm-centos.md</a></p>
-
-            
+            <p><p>此文纯属命令记录，后续更新原理解说</p>
+<h1 id="更改virtual0的ip"><a href="#更改virtual0的ip" class="headerlink" title="更改virtual0的ip"></a>更改virtual0的ip</h1><p> VBoxManage hostonlyif ipconfig vboxnet0 –ip 192.168.33.253 –netmask 255.255.255.0</p></p>
+            <p class="article-more-link">
+                <a href="/2018/07/20/Docker-machine的搭建(与宿主机在同一ip段下)/#more">查看更多</a>
+            </p>
+        
 
         </div>
 

@@ -8,12 +8,14 @@ typora-copy-images-to: ipic
 ---
 
 
-<!-- more -->
+
 
 此文纯属命令记录，后续更新原理解说
 
  # 更改virtual0的ip
  VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.33.253 --netmask 255.255.255.0
+
+<!-- more -->
 
 # ifconfig 查看
 创建虚拟机配置文件  Vagrantfile
