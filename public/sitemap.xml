@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://gangtieguo.cn/2018/06/26/Docker%E5%91%BD%E4%BB%A4%E6%B1%87%E9%9B%86/</loc>
+    
+    <lastmod>2018-08-06T19:23:14.964Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://gangtieguo.cn/2018/08/07/zookeeper%E9%85%8D%E7%BD%AE/</loc>
     
     <lastmod>2018-08-06T19:18:12.553Z</lastmod>
@@ -142,13 +149,6 @@
   </url>
   
   <url>
-    <loc>http://gangtieguo.cn/2018/06/26/Docker%E5%91%BD%E4%BB%A4%E6%B1%87%E9%9B%86/</loc>
-    
-    <lastmod>2018-08-06T17:33:16.880Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://gangtieguo.cn/2018/07/20/Docker%E6%9E%84%E5%BB%BA%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%95%9C%E5%83%8F/</loc>
     
     <lastmod>2018-08-06T16:53:17.979Z</lastmod>
@@ -219,14 +219,14 @@
   </url>
   
   <url>
-    <loc>http://gangtieguo.cn/tags/index.html</loc>
+    <loc>http://gangtieguo.cn/categories/index.html</loc>
     
     <lastmod>2018-04-30T00:06:32.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://gangtieguo.cn/categories/index.html</loc>
+    <loc>http://gangtieguo.cn/tags/index.html</loc>
     
     <lastmod>2018-04-30T00:06:32.000Z</lastmod>
     

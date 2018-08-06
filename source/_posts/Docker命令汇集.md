@@ -83,6 +83,10 @@ docker volume prune
 
 ```docker logs -f -t --tail 100  kanbigdata_namenode_1```
 
+
+
+
+
 ## 查看容器信息
 
 ```
