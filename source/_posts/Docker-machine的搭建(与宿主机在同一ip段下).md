@@ -4,9 +4,12 @@ date: 2018年07月20日 03时02分26秒
 tags:  [Docker,Docker-machine]
 categories: 部署安装
 toc: true
+typora-copy-images-to: ipic
 ---
-![enter description here](https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/7/20/1532027033015.jpg)
+
+
 <!-- more -->
+
 此文纯属命令记录，后续更新原理解说
 
  # 更改virtual0的ip
