@@ -2,7 +2,7 @@
 title:  Centos7上搭建Jenkins
 date: 2018年06月21日 22时15分52秒
 tags:  [Jenkins]
-categories: 部署安装
+categories: 安装部署
 toc: true
 ---
 ![Jenkins](https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/21/1529592059717.jpg)

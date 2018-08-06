@@ -2,15 +2,15 @@
 title:  git命令总结
 date:
 tags:  [git]
-categories:
+categories: 工程框架
 toc: true
 ---
 
 ## 提交
 >git add .
-git commit -m " "
-git push origin master
-git push origin master -f
+>git commit -m " "
+>git push origin master
+>git push origin master -f
 ## 拉取
 git pull <远程主机名> <远程分支名>:<本地分支名>
 如拉取远程的 master 分支到本地 wy 分支：
