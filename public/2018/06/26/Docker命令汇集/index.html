@@ -8,21 +8,18 @@
 
     <title>钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="title:  jsontool使用date: 2018年06月21日 22时15分52秒tags:  []categories:  toc: truejson-tool使用：java -jar json-tool.jar &amp;quot;json文件目录&amp;quot; &amp;quot;jsonPath路径&amp;quot;示例： 1java -jar /Users/yaosong/Documents/json">
+    <meta name="description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name slav">
 <meta name="keywords" content="Nothing">
 <meta property="og:type" content="article">
 <meta property="og:title" content="钢铁锅">
-<meta property="og:url" content="http://gangtieguo.cn/2018/05/30/json-tool使用/index.html">
+<meta property="og:url" content="http://gangtieguo.cn/2018/06/26/Docker命令汇集/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="title:  jsontool使用date: 2018年06月21日 22时15分52秒tags:  []categories:  toc: truejson-tool使用：java -jar json-tool.jar &amp;quot;json文件目录&amp;quot; &amp;quot;jsonPath路径&amp;quot;示例： 1java -jar /Users/yaosong/Documents/json">
+<meta property="og:description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name slav">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/5/30/1527644586687.jpg">
-<meta property="og:image" content="http://gangtieguo.cn/2018/05/30/json-tool使用/attachments/json-tool.jar">
-<meta property="og:updated_time" content="2018-08-06T16:34:42.126Z">
+<meta property="og:updated_time" content="2018-08-06T07:11:17.736Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="钢铁锅">
-<meta name="twitter:description" content="title:  jsontool使用date: 2018年06月21日 22时15分52秒tags:  []categories:  toc: truejson-tool使用：java -jar json-tool.jar &amp;quot;json文件目录&amp;quot; &amp;quot;jsonPath路径&amp;quot;示例： 1java -jar /Users/yaosong/Documents/json">
-<meta name="twitter:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/5/30/1527644586687.jpg">
+<meta name="twitter:description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name slav">
     
 
     
@@ -247,7 +244,7 @@ var _hmt = _hmt || [];
 </aside>
 
             
-            <section id="main"><article id="post-json-tool使用" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Docker命令汇集" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -278,11 +275,51 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <hr>
-<p>title:  jsontool使用<br>date: 2018年06月21日 22时15分52秒<br>tags:  []<br>categories: </p>
-<h2 id="toc-true"><a href="#toc-true" class="headerlink" title="toc: true"></a>toc: true</h2><p>json-tool使用：<code>java -jar json-tool.jar &quot;json文件目录&quot; &quot;jsonPath路径&quot;</code><br>示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar /Users/yaosong/Documents/json-tool.jar &quot;/Users/yaosong/tmp/access_report_data_by_token.json&quot;  &quot;$.report_data.behavior_check[?(@.check_point_cn == &apos;朋友圈在哪里&apos;)].evidence&quot;</span><br></pre></td></tr></table></figure>
-<p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/5/30/1527644586687.jpg" alt="示例截图"><br><img src="./attachments/json-tool.jar" alt="json-tool jar包" title="json-tool"></p>
+                <p>[TOC]</p>
+<h1 id="Docker源配置"><a href="#Docker源配置" class="headerlink" title="Docker源配置"></a>Docker源配置</h1><p>  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：<br>  vi /etc/docker/daemon.json<br>  {“registry-mirrors”:[“<a href="http://c1f0a193.m.daocloud.io&quot;]" target="_blank" rel="noopener">http://c1f0a193.m.daocloud.io&quot;]</a> }</p>
+<p>启动容器</p>
+<pre><code>docker run -itd  --net=br  --name slave02 --hostname slave02 centos:hadoop-spark &amp;&gt; /dev/null
+如果以 /bin/bash启动的话，sshd服务不会启动(docker未知bug)
+</code></pre><h2 id="创建容器"><a href="#创建容器" class="headerlink" title="创建容器"></a>创建容器</h2><pre><code>--name    --hostname (同-h)  --net=    -d表示后台启动
+此命令不会打印出容器id
+docker run -itd  --net=br  --name hm --hostname hadoop-master kiwenlau/hadoop:1.0 &amp;&gt; /dev/null   （hadoop镜像）
+设置静态固定ip
+docker run -d --net=br --name=c6 --ip=192.168.33.6 nginx
+
+
+自动分配Ip
+docker run -d --net=br --name=c1 nginx
+
+设置docker默认ip段命令
+docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 --name master -h master --add-host slave01:172.17.0.3 --add-host slave02:172.17.0.4 centos:ssh-spark-hadoop
+</code></pre><h2 id="容器挂载目录"><a href="#容器挂载目录" class="headerlink" title="容器挂载目录"></a>容器挂载目录</h2><p>compose文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">volumes:</span><br><span class="line">	- /Users/yaosong/Yao/dev/hadoop/dfs/name:/root/hadoop/dfs/name</span><br></pre></td></tr></table></figure></p>
+<p>shell命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-v : </span><br><span class="line">docker run -it -v /<span class="built_in">test</span>:/soft centos /bin/bash</span><br></pre></td></tr></table></figure>
+<p>“:”前目录为宿主机目录，后目录为容器目录</p>
+<h2 id="删除所有未用的-Data-volumes"><a href="#删除所有未用的-Data-volumes" class="headerlink" title="删除所有未用的 Data volumes"></a>删除所有未用的 Data volumes</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume prune</span><br></pre></td></tr></table></figure>
+<h2 id="run-命令解释"><a href="#run-命令解释" class="headerlink" title="run 命令解释"></a>run 命令解释</h2><pre><code>-d 是后台启动
+docker run -itd  --net=br  --name spark --hostname spark yaosong/spark:2.1.0 &amp;&gt; /dev/null
+sudo docker exec -it hm bash（进入后台启动的容器）
+
+和下面一样（直接进入）
+docker run -it --net=br  --name spark --hostname spark yaosong/spark:2.1.0 bash
+</code></pre><h2 id="exec-进入后台容器"><a href="#exec-进入后台容器" class="headerlink" title="exec 进入后台容器"></a>exec 进入后台容器</h2><pre><code>docker exec -it spark bash
+docker exec -it 容器名 bash
+执行命令 docker exec -it 容器名 ip addr 可以拿到 a0 容器的 ip
+</code></pre><h2 id="logs查看容器启动日志"><a href="#logs查看容器启动日志" class="headerlink" title="logs查看容器启动日志"></a>logs查看容器启动日志</h2><figure class="highlight docker"><figcaption><span>logs -f -t --tail 100  kanbigdata_namenode_1```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 查看容器信息</span></span><br></pre></td></tr></table></figure>
+<p>docker inspect hm<br>执行命令 docker exec -it 容器名 ip addr 可以拿到 a0 容器的 ip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 启动 关闭 删除容器</span><br><span class="line"></span><br><span class="line">	docker start </span><br><span class="line">	docker stop 容器名</span><br><span class="line">	docker rm 容器名</span><br><span class="line"></span><br><span class="line">## cp容器宿主互拷文件</span><br></pre></td></tr></table></figure></p>
+<p>docker cp /Users/yaosong/Yao/etc.tar  f7e795c0fddd:/<br>后为容器id:/目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 删除镜像</span><br><span class="line"></span><br><span class="line">	（根据镜像id删除）</span><br><span class="line">	docker rmi 00de07ebadff</span><br><span class="line">	用docker images -a 查看image id，</span><br><span class="line">	也可docker rmi 镜像名:版本号</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 保存镜像</span><br></pre></td></tr></table></figure></p>
+<p>docker commit -m “centos-6.9 with spark 2.2.0 and hadoop 2.8.0”  os   centos:hadoop-spark</p>
+<p>docker commit -m “bigdata:spark,hadoop,hive,mysql and shell  foundation”   –author=”yaosong”  master   yao/os/bigdata:2.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">## Docker用DockerFile创建镜像</span><br><span class="line"></span><br><span class="line">	docker build -t hadoop:v1- &lt;Dockerfile</span><br><span class="line">	docker build -t=&quot;hadoop:v1&quot; .  （.表示是当前文件夹，也就是dockerfile所在文件夹）</span><br><span class="line">	docker build -f Dockerfile -t hadoop:v1 . 此命令也可</span><br><span class="line"></span><br><span class="line">## 一键启动docker-compose.yml编排的所有服务</span><br></pre></td></tr></table></figure></p>
+<p>docker-compose -f docker-compose.yml up d<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## Docker改变标签</span><br><span class="line"></span><br><span class="line">docker tag IMAGEID(镜像id) REPOSITORY:TAG（仓库：标签）</span><br><span class="line"></span><br><span class="line">`docker tag  b7a66cb0e8ba yaosong5/bigdata:1.0`</span><br><span class="line"></span><br><span class="line">## 搜索docker镜像</span><br></pre></td></tr></table></figure></p>
+<p>docker search yaosong5<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 登录docker账户</span><br><span class="line"></span><br><span class="line">`docker login` 登录docker hub中注册的账户</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 上传仓库</span><br><span class="line"></span><br><span class="line">`docker push yaosong5/elk:1.0`</span><br><span class="line"></span><br><span class="line">## 容器保存为镜像，加载本地镜像 引用</span><br><span class="line"></span><br><span class="line">	docker save imageID &gt; filename</span><br><span class="line">	docker load &lt;filename</span><br><span class="line">	如：</span><br><span class="line">	docker save 4f9e92e56941&gt;  /Users/yaosong/centosSparkHadoop.tar</span><br><span class="line">	docker load &lt;/Users/yaosong/centosSparkHadoop.tar</span><br><span class="line">	</span><br><span class="line">	通过 image 保存的镜像会保存操作历史，可以回滚到历史版本。</span><br><span class="line"></span><br><span class="line">## 保存，加载容器命令：</span><br><span class="line">	docker export containID &gt; filename</span><br><span class="line">	docker import filename [newname]</span><br><span class="line">通过容器保存的镜像不会保存操作历史，所以文件小一点。</span><br><span class="line">如果要运行通过容器加载的镜像， 需要在运行的时候加上相关命令。</span><br><span class="line"></span><br><span class="line">#  Docker-machine命令</span><br><span class="line">	docker-machine rm default</span><br><span class="line">	docker-machine ls</span><br><span class="line">	</span><br><span class="line">	开启虚拟机</span><br><span class="line">	docker-machine start default</span><br><span class="line">	</span><br><span class="line">	关闭虚拟机</span><br><span class="line">	docker-machine stop default</span><br><span class="line">	</span><br><span class="line">	重启虚拟机</span><br><span class="line">	docker-machine restart default</span><br><span class="line">	</span><br><span class="line">	设置环境比变量docker-machine</span><br><span class="line">	eval $(docker-machine env default) # Setup the environment</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># mac宿主机和docker容器网络互通</span><br></pre></td></tr></table></figure></p>
+<p>VBoxManage hostonlyif ipconfig vboxnet0 –ip 192.168.33.253 –netmask 255.255.255.0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## hadoop镜像对应的IP</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 顺序执行下面</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.33.253 --netmask 255.255.255.0</span><br><span class="line"></span><br><span class="line">	vagrant ssh</span><br><span class="line"></span><br><span class="line">	vagrant ssh-config</span><br><span class="line"></span><br><span class="line">	scp ~/.vagrant.d/boxes/dolbager-VAGRANTSLASH-centos-7-docker/0.2/virtualbox/vagrant_private_key .vagrant/machines/default/virtualbox/private_key</span><br><span class="line"></span><br><span class="line">	docker-machine create \</span><br><span class="line">	 --driver &quot;generic&quot; \</span><br><span class="line">	 --generic-ip-address 192.168.33.1 \</span><br><span class="line">	 --generic-ssh-user vagrant \</span><br><span class="line">	 --generic-ssh-key .vagrant/machines/default/virtualbox/private_key \</span><br><span class="line">	 --generic-ssh-port 22 \</span><br><span class="line">	 default</span><br><span class="line"></span><br><span class="line">需要的话，删除 （如之间创建失败）   docker-machine rm default</span><br><span class="line"></span><br><span class="line">登录查看网桥更改后情况</span><br><span class="line"></span><br><span class="line"> 	vagrant ssh</span><br><span class="line"></span><br><span class="line"> 	ip -4 addr</span><br></pre></td></tr></table></figure></p>
+<p> sudo docker network create \<br>–driver bridge \<br>–subnet=192.168.33.0/24 \<br>–gateway=192.168.33.1 \<br>–opt “com.docker.network.bridge.enable_icc”=”true” \<br>–opt “com.docker.network.bridge.enable_ip_masquerade”=”true” \<br>–opt “com.docker.network.bridge.name”=”docker1” \<br>–opt “com.docker.network.driver.mtu”=”1500” \<br>br<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">sudo vi /etc/sysconfig/network-scripts/ifcfg-docker1</span><br><span class="line"></span><br><span class="line">	DEVICE=docker1</span><br><span class="line">	TYPE=Bridge</span><br><span class="line">	BOOTPROTO=static</span><br><span class="line">	ONBOOT=yes</span><br><span class="line">	STP=on</span><br><span class="line">	IPADDR=</span><br><span class="line">	NETMASK=</span><br><span class="line">	GATEWAY=</span><br><span class="line">	DNS1=</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	sudo vi /etc/sysconfig/network-scripts/ifcfg-eth1</span><br><span class="line">	DEVICE=eth1</span><br><span class="line">	BOOTPROTO=static</span><br><span class="line">	HWADDR=</span><br><span class="line">	ONBOOT=yes</span><br><span class="line">	NETMASK=</span><br><span class="line">	GATEWAY=</span><br><span class="line">	BRIDGE=docker1</span><br><span class="line">	TYPE=Ethernet</span><br><span class="line"></span><br><span class="line">sudo reboot now</span><br><span class="line"></span><br><span class="line">vagrant ssh</span><br><span class="line">### 设置环境变量docker-machine</span><br></pre></td></tr></table></figure></p>
+<p>eval $(docker-machine env default) </p>
+<h1 id="Setup-the-environment"><a href="#Setup-the-environment" class="headerlink" title="Setup the environment"></a>Setup the environment</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 其他参考</span><br><span class="line"></span><br><span class="line">ip -4 addr</span><br><span class="line"></span><br><span class="line">chkconfig sshd on</span><br><span class="line"></span><br><span class="line">rpm -qa|grep ssh。</span><br><span class="line"></span><br><span class="line">为了快速实现我们就不自己装 SSH 服务了，hub.docker.com 上的 kinogmt/centos-ssh:6.7 这个镜像就能满足我们的要求</span><br></pre></td></tr></table></figure>
+<p>docker run  -itd –net=br  –name centos-6.9   centos:6 /bin/bash<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">以原始容器ip启动</span><br></pre></td></tr></table></figure></p>
+<p>docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 –name master -h master –add-host slave01:172.17.0.3 –add-host slave02:172.17.0.4 centos:ssh-spark-hadoop<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>docker run -itd  –net=br –ip=192.168.33.61 –name tt1 –hostname tt1 centos:tt /bin/bash<br>docker run -itd  –net=br –ip=192.168.33.62 –name tt2 –hostname tt2 centos:tt /bin/bash<br><code>`</code></p>
 
             
 
@@ -361,7 +398,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/05/30/json-tool使用/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/06/26/Docker命令汇集/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -370,19 +407,19 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/05/31/大数据命令积累/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/07/08/elk容器的搭建/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    命令积累
+                    elk容器的搭建
                 
             </div>
         </a>
     
     
-        <a href="/2018/05/24/搭建dockerHadoop记录/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/06/21/各种快捷键/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">搭建DockerHadoop记录</div>
+            <div class="article-nav-title">各种快捷键</div>
         </a>
     
 </nav>
