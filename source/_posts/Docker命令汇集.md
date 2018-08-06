@@ -81,7 +81,9 @@ docker volume prune
 
 ## logs查看容器启动日志
 
-```docker logs -f -t --tail 100  kanbigdata_namenode_1```
+```
+docker logs -f -t --tail 100  kanbigdata_namenode_1
+```
 
 
 
