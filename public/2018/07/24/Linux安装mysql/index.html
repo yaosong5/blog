@@ -6,20 +6,20 @@
     <meta charset="utf-8">
     
 
-    <title>MyBatis相关注解 | 钢铁锅</title>
+    <title>Linux安装mysql | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="现接触MyBatic记录一些注解">
-<meta name="keywords" content="Java">
+    <meta name="description" content="1234567891011121314151617181920yum install -y mysql-serverchkconfig --add mysqldchkconfig mysqld onchkconfig --list mysqldservice mysqld start&amp;lt;!--more--&amp;gt;mysql -u root -pEnter password:">
+<meta name="keywords" content="Linux,mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MyBatis相关注解">
-<meta property="og:url" content="http://gangtieguo.cn/2018/05/17/MyBatis注解/index.html">
+<meta property="og:title" content="Linux安装mysql">
+<meta property="og:url" content="http://gangtieguo.cn/2018/07/24/Linux安装mysql/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="现接触MyBatic记录一些注解">
+<meta property="og:description" content="1234567891011121314151617181920yum install -y mysql-serverchkconfig --add mysqldchkconfig mysqld onchkconfig --list mysqldservice mysqld start&amp;lt;!--more--&amp;gt;mysql -u root -pEnter password:">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-20T16:55:17.057Z">
+<meta property="og:updated_time" content="2018-08-06T16:49:04.992Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MyBatis相关注解">
-<meta name="twitter:description" content="现接触MyBatic记录一些注解">
+<meta name="twitter:title" content="Linux安装mysql">
+<meta name="twitter:description" content="1234567891011121314151617181920yum install -y mysql-serverchkconfig --add mysqldchkconfig mysqld onchkconfig --list mysqldservice mysqld start&amp;lt;!--more--&amp;gt;mysql -u root -pEnter password:">
     
 
     
@@ -244,7 +244,7 @@ var _hmt = _hmt || [];
 </aside>
 
             
-            <section id="main"><article id="post-MyBatis注解" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Linux安装mysql" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -252,7 +252,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            MyBatis相关注解
+            Linux安装mysql
         </h1>
     
 
@@ -261,17 +261,22 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/05/17/MyBatis注解/">
-            <time datetime="2018-05-17T12:09:55.000Z" itemprop="datePublished">2018-05-17</time>
+        <a href="/2018/07/24/Linux安装mysql/">
+            <time datetime="2018-07-24T15:42:18.647Z" itemprop="datePublished">2018-07-24</time>
         </a>
     </div>
 
 
                         
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/安装/">安装</a>
+    </div>
+
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Java/">Java</a>
+        <a class="tag-link" href="/tags/Linux/">Linux</a>, <a class="tag-link" href="/tags/mysql/">mysql</a>
     </div>
 
                     </div>
@@ -323,8 +328,7 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p>现接触MyBatic记录一些注解<br><a id="more"></a><br>自动生成主键<br>        可以使用 @Options 注解的 userGeneratedKeys 和 keyProperty 属性让数据库产生 auto_increment（自增长）列的值，然后将生成的值设置到输入参数对象的属性中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into students(name,sex,age)  values(#&#123;name&#125;,#&#123;sex&#125;,#&#123;age&#125;"</span>)  </span><br><span class="line"><span class="meta">@Options</span>(useGeneratedKeys = <span class="keyword">true</span>, keyProperty =<span class="string">"userId"</span>)  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insertUser</span><span class="params">(User user)</span></span>;</span><br></pre></td></tr></table></figure></p>
-<p>将自增的Id存入到userId属性中</p>
+                <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">yum install -y mysql-server</span><br><span class="line">chkconfig --add mysqld</span><br><span class="line">chkconfig mysqld on</span><br><span class="line">chkconfig --list mysqld</span><br><span class="line">service mysqld start</span><br><span class="line">&lt;!--more--&gt;</span><br><span class="line">mysql -u root -p</span><br><span class="line">Enter password:           //默认密码为空，输入后回车即可</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@localhost=password(<span class="string">'root'</span>); 　　密码设置为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@=password(<span class="string">'root'</span>);</span><br><span class="line">默认情况下Mysql只允许本地登录，所以只需配置root@localhost就好</span><br><span class="line">设置所有ip访问密码为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@%=password(<span class="string">'root'</span>); 　　　　　　密码设置为root （其实这一步可以不配）</span><br><span class="line">设置master访问密码为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@master=password(<span class="string">'root'</span>); 　　密码设置为root （其实这一步可以不配）</span><br><span class="line">查询密码</span><br><span class="line">select user,host,password from mysql.user;  　　查看密码是否设置成功</span><br><span class="line">设置所有ip可以通过root访问</span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">'root'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'root'</span> WITH GRANT OPTION;</span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">'hive'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'hive'</span> WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
 
             
 
@@ -403,7 +407,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/05/17/MyBatis注解/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/24/Linux安装mysql/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -412,19 +416,10 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/05/21/转移Github博客到云服务器/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    部署博客到云服务器
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/05/10/linux命令积累/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/07/20/Docker-machine的搭建(与宿主机在同一ip段下)/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">linux命令积累</div>
+            <div class="article-nav-title">Docker-machine的创建</div>
         </a>
     
 </nav>

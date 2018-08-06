@@ -1,1 +1,1 @@
-http://gangtieguo.cn/2018/07/20/Docker-machine的搭建(与宿主机在同一ip段下)/
+http://gangtieguo.cn/2018/07/24/Linux安装mysql/
