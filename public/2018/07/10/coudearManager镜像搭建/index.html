@@ -6,20 +6,20 @@
     <meta charset="utf-8">
     
 
-    <title>钢铁锅</title>
+    <title>coudearManager镜像搭建 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="docker run -itd  –net=br  –name cm –hostname cm yaosong5/centosbase:1.0 &amp;amp;&amp;gt; /dev/null 将下载的包进行解压然后进行拷贝 docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/cloudera 8a3b1b4b5386:/opt/">
-<meta name="keywords" content="Nothing">
+    <meta name="description" content="[TOC] 创建基础容器1docker run -itd  --net=br  --name cm --hostname cm yaosong5/centosbase:1.0 &amp;amp;&amp;gt; /dev/null 将下载的包进行解压然后进行拷贝12345docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/clouder">
+<meta name="keywords" content="DOCKER,FLINK">
 <meta property="og:type" content="article">
-<meta property="og:title" content="钢铁锅">
-<meta property="og:url" content="http://gangtieguo.cn/2018/07/10/coudearManager镜像搭建/index.html">
+<meta property="og:title" content="coudearManager镜像搭建">
+<meta property="og:url" content="http://gangtieguo.cn/2018/07/10/CoudearManager镜像搭建/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="docker run -itd  –net=br  –name cm –hostname cm yaosong5/centosbase:1.0 &amp;amp;&amp;gt; /dev/null 将下载的包进行解压然后进行拷贝 docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/cloudera 8a3b1b4b5386:/opt/">
+<meta property="og:description" content="[TOC] 创建基础容器1docker run -itd  --net=br  --name cm --hostname cm yaosong5/centosbase:1.0 &amp;amp;&amp;gt; /dev/null 将下载的包进行解压然后进行拷贝12345docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/clouder">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-27T04:10:12.850Z">
+<meta property="og:updated_time" content="2018-08-06T18:57:02.301Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="钢铁锅">
-<meta name="twitter:description" content="docker run -itd  –net=br  –name cm –hostname cm yaosong5/centosbase:1.0 &amp;amp;&amp;gt; /dev/null 将下载的包进行解压然后进行拷贝 docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/cloudera 8a3b1b4b5386:/opt/">
+<meta name="twitter:title" content="coudearManager镜像搭建">
+<meta name="twitter:description" content="[TOC] 创建基础容器1docker run -itd  --net=br  --name cm --hostname cm yaosong5/centosbase:1.0 &amp;amp;&amp;gt; /dev/null 将下载的包进行解压然后进行拷贝12345docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/clouder">
     
 
     
@@ -206,11 +206,11 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                27
+                26
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                29
+                30
                 <span>标签</span>
             </div>
         </div>
@@ -244,14 +244,67 @@ var _hmt = _hmt || [];
 </aside>
 
             
-            <section id="main"><article id="post-coudearManager镜像搭建" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-CoudearManager镜像搭建" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            coudearManager镜像搭建
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/07/10/CoudearManager镜像搭建/">
+            <time datetime="2018-07-10T14:10:04.881Z" itemprop="datePublished">2018-07-10</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/安装部署/">安装部署</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/DOCKER/">DOCKER</a>, <a class="tag-link" href="/tags/FLINK/">FLINK</a>
+    </div>
+
+                    </div>
+                
+            </header>
         
        
         
         <div class="article-entry" itemprop="articleBody">
         
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article "  class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#创建基础容器"><span class="toc-number">1.</span> <span class="toc-text">创建基础容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将下载的包进行解压然后进行拷贝"><span class="toc-number">2.</span> <span class="toc-text">将下载的包进行解压然后进行拷贝</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将-parcel-文件放至-opt-cloudera-parcel-repo"><span class="toc-number">3.</span> <span class="toc-text">将 parcel 文件放至 /opt/cloudera/parcel-repo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#初始化-mysql-库"><span class="toc-number">4.</span> <span class="toc-text">初始化 mysql 库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建用户（所有节点执行）"><span class="toc-number">5.</span> <span class="toc-text">创建用户（所有节点执行）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Agent-配置"><span class="toc-number">6.</span> <span class="toc-text">Agent 配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建CM用的数据库"><span class="toc-number">7.</span> <span class="toc-text">创建CM用的数据库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cloudera推荐设置"><span class="toc-number">8.</span> <span class="toc-text">Cloudera推荐设置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、设置swap空间"><span class="toc-number">8.1.</span> <span class="toc-text">1、设置swap空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、关闭大页面压缩"><span class="toc-number">8.2.</span> <span class="toc-text">2、关闭大页面压缩</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动cloudera-manager-服务"><span class="toc-number">9.</span> <span class="toc-text">启动cloudera manager 服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#保存为镜像"><span class="toc-number">10.</span> <span class="toc-text">保存为镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建容器"><span class="toc-number">10.1.</span> <span class="toc-text">创建容器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#调错"><span class="toc-number">11.</span> <span class="toc-text">调错</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#链接hue连接不上"><span class="toc-number">11.1.</span> <span class="toc-text">链接hue连接不上</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提示hue测试连接连接不上，安装依赖："><span class="toc-number">11.2.</span> <span class="toc-text">提示hue测试连接连接不上，安装依赖：</span></a></li></ol></li></ol>
+            </div>
+
+
             
             <script type="text/javascript">
                             function showBtn(){
@@ -275,60 +328,43 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p>docker run -itd  –net=br  –name cm –hostname cm yaosong5/centosbase:1.0 &amp;&gt; /dev/null</p>
-<p>将下载的包进行解压然后进行拷贝</p>
-<p>docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/cloudera 8a3b1b4b5386:/opt/<br>docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/cm-5.9.0 8a3b1b4b5386:/opt/</p>
-<p>docker cp /Users/yaosong/Yao/mysql-connector-java-5.1.40-bin.jar 8a3b1b4b5386:/opt/cm-5.9.0/share/cmf/lib/</p>
-<p>docker cp /Users/yaosong/Yao/mysql-connector-java.jar 8a3b1b4b5386:/usr/share/java/</p>
-<p>docker cp /Users/yaosong/Yao/jdk1.8 8a3b1b4b5386:/usr/local/</p>
-<p>将 parcel 文件放至 /opt/cloudera/parcel-repo</p>
-<p>docker cp /Users/yaosong/Yao/CDH-5.9.0-1.cdh5.9.0.p0.23-el6.parcel  8a3b1b4b5386:/opt/cloudera/parcel-repo<br>docker cp /Users/yaosong/Yao/CDH-5.9.0-1.cdh5.9.0.p0.23-el6.parcel.sha 8a3b1b4b5386:/opt/cloudera/parcel-repo<br>docker cp /Users/yaosong/Yao/manifest.json 8a3b1b4b5386:/opt/cloudera/parcel-repo</p>
-<p>vim /etc/profile<br>export JAVA_HOME=/usr/local/jdk1.8</p>
-<p>export PATH=$JAVA_HOME/bin:$PATH</p>
-<p>export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</p>
-<p>usr/share/java 并重新命名为   mysql-connector-java.jar</p>
-<p>初始化 mysql 库</p>
-<p>[root@server1 cm-5.9.0]# /opt/cm-5.9.0/share/cmf/schema/scm_prepare_database.sh mysql cm -hlocalhost -uroot -proot –scm-host localhost scm scm scm</p>
-<p>创建用户（所有节点执行）</p>
-<p>[root@server1 cm-5.9.0]# useradd –system –home=/opt/cm-5.9.0/run/cloudera-scm-server/ –no-create-home –shell=/bin/false –comment “Cloudera SCM User” cloudera-scm</p>
-<p>Agent 配置 </p>
-<p>vim /opt/cm-5.9.0/etc/cloudera-scm-agent/config.ini</p>
+                <p>[TOC]</p>
+<h1 id="创建基础容器"><a href="#创建基础容器" class="headerlink" title="创建基础容器"></a>创建基础容器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --net=br  --name cm --hostname cm yaosong5/centosbase:1.0 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
+<h1 id="将下载的包进行解压然后进行拷贝"><a href="#将下载的包进行解压然后进行拷贝" class="headerlink" title="将下载的包进行解压然后进行拷贝"></a>将下载的包进行解压然后进行拷贝</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/cloudera cm:/opt/</span><br><span class="line">docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/cm-5.9.0 cm:/opt/</span><br><span class="line">docker cp /Users/yaosong/Yao/mysql-connector-java-5.1.40-bin.jar cm:/opt/cm-5.9.0/share/cmf/lib/</span><br><span class="line">docker cp /Users/yaosong/Yao/mysql-connector-java.jar cm:/usr/share/java/</span><br><span class="line">docker cp /Users/yaosong/Yao/jdk1.8 cm:/usr/<span class="built_in">local</span>/</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h1 id="将-parcel-文件放至-opt-cloudera-parcel-repo"><a href="#将-parcel-文件放至-opt-cloudera-parcel-repo" class="headerlink" title="将 parcel 文件放至 /opt/cloudera/parcel-repo"></a>将 parcel 文件放至 /opt/cloudera/parcel-repo</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker cp /Users/yaosong/Yao/CDH-5.9.0-1.cdh5.9.0.p0.23-el6.parcel  cm:/opt/cloudera/parcel-repo</span><br><span class="line">docker cp /Users/yaosong/Yao/CDH-5.9.0-1.cdh5.9.0.p0.23-el6.parcel.sha cm:/opt/cloudera/parcel-repo</span><br><span class="line">docker cp /Users/yaosong/Yao/manifest.json cm:/opt/cloudera/parcel-repo</span><br></pre></td></tr></table></figure>
+<p><code>vim /etc/profile</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/<span class="built_in">local</span>/jdk1.8</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br></pre></td></tr></table></figure>
+<h1 id="初始化-mysql-库"><a href="#初始化-mysql-库" class="headerlink" title="初始化 mysql 库"></a>初始化 mysql 库</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/cm-5.9.0/share/cmf/schema/scm_prepare_database.sh mysql cm -hlocalhost -uroot -proot --scm-host localhost scm scm scm</span><br></pre></td></tr></table></figure>
+<h1 id="创建用户（所有节点执行）"><a href="#创建用户（所有节点执行）" class="headerlink" title="创建用户（所有节点执行）"></a>创建用户（所有节点执行）</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd --system --home=/opt/cm-5.9.0/run/cloudera-scm-server/ --no-create-home --shell=/bin/false --comment &quot;Cloudera SCM User&quot; cloudera-scm</span><br></pre></td></tr></table></figure>
+<h1 id="Agent-配置"><a href="#Agent-配置" class="headerlink" title="Agent 配置"></a>Agent 配置</h1><p><code>vim /opt/cm-5.9.0/etc/cloudera-scm-agent/config.ini</code></p>
 <p> 将 server_host 改为主节点主机名</p>
-<p>server_host=cm1</p>
-<p>安装mysql<br>chkconfig mysqld on</p>
-<p>5、设置允许远程登录</p>
-<p>mysql -u root -p<br>你的密码<br>GRANT ALL PRIVILEGES ON <em>.</em> TO ‘root‘@’%’ IDENTIFIED BY ‘root’ WITH GRANT OPTION;<br>6、创建CM用的数据库</p>
-<p>安装集群时按需创建，详见第七章第13步</p>
-<p>–hive数据库<br>create database hive DEFAULT CHARSET utf8 COLLATE utf8_general_ci;<br>–oozie数据库<br>create database oozie DEFAULT CHARSET utf8 COLLATE utf8_general_ci;<br>–hue数据库<br>create database hue DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</p>
-<p>Cloudera推荐设置</p>
-<p>在试安装的过程，发现Cloudera给出了一些警告，如下图：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server_host=cm1</span><br></pre></td></tr></table></figure>
+<p>安装mysql<br><code>chkconfig mysqld on</code></p>
+<p>设置允许远程登录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p </span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">'root'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'root'</span> WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+<h1 id="创建CM用的数据库"><a href="#创建CM用的数据库" class="headerlink" title="创建CM用的数据库"></a>创建CM用的数据库</h1><p>安装集群时按需创建，详见第七章第13步</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--hive数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> hive <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> utf8 <span class="keyword">COLLATE</span> utf8_general_ci;</span><br><span class="line"><span class="comment">--oozie数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> oozie <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> utf8 <span class="keyword">COLLATE</span> utf8_general_ci;</span><br><span class="line"><span class="comment">--hue数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> hue <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> utf8 <span class="keyword">COLLATE</span> utf8_general_ci;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> amon <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> utf8 <span class="keyword">COLLATE</span> utf8_general_ci;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> monitor <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> utf8 <span class="keyword">COLLATE</span> utf8_general_ci;</span><br></pre></td></tr></table></figure>
+<h1 id="Cloudera推荐设置"><a href="#Cloudera推荐设置" class="headerlink" title="Cloudera推荐设置"></a>Cloudera推荐设置</h1><p>在试安装的过程，发现Cloudera给出了一些警告</p>
 <p>身为一个有洁癖的码农，自然是连黄色的感叹号都要消灭的。因此在安装CM/CDH之前就先全部设置好。</p>
-<p>1、设置swap空间</p>
-<p>vim /etc/sysctl.conf<br>末尾加上<br>vm.swappiness=10</p>
-<p>2、关闭大页面压缩</p>
-<p>试过只设置defrag，但貌似个别节点还是会有警告，干脆全部设置</p>
-<p>vim /etc/rc.local<br>末尾加上(永久生效)<br>echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled<br>echo never &gt; /sys/kernel/mm/transparent_hugepage/defrag</p>
-<p>创建 cdh 所需要的库</p>
-<p>create database hive DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</p>
-<p>create database amon DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</p>
-<p>create database hue DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</p>
-<p>create database monitor DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</p>
-<p>create database oozie DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</p>
-<p>89dde192b411:/cdh-rpm</p>
-<p>docker cp /Users/yaosong/Yao/cloudera-manager-agent-5.9.0-1.cm590.p0.249.el6.x86_64.rpm 89dde192b411:/cdh-rpm<br>docker cp /Users/yaosong/Yao/cloudera-manager-daemons-5.9.0-1.cm590.p0.249.el6.x86_64.rpm 89dde192b411:/cdh-rpm<br>docker cp /Users/yaosong/Yao/cloudera-manager-server-5.9.0-1.cm590.p0.249.el6.x86_64.rpm 89dde192b411:/cdh-rpm<br>docker cp /Users/yaosong/Yao/cloudera-manager-server-db-2-5.9.0-1.cm590.p0.249.el6.x86_64.rpm 89dde192b411:/cdh-rpm<br>docker cp /Users/yaosong/Yao/enterprise-debuginfo-5.9.0-1.cm590.p0.249.el6.x86_64.rpm 89dde192b411:/cdh-rpm<br>docker cp /Users/yaosong/Yao/jdk-6u31-linux-amd64.rpm 89dde192b411:/cdh-rpm<br>docker cp /Users/yaosong/Yao/oracle-j2sdk1.7-1.7.0+update67-1.x86_64.rpm  89dde192b411:/cdh-rpm</p>
-<p>启动cloudera manager 服务<br>/opt/cm-5.9.0/etc/init.d/cloudera-scm-server start</p>
+<h2 id="1、设置swap空间"><a href="#1、设置swap空间" class="headerlink" title="1、设置swap空间"></a>1、设置swap空间</h2><p><code>vim /etc/sysctl.conf</code><br>末尾加上<br><code>vm.swappiness=10</code></p>
+<h2 id="2、关闭大页面压缩"><a href="#2、关闭大页面压缩" class="headerlink" title="2、关闭大页面压缩"></a>2、关闭大页面压缩</h2><p>试过只设置defrag，但貌似个别节点还是会有警告，干脆全部设置</p>
+<p><code>vim /etc/rc.local</code><br>末尾加上(永久生效)<br><code>echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled</code><br><code>echo never &gt; /sys/kernel/mm/transparent_hugepage/defrag</code></p>
+<h1 id="启动cloudera-manager-服务"><a href="#启动cloudera-manager-服务" class="headerlink" title="启动cloudera manager 服务"></a>启动cloudera manager 服务</h1><p>/opt/cm-5.9.0/etc/init.d/cloudera-scm-server start</p>
 <p>/opt/cm-5.9.0/etc/init.d/cloudera-scm-agent start</p>
 <p>端口 7180</p>
-<p>保存为镜像：<br>    docker commit -m “cloudera manger image”  cm   yaosong5/cm59:1.0<br>创建容器：<br>    docker run -itd  –net=br  –name cm1 –hostname cm1 yaosong5/cm59:1.0 &amp;&gt; /dev/null<br>    docker run -itd  –net=br  –name cm2 –hostname cm2 yaosong5/cm59:1.0 &amp;&gt; /dev/null<br>    docker run -itd  –net=br  –name cm3 –hostname cm3 yaosong5/cm59:1.0 &amp;&gt; /dev/null</p>
-<p>docker stop cm1<br>docker stop cm2<br>docker stop cm3</p>
-<p>docker rm cm1<br>docker rm cm2<br>docker rm cm3</p>
-<p>调错</p>
+<h1 id="保存为镜像"><a href="#保存为镜像" class="headerlink" title="保存为镜像"></a>保存为镜像</h1><pre><code>docker commit -m &quot;cloudera manger image&quot;  cm   yaosong5/cm59:1.0
+</code></pre><h2 id="创建容器"><a href="#创建容器" class="headerlink" title="创建容器"></a>创建容器</h2><pre><code>docker run -itd  --net=br  --name cm1 --hostname cm1 yaosong5/cm59:1.0 &amp;&gt; /dev/null
+docker run -itd  --net=br  --name cm2 --hostname cm2 yaosong5/cm59:1.0 &amp;&gt; /dev/null
+docker run -itd  --net=br  --name cm3 --hostname cm3 yaosong5/cm59:1.0 &amp;&gt; /dev/null
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker stop cm1</span><br><span class="line">docker stop cm2</span><br><span class="line">docker stop cm3</span><br><span class="line"></span><br><span class="line">docker rm cm1</span><br><span class="line">docker rm cm2</span><br><span class="line">docker rm cm3</span><br></pre></td></tr></table></figure>
+<h1 id="调错"><a href="#调错" class="headerlink" title="调错"></a>调错</h1><blockquote>
 <p>.SearchRepositoryManager: No read permission to the server storage directory [/var/lib/cloudera-scm-server]<br>2018-07-11 10:20:39,788 ERROR SearchRepositoryManager-0:com.cloudera.server.web.cmf.search.components.SearchRepositoryManager: No write permission to the server storage directory [/var/lib/cloudera-scm-server]</p>
-<p>链接hue连接不上<br>节点的 cm-5.x.0/log/cloudera-scm-server/cloudera-scm-server.log，一般情况下应该会说到</p>
+</blockquote>
+<h2 id="链接hue连接不上"><a href="#链接hue连接不上" class="headerlink" title="链接hue连接不上"></a>链接hue连接不上</h2><p>节点的 cm-5.x.0/log/cloudera-scm-server/cloudera-scm-server.log，一般情况下应该会说到</p>
 <p>ImportError:libxslt.so.1:cannot open shared object file:No such file ordirectory</p>
-<p>yum -y install libxml2-python </p>
-<p>提示hue测试连接连接不上，安装依赖：</p>
-<p>yum install libxml2-python  mod_ssl install krb5-devel cyrus-sasl-gssapi cyrus-sasl-deve libxml2-devel libxslt-devel mysql mysql-devel openldap-devel python-devel python-simplejson sqlite-devel -y</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install libxml2-python</span><br></pre></td></tr></table></figure>
+<h2 id="提示hue测试连接连接不上，安装依赖："><a href="#提示hue测试连接连接不上，安装依赖：" class="headerlink" title="提示hue测试连接连接不上，安装依赖："></a>提示hue测试连接连接不上，安装依赖：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install libxml2-python  mod_ssl install krb5-devel cyrus-sasl-gssapi cyrus-sasl-deve libxml2-devel libxslt-devel mysql mysql-devel openldap-devel python-devel python-simplejson sqlite-devel -y</span><br></pre></td></tr></table></figure>
 
             
 
@@ -407,7 +443,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/07/10/coudearManager镜像搭建/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/10/CoudearManager镜像搭建/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -426,9 +462,9 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         </a>
     
     
-        <a href="/2018/07/10/ambari搭建/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/07/10/Ambari搭建/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title"></div>
+            <div class="article-nav-title">Ambari镜像搭建</div>
         </a>
     
 </nav>
@@ -498,25 +534,6 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/07/20/Docker中hadoop spark集群搭建/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/部署安装/">部署安装</a></p>
-                            <p class="item-title"><a href="/2018/07/20/Docker中hadoop spark集群搭建/" class="title">Docker中hadoop，spark镜像搭建</a></p>
-                            <p class="item-date"><time datetime="2018-07-19T18:53:35.738Z" itemprop="datePublished">2018-07-20</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
                             <a href="/2018/07/20/hive搭建/" class="thumbnail">
     
     
@@ -552,6 +569,25 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         </div>
                     </li>
                 
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/10/CoudearManager镜像搭建/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/安装部署/">安装部署</a></p>
+                            <p class="item-title"><a href="/2018/07/10/CoudearManager镜像搭建/" class="title">coudearManager镜像搭建</a></p>
+                            <p class="item-date"><time datetime="2018-07-10T14:10:04.881Z" itemprop="datePublished">2018-07-10</time></p>
+                        </div>
+                    </li>
+                
             </ul>
         </div>
     </div>
@@ -561,7 +597,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-archive"></i>归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
         </div>
     </div>
 
@@ -570,7 +606,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker部署安装/">Docker部署安装</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FLINK/">FLINK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/部署安装/">部署安装</a><span class="category-list-count">6</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker部署安装/">Docker部署安装</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/部署安装/">部署安装</a><span class="category-list-count">5</span></li></ul>
         </div>
     </div>
 
@@ -579,7 +615,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOCKER/">DOCKER</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dokcer/">Dokcer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HIVE/">HIVE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadooop/">Hadooop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kakfa/">Kakfa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOCKER/">DOCKER</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dokcer/">Dokcer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HIVE/">HIVE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadooop/">Hadooop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kakfa/">Kakfa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -588,7 +624,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-tags"></i>标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/DOCKER/" style="font-size: 13.33px;">DOCKER</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/Dokcer/" style="font-size: 13.33px;">Dokcer</a> <a href="/tags/ELK/" style="font-size: 10px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HIVE/" style="font-size: 10px;">HIVE</a> <a href="/tags/Hadooop/" style="font-size: 10px;">Hadooop</a> <a href="/tags/Hadoop/" style="font-size: 13.33px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 16.67px;">Hexo</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Kakfa/" style="font-size: 10px;">Kakfa</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Spark/" style="font-size: 13.33px;">Spark</a> <a href="/tags/git/" style="font-size: 13.33px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/命令/" style="font-size: 13.33px;">命令</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/开发/" style="font-size: 13.33px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a>
+            <a href="/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/tags/DOCKER/" style="font-size: 17.5px;">DOCKER</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/Dokcer/" style="font-size: 12.5px;">Dokcer</a> <a href="/tags/ELK/" style="font-size: 10px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 12.5px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HIVE/" style="font-size: 10px;">HIVE</a> <a href="/tags/Hadooop/" style="font-size: 10px;">Hadooop</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Kakfa/" style="font-size: 10px;">Kakfa</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/git/" style="font-size: 12.5px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/命令/" style="font-size: 12.5px;">命令</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/开发/" style="font-size: 12.5px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a>
         </div>
     </div>
 
