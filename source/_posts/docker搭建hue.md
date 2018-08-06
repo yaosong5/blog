@@ -1,11 +1,11 @@
 ---
-title:  Docker搭建hue
+title:  Docker搭建hue容器
 date: 2018年06月21日 22时15分52秒
 tags:  [Docker,Hue]
 categories: 部署安装
 toc: true
 ---
-[toc]
+[TOC]
 ![enter description here](https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/7/20/1532025321846.jpg)
 # 本次采用的ant maven来编译hue
 
@@ -98,7 +98,7 @@ create database hue;
 	webhdfs_url=http://master:50070/webhdfs/v1
 	hadoop_hdfs_home=$HADOOP_HOME
 	hadoop_conf_dir=$HADOOP_HOME/etc/hadoop
-
+	
 	配置 yarn
 	在 [hadoop].[[yarn_clusters]].[[[default]]] 下
 	resourcemanager_host=master
@@ -119,7 +119,7 @@ create database hue;
 
 <kbd>options={"init_command":"SET NAMES'utf8'"}</kbd>
 > [参考]
-https://blog.csdn.net/u012802702/article/details/68071244
+> https://blog.csdn.net/u012802702/article/details/68071244
 
 ### 初始化mysql
 
@@ -163,7 +163,7 @@ $HUE_HOME/build/env/bin/hue syncdb --noinput
     <value>*</value>
 </property>
 <!--《为了让 hue 能够访问 hdfs，需要在 hdfs-site.xml 里面配置一些内容-->
- ```
+```
 
 ### hbase
 hue 访问 hbase 是用的 thriftserver，并且是 thrift1，不是 thrift2，所以要在 master 上面启动 thrif1
@@ -195,11 +195,11 @@ nohup HIVE_HOME/bin/hive --service hiveserver2 &
 	然后需要同时启动 hive 的 metastore 和 hiveserve2
 	nohup hive --service metastore &
 	nohup hive --service hiveserver2 &
-
+	
 	Hue 需要读取 HBase 的数据是使用 thrift 的方式，默认 HBase 的 thrift 服务没有开启，所有需要手动额外开启 thrift 服务。
 	thrift service 默认使用的是 9090 端口，使用如下命令查看端口是否被占用
 	netstat -nl|grep 9090
-
+	
 	启动 thrift service
 	$HBASE_HOME/bin/hbase-daemon.sh start thrift
 

@@ -1,3 +1,15 @@
+---
+title:  elk容器的搭建
+date: 2018年08月06日 22时15分52秒
+tags:  [elk]
+categories: elk
+toc: true
+---
+
+[TOC]
+
+
+
 # elk容器的搭建
 
 ## 来源容器  elk
@@ -9,6 +21,8 @@ docker run -itd  --name os --hostname os kinogmt/centos-ssh:6.7 &> /dev/null
 ```
 
 > 注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小bug
+
+<!--more-->
 
 在容器中下载需要的elk的源包。做解压就不赘述，很多案例教程。
 

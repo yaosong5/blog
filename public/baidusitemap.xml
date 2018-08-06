@@ -5,14 +5,41 @@
     
   <url>
     <loc>http://gangtieguo.cn/2018/07/08/elk%E5%AE%B9%E5%99%A8%E7%9A%84%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2018-08-06T15:20:57.781Z</lastmod>
+    <lastmod>2018-08-06T15:54:59.432Z</lastmod>
     <data>
         <display>
-        <title></title>
+        <title>elk容器的搭建</title>
         <pubTime>2018-07-08T15:43:05.950Z</pubTime>
         
+        <tag>elk</tag>
+         
          
            
+             
+              <breadCrumb title="elk" url="http://gangtieguo.cn/categories/elk/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/20/docker%E6%90%AD%E5%BB%BAhue/</loc>
+    <lastmod>2018-08-06T15:54:14.427Z</lastmod>
+    <data>
+        <display>
+        <title>Docker搭建hue容器</title>
+        <pubTime>2018-07-19T18:19:08.144Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>Hue</tag>
+         
+         
+           
+             
+              <breadCrumb title="部署安装" url="http://gangtieguo.cn/categories/%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/"/>
+          
         </display>
     </data>
     </url>
@@ -30,28 +57,6 @@
          
          
            
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/07/20/docker%E6%90%AD%E5%BB%BAhue/</loc>
-    <lastmod>2018-07-26T05:21:34.579Z</lastmod>
-    <data>
-        <display>
-        <title>Docker搭建hue</title>
-        <pubTime>2018-07-19T18:19:08.144Z</pubTime>
-        
-        <tag>Docker</tag>
-         
-        <tag>Hue</tag>
-         
-         
-           
-             
-              <breadCrumb title="部署安装" url="http://gangtieguo.cn/categories/%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/"/>
-          
         </display>
     </data>
     </url>
@@ -307,9 +312,9 @@
         
         <tag>Java</tag>
          
-        <tag>技术</tag>
-         
         <tag>开发</tag>
+         
+        <tag>技术</tag>
          
          
            
@@ -331,9 +336,9 @@
         <title>linux命令积累</title>
         <pubTime>2018-05-10T07:37:28.983Z</pubTime>
         
-        <tag>开发</tag>
-         
         <tag>linux</tag>
+         
+        <tag>开发</tag>
          
          
            
