@@ -7,6 +7,7 @@ toc: true
 typora-copy-images-to: ipic
 ---
 
+
 [TOC]
 
 # 创建基础容器
@@ -86,6 +87,7 @@ ambari-server start
 ## 访问
 
 http://192.168.1.133:8080  
+
 用户名密码: admin,admin
 
 
@@ -104,8 +106,6 @@ docker run -itd  --net=br  --name ambari2 --hostname ambari2 yaosong5/ambari-ser
 docker run -itd  --net=br  --name ambari3 --hostname ambari3 yaosong5/ambari-server:1.0 &> /dev/null
 ```
 
-
-
 # 停止and删除容器
 
 ```bash
@@ -117,8 +117,3 @@ docker rm ambari1
 docker rm ambari2
 docker rm ambari3
 ```
-
-
-
-
-

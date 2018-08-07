@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://gangtieguo.cn/2018/07/10/Ambari%E6%90%AD%E5%BB%BA/</loc>
+    
+    <lastmod>2018-08-07T02:55:50.578Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://gangtieguo.cn/2018/08/07/zookeeper%E9%85%8D%E7%BD%AE/</loc>
     
     <lastmod>2018-08-07T02:53:27.333Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>http://gangtieguo.cn/2018/07/09/flink%E5%AE%B9%E5%99%A8%E6%90%AD%E5%BB%BA/</loc>
     
     <lastmod>2018-08-07T02:52:58.322Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://gangtieguo.cn/2018/07/10/Ambari%E6%90%AD%E5%BB%BA/</loc>
-    
-    <lastmod>2018-08-07T02:50:27.002Z</lastmod>
     
   </url>
   
@@ -219,14 +219,14 @@
   </url>
   
   <url>
-    <loc>http://gangtieguo.cn/categories/index.html</loc>
+    <loc>http://gangtieguo.cn/tags/index.html</loc>
     
     <lastmod>2018-04-30T00:06:32.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://gangtieguo.cn/tags/index.html</loc>
+    <loc>http://gangtieguo.cn/categories/index.html</loc>
     
     <lastmod>2018-04-30T00:06:32.000Z</lastmod>
     
