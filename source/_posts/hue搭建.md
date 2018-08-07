@@ -332,7 +332,9 @@ nohup $HUE_HOME/build/env/bin/supervisor &
 
 
 ## hue启动命令
-```$HUE_HOME/build/env/bin/supervisor &```
+```
+$HUE_HOME/build/env/bin/supervisor &
+```
 
 (注：想要后台执行就是 **$HUE_HOME/build/env/bin/supervisor &** )
 

@@ -4,18 +4,16 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/07/09/hadoop-spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2018-08-07T06:26:19.880Z</lastmod>
+    <loc>http://gangtieguo.cn/2018/07/10/hue%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2018-08-07T07:19:22.986Z</lastmod>
     <data>
         <display>
-        <title>Hadoop&Spark组合容器的搭建</title>
-        <pubTime>2018-07-08T17:06:20.114Z</pubTime>
+        <title>Hue搭建</title>
+        <pubTime>2018-07-09T16:37:50.903Z</pubTime>
         
         <tag>Docker</tag>
          
-        <tag>Hadoop</tag>
-         
-        <tag>Spark</tag>
+        <tag>Hue</tag>
          
          
            
@@ -28,16 +26,18 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/07/10/hue%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2018-08-07T06:26:12.521Z</lastmod>
+    <loc>http://gangtieguo.cn/2018/07/09/hadoop-spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2018-08-07T06:26:19.880Z</lastmod>
     <data>
         <display>
-        <title>Hue搭建</title>
-        <pubTime>2018-07-09T16:37:50.903Z</pubTime>
+        <title>Hadoop&Spark组合容器的搭建</title>
+        <pubTime>2018-07-08T17:06:20.114Z</pubTime>
         
         <tag>Docker</tag>
          
-        <tag>Hue</tag>
+        <tag>Hadoop</tag>
+         
+        <tag>Spark</tag>
          
          
            
