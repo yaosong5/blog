@@ -1,7 +1,7 @@
 ---
 title:  HBase容器的搭建
 date: 2018年08月06日 22时15分52秒
-tags:  [HBase,Dokcer]
+tags:  [HBase,Docker]
 categories: 安装部署
 toc: true
 typora-copy-images-to: ipic

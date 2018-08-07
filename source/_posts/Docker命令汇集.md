@@ -1,7 +1,7 @@
 ---
 title:  Docker常用命令汇集
 date: 2018年08月06日 22时15分52秒
-tags:  [Dokcer]
+tags:  [Docker]
 categories: Docker
 toc: true
 typora-copy-images-to: ipic
