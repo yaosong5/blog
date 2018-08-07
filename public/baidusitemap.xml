@@ -4,6 +4,72 @@
 
     
   <url>
+    <loc>http://gangtieguo.cn/2018/08/07/zookeeper%E9%85%8D%E7%BD%AE/</loc>
+    <lastmod>2018-08-07T02:53:27.333Z</lastmod>
+    <data>
+        <display>
+        <title>Zookeeper的配置容器的搭建</title>
+        <pubTime>2018-08-06T19:06:03.170Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>zk</tag>
+         
+         
+           
+             
+              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/20/hive%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2018-08-07T02:53:11.544Z</lastmod>
+    <data>
+        <display>
+        <title>HIVE搭建</title>
+        <pubTime>2018-07-19T18:51:21.978Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>HIVE</tag>
+         
+         
+           
+             
+              <breadCrumb title="部署安装" url="http://gangtieguo.cn/categories/%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/09/flink%E5%AE%B9%E5%99%A8%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2018-08-07T02:52:58.322Z</lastmod>
+    <data>
+        <display>
+        <title>FLINK容器的搭建</title>
+        <pubTime>2018-07-08T16:00:22.635Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>FLINK</tag>
+         
+         
+           
+             
+              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://gangtieguo.cn/2018/07/10/Ambari%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2018-08-07T02:50:27.002Z</lastmod>
     <data>
@@ -136,28 +202,6 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/08/07/zookeeper%E9%85%8D%E7%BD%AE/</loc>
-    <lastmod>2018-08-07T02:46:01.733Z</lastmod>
-    <data>
-        <display>
-        <title>Zookeeper的配置容器的搭建</title>
-        <pubTime>2018-08-06T19:06:03.170Z</pubTime>
-        
-        <tag>Docker</tag>
-         
-        <tag>zk</tag>
-         
-         
-           
-             
-              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://gangtieguo.cn/2018/06/03/Docker%E5%AE%89%E8%A3%85Hadoop%E9%9B%86%E7%BE%A4%E3%80%90%E5%BC%95%E7%94%A8%E3%80%91/</loc>
     <lastmod>2018-08-06T19:27:34.504Z</lastmod>
     <data>
@@ -193,28 +237,6 @@
            
              
               <breadCrumb title="工程框架" url="http://gangtieguo.cn/categories/%E5%B7%A5%E7%A8%8B%E6%A1%86%E6%9E%B6/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/07/09/flink%E5%AE%B9%E5%99%A8%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2018-08-06T19:14:36.493Z</lastmod>
-    <data>
-        <display>
-        <title>FLINK容器的搭建</title>
-        <pubTime>2018-07-08T16:00:22.635Z</pubTime>
-        
-        <tag>DOCKER</tag>
-         
-        <tag>FLINK</tag>
-         
-         
-           
-             
-              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
           
         </display>
     </data>
@@ -301,28 +323,6 @@
            
              
               <breadCrumb title="tool" url="http://gangtieguo.cn/categories/tool/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/07/20/hive%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2018-08-06T18:21:59.446Z</lastmod>
-    <data>
-        <display>
-        <title>HIVE搭建</title>
-        <pubTime>2018-07-19T18:51:21.978Z</pubTime>
-        
-        <tag>DOCKER</tag>
-         
-        <tag>HIVE</tag>
-         
-         
-           
-             
-              <breadCrumb title="部署安装" url="http://gangtieguo.cn/categories/%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/"/>
           
         </display>
     </data>

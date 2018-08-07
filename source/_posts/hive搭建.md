@@ -1,7 +1,7 @@
 ---
 title:  HIVE搭建
 date: 2018年08月06日 22时15分52秒
-tags:  [DOCKER,HIVE]
+tags:  [Docker,HIVE]
 categories: 部署安装
 toc: true
 typora-copy-images-to: ipic
