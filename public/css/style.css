@@ -185,7 +185,7 @@ code {
   background-color: #f8f8f8;
 }
 .outer {
-  max-width: 1820px;
+  max-width: 1520px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -217,7 +217,7 @@ code {
   width: 40px;
   height: 40px;
   background-repeat: no-repeat;
-  background-image: url("images/venum.gif");
+  background-image: url("images/badboygq.jpg");
   -webkit-background-size: 40px 40px;
   -moz-background-size: 40px 40px;
   background-size: 40px 40px;
@@ -235,20 +235,24 @@ code {
   #main {
     display: inline;
     float: left;
-    width: 65.55555555555556%;
-    margin: 0 0.555555555555556%;
+    width: 72%;
+    margin: 0 0.666666666666667%;
+    margin: auto;
+    width: 70%;
+    display: block;
+    float: left;
   }
 }
 @media screen and (min-width: 800px) and (max-width: 1199px) {
   #main {
     display: inline;
     float: left;
-    width: 48.888888888888886%;
-    margin: 0 0.555555555555556%;
+    width: 58.666666666666664%;
+    margin: 0 0.666666666666667%;
     display: inline;
     float: left;
-    width: 48.888888888888886%;
-    margin: 0 0.555555555555556%;
+    width: 58.666666666666664%;
+    margin: 0 0.666666666666667%;
   }
 }
 @media screen and (min-width: 560px) and (max-width: 799px) {
@@ -700,8 +704,8 @@ code {
 #profile {
   display: inline;
   float: left;
-  width: 15.555555555555555%;
-  margin: 0 0.555555555555556%;
+  width: 12%;
+  margin: 0 0.666666666666667%;
   display: none;
   margin: 0px;
   margin-bottom: 40px;
@@ -718,8 +722,8 @@ code {
 #profile .inner .base-info #avatar {
   display: block;
   margin: 10px auto 20px;
-  width: 180px;
-  height: 128px;
+  width: 120px;
+  height: 110px;
 }
 #profile .inner .base-info #name,
 #profile .inner .base-info #title,
@@ -1838,20 +1842,25 @@ a.article-title:hover {
   line-height: 1.6em;
   font-size: 0.85em;
 }
+#sidebar {
+  margin: 0;
+}
 @media screen and (min-width: 1200px) {
   #sidebar {
     display: inline;
     float: left;
-    width: 15.555555555555555%;
-    margin: 0 0.555555555555556%;
+    width: 12%;
+    margin: 0 0.666666666666667%;
+    border-left: 1px solid #eceff2;
+    margin: 0px;
   }
 }
 @media screen and (min-width: 800px) and (max-width: 1199px) {
   #sidebar {
     display: inline;
     float: left;
-    width: 26.666666666666668%;
-    margin: 0 0.555555555555556%;
+    width: 32%;
+    margin: 0 0.666666666666667%;
   }
 }
 .widget {

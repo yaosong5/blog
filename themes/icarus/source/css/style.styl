@@ -71,13 +71,23 @@ code
 #main
     @media mq-normal
         column(main-column)
+        margin: auto;
+        width: 70%;
+        display: block;
+        if is_post() 
+            if !post_sidebar and !profile_post_sidebar
+                float: none
+            else 
+                float: left
+
     @media mq-tablet
-        if is_home() and home_sidebar
+        if is_home() and home_sidebar and  profile_home_sidebar
             column(main-column-tablet)
-        if is_post() and post_sidebar
+        if is_post() and post_sidebar and profile_post_sidebar
             column(main-column-tablet)
         else
             width: 100%
+
     @media mq-mobile
         width: 100%
     @media mq-mini

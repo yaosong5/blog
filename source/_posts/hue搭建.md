@@ -2,7 +2,7 @@
 title:  Hue搭建
 date: 2018年06月21日 22时15分52秒
 tags:  [Docker,Hue]
-categories: 部署安装
+categories: 安装部署
 toc: true
 ---
 [TOC]

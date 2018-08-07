@@ -2,11 +2,17 @@
 title:  Linux安装mysql
 date: 2018年06月21日 22时15分52秒
 tags:  [Linux,Mysql]
-categories: 部署安装
+categories: 安装部署
 toc: true
 ---
 
-```bash
+
+
+在linux yum安装mysql
+
+<!--more -->
+
+```Bash
 yum install -y mysql-server
 chkconfig --add mysqld
 chkconfig mysqld on
@@ -26,6 +32,7 @@ select user,host,password from mysql.user;  　　查看密码是否设置成功
 设置所有ip可以通过root访问
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON *.* TO 'hive'@'%' IDENTIFIED BY 'hive' WITH GRANT OPTION;
+
 
 ```
 

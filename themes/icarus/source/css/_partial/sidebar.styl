@@ -1,8 +1,12 @@
 #sidebar
     @media mq-normal
         column(sidebar-column)
+        border-left: 1px solid #eceff2
+        margin: 0px
     @media mq-tablet
         column(sidebar-column-tablet)
+    
+    margin: 0
 
 .widget
     @extend $base-style

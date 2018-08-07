@@ -3,9 +3,14 @@
     <div id="container">
         <%- partial('common/header') %>
         <div class="outer">
-            <% if (theme.customize.profile.enabled) { %>
+             <% if (is_home() && theme.profile_home_sidebar) { %>
                 <%- partial('common/profile', null, {cache: !config.relative_link}) %>
             <% } %>
+
+            <% if (is_post() && theme.profile_post_sidebar) { %>
+                <%- partial('common/profile', null, {cache: !config.relative_link}) %>
+            <% } %>
+
             <section id="main"><%- body %></section>
             <% if (is_home() && theme.home_sidebar) { %>
                 <%- partial('common/sidebar', null, {cache: !config.relative_link}) %>
