@@ -2288,71 +2288,57 @@ a.article-title:hover {
   height: 1.6em;
 }
 .highlight {
-  color: #000;
-  background: #fff;
-}
-.highlight .code .subst,
-.highlight .code .title {
-  font-weight: normal;
-  color: #000;
+  color: #839496;
+  background: #002b36;
 }
 .highlight .code .comment,
 .highlight .code .quote {
-  color: #808080;
-  font-style: italic;
+  color: #586e75;
 }
-.highlight .code .meta {
-  color: #808000;
-}
-.highlight .code .tag {
-  background: #efefef;
-}
-.highlight .code .section,
-.highlight .code .name,
-.highlight .code .literal,
 .highlight .code .keyword,
 .highlight .code .selector-tag,
-.highlight .code .type,
+.highlight .code .addition {
+  color: #859900;
+}
+.highlight .code .number,
+.highlight .code .string,
+.highlight .code .meta .meta-string,
+.highlight .code .literal,
+.highlight .code .doctag,
+.highlight .code .regexp {
+  color: #2aa198;
+}
+.highlight .code .title,
+.highlight .code .section,
+.highlight .code .name,
 .highlight .code .selector-id,
 .highlight .code .selector-class {
-  font-weight: bold;
-  color: #000080;
+  color: #268bd2;
 }
 .highlight .code .attribute,
-.highlight .code .number,
-.highlight .code .regexp,
-.highlight .code .link {
-  font-weight: bold;
-  color: #00f;
-}
-.highlight .code .number,
-.highlight .code .regexp,
-.highlight .code .link {
-  font-weight: normal;
-}
-.highlight .code .string {
-  color: #008000;
-  font-weight: bold;
+.highlight .code .attr,
+.highlight .code .variable,
+.highlight .code .template-variable,
+.highlight .code .class .title,
+.highlight .code .type {
+  color: #b58900;
 }
 .highlight .code .symbol,
 .highlight .code .bullet,
-.highlight .code .formula {
-  color: #000;
-  background: #d0eded;
-  font-style: italic;
+.highlight .code .subst,
+.highlight .code .meta,
+.highlight .code .meta .keyword,
+.highlight .code .selector-attr,
+.highlight .code .selector-pseudo,
+.highlight .code .link {
+  color: #cb4b16;
 }
-.highlight .code .doctag {
-  text-decoration: underline;
-}
-.highlight .code .variable,
-.highlight .code .template-variable {
-  color: #660e7a;
-}
-.highlight .code .addition {
-  background: #baeeba;
-}
+.highlight .code .built_in,
 .highlight .code .deletion {
-  background: #ffc8bd;
+  color: #dc322f;
+}
+.highlight .code .formula {
+  background: #073642;
 }
 .highlight .code .emphasis {
   font-style: italic;
