@@ -71,14 +71,13 @@ code
 #main
     @media mq-normal
         column(main-column)
-        margin: auto;
+        margin: 10px;
         width: 70%;
         display: block;
-        if is_post() 
-            if !post_sidebar and !profile_post_sidebar
-                float: none
-            else 
-                float: left
+        if is_home()
+            float: left
+        else 
+            float: none
 
     @media mq-tablet
         if is_home() and home_sidebar and  profile_home_sidebar

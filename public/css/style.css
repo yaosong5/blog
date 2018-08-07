@@ -237,7 +237,7 @@ code {
     float: left;
     width: 72%;
     margin: 0 0.666666666666667%;
-    margin: auto;
+    margin: 10px;
     width: 70%;
     display: block;
     float: left;
@@ -2096,6 +2096,11 @@ a.article-title:hover {
 }
 #recent-post li .item-inner .item-title {
   font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 #recent-post li .item-inner .item-title a {
   color: #333;
