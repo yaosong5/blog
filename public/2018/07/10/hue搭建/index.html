@@ -17,7 +17,7 @@
 <meta property="og:description" content="[TOC] 本次采用的ant maven来编译hue启动一个基础容器docker run -itd  --net=br  --name hue --hostname  hue yaosong5/centosbase:1.0 &amp;amp;&amp;gt; /dev/null">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/7/20/1532025321846.jpg">
-<meta property="og:updated_time" content="2018-08-07T07:19:22.986Z">
+<meta property="og:updated_time" content="2018-08-07T07:25:08.875Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hue搭建">
 <meta name="twitter:description" content="[TOC] 本次采用的ant maven来编译hue启动一个基础容器docker run -itd  --net=br  --name hue --hostname  hue yaosong5/centosbase:1.0 &amp;amp;&amp;gt; /dev/null">
@@ -402,7 +402,6 @@ docker cp  /Users/yaosong/Yao/hue4  4115ea59088e:/usr/
 <blockquote>
 <p>[参考]<br><a href="https://blog.csdn.net/u012802702/article/details/68071244" target="_blank" rel="noopener">https://blog.csdn.net/u012802702/article/details/68071244</a></p>
 </blockquote>
-<p>### </p>
 <h2 id="依赖的组件启动"><a href="#依赖的组件启动" class="headerlink" title="依赖的组件启动"></a>依赖的组件启动</h2><h3 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h3><p><code>service mysqld start</code></p>
 <h3 id="hadoop"><a href="#hadoop" class="headerlink" title="hadoop"></a>hadoop</h3><p><code>start-all.sh</code></p>
 <h3 id="hive-2"><a href="#hive-2" class="headerlink" title="hive"></a>hive</h3><p>然后需要同时启动 hive 的 metastore 和 hiveserve2</p>
@@ -412,14 +411,14 @@ docker cp  /Users/yaosong/Yao/hue4  4115ea59088e:/usr/
 <p>thrift service 默认使用的是 9090 端口，使用如下命令查看端口是否被占用</p>
 <p><code>netstat -nl|grep 9090</code></p>
 <h4 id="依赖启动的脚本"><a href="#依赖启动的脚本" class="headerlink" title="依赖启动的脚本"></a>依赖启动的脚本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment">#启动mysql</span></span><br><span class="line">service mysqld start</span><br><span class="line"><span class="comment">#启动hadoop</span></span><br><span class="line">sh /hadoop-start.sh</span><br><span class="line"><span class="comment">#启动hive</span></span><br><span class="line">sh /hive-start-servers2.sh</span><br><span class="line"><span class="comment">#启动 thrift service</span></span><br><span class="line"><span class="variable">$HBASE_HOME</span>/bin/hbase-daemon.sh start thrift</span><br><span class="line"><span class="comment">#启动hue</span></span><br><span class="line">nohup <span class="variable">$HUE_HOME</span>/build/env/bin/supervisor &amp;</span><br></pre></td></tr></table></figure>
-<h2 id="hue启动命令"><a href="#hue启动命令" class="headerlink" title="hue启动命令"></a>hue启动命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HUE_HOME/build/env/bin/supervisor &amp;</span><br></pre></td></tr></table></figure>
+<h2 id="hue启动命令"><a href="#hue启动命令" class="headerlink" title="hue启动命令"></a>hue启动命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$HUE_HOME</span>/build/env/bin/supervisor &amp;</span><br></pre></td></tr></table></figure>
 <p>(注：想要后台执行就是 <strong>$HUE_HOME/build/env/bin/supervisor &amp;</strong> )</p>
 <p>或者</p>
-<p><code>$HUE_HOME/build/env/bin/hue runserver_plus 0.0.0.0:8888</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$HUE_HOME</span>/build/env/bin/hue runserver_plus 0.0.0.0:8888</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>【参考】<a href="https://blog.csdn.net/hexinghua0126/article/details/80338779" target="_blank" rel="noopener">https://blog.csdn.net/hexinghua0126/article/details/80338779</a></p>
 </blockquote>
-<p>*<em>hue的web服务端口：8888</em></p>
+<p><em>hue的web服务端口：8888</em></p>
 <h2 id="hue停止命令"><a href="#hue停止命令" class="headerlink" title="hue停止命令"></a>hue停止命令</h2><p><code>pkill -U hue</code></p>
 <h1 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h1><p>1、如果修改配置文件后，启动后无法进人 hue 界面</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">可能是配置文件被锁住了</span><br><span class="line">cd $HUE_HOME/desktop/conf</span><br><span class="line">ls –a</span><br><span class="line">rm –rf hue.ini.swp</span><br><span class="line">或者 hadoop、hive 等服务没有启动起来</span><br></pre></td></tr></table></figure>

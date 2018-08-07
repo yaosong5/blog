@@ -1445,8 +1445,8 @@ a.article-title:hover {
   z-index: 100;
   background: #fff;
   border: 1px solid #ccc;
-  max-width: 260px;
-  min-width: 200px;
+  max-width: 230px;
+  min-width: 170px;
   max-height: 500px;
   -webkit-box-shadow: 5px 5px 2px #ccc;
   -webkit-box-shadow: 5px 5px 2px #ccc;

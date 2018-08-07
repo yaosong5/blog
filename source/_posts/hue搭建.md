@@ -282,8 +282,6 @@ options={"init_command":"SET NAMES'utf8'"}
 
 
 
-### 
-
 ## 依赖的组件启动
 
 ### Mysql
@@ -332,7 +330,7 @@ nohup $HUE_HOME/build/env/bin/supervisor &
 
 
 ## hue启动命令
-```
+```bash
 $HUE_HOME/build/env/bin/supervisor &
 ```
 
@@ -340,13 +338,17 @@ $HUE_HOME/build/env/bin/supervisor &
 
 或者
 
-`$HUE_HOME/build/env/bin/hue runserver_plus 0.0.0.0:8888`
+```Bash
+$HUE_HOME/build/env/bin/hue runserver_plus 0.0.0.0:8888
+```
 
 >
 > 【参考】https://blog.csdn.net/hexinghua0126/article/details/80338779
 >
 
-**hue的web服务端口：8888*
+*hue的web服务端口：8888*
+
+
 
 ## hue停止命令
 

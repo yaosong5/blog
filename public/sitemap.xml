@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://gangtieguo.cn/categories/index.html</loc>
+    
+    <lastmod>2018-08-07T07:28:04.841Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/about/index.html</loc>
+    
+    <lastmod>2018-08-07T07:27:50.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/tags/index.html</loc>
+    
+    <lastmod>2018-08-07T07:27:29.135Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://gangtieguo.cn/2018/07/10/hue%E6%90%AD%E5%BB%BA/</loc>
     
-    <lastmod>2018-08-07T07:19:22.986Z</lastmod>
+    <lastmod>2018-08-07T07:25:08.875Z</lastmod>
     
   </url>
   
@@ -208,27 +229,6 @@
     <loc>http://gangtieguo.cn//404.html</loc>
     
     <lastmod>2018-05-08T10:00:51.508Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://gangtieguo.cn/about/index.html</loc>
-    
-    <lastmod>2018-05-08T07:53:31.549Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://gangtieguo.cn/categories/index.html</loc>
-    
-    <lastmod>2018-04-30T00:06:32.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://gangtieguo.cn/tags/index.html</loc>
-    
-    <lastmod>2018-04-30T00:06:32.000Z</lastmod>
     
   </url>
   
