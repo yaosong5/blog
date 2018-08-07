@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://gangtieguo.cn/2018/07/10/Ambari%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2018-08-07T02:50:27.002Z</lastmod>
+    <data>
+        <display>
+        <title>Ambari镜像搭建</title>
+        <pubTime>2018-07-09T17:08:44.939Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>Ambari</tag>
+         
+         
+           
+             
+              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://gangtieguo.cn/2018/07/10/CoudearManager%E9%95%9C%E5%83%8F%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2018-08-07T02:47:46.976Z</lastmod>
     <data>
@@ -230,28 +252,6 @@
         <pubTime>2018-06-21T14:11:28.272Z</pubTime>
         
         <tag>Jenkins</tag>
-         
-         
-           
-             
-              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/07/10/Ambari%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2018-08-06T18:49:05.557Z</lastmod>
-    <data>
-        <display>
-        <title>Ambari镜像搭建</title>
-        <pubTime>2018-07-09T17:08:44.939Z</pubTime>
-        
-        <tag>DOCKER</tag>
-         
-        <tag>Ambari</tag>
          
          
            
