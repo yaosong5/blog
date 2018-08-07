@@ -4,6 +4,118 @@
 
     
   <url>
+    <loc>http://gangtieguo.cn/2018/07/09/hadoop-spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2018-08-07T03:03:03.319Z</lastmod>
+    <data>
+        <display>
+        <title>Hadoop&Spark组合容器的搭建</title>
+        <pubTime>2018-07-08T17:06:20.114Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>Hadoop</tag>
+         
+        <tag>Spark</tag>
+         
+         
+           
+             
+              <breadCrumb title="部署安装" url="http://gangtieguo.cn/categories/%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/10/es%E6%B5%8B%E8%AF%95%E5%91%BD%E4%BB%A4/</loc>
+    <lastmod>2018-08-07T03:02:49.763Z</lastmod>
+    <data>
+        <display>
+        <title>ES测试命令</title>
+        <pubTime>2018-07-09T16:11:03.158Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>ELK</tag>
+         
+        <tag>es</tag>
+         
+         
+           
+             
+              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/20/Docker%E6%9E%84%E5%BB%BA%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%95%9C%E5%83%8F/</loc>
+    <lastmod>2018-08-07T03:02:40.524Z</lastmod>
+    <data>
+        <display>
+        <title>Docker构建免密ssh登录镜像</title>
+        <pubTime>2018-07-19T18:49:08.996Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+         
+           
+             
+              <breadCrumb title="Docker" url="http://gangtieguo.cn/categories/Docker/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/10/Ambari%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2018-08-07T03:02:29.344Z</lastmod>
+    <data>
+        <display>
+        <title>Ambari镜像搭建</title>
+        <pubTime>2018-07-09T17:08:44.939Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>Ambari</tag>
+         
+         
+           
+             
+              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/10/CoudearManager%E9%95%9C%E5%83%8F%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2018-08-07T03:02:00.022Z</lastmod>
+    <data>
+        <display>
+        <title>CoudearManager镜像搭建</title>
+        <pubTime>2018-07-10T14:10:04.881Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>CDH</tag>
+         
+         
+           
+             
+              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://gangtieguo.cn/2018/08/07/zookeeper%E9%85%8D%E7%BD%AE/</loc>
     <lastmod>2018-08-07T02:53:27.333Z</lastmod>
     <data>
@@ -70,28 +182,6 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/07/10/CoudearManager%E9%95%9C%E5%83%8F%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2018-08-07T02:47:46.976Z</lastmod>
-    <data>
-        <display>
-        <title>coudearManager镜像搭建</title>
-        <pubTime>2018-07-10T14:10:04.881Z</pubTime>
-        
-        <tag>Docker</tag>
-         
-        <tag>CDH</tag>
-         
-         
-           
-             
-              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://gangtieguo.cn/2018/06/26/Docker%E5%91%BD%E4%BB%A4%E6%B1%87%E9%9B%86/</loc>
     <lastmod>2018-08-07T02:46:59.520Z</lastmod>
     <data>
@@ -144,30 +234,6 @@
         <tag>Docker</tag>
          
         <tag>HBase</tag>
-         
-         
-           
-             
-              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/07/10/es%E6%B5%8B%E8%AF%95%E5%91%BD%E4%BB%A4/</loc>
-    <lastmod>2018-08-07T02:46:11.207Z</lastmod>
-    <data>
-        <display>
-        <title>es测试命令</title>
-        <pubTime>2018-07-09T16:11:03.158Z</pubTime>
-        
-        <tag>Docker</tag>
-         
-        <tag>ELK</tag>
-         
-        <tag>es</tag>
          
          
            
@@ -257,30 +323,6 @@
            
              
               <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/07/09/hadoop-spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2018-08-06T18:37:55.902Z</lastmod>
-    <data>
-        <display>
-        <title>hadoop-spark组合容器的搭建</title>
-        <pubTime>2018-07-08T17:06:20.114Z</pubTime>
-        
-        <tag>Docker</tag>
-         
-        <tag>Hadoop</tag>
-         
-        <tag>Spark</tag>
-         
-         
-           
-             
-              <breadCrumb title="部署安装" url="http://gangtieguo.cn/categories/%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/"/>
           
         </display>
     </data>
@@ -438,26 +480,6 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/07/20/Docker%E6%9E%84%E5%BB%BA%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%95%9C%E5%83%8F/</loc>
-    <lastmod>2018-08-06T16:53:17.979Z</lastmod>
-    <data>
-        <display>
-        <title>docker构建免密ssh登录镜像</title>
-        <pubTime>2018-07-19T18:49:08.996Z</pubTime>
-        
-        <tag>Docker</tag>
-         
-         
-           
-             
-              <breadCrumb title="Docker" url="http://gangtieguo.cn/categories/Docker/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://gangtieguo.cn/2018/06/21/%E5%90%84%E7%A7%8D%E5%BF%AB%E6%8D%B7%E9%94%AE/</loc>
     <lastmod>2018-07-19T18:33:25.160Z</lastmod>
     <data>
@@ -555,9 +577,9 @@
         <title>spring集成权限校验</title>
         <pubTime>2018-05-08T10:34:55.000Z</pubTime>
         
-        <tag>开发</tag>
-         
         <tag>Java</tag>
+         
+        <tag>开发</tag>
          
         <tag>技术</tag>
          

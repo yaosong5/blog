@@ -1,5 +1,5 @@
 ---
-title:  es测试命令
+title:  ES测试命令
 date: 2018年08月06日 22时15分52秒
 tags:  [ELK,Docker,es]
 categories: 安装部署

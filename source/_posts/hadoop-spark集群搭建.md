@@ -1,5 +1,5 @@
 ---
-title:  hadoop-spark组合容器的搭建
+title:  Hadoop&Spark组合容器的搭建
 date: 2018年08月06日 22时15分52秒
 tags:  [Docker,Spark,Hadoop]
 categories: 部署安装
@@ -261,7 +261,7 @@ $HADOOP_HOME/bin/hadoop namenode -format
 测试
 
 	yarn 8088端口   http://yourip:8088
-	
+
 	hdfs 50070端口 hdfs3.0为9870   http://yourip:50070
 
 ## spark只需要在slaves中添加
