@@ -16,7 +16,7 @@ HBase启动命令行
 $HBASE_HOME/bin/hbase shell
 ```
 
-<!— more —>
+<!-- more -->
 
 ## 创建表
 
