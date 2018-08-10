@@ -24,6 +24,14 @@ $HBASE_HOME/bin/hbase shell
 create 'testtable',{NAME=>'cf',VERSIONS=>2},{NAME=>'cf2',VERSIONS=>2}
 ```
 
+## 创建namespace
+
+```bash
+create_namespace 'beehive'
+```
+
+
+
 ## 查看表结构
 
 ```bash

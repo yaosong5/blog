@@ -4,6 +4,72 @@
 
     
   <url>
+    <loc>http://gangtieguo.cn/2018/08/11/Spark%E8%AF%BB%E5%8F%96Hbase/</loc>
+    <lastmod>2018-08-10T16:40:54.321Z</lastmod>
+    <data>
+        <display>
+        <title>Spark读取HBase</title>
+        <pubTime>2018-08-10T16:18:11.706Z</pubTime>
+        
+        <tag>HBase</tag>
+         
+        <tag>Spark</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/10/Hbase-shell%E6%93%8D%E4%BD%9C/</loc>
+    <lastmod>2018-08-10T16:40:36.317Z</lastmod>
+    <data>
+        <display>
+        <title>Hbase-shell操作</title>
+        <pubTime>2018-08-10T09:27:05.100Z</pubTime>
+        
+        <tag>HBase</tag>
+         
+        <tag>Shell</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/11/Spark%E8%AF%BB%E5%8F%96HBase%E8%A7%A3%E6%9E%90json%E5%88%9B%E5%BB%BA%E4%B8%B4%E6%97%B6%E8%A1%A8%E5%BD%95%E5%85%A5%E5%88%B0Hive%E8%A1%A8/</loc>
+    <lastmod>2018-08-10T16:17:14.365Z</lastmod>
+    <data>
+        <display>
+        <title>Spark读取HBase解析json创建临时表录入到Hive表</title>
+        <pubTime>2018-08-10T16:09:46.585Z</pubTime>
+        
+        <tag>Spark</tag>
+         
+        <tag>SparkSOL</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://gangtieguo.cn/2018/07/09/hadoop-spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2018-08-10T16:07:47.069Z</lastmod>
     <data>
@@ -36,28 +102,6 @@
         <pubTime>2018-08-10T10:19:15.453Z</pubTime>
         
         <tag>HBase，操作</tag>
-         
-         
-           
-             
-              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/10/Hbase-shell%E6%93%8D%E4%BD%9C/</loc>
-    <lastmod>2018-08-10T15:58:55.863Z</lastmod>
-    <data>
-        <display>
-        <title>Hbase-shell操作</title>
-        <pubTime>2018-08-10T09:27:05.100Z</pubTime>
-        
-        <tag>HBase</tag>
-         
-        <tag>Shell</tag>
          
          
            
@@ -639,9 +683,9 @@
         <title>spring集成权限校验</title>
         <pubTime>2018-05-08T10:34:55.000Z</pubTime>
         
-        <tag>Java</tag>
-         
         <tag>开发</tag>
+         
+        <tag>Java</tag>
          
         <tag>技术</tag>
          
