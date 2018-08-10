@@ -1,6 +1,6 @@
 ---
 title:HBase拷贝生产环境数据到本地运行调试
-date: 
+date: 2018年08月06日 22时15分52秒
 tags:  [HBase，操作]
 categories: 大数据
 toc: true

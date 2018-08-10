@@ -1,6 +1,6 @@
 ---
 title:Hbase-shell操作
-date:
+date: 2018年08月06日 22时15分52秒
 tags:  [HBase,Shell]
 categories: 大数据
 toc: true
