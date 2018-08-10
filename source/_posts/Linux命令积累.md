@@ -25,7 +25,6 @@ toc: true
 
 ```bash
 ssh root@slave01 "sed -i '6c advertised.host.name=slave01 ' $KAFKA_HOME/config/server.properties"
-s
 ```
 
 删除第一行`sed -i '1d'  `     sed -i '1d' 文件名
