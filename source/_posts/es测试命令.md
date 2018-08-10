@@ -9,6 +9,8 @@ typora-copy-images-to: ipic
 
 [TOC]
 
+![](https://ws1.sinaimg.cn/large/006tNbRwgy1fu55ayb4i7j31kw0c73yz.jpg)
+
 简单命令测试和展示es的功能
 
 <!--more -->

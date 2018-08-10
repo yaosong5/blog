@@ -8,6 +8,8 @@ toc: true
 
 [TOC]
 
+![](https://ws1.sinaimg.cn/large/006tNbRwgy1fu552ugvkxj30ys0han0l.jpg)
+
 介绍：主要是读取通过mysql查到关联关系然后读取HBASE里面存放的Json，通过解析json将json数组对象里的元素拆分成单条json,再将json映射成临时表，查询临时表将数据落入到hive表中
 
 注意：查询HBASE的时候，HBase集群的HMaster，HRegionServer需要是正常运行
@@ -67,3 +69,4 @@ hbase里面存放的是身份id作为rowkey来存放的数据
     }).flatMap(r => r)
 ```
 
+代码中的 jsonObj2Map,map2Json 方法参照 [Json与Scala类型的相互转换处理](http://www.gangtieguo.cn/2018/08/11/Json与Scala类型的一些互相转换处理/)

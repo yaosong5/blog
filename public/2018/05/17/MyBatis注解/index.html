@@ -16,10 +16,12 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="现接触MyBatic记录一些注解">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-06T18:18:59.332Z">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fu551ai6pij30mm064q3r.jpg">
+<meta property="og:updated_time" content="2018-08-10T17:52:53.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MyBatis相关注解">
 <meta name="twitter:description" content="现接触MyBatic记录一些注解">
+<meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fu551ai6pij30mm064q3r.jpg">
     
 
     
@@ -331,7 +333,10 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p>现接触MyBatic记录一些注解<br><a id="more"></a><br>自动生成主键<br>        可以使用 @Options 注解的 userGeneratedKeys 和 keyProperty 属性让数据库产生 auto_increment（自增长）列的值，然后将生成的值设置到输入参数对象的属性中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into students(name,sex,age)  values(#&#123;name&#125;,#&#123;sex&#125;,#&#123;age&#125;"</span>)  </span><br><span class="line"><span class="meta">@Options</span>(useGeneratedKeys = <span class="keyword">true</span>, keyProperty =<span class="string">"userId"</span>)  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insertUser</span><span class="params">(User user)</span></span>;</span><br></pre></td></tr></table></figure></p>
+                <p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fu551ai6pij30mm064q3r.jpg" alt=""></p>
+<p>现接触MyBatic记录一些注解<br><a id="more"></a><br>自动生成主键  </p>
+<pre><code>可以使用 @Options 注解的 userGeneratedKeys 和 keyProperty 属性让数据库产生 auto_increment（自增长）列的值，然后将生成的值设置到输入参数对象的属性中。 
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into students(name,sex,age)  values(#&#123;name&#125;,#&#123;sex&#125;,#&#123;age&#125;"</span>)  </span><br><span class="line"><span class="meta">@Options</span>(useGeneratedKeys = <span class="keyword">true</span>, keyProperty =<span class="string">"userId"</span>)  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insertUser</span><span class="params">(User user)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>将自增的Id存入到userId属性中</p>
 
             

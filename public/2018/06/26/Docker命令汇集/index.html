@@ -8,18 +8,20 @@
 
     <title>Docker常用命令汇集 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name slav">
+    <meta name="description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name sla">
 <meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker常用命令汇集">
 <meta property="og:url" content="http://gangtieguo.cn/2018/06/26/Docker命令汇集/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name slav">
+<meta property="og:description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name sla">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-08T02:02:14.250Z">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu55c5h3g1j319i0eu0tg.jpg">
+<meta property="og:updated_time" content="2018-08-10T18:03:11.035Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker常用命令汇集">
-<meta name="twitter:description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name slav">
+<meta name="twitter:description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name sla">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu55c5h3g1j319i0eu0tg.jpg">
     
 
     
@@ -331,7 +333,8 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p>[TOC]</p>
+                <p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fu55c5h3g1j319i0eu0tg.jpg" alt=""></p>
+<p>[TOC]</p>
 <h1 id="Docker源配置"><a href="#Docker源配置" class="headerlink" title="Docker源配置"></a>Docker源配置</h1><p>  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：<br>  vi /etc/docker/daemon.json<br>  {“registry-mirrors”:[“<a href="http://c1f0a193.m.daocloud.io&quot;]" target="_blank" rel="noopener">http://c1f0a193.m.daocloud.io&quot;]</a> }</p>
 <p>启动容器</p>
 <pre><code>docker run -itd  --net=br  --name slave02 --hostname slave02 centos:hadoop-spark &amp;&gt; /dev/null

@@ -98,4 +98,4 @@ hbase-site.xml
 	在 hbasezk1,2,3 中的任意一台机器使用 $HBASE_HOME/bin/hbase shell
 
 	进入 hbase 自带的 shell 环境，然后使用命令 version 等，进行查看 hbase 信息及建立表等操作。
-·
+要配置 HBase 高可用的话，只需要启动两个 HMaster，让 Zookeeper 自己去选择一个 Master Acitve。
