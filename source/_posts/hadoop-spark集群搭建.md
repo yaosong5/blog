@@ -26,75 +26,76 @@ docker run -itd  --name bigdata --hostname bigdata kinogmt/centos-ssh:6.7 &> /de
 
 <!--more-->
 
-在容器中下载需要的elk的源包。做解压就不赘述，很多案例教程。
+在容器中下载需要的elk的源包，做解压就不赘述，很多案例教程。
 
-> 我是采用的下载到宿主机，解压后，用 "docker cp 解压包目录  os:/usr/loca/"来传到容器内，比在容器内下载速度更快
->
-> # 拷贝文件到容器
->
-> 命令格式`docker cp 本地文件路径   容器id或者容器名称:`
-> 将所有组件下载解压并拷贝到容器
->
-> ```bash
-> docker cp /Users/yaosong/Downloads/hadoop-2.8.0.tar.gz   bigdata:/
-> docker cp /Users/yaosong/Downloads/spark-2.2.0-bin-without-hadoop.tgz   bigdata:/
-> docker cp /Users/yaosong/Downloads/jdk-8u144-linux-x64.rpm   bigdata:/
-> docker cp /Users/yaosong/Downloads/spark-2.1.0-bin-hadoop2.6.tgz   bigdata:/
-> docker cp  /Users/yaosong/Yao/spark源包/hive bigdata:/usr
-> docker cp /Users/yaosong/Downloads/jdk-8u144-linux-x64.rpm  bigdata:/
-> docker cp /Users/yaosong/Downloads/hadoop-2.8.0.tar.gz  bigdata:/
-> docker cp /Users/yaosong/Downloads/spark-2.2.0-bin-without-hadoop.tgz  bigdata:/
-> docker cp /Users/yaosong/Downloads/spark-2.1.0-bin-hadoop2.6.tgz  bigdata:/
-> docker cp /Users/yaosong/Yao/spark源包/hbase  bigdata:/usr
-> docker cp /Users/yaosong/Yao/spark源包/zk   bigdata:/usr
-> docker cp  /Users/yaosong/Yao/ant    bigdata:/usr
-> docker cp  /Users/yaosong/Yao/maven  bigdata:/usr
-> docker cp  /Users/yaosong/Yao/hue4  bigdata:/usr
-> 创建home
->
-> vim /etc/profile
->
-> mac: vim ~/.bashrc
->
-> 添加以下内容
->
->     export JAVA_HOME=/usr/java/jdk
->     export PATH=$JAVA_HOME:$PATH
->     export SCALA_HOME=/usr/scala-2.12.3/
->     export HADOOP_HOME=/usr/hadoop
->     export HADOOP_CONFIG_HOME=$HADOOP_HOME/etc/hadoop
->     export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
->     export PATH=$PATH:$HADOOP_HOME/bin
->     export PATH=$PATH:$HADOOP_HOME/sbin
->     export SPARK_DIST_CLASSPATH=$(hadoop classpath)
->     SPARK_MASTER_IP=master
->     SPARK_LOCAL_DIRS=/usr/spark
->     SPARK_DRIVER_MEMORY=1G
->     export SPARK_HOME=/usr/spark
->     export PATH=$SPARK_HOME/bin:$PATH
->     export PATH=$SPARK_HOME/sbin:$PATH
->     
->     MAVEN_HOME=/usr/maven
->     export MAVEN_HOME
->     export PATH=${PATH}:${MAVEN_HOME}/bin
->     ANT_HOME=/usr/ant
->     PATH=$JAVA_HOME/bin:$ANT_HOME/bin:$PATH
->     export ANT_HOME PATH
->     HUE_HOME=/usr/hue4
->     export ZK_HOME=/usr/zk
->     export HBASE_HOME=/usr/hbase
->     export PATH=$HBASE_HOME/bin:$PATH
->     export PATH=$ZK_HOME/bin:$PATH
->
->
->
-> ```
+ 我是采用的下载到宿主机，解压后，用 "docker cp 解压包目录  os:/usr/loca/"来传到容器内，比在容器内下载速度更快
+
+ # 拷贝文件到容器
+
+ 
+
+ 命令格式`docker cp 本地文件路径   容器id或者容器名称:`
+ 将所有组件下载解压并拷贝到容器
+
+ ```bash
+ docker cp /Users/yaosong/Downloads/hadoop-2.8.0.tar.gz   bigdata:/
+ docker cp /Users/yaosong/Downloads/spark-2.2.0-bin-without-hadoop.tgz   bigdata:/
+ docker cp /Users/yaosong/Downloads/jdk-8u144-linux-x64.rpm   bigdata:/
+ docker cp /Users/yaosong/Downloads/spark-2.1.0-bin-hadoop2.6.tgz   bigdata:/
+ docker cp  /Users/yaosong/Yao/spark源包/hive bigdata:/usr
+ docker cp /Users/yaosong/Downloads/jdk-8u144-linux-x64.rpm  bigdata:/
+ docker cp /Users/yaosong/Downloads/hadoop-2.8.0.tar.gz  bigdata:/
+ docker cp /Users/yaosong/Downloads/spark-2.2.0-bin-without-hadoop.tgz  bigdata:/
+ docker cp /Users/yaosong/Downloads/spark-2.1.0-bin-hadoop2.6.tgz  bigdata:/
+ docker cp /Users/yaosong/Yao/spark源包/hbase  bigdata:/usr
+ docker cp /Users/yaosong/Yao/spark源包/zk   bigdata:/usr
+ docker cp  /Users/yaosong/Yao/ant    bigdata:/usr
+ docker cp  /Users/yaosong/Yao/maven  bigdata:/usr
+ docker cp  /Users/yaosong/Yao/hue4  bigdata:/usr
+ 创建home
+
+ vim /etc/profile
+
+ mac: vim ~/.bashrc
+
+ 添加以下内容
+
+     export JAVA_HOME=/usr/java/jdk
+     export PATH=$JAVA_HOME:$PATH
+     export SCALA_HOME=/usr/scala-2.12.3/
+     export HADOOP_HOME=/usr/hadoop
+     export HADOOP_CONFIG_HOME=$HADOOP_HOME/etc/hadoop
+     export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+     export PATH=$PATH:$HADOOP_HOME/bin
+     export PATH=$PATH:$HADOOP_HOME/sbin
+     export SPARK_DIST_CLASSPATH=$(hadoop classpath)
+     SPARK_MASTER_IP=master
+     SPARK_LOCAL_DIRS=/usr/spark
+     SPARK_DRIVER_MEMORY=1G
+     export SPARK_HOME=/usr/spark
+     export PATH=$SPARK_HOME/bin:$PATH
+     export PATH=$SPARK_HOME/sbin:$PATH
+     
+     MAVEN_HOME=/usr/maven
+     export MAVEN_HOME
+     export PATH=${PATH}:${MAVEN_HOME}/bin
+     ANT_HOME=/usr/ant
+     PATH=$JAVA_HOME/bin:$ANT_HOME/bin:$PATH
+     export ANT_HOME PATH
+     HUE_HOME=/usr/hue4
+     export ZK_HOME=/usr/zk
+     export HBASE_HOME=/usr/hbase
+     export PATH=$HBASE_HOME/bin:$PATH
+     export PATH=$ZK_HOME/bin:$PATH
 
 
+
+ ```
 
 
 
 # 安装
+
 ### 创建 hadoop 集群所需目录：
 
 在以下配置文件中会有以下目录
@@ -110,8 +111,10 @@ cd $HADOOP_CONFIG_HOME/
 `cd $HADOOP_CONFIG_HOME/` or `cd $HADOOP_HOME/etc/hadoop`
 #### hdfs slaves
 
-	slave01
-	slave02
+```bash
+slave01
+slave02
+```
 
 #### core-site.xml：
 
@@ -260,20 +263,28 @@ $HADOOP_HOME/bin/hadoop namenode -format
 
 测试
 
-	yarn 8088端口   http://yourip:8088
+```bash
+yarn 8088端口   http://yourip:8088
+```
 
-	hdfs 50070端口 hdfs3.0为9870   http://yourip:50070
+```bash
+hdfs 50070端口 hdfs3.0为9870   http://yourip:50070
+```
 
 ## spark只需要在slaves中添加
 
-	slave01
-	slave02
-	**sparkUI端口8080**
+```bash
+slave01
+slave02
+
+```
+**sparkUI端口8080**
+
 # 测试spark集群
 
 启动spark 
 
-```
+```bash
 $HADOOP_HOME/bin/start-all.sh
 ```
 

@@ -88,7 +88,15 @@ sudo yum install python-devel.x86_64 -y
 
 ### mysql
 
-找到位置更改host
+```Ini
+ [[database]]
+  host=master
+  port=3306
+  engine=mysql
+  user=root
+  password=root
+  name=hue
+```
 
 ### hive
 

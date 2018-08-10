@@ -1,1 +1,1 @@
-http://gangtieguo.cn/2018/08/07/zookeeper配置/
+http://gangtieguo.cn/2018/08/07/Spark本地调试远程集群程序/

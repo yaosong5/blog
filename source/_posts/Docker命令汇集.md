@@ -67,21 +67,24 @@ docker volume prune
 
 ## run 命令解释
 
-	-d 是后台启动
-	docker run -itd  --net=br  --name spark --hostname spark yaosong/spark:2.1.0 &> /dev/null
-	sudo docker exec -it hm bash（进入后台启动的容器）
-	
-	和下面一样（直接进入）
-	docker run -it --net=br  --name spark --hostname spark yaosong/spark:2.1.0 bash
+```Bash
+-d 是后台启动
+docker run -itd  --net=br  --name spark --hostname spark yaosong/spark:2.1.0 &> /dev/null
+sudo docker exec -it spark bash（进入后台启动的容器）
+和下面一样（直接进入）
+docker run -it --net=br  --name spark --hostname spark yaosong/spark:2.1.0 bash
+```
 
 ## exec 进入后台容器
-	docker exec -it spark bash
-	docker exec -it 容器名 bash
-	执行命令 docker exec -it 容器名 ip addr 可以拿到 a0 容器的 ip
+```Bash
+docker exec -it spark bash
+docker exec -it 容器名 bash
+执行命令 docker exec -it 容器名 ip addr 可以拿到 a0 容器的 ip
+```
 
 ## logs查看容器启动日志
 
-```
+```Bash
 docker logs -f -t --tail 100  kanbigdata_namenode_1
 ```
 
