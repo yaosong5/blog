@@ -6,20 +6,20 @@
     <meta charset="utf-8">
     
 
-    <title>git命令总结 | 钢铁锅</title>
+    <title>Hbase-shell操作 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="提交 git add .git commit -m “ “git push origin mastergit push origin master -f  拉取git pull &amp;lt;远程主机名&amp;gt; &amp;lt;远程分支名&amp;gt;:&amp;lt;本地分支名&amp;gt;如拉取远程的 master 分支到本地 wy 分支：git pull origin master:wy 分支切换">
-<meta name="keywords" content="git">
+    <meta name="description" content="[TOC] hbase使用命令行操作，简单直接，方便快捷，掌握一点必备的基础命令。 HBase启动命令行 1$HBASE_HOME/bin/hbase shell">
+<meta name="keywords" content="HBase,Shell">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git命令总结">
-<meta property="og:url" content="http://gangtieguo.cn/2018/05/22/git命令总结/index.html">
+<meta property="og:title" content="Hbase-shell操作">
+<meta property="og:url" content="http://gangtieguo.cn/2018/08/10/Hbase-shell操作/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="提交 git add .git commit -m “ “git push origin mastergit push origin master -f  拉取git pull &amp;lt;远程主机名&amp;gt; &amp;lt;远程分支名&amp;gt;:&amp;lt;本地分支名&amp;gt;如拉取远程的 master 分支到本地 wy 分支：git pull origin master:wy 分支切换">
+<meta property="og:description" content="[TOC] hbase使用命令行操作，简单直接，方便快捷，掌握一点必备的基础命令。 HBase启动命令行 1$HBASE_HOME/bin/hbase shell">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-06T19:14:55.476Z">
+<meta property="og:updated_time" content="2018-08-10T15:53:58.607Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="git命令总结">
-<meta name="twitter:description" content="提交 git add .git commit -m “ “git push origin mastergit push origin master -f  拉取git pull &amp;lt;远程主机名&amp;gt; &amp;lt;远程分支名&amp;gt;:&amp;lt;本地分支名&amp;gt;如拉取远程的 master 分支到本地 wy 分支：git pull origin master:wy 分支切换">
+<meta name="twitter:title" content="Hbase-shell操作">
+<meta name="twitter:description" content="[TOC] hbase使用命令行操作，简单直接，方便快捷，掌握一点必备的基础命令。 HBase启动命令行 1$HBASE_HOME/bin/hbase shell">
     
 
     
@@ -247,7 +247,7 @@ var _hmt = _hmt || [];
 
             
 
-            <section id="main"><article id="post-git命令总结" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Hbase-shell操作" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -255,7 +255,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            git命令总结
+            Hbase-shell操作
         </h1>
     
 
@@ -264,8 +264,8 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/05/22/git命令总结/">
-            <time datetime="2018-05-21T17:43:07.025Z" itemprop="datePublished">2018-05-22</time>
+        <a href="/2018/08/10/Hbase-shell操作/">
+            <time datetime="2018-08-10T09:27:05.100Z" itemprop="datePublished">2018-08-10</time>
         </a>
     </div>
 
@@ -273,13 +273,13 @@ var _hmt = _hmt || [];
                         
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/工程框架/">工程框架</a>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/git/">git</a>
+        <a class="tag-link" href="/tags/HBase/">HBase</a>, <a class="tag-link" href="/tags/Shell/">Shell</a>
     </div>
 
                     </div>
@@ -304,7 +304,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#提交"><span class="toc-number">1.</span> <span class="toc-text">提交</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉取"><span class="toc-number">2.</span> <span class="toc-text">拉取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分支切换"><span class="toc-number">3.</span> <span class="toc-text">分支切换</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建表"><span class="toc-number">1.</span> <span class="toc-text">创建表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看表结构"><span class="toc-number">2.</span> <span class="toc-text">查看表结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除表"><span class="toc-number">3.</span> <span class="toc-text">删除表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改表"><span class="toc-number">4.</span> <span class="toc-text">修改表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#表数据的增删查改："><span class="toc-number">5.</span> <span class="toc-text">表数据的增删查改：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#添加数据："><span class="toc-number">5.1.</span> <span class="toc-text">添加数据：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询数据"><span class="toc-number">5.2.</span> <span class="toc-text">查询数据:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#扫描表"><span class="toc-number">5.3.</span> <span class="toc-text">扫描表:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询表中的数据行数"><span class="toc-number">5.4.</span> <span class="toc-text">查询表中的数据行数:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除数据"><span class="toc-number">5.5.</span> <span class="toc-text">删除数据:</span></a></li></ol></li></ol>
             </div>
 
 
@@ -331,12 +331,21 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <h2 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h2><blockquote>
-<p>git add .<br>git commit -m “ “<br>git push origin master<br>git push origin master -f</p>
-</blockquote>
-<h2 id="拉取"><a href="#拉取" class="headerlink" title="拉取"></a>拉取</h2><p>git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;<br>如拉取远程的 master 分支到本地 wy 分支：<br>git pull origin master:wy</p>
-<h2 id="分支切换"><a href="#分支切换" class="headerlink" title="分支切换"></a>分支切换</h2><a id="more"></a>
-<p>查看分支：git branch<br>创建分支：git branch <name><br>切换分支：git checkout <name><br>创建 + 切换分支：git checkout -b <name><br>合并某分支到当前分支：git merge <name><br>删除分支：git branch -d <name></name></name></name></name></name></p>
+                <p>[TOC]</p>
+<p>hbase使用命令行操作，简单直接，方便快捷，掌握一点必备的基础命令。</p>
+<p>HBase启动命令行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$HBASE_HOME</span>/bin/hbase shell</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create <span class="string">'testtable'</span>,&#123;NAME=&gt;<span class="string">'cf'</span>,VERSIONS=&gt;2&#125;,&#123;NAME=&gt;<span class="string">'cf2'</span>,VERSIONS=&gt;2&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="查看表结构"><a href="#查看表结构" class="headerlink" title="查看表结构"></a>查看表结构</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">disable</span> <span class="string">'testtable'</span></span><br></pre></td></tr></table></figure>
+<h2 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop <span class="string">'testtable'</span></span><br></pre></td></tr></table></figure>
+<h2 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">disable</span> <span class="string">'testtable'</span></span><br><span class="line">alter <span class="string">'testtable'</span>,&#123;NAME=&gt;<span class="string">'cf'</span>,TTL=&gt;<span class="string">'10000000'</span>&#125;,&#123;NAME=&gt;<span class="string">'cf2'</span>,TTL=&gt;<span class="string">'10000000'</span>&#125;</span><br><span class="line"><span class="built_in">enable</span> <span class="string">'testtable'</span></span><br><span class="line">修改表必须先 <span class="built_in">disable</span> 表</span><br></pre></td></tr></table></figure>
+<h2 id="表数据的增删查改："><a href="#表数据的增删查改：" class="headerlink" title="表数据的增删查改："></a>表数据的增删查改：</h2><h3 id="添加数据："><a href="#添加数据：" class="headerlink" title="添加数据："></a>添加数据：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">put <span class="string">'testtable'</span>,<span class="string">'rowkey1'</span>,<span class="string">'cf:key1'</span>,<span class="string">'val1'</span></span><br></pre></td></tr></table></figure>
+<h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据:"></a>查询数据:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">get <span class="string">'testtable'</span>,<span class="string">'rowkey1'</span>,<span class="string">'cf:key1'</span></span><br><span class="line">get <span class="string">'testtable'</span>,<span class="string">'rowkey1'</span>, &#123;COLUMN=&gt;<span class="string">'cf:key1'</span>&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="扫描表"><a href="#扫描表" class="headerlink" title="扫描表:"></a>扫描表:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scan <span class="string">'testtable'</span>,&#123;COLUMNS=&gt;cf:col1,LIMIT=&gt;5&#125; <span class="comment">#可以添加STARTROW、TIMERANGE和FITLER等高级功能</span></span><br></pre></td></tr></table></figure>
+<h3 id="查询表中的数据行数"><a href="#查询表中的数据行数" class="headerlink" title="查询表中的数据行数:"></a>查询表中的数据行数:</h3><p>语法：count <table>, {INTERVAL =&gt; intervalNum, CACHE =&gt; cacheNum}</table></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">count <span class="string">'testtable'</span>,&#123;INTERVAL =&gt; 100, CACHE =&gt; 500&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据:"></a>删除数据:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete <span class="string">'testtable'</span>,<span class="string">'rowkey1'</span>,<span class="string">'cf:key1'</span></span><br><span class="line">truncate <span class="string">'testtable'</span></span><br></pre></td></tr></table></figure>
 
             
 
@@ -415,7 +424,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/05/22/git命令总结/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/08/10/Hbase-shell操作/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -424,19 +433,19 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/05/30/json-tool使用/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/08/10/HBase拷贝生产环境数据到本地运行调试/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    jsontool使用
+                    HBase拷贝生产环境数据到本地运行调试
                 
             </div>
         </a>
     
     
-        <a href="/2018/05/22/博客源文件提交到仓库/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/08/07/Spark本地调试远程集群程序/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">源文件提交到仓库</div>
+            <div class="article-nav-title">Spark本地调试远程集群程序</div>
         </a>
     
 </nav>

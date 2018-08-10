@@ -1,1 +1,1 @@
-http://gangtieguo.cn/2018/08/07/Spark本地调试远程集群程序/
+http://gangtieguo.cn/2018/08/10/HBase拷贝生产环境数据到本地运行调试/
