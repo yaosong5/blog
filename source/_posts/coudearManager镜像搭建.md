@@ -1,5 +1,5 @@
 ---
-title:  CoudearManager镜像搭建
+title:  CoudearManager镜像搭建(dcoker)
 date: 2018年08月11日 02时55分44秒
 tags:  [Docker,CDH]
 categories: 安装部署
