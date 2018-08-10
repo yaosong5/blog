@@ -8,18 +8,18 @@
 
     <title>kafka的启动及命令 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="kafka的启动脚本 kafka-startall.sh  #!/bin/bash sed -e &amp;apos;1c borker.id=0&amp;apos; $KAFKA_HOME/config/server.properties $KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties ssh">
+    <meta name="description" content="kafka的启动脚本kafka-startall.sh 1234567891011#!/bin/bashsed -e &apos;1c borker.id=0&apos; $KAFKA_HOME/config/server.properties$KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.propertiesssh ro">
 <meta name="keywords" content="Kakfa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kafka的启动及命令">
 <meta property="og:url" content="http://gangtieguo.cn/2018/07/08/kafka启动脚本/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="kafka的启动脚本 kafka-startall.sh  #!/bin/bash sed -e &amp;apos;1c borker.id=0&amp;apos; $KAFKA_HOME/config/server.properties $KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties ssh">
+<meta property="og:description" content="kafka的启动脚本kafka-startall.sh 1234567891011#!/bin/bashsed -e &apos;1c borker.id=0&apos; $KAFKA_HOME/config/server.properties$KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.propertiesssh ro">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-06T18:21:34.826Z">
+<meta property="og:updated_time" content="2018-08-10T16:53:05.439Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kafka的启动及命令">
-<meta name="twitter:description" content="kafka的启动脚本 kafka-startall.sh  #!/bin/bash sed -e &amp;apos;1c borker.id=0&amp;apos; $KAFKA_HOME/config/server.properties $KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties ssh">
+<meta name="twitter:description" content="kafka的启动脚本kafka-startall.sh 1234567891011#!/bin/bashsed -e &apos;1c borker.id=0&apos; $KAFKA_HOME/config/server.properties$KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.propertiesssh ro">
     
 
     
@@ -304,7 +304,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka的启动脚本"><span class="toc-number">1.</span> <span class="toc-text">kafka的启动脚本</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka的启动脚本"><span class="toc-number">1.</span> <span class="toc-text">kafka的启动脚本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka的shell命令"><span class="toc-number">2.</span> <span class="toc-text">kafka的shell命令</span></a></li></ol>
             </div>
 
 
@@ -331,28 +331,11 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <h1 id="kafka的启动脚本"><a href="#kafka的启动脚本" class="headerlink" title="kafka的启动脚本"></a>kafka的启动脚本</h1><pre><code> kafka-startall.sh
+                <h1 id="kafka的启动脚本"><a href="#kafka的启动脚本" class="headerlink" title="kafka的启动脚本"></a>kafka的启动脚本</h1><pre><code>kafka-startall.sh
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">sed -e <span class="string">'1c borker.id=0'</span> <span class="variable">$KAFKA_HOME</span>/config/server.properties</span><br><span class="line"><span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties</span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '1c borker.id=1 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '5c host.name=slave01 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '6c advertised.host.name=slave01 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"<span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '1c borker.id=2 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '5c host.name=slave02 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '6c advertised.host.name=slave02 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"<span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h1 id="kafka的shell命令"><a href="#kafka的shell命令" class="headerlink" title="kafka的shell命令"></a>kafka的shell命令</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/usr/kafka/bin/kafka-topics.sh --create --zookeeper hbasezk1:2181 --replication-factor 2 --partitions 1 --topic shuaige</span><br><span class="line">/usr/kafka/bin/kafka-console-producer.sh --broker-list master:9092 --topic shuaige</span><br><span class="line"></span><br><span class="line"><span class="comment">#在一台服务器上创建一个订阅者</span></span><br><span class="line">/usr/kafka/bin/kafka-console-consumer.sh --zookeeper hbasezk1:2181 --topic shuaige --from-beginning</span><br><span class="line">/kafka-topics.sh --list --zookeeper localhost:12181</span><br></pre></td></tr></table></figure>
 
-#!/bin/bash
-sed -e &apos;1c borker.id=0&apos; $KAFKA_HOME/config/server.properties
-$KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties
-ssh root@slave01 &quot;sed -i &apos;1c borker.id=1 &apos; $KAFKA_HOME/config/server.properties&quot;
-ssh root@slave01 &quot;sed -i &apos;5c host.name=slave01 &apos; $KAFKA_HOME/config/server.properties&quot;
-ssh root@slave01 &quot;sed -i &apos;6c advertised.host.name=slave01 &apos; $KAFKA_HOME/config/server.properties&quot;
-ssh root@slave01 &quot;$KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties&quot;
-ssh root@slave02 &quot;sed -i &apos;1c borker.id=2 &apos; $KAFKA_HOME/config/server.properties&quot;
-ssh root@slave02 &quot;sed -i &apos;5c host.name=slave02 &apos; $KAFKA_HOME/config/server.properties&quot;
-ssh root@slave02 &quot;sed -i &apos;6c advertised.host.name=slave02 &apos; $KAFKA_HOME/config/server.properties&quot;
-ssh root@slave02 &quot;$KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties&quot;
-</code></pre><a id="more"></a>
-<pre><code>kafka的shell命令
-/usr/kafka/bin/kafka-topics.sh --create --zookeeper hbasezk1:2181 --replication-factor 2 --partitions 1 --topic shuaige
-/usr/kafka/bin/kafka-console-producer.sh --broker-list master:9092 --topic shuaige
-
-&apos;&apos;&apos;在一台服务器上创建一个订阅者&apos;&apos;&apos;
-/usr/kafka/bin/kafka-console-consumer.sh --zookeeper hbasezk1:2181 --topic shuaige --from-beginning
-/kafka-topics.sh --list --zookeeper localhost:12181
-</code></pre>
             
 
         </div>

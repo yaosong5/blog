@@ -1108,20 +1108,8 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><h1 id="kafka的启动脚本"><a href="#kafka的启动脚本" class="headerlink" title="kafka的启动脚本"></a>kafka的启动脚本</h1><pre><code> kafka-startall.sh
-
-#!/bin/bash
-sed -e &apos;1c borker.id=0&apos; $KAFKA_HOME/config/server.properties
-$KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties
-ssh root@slave01 &quot;sed -i &apos;1c borker.id=1 &apos; $KAFKA_HOME/config/server.properties&quot;
-ssh root@slave01 &quot;sed -i &apos;5c host.name=slave01 &apos; $KAFKA_HOME/config/server.properties&quot;
-ssh root@slave01 &quot;sed -i &apos;6c advertised.host.name=slave01 &apos; $KAFKA_HOME/config/server.properties&quot;
-ssh root@slave01 &quot;$KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties&quot;
-ssh root@slave02 &quot;sed -i &apos;1c borker.id=2 &apos; $KAFKA_HOME/config/server.properties&quot;
-ssh root@slave02 &quot;sed -i &apos;5c host.name=slave02 &apos; $KAFKA_HOME/config/server.properties&quot;
-ssh root@slave02 &quot;sed -i &apos;6c advertised.host.name=slave02 &apos; $KAFKA_HOME/config/server.properties&quot;
-ssh root@slave02 &quot;$KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties&quot;
-</code></pre></p>
+            <p><h1 id="kafka的启动脚本"><a href="#kafka的启动脚本" class="headerlink" title="kafka的启动脚本"></a>kafka的启动脚本</h1><pre><code>kafka-startall.sh
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">sed -e <span class="string">'1c borker.id=0'</span> <span class="variable">$KAFKA_HOME</span>/config/server.properties</span><br><span class="line"><span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties</span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '1c borker.id=1 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '5c host.name=slave01 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '6c advertised.host.name=slave01 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"<span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '1c borker.id=2 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '5c host.name=slave02 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '6c advertised.host.name=slave02 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"<span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br></pre></td></tr></table></figure></p>
             <p class="article-more-link">
                 <a href="/2018/07/08/kafka启动脚本/#more">查看更多</a>
             </p>

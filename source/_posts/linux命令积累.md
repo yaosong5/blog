@@ -20,8 +20,15 @@ grammar_cjkRuby: true
 动态显示机器各端口的链接情况`while :; do netstat -apn | grep ":80" | wc -l; sleep 1; done`
 ## sed
 更改第一行 `sed -i '1s/.*//'`     sed -i '1s/.*/想更改的内容/'
+
+```bash
+ssh root@slave01 "sed -i '6c advertised.host.name=slave01 ' $KAFKA_HOME/config/server.properties"
+s
+```
+
 删除第一行`sed -i '1d'  `     sed -i '1d' 文件名
 插入第一行 `sed -i '1i\' `       sed -i ‘1i\内容‘ 文件名
+
 ## cpu
 `cat /proc/cpuinfo | grep processor | wc -l`
 `lscpu`

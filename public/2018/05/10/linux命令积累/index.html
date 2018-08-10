@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="简单linux命令 nohup   &amp;amp;后台运行">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-08T01:24:21.993Z">
+<meta property="og:updated_time" content="2018-08-10T16:54:14.356Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux命令积累">
 <meta name="twitter:description" content="简单linux命令 nohup   &amp;amp;后台运行">
@@ -335,7 +335,9 @@ var _hmt = _hmt || [];
 <p><code>nohup   &amp;</code>后台运行</p>
 <a id="more"></a>
 <h2 id="文件查找"><a href="#文件查找" class="headerlink" title="文件查找"></a>文件查找</h2><p><code>find / -type f -size +10G</code><br>在Linux下如何让文件让按大小单位为M,G等易读格式，S size大小排序。  <code>ls -lhS</code><br><code>du -h * | sort -n</code><br>当然您也可以结合管道文件夹内最大的几个文件  <code>du -h * | sort -n|head</code><br>动态显示机器各端口的链接情况<code>while :; do netstat -apn | grep &quot;:80&quot; | wc -l; sleep 1; done</code></p>
-<h2 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h2><p>更改第一行 <code>sed -i &#39;1s/.*//&#39;</code>     sed -i ‘1s/.*/想更改的内容/‘<br>删除第一行<code>sed -i &#39;1d&#39;</code>     sed -i ‘1d’ 文件名<br>插入第一行 <code>sed -i &#39;1i\&#39;</code>       sed -i ‘1i\内容‘ 文件名</p>
+<h2 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h2><p>更改第一行 <code>sed -i &#39;1s/.*//&#39;</code>     sed -i ‘1s/.*/想更改的内容/‘</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh root@slave01 <span class="string">"sed -i '6c advertised.host.name=slave01 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">s</span><br></pre></td></tr></table></figure>
+<p>删除第一行<code>sed -i &#39;1d&#39;</code>     sed -i ‘1d’ 文件名<br>插入第一行 <code>sed -i &#39;1i\&#39;</code>       sed -i ‘1i\内容‘ 文件名</p>
 <h2 id="cpu"><a href="#cpu" class="headerlink" title="cpu"></a>cpu</h2><p><code>cat /proc/cpuinfo | grep processor | wc -l</code><br><code>lscpu</code></p>
 <h2 id="sz-rz与服务器交互上传下载文件"><a href="#sz-rz与服务器交互上传下载文件" class="headerlink" title="sz rz与服务器交互上传下载文件"></a>sz rz与服务器交互上传下载文件</h2><p><code>sudo yum install lrzsz -y</code></p>
 <h2 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h2><p> <code>sshfs  root@192.168.73.12:/home/ /csdn/win10/</code></p>
@@ -439,9 +441,9 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         </a>
     
     
-        <a href="/2018/05/08/spring集成权限校验/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/05/08/博客修改备份/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">spring集成权限校验</div>
+            <div class="article-nav-title">博客备份.md</div>
         </a>
     
 </nav>
