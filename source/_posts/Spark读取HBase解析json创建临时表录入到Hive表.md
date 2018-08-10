@@ -22,9 +22,13 @@ spark读取本地HBase
 
 参考 [Spark读取HBase](http://www.gangtieguo.cn/2018/08/11/Spark读取Hbase/)
 
+# json样例
+
 ![](https://ws1.sinaimg.cn/large/006tNbRwgy1fu53tng462j31721e6afd.jpg)
 
 
+
+# 读取hbase
 
 hbase里面存放的是身份id作为rowkey来存放的数据
 
@@ -70,3 +74,38 @@ hbase里面存放的是身份id作为rowkey来存放的数据
 ```
 
 代码中的 jsonObj2Map,map2Json 方法参照 [Json与Scala类型的相互转换处理](http://www.gangtieguo.cn/2018/08/11/Json与Scala类型的一些互相转换处理/)
+
+这里拆分json数组每一个元素为一个json，存放在ListBuffer里面，通过flatMap压平rdd里面的内容。
+
+# 映射临时表
+
+最后将得到的json通过sparkSql创建成临时表
+
+```scala
+ val dataFrame: DataFrame = sqlContext.read.json(hbaseJsonRdd)
+dataFrame.createOrReplaceTempView("tmp_hbase")
+//// 测试
+
+println("++++++++++++++++++++++++++++++hbaseJsonRdd.....创建临时表 测试查询数据  ......++++++++++++++++++++++++++++++")
+val df = sqlContext.sql("select * from tmp_hbase limit 1")
+df.show(1)
+```
+
+# 插入Hive
+
+```scala
+sqlContext.sql("insert into ods.ods_r_juxinli_region_n partition(dt='20180101') select region_id as juxinli_region_id,request_id as juxinli_request_id," +
+        "region_loc as juxinli_rejion_loc ,region_uniq_num_cnt as juxinli_region_uniq_num_cnt ," +
+        "region_call_out_time as juxinli_region_call_out_time,region_call_in_time as juxinli_region_call_in_time,region_call_out_cnt as juxinli_region_call_out_cnt," +
+        "region_call_in_cnt as juxinli_region_call_in_cnt,region_avg_call_in_time as juxinli_region_avg_call_in_time,region_avg_call_out_time as juxinli_region_avg_call_out_time," +
+        "region_call_in_time_pct as juxinli_region_call_in_time_pct,region_call_out_time_pct as juxinli_region_call_out_time_pct ,region_call_in_cnt_pct as juxinli_region_call_in_cnt_pct," +
+        "region_call_out_cnt_pct as juxinli_region_call_out_cnt_pct,region_create_at as juxinli_region_create_at,region_update_at as juxinli_region_update_at from tmp_hbase")
+    }
+```
+
+**关闭资源**
+
+```scala
+sparkContext.stop()
+sparkSession.close()
+```

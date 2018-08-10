@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://gangtieguo.cn/2018/08/11/Spark%E8%AF%BB%E5%8F%96HBase%E8%A7%A3%E6%9E%90json%E5%88%9B%E5%BB%BA%E4%B8%B4%E6%97%B6%E8%A1%A8%E5%BD%95%E5%85%A5%E5%88%B0Hive%E8%A1%A8/</loc>
+    
+    <lastmod>2018-08-10T18:21:36.344Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://gangtieguo.cn/2018/06/26/Docker%E5%91%BD%E4%BB%A4%E6%B1%87%E9%9B%86/</loc>
     
     <lastmod>2018-08-10T18:03:11.035Z</lastmod>
@@ -47,13 +54,6 @@
     <loc>http://gangtieguo.cn/2018/08/11/Spark%E8%AF%BB%E5%8F%96Hbase/</loc>
     
     <lastmod>2018-08-10T17:56:47.563Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/11/Spark%E8%AF%BB%E5%8F%96HBase%E8%A7%A3%E6%9E%90json%E5%88%9B%E5%BB%BA%E4%B8%B4%E6%97%B6%E8%A1%A8%E5%BD%95%E5%85%A5%E5%88%B0Hive%E8%A1%A8/</loc>
-    
-    <lastmod>2018-08-10T17:54:19.038Z</lastmod>
     
   </url>
   
