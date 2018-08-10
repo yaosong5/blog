@@ -10,7 +10,10 @@ typora-copy-images-to: ipic
 
 [TOC]
 
+![](https://ws1.sinaimg.cn/large/006tNbRwgy1fu56b6k2qjj316y0s0jtg.jpg)
+
 # 创建hbasezk镜像
+
 ##   拷贝源码
 
 
@@ -23,6 +26,8 @@ docker cp /Users/yaosong/Yao/zk-start.sh 8019587d559b:/usr/
 ```
 
 参考https://www.cnblogs.com/netbloomy/p/6677883.html
+
+<!--more-->
 
 ## 解压
 

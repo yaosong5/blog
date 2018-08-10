@@ -5,8 +5,6 @@ tags:  [Jenkins]
 categories: 安装部署
 toc: true
 ---
-![Jenkins](https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/21/1529592059717.jpg)
-
 
 
 之前用yum模式安装，总是启动报错，解决了一番，未找到解决方案，后直接下载war包进行安装部署

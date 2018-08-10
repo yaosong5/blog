@@ -6,8 +6,13 @@ categories: 博客
 toc: true
 ---
 
+
+
+![](https://ws2.sinaimg.cn/large/006tNbRwgy1fu566e9ybjj30kg05q0t0.jpg)
+
 简单记录转移到博客到云服务器
 <!-- more -->
+
 #  原理及准备
 >我们在自己的电脑上写好博客, 使用 git 发布到代码仓库进行备份, git 仓库接收到 push 请求后, 使用 webhook 配合 nodejs 自动进行服务器端页面的更新.
 ## 准备
@@ -110,8 +115,8 @@ tips: 在此之前你可以使用 node webhook.js 来测试一下监听程序是
 我在这里碰到了一个 node 环境变量的问题, 读取不到 github-webhook-handler 这个模块, 找了很多办法也没有解决, 后来我直接在项目根目录的上级目录安装了这个模块, 问题就解决了.
 
 >cd /root/blog
-npm install github-webhook-handler
-npm 会从当前目录依次向上寻找含有 node_modules 目录并访问该模块.
+>npm install github-webhook-handler
+>npm 会从当前目录依次向上寻找含有 node_modules 目录并访问该模块.
 
 ### 普通方式运行 webhook.js
 利用 Linux 提供的 nohup 命令，让 webhooks.js 运行在后台
@@ -128,7 +133,7 @@ nohup node webhook.js > deploy.log &
 ``` 
 cd { 部署服务器的根目录 }
  nohup forever start webhook.js > deploy.log &
- ```
+```
  Ubuntu 中原本就有一个叫 node 的包。为了避免冲突，在 Ubuntu 上安装或使用 Node 得用 nodejs 这个名字。而 forever 默认是使用 node 作为执行脚本的程序名。所以为了处理 Ubuntu 存在的这种特殊情况，在启动 forever 时得另外添加一个参数：(其它则忽略)
 
 `forever start webhook.js -c nodejs`
