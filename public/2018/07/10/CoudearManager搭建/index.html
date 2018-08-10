@@ -6,20 +6,20 @@
     <meta charset="utf-8">
     
 
-    <title>linux命令-积累 | 钢铁锅</title>
+    <title>CoudearManager搭建 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="简单linux命令 nohup   &amp;amp;后台运行">
-<meta name="keywords" content="linux,开发">
+    <meta name="description" content="[TOC] 创建基础容器1docker run -itd  --net=br  --name cm --hostname cm yaosong5/centosbase:1.0 &amp;amp;&amp;gt; /dev/null 将下载的包进行解压然后进行拷贝12345docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/clouder">
+<meta name="keywords" content="Docker,CDH">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux命令-积累">
-<meta property="og:url" content="http://gangtieguo.cn/2018/05/10/Linux命令积累/index.html">
+<meta property="og:title" content="CoudearManager搭建">
+<meta property="og:url" content="http://gangtieguo.cn/2018/07/10/CoudearManager搭建/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="简单linux命令 nohup   &amp;amp;后台运行">
+<meta property="og:description" content="[TOC] 创建基础容器1docker run -itd  --net=br  --name cm --hostname cm yaosong5/centosbase:1.0 &amp;amp;&amp;gt; /dev/null 将下载的包进行解压然后进行拷贝12345docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/clouder">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-10T18:57:52.109Z">
+<meta property="og:updated_time" content="2018-08-10T19:05:49.436Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="linux命令-积累">
-<meta name="twitter:description" content="简单linux命令 nohup   &amp;amp;后台运行">
+<meta name="twitter:title" content="CoudearManager搭建">
+<meta name="twitter:description" content="[TOC] 创建基础容器1docker run -itd  --net=br  --name cm --hostname cm yaosong5/centosbase:1.0 &amp;amp;&amp;gt; /dev/null 将下载的包进行解压然后进行拷贝12345docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/clouder">
     
 
     
@@ -247,7 +247,7 @@ var _hmt = _hmt || [];
 
             
 
-            <section id="main"><article id="post-Linux命令积累" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-CoudearManager搭建" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -255,7 +255,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            linux命令-积累
+            CoudearManager搭建
         </h1>
     
 
@@ -264,8 +264,8 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/05/10/Linux命令积累/">
-            <time datetime="2018-05-10T07:37:28.983Z" itemprop="datePublished">2018-05-10</time>
+        <a href="/2018/07/10/CoudearManager搭建/">
+            <time datetime="2018-07-10T14:10:04.881Z" itemprop="datePublished">2018-07-10</time>
         </a>
     </div>
 
@@ -273,13 +273,13 @@ var _hmt = _hmt || [];
                         
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Linux/">Linux</a>
+        <a class="article-category-link" href="/categories/安装部署/">安装部署</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/linux/">linux</a>, <a class="tag-link" href="/tags/开发/">开发</a>
+        <a class="tag-link" href="/tags/CDH/">CDH</a>, <a class="tag-link" href="/tags/Docker/">Docker</a>
     </div>
 
                     </div>
@@ -304,7 +304,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#文件查找"><span class="toc-number">1.</span> <span class="toc-text">文件查找</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sed"><span class="toc-number">2.</span> <span class="toc-text">sed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cpu"><span class="toc-number">3.</span> <span class="toc-text">cpu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sz-rz与服务器交互上传下载文件"><span class="toc-number">4.</span> <span class="toc-text">sz rz与服务器交互上传下载文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#挂载"><span class="toc-number">5.</span> <span class="toc-text">挂载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看端口是否被监听"><span class="toc-number">6.</span> <span class="toc-text">查看端口是否被监听</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#创建基础容器"><span class="toc-number">1.</span> <span class="toc-text">创建基础容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将下载的包进行解压然后进行拷贝"><span class="toc-number">2.</span> <span class="toc-text">将下载的包进行解压然后进行拷贝</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将-parcel-文件放至-opt-cloudera-parcel-repo"><span class="toc-number">3.</span> <span class="toc-text">将 parcel 文件放至 /opt/cloudera/parcel-repo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#初始化-mysql-库"><span class="toc-number">4.</span> <span class="toc-text">初始化 mysql 库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建用户（所有节点执行）"><span class="toc-number">5.</span> <span class="toc-text">创建用户（所有节点执行）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Agent-配置"><span class="toc-number">6.</span> <span class="toc-text">Agent 配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建CM用的数据库"><span class="toc-number">7.</span> <span class="toc-text">创建CM用的数据库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cloudera推荐设置"><span class="toc-number">8.</span> <span class="toc-text">Cloudera推荐设置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、设置swap空间"><span class="toc-number">8.1.</span> <span class="toc-text">1、设置swap空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、关闭大页面压缩"><span class="toc-number">8.2.</span> <span class="toc-text">2、关闭大页面压缩</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动cloudera-manager-服务"><span class="toc-number">9.</span> <span class="toc-text">启动cloudera manager 服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#保存为镜像"><span class="toc-number">10.</span> <span class="toc-text">保存为镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建容器"><span class="toc-number">10.1.</span> <span class="toc-text">创建容器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#调错"><span class="toc-number">11.</span> <span class="toc-text">调错</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#链接hue连接不上"><span class="toc-number">11.1.</span> <span class="toc-text">链接hue连接不上</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提示hue测试连接连接不上，安装依赖："><span class="toc-number">11.2.</span> <span class="toc-text">提示hue测试连接连接不上，安装依赖：</span></a></li></ol></li></ol>
             </div>
 
 
@@ -331,18 +331,43 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p>简单linux命令</p>
-<p><code>nohup   &amp;</code><br>后台运行</p>
+                <p>[TOC]</p>
+<h1 id="创建基础容器"><a href="#创建基础容器" class="headerlink" title="创建基础容器"></a>创建基础容器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --net=br  --name cm --hostname cm yaosong5/centosbase:1.0 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
+<h1 id="将下载的包进行解压然后进行拷贝"><a href="#将下载的包进行解压然后进行拷贝" class="headerlink" title="将下载的包进行解压然后进行拷贝"></a>将下载的包进行解压然后进行拷贝</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/cloudera cm:/opt/</span><br><span class="line">docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/cm-5.9.0 cm:/opt/</span><br><span class="line">docker cp /Users/yaosong/Yao/mysql-connector-java-5.1.40-bin.jar cm:/opt/cm-5.9.0/share/cmf/lib/</span><br><span class="line">docker cp /Users/yaosong/Yao/mysql-connector-java.jar cm:/usr/share/java/</span><br><span class="line">docker cp /Users/yaosong/Yao/jdk1.8 cm:/usr/<span class="built_in">local</span>/</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h2 id="文件查找"><a href="#文件查找" class="headerlink" title="文件查找"></a>文件查找</h2><p><code>find / -type f -size +10G</code><br>在Linux下如何让文件让按大小单位为M,G等易读格式，S size大小排序。  <code>ls -lhS</code><br><code>du -h * | sort -n</code><br>当然您也可以结合管道文件夹内最大的几个文件  <code>du -h * | sort -n|head</code><br>动态显示机器各端口的链接情况<code>while :; do netstat -apn | grep &quot;:80&quot; | wc -l; sleep 1; done</code></p>
-<h2 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h2><p>更改第一行 <code>sed -i &#39;1s/.*//&#39;</code>     sed -i ‘1s/.*/想更改的内容/‘</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh root@slave01 <span class="string">"sed -i '6c advertised.host.name=slave01 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">s</span><br></pre></td></tr></table></figure>
-<p>删除第一行<code>sed -i &#39;1d&#39;</code>     sed -i ‘1d’ 文件名<br>插入第一行 <code>sed -i &#39;1i\&#39;</code>       sed -i ‘1i\内容‘ 文件名</p>
-<h2 id="cpu"><a href="#cpu" class="headerlink" title="cpu"></a>cpu</h2><p><code>cat /proc/cpuinfo | grep processor | wc -l</code><br><code>lscpu</code></p>
-<h2 id="sz-rz与服务器交互上传下载文件"><a href="#sz-rz与服务器交互上传下载文件" class="headerlink" title="sz rz与服务器交互上传下载文件"></a>sz rz与服务器交互上传下载文件</h2><p><code>sudo yum install lrzsz -y</code></p>
-<h2 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h2><p> <code>sshfs  root@192.168.73.12:/home/ /csdn/win10/</code></p>
-<p>即：sshfs 用户名@远程主机IP:远程主机路径 本地挂载点<br>sshfs  root@master:/usr/hadoop  /usr/hive/hadoop</p>
-<h2 id="查看端口是否被监听"><a href="#查看端口是否被监听" class="headerlink" title="查看端口是否被监听"></a>查看端口是否被监听</h2><p>也可验证对应端口程序是否启动<br><code>netstat -nl|grep 10000</code></p>
+<h1 id="将-parcel-文件放至-opt-cloudera-parcel-repo"><a href="#将-parcel-文件放至-opt-cloudera-parcel-repo" class="headerlink" title="将 parcel 文件放至 /opt/cloudera/parcel-repo"></a>将 parcel 文件放至 /opt/cloudera/parcel-repo</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker cp /Users/yaosong/Yao/CDH-5.9.0-1.cdh5.9.0.p0.23-el6.parcel  cm:/opt/cloudera/parcel-repo</span><br><span class="line">docker cp /Users/yaosong/Yao/CDH-5.9.0-1.cdh5.9.0.p0.23-el6.parcel.sha cm:/opt/cloudera/parcel-repo</span><br><span class="line">docker cp /Users/yaosong/Yao/manifest.json cm:/opt/cloudera/parcel-repo</span><br></pre></td></tr></table></figure>
+<p><code>vim /etc/profile</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/<span class="built_in">local</span>/jdk1.8</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br></pre></td></tr></table></figure>
+<h1 id="初始化-mysql-库"><a href="#初始化-mysql-库" class="headerlink" title="初始化 mysql 库"></a>初始化 mysql 库</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/cm-5.9.0/share/cmf/schema/scm_prepare_database.sh mysql cm -hlocalhost -uroot -proot --scm-host localhost scm scm scm</span><br></pre></td></tr></table></figure>
+<h1 id="创建用户（所有节点执行）"><a href="#创建用户（所有节点执行）" class="headerlink" title="创建用户（所有节点执行）"></a>创建用户（所有节点执行）</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd --system --home=/opt/cm-5.9.0/run/cloudera-scm-server/ --no-create-home --shell=/bin/false --comment &quot;Cloudera SCM User&quot; cloudera-scm</span><br></pre></td></tr></table></figure>
+<h1 id="Agent-配置"><a href="#Agent-配置" class="headerlink" title="Agent 配置"></a>Agent 配置</h1><p><code>vim /opt/cm-5.9.0/etc/cloudera-scm-agent/config.ini</code></p>
+<p> 将 server_host 改为主节点主机名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server_host=cm1</span><br></pre></td></tr></table></figure>
+<p>安装mysql<br><code>chkconfig mysqld on</code></p>
+<p>设置允许远程登录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p </span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">'root'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'root'</span> WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+<h1 id="创建CM用的数据库"><a href="#创建CM用的数据库" class="headerlink" title="创建CM用的数据库"></a>创建CM用的数据库</h1><p>安装集群时按需创建，详见第七章第13步</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--hive数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> hive <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> utf8 <span class="keyword">COLLATE</span> utf8_general_ci;</span><br><span class="line"><span class="comment">--oozie数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> oozie <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> utf8 <span class="keyword">COLLATE</span> utf8_general_ci;</span><br><span class="line"><span class="comment">--hue数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> hue <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> utf8 <span class="keyword">COLLATE</span> utf8_general_ci;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> amon <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> utf8 <span class="keyword">COLLATE</span> utf8_general_ci;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> monitor <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> utf8 <span class="keyword">COLLATE</span> utf8_general_ci;</span><br></pre></td></tr></table></figure>
+<h1 id="Cloudera推荐设置"><a href="#Cloudera推荐设置" class="headerlink" title="Cloudera推荐设置"></a>Cloudera推荐设置</h1><p>在试安装的过程，发现Cloudera给出了一些警告</p>
+<p>身为一个有洁癖的码农，自然是连黄色的感叹号都要消灭的。因此在安装CM/CDH之前就先全部设置好。</p>
+<h2 id="1、设置swap空间"><a href="#1、设置swap空间" class="headerlink" title="1、设置swap空间"></a>1、设置swap空间</h2><p><code>vim /etc/sysctl.conf</code><br>末尾加上<br><code>vm.swappiness=10</code></p>
+<h2 id="2、关闭大页面压缩"><a href="#2、关闭大页面压缩" class="headerlink" title="2、关闭大页面压缩"></a>2、关闭大页面压缩</h2><p>试过只设置defrag，但貌似个别节点还是会有警告，干脆全部设置</p>
+<p><code>vim /etc/rc.local</code><br>末尾加上(永久生效)<br><code>echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled</code><br><code>echo never &gt; /sys/kernel/mm/transparent_hugepage/defrag</code></p>
+<h1 id="启动cloudera-manager-服务"><a href="#启动cloudera-manager-服务" class="headerlink" title="启动cloudera manager 服务"></a>启动cloudera manager 服务</h1><p>/opt/cm-5.9.0/etc/init.d/cloudera-scm-server start</p>
+<p>/opt/cm-5.9.0/etc/init.d/cloudera-scm-agent start</p>
+<p>端口 7180</p>
+<h1 id="保存为镜像"><a href="#保存为镜像" class="headerlink" title="保存为镜像"></a>保存为镜像</h1><pre><code>docker commit -m &quot;cloudera manger image&quot;  cm   yaosong5/cm59:1.0
+</code></pre><h2 id="创建容器"><a href="#创建容器" class="headerlink" title="创建容器"></a>创建容器</h2><pre><code>docker run -itd  --net=br  --name cm1 --hostname cm1 yaosong5/cm59:1.0 &amp;&gt; /dev/null
+docker run -itd  --net=br  --name cm2 --hostname cm2 yaosong5/cm59:1.0 &amp;&gt; /dev/null
+docker run -itd  --net=br  --name cm3 --hostname cm3 yaosong5/cm59:1.0 &amp;&gt; /dev/null
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker stop cm1</span><br><span class="line">docker stop cm2</span><br><span class="line">docker stop cm3</span><br><span class="line"></span><br><span class="line">docker rm cm1</span><br><span class="line">docker rm cm2</span><br><span class="line">docker rm cm3</span><br></pre></td></tr></table></figure>
+<h1 id="调错"><a href="#调错" class="headerlink" title="调错"></a>调错</h1><blockquote>
+<p>.SearchRepositoryManager: No read permission to the server storage directory [/var/lib/cloudera-scm-server]<br>2018-07-11 10:20:39,788 ERROR SearchRepositoryManager-0:com.cloudera.server.web.cmf.search.components.SearchRepositoryManager: No write permission to the server storage directory [/var/lib/cloudera-scm-server]</p>
+</blockquote>
+<h2 id="链接hue连接不上"><a href="#链接hue连接不上" class="headerlink" title="链接hue连接不上"></a>链接hue连接不上</h2><p>节点的 cm-5.x.0/log/cloudera-scm-server/cloudera-scm-server.log，一般情况下应该会说到</p>
+<p>ImportError:libxslt.so.1:cannot open shared object file:No such file ordirectory</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install libxml2-python</span><br></pre></td></tr></table></figure>
+<h2 id="提示hue测试连接连接不上，安装依赖："><a href="#提示hue测试连接连接不上，安装依赖：" class="headerlink" title="提示hue测试连接连接不上，安装依赖："></a>提示hue测试连接连接不上，安装依赖：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install libxml2-python  mod_ssl install krb5-devel cyrus-sasl-gssapi cyrus-sasl-deve libxml2-devel libxslt-devel mysql mysql-devel openldap-devel python-devel python-simplejson sqlite-devel -y</span><br></pre></td></tr></table></figure>
 
             
 
@@ -421,7 +446,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/05/10/Linux命令积累/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/10/CoudearManager搭建/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -430,19 +455,19 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/05/17/MyBatis注解/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/07/20/Docker构建免密登录镜像/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    MyBatis相关注解
+                    Docker构建免密ssh镜像
                 
             </div>
         </a>
     
     
-        <a href="/2018/05/08/博客修改备份/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/07/10/Ambari搭建/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">博客备份.md</div>
+            <div class="article-nav-title">Ambari镜像搭建</div>
         </a>
     
 </nav>

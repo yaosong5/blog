@@ -354,7 +354,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
 
 
-    <article id="post-CoudearManager镜像搭建" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-CoudearManager搭建" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -362,7 +362,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/07/10/CoudearManager镜像搭建/">CoudearManager镜像搭建(dcoker)</a>
+            <a class="article-title" href="/2018/07/10/CoudearManager搭建/">CoudearManager搭建</a>
         </h1>
     
 
@@ -371,7 +371,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/07/10/CoudearManager镜像搭建/">
+        <a href="/2018/07/10/CoudearManager搭建/">
             <time datetime="2018-07-10T14:10:04.881Z" itemprop="datePublished">2018-07-10</time>
         </a>
     </div>
@@ -401,7 +401,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 <h1 id="创建基础容器"><a href="#创建基础容器" class="headerlink" title="创建基础容器"></a>创建基础容器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --net=br  --name cm --hostname cm yaosong5/centosbase:1.0 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
 <h1 id="将下载的包进行解压然后进行拷贝"><a href="#将下载的包进行解压然后进行拷贝" class="headerlink" title="将下载的包进行解压然后进行拷贝"></a>将下载的包进行解压然后进行拷贝</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/cloudera cm:/opt/</span><br><span class="line">docker cp /Users/yaosong/Yao/cloudera-manager-el6-cm5.9.0_x86_64/cm-5.9.0 cm:/opt/</span><br><span class="line">docker cp /Users/yaosong/Yao/mysql-connector-java-5.1.40-bin.jar cm:/opt/cm-5.9.0/share/cmf/lib/</span><br><span class="line">docker cp /Users/yaosong/Yao/mysql-connector-java.jar cm:/usr/share/java/</span><br><span class="line">docker cp /Users/yaosong/Yao/jdk1.8 cm:/usr/<span class="built_in">local</span>/</span><br></pre></td></tr></table></figure></p>
             <p class="article-more-link">
-                <a href="/2018/07/10/CoudearManager镜像搭建/#more">查看更多</a>
+                <a href="/2018/07/10/CoudearManager搭建/#more">查看更多</a>
             </p>
         
 
@@ -453,7 +453,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/07/10/CoudearManager镜像搭建/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/10/CoudearManager搭建/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
