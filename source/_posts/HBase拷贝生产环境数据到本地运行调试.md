@@ -119,7 +119,9 @@ hadoop fs -put hadoop fs -put hbaseout1.txt /local/
 
 ## 将数据导入到本地hbase
 
-    hbase org.apache.hadoop.hbase.mapreduce.ImportTsv  -Dimporttsv.separator="|"  -Dimporttsv.columns=HBASE_ROW_KEY,cf:273468436_data beehive:a_up_rawdata /local/hbaseout2.txt
+```Bash
+hbase org.apache.hadoop.hbase.mapreduce.ImportTsv  -Dimporttsv.separator="|"  -Dimporttsv.columns=HBASE_ROW_KEY,cf:273468436_data beehive:a_up_rawdata /local/hbaseout2.txt
+```
 
 
 # 3、校验查看

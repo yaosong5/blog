@@ -23,7 +23,7 @@
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/0069RVTdgy1fu4ssvedr6j319a030wel.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fu50q6kl65j31kg0kymxw.jpg">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fu515ozpw6j31kw08b7dl.jpg">
-<meta property="og:updated_time" content="2018-08-10T15:58:23.710Z">
+<meta property="og:updated_time" content="2018-08-10T16:02:52.859Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HBase拷贝生产环境数据到本地运行调试">
 <meta name="twitter:description" content="[TOC]  由于线上环境要经过跳板机跳转，并且打包测试，上传jar包步骤多，不然的话，要进行各种端口转发，且有权限控制，不易在本地idea编辑器上进行程序运行及调试 现在想法是，将线上测试环境的数据拷贝小部分到本地自己搭建的集群，进行程序的逻辑和初期调试 此贴就是记录一些操作  这都是要基于本地有HBASE及其依赖组件的。 主要思路是，拷贝线上查询的结果到文件hbaseout1.txt，将hba">
@@ -374,8 +374,8 @@ var _hmt = _hmt || [];
 <p><img src="https://ws2.sinaimg.cn/large/0069RVTdgy1fu4ssvedr6j319a030wel.jpg" alt=""></p>
 <p>将文件上传到hdfs</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -put hadoop fs -put hbaseout1.txt /<span class="built_in">local</span>/</span><br></pre></td></tr></table></figure>
-<h2 id="将数据导入到本地hbase"><a href="#将数据导入到本地hbase" class="headerlink" title="将数据导入到本地hbase"></a>将数据导入到本地hbase</h2><pre><code>hbase org.apache.hadoop.hbase.mapreduce.ImportTsv  -Dimporttsv.separator=&quot;|&quot;  -Dimporttsv.columns=HBASE_ROW_KEY,cf:273468436_data beehive:a_up_rawdata /local/hbaseout2.txt
-</code></pre><h1 id="3、校验查看"><a href="#3、校验查看" class="headerlink" title="3、校验查看"></a>3、校验查看</h1><p>在hue上查看hbase内容，显示有数据</p>
+<h2 id="将数据导入到本地hbase"><a href="#将数据导入到本地hbase" class="headerlink" title="将数据导入到本地hbase"></a>将数据导入到本地hbase</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase org.apache.hadoop.hbase.mapreduce.ImportTsv  -Dimporttsv.separator=<span class="string">"|"</span>  -Dimporttsv.columns=HBASE_ROW_KEY,cf:273468436_data beehive:a_up_rawdata /<span class="built_in">local</span>/hbaseout2.txt</span><br></pre></td></tr></table></figure>
+<h1 id="3、校验查看"><a href="#3、校验查看" class="headerlink" title="3、校验查看"></a>3、校验查看</h1><p>在hue上查看hbase内容，显示有数据</p>
 <p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fu50q6kl65j31kg0kymxw.jpg" alt=""></p>
 <p>在hbase shell 查看</p>
 <p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fu515ozpw6j31kw08b7dl.jpg" alt=""></p>
