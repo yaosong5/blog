@@ -96,7 +96,7 @@ docker run -itd  --name bigdata --hostname bigdata kinogmt/centos-ssh:6.7 &> /de
 
 # 安装
 
-### 创建 hadoop 集群所需目录：
+## 创建 hadoop 集群所需目录：
 
 在以下配置文件中会有以下目录
 
@@ -107,7 +107,8 @@ mkdir namenode
 mkdir datanode
 cd $HADOOP_CONFIG_HOME/
 ```
-### 更改配置文件
+## 更改配置文件
+
 `cd $HADOOP_CONFIG_HOME/` or `cd $HADOOP_HOME/etc/hadoop`
 #### hdfs slaves
 
@@ -250,13 +251,13 @@ YARN_NODEMANAGER_USER=yarn
 YARN_PROXYSERVER_USER=root
 ```
 
-
-
-
 ## 格式化namenode
+
 ```bash
 $HADOOP_HOME/bin/hadoop namenode -format
 ```
+
+
 # 启动集群
 
 `$HADOOP_HOME/sbin/start-all.sh`
