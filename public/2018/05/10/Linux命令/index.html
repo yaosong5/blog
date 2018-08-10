@@ -8,18 +8,18 @@
 
     <title>linux命令积累 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="简单linux命令 nohup   &amp;amp;后台运行">
+    <meta name="description" content="纵浪大化中，不喜亦不悲">
 <meta name="keywords" content="linux,开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux命令积累">
 <meta property="og:url" content="http://gangtieguo.cn/2018/05/10/Linux命令/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="简单linux命令 nohup   &amp;amp;后台运行">
+<meta property="og:description" content="纵浪大化中，不喜亦不悲">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-10T19:05:59.249Z">
+<meta property="og:updated_time" content="2018-08-10T19:08:25.802Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux命令积累">
-<meta name="twitter:description" content="简单linux命令 nohup   &amp;amp;后台运行">
+<meta name="twitter:description" content="纵浪大化中，不喜亦不悲">
     
 
     
@@ -304,7 +304,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#文件查找"><span class="toc-number">1.</span> <span class="toc-text">文件查找</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sed"><span class="toc-number">2.</span> <span class="toc-text">sed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cpu"><span class="toc-number">3.</span> <span class="toc-text">cpu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sz-rz与服务器交互上传下载文件"><span class="toc-number">4.</span> <span class="toc-text">sz rz与服务器交互上传下载文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#挂载"><span class="toc-number">5.</span> <span class="toc-text">挂载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看端口是否被监听"><span class="toc-number">6.</span> <span class="toc-text">查看端口是否被监听</span></a></li></ol>
+                
             </div>
 
 
@@ -331,19 +331,7 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p>简单linux命令</p>
-<p><code>nohup   &amp;</code><br>后台运行</p>
-<a id="more"></a>
-<h2 id="文件查找"><a href="#文件查找" class="headerlink" title="文件查找"></a>文件查找</h2><p><code>find / -type f -size +10G</code><br>在Linux下如何让文件让按大小单位为M,G等易读格式，S size大小排序。  <code>ls -lhS</code><br><code>du -h * | sort -n</code><br>当然您也可以结合管道文件夹内最大的几个文件  <code>du -h * | sort -n|head</code><br>动态显示机器各端口的链接情况<code>while :; do netstat -apn | grep &quot;:80&quot; | wc -l; sleep 1; done</code></p>
-<h2 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h2><p>更改第一行 <code>sed -i &#39;1s/.*//&#39;</code>     sed -i ‘1s/.*/想更改的内容/‘</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh root@slave01 <span class="string">"sed -i '6c advertised.host.name=slave01 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">s</span><br></pre></td></tr></table></figure>
-<p>删除第一行<code>sed -i &#39;1d&#39;</code>     sed -i ‘1d’ 文件名<br>插入第一行 <code>sed -i &#39;1i\&#39;</code>       sed -i ‘1i\内容‘ 文件名</p>
-<h2 id="cpu"><a href="#cpu" class="headerlink" title="cpu"></a>cpu</h2><p><code>cat /proc/cpuinfo | grep processor | wc -l</code><br><code>lscpu</code></p>
-<h2 id="sz-rz与服务器交互上传下载文件"><a href="#sz-rz与服务器交互上传下载文件" class="headerlink" title="sz rz与服务器交互上传下载文件"></a>sz rz与服务器交互上传下载文件</h2><p><code>sudo yum install lrzsz -y</code></p>
-<h2 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h2><p> <code>sshfs  root@192.168.73.12:/home/ /csdn/win10/</code></p>
-<p>即：sshfs 用户名@远程主机IP:远程主机路径 本地挂载点<br>sshfs  root@master:/usr/hadoop  /usr/hive/hadoop</p>
-<h2 id="查看端口是否被监听"><a href="#查看端口是否被监听" class="headerlink" title="查看端口是否被监听"></a>查看端口是否被监听</h2><p>也可验证对应端口程序是否启动<br><code>netstat -nl|grep 10000</code></p>
-
+                
             
 
         </div>
