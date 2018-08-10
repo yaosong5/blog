@@ -3,12 +3,13 @@ title:  linux命令积累
 tags:  [linux,开发]
 categories: Linux
 toc: true
-grammar_cjkRuby: true
 ---
+
 
 简单linux命令
 
-`nohup   & `后台运行
+`nohup   & ` 
+后台运行
 
 <!-- more -->
 
