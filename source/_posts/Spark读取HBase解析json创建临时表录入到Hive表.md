@@ -17,3 +17,53 @@ toc: true
 spark读取本地HBase
 
 <!-- more -->
+
+参考 [Spark读取HBase](http://www.gangtieguo.cn/2018/08/11/Spark读取Hbase/)
+
+![](https://ws1.sinaimg.cn/large/006tNbRwgy1fu53tng462j31721e6afd.jpg)
+
+
+
+hbase里面存放的是身份id作为rowkey来存放的数据
+
+> JSON、JSONObject类包是引用的com.alibaba.fastjson包下的
+
+```scala
+ val hbaseJsonRdd: RDD[String] = hbaseRDD.mapPartitions( it=>{
+      it.map(x=>x._2).map(hbaseValue => {
+        var listBuffer = new ListBuffer[String]()
+        //对应的值
+        //获取key,也就是身份证号，通过身份证号在广播map中的值 也就是risk_request_id
+        val idNum = Bytes.toString(hbaseValue.getRow)
+        val json: String = Bytes.toString(hbaseValue.getValue(Bytes.toBytes("cf"), Bytes.toBytes(s"273468436_data")))
+        if (null != json ) {
+          //********************************获取到json之后进行解析********************************
+          try {
+            val jSONObject: JSONObject = JSON.parseObject(json)
+            if (jSONObject != null) {
+                val contactRegion = repostData.getJSONArray("contact_region")
+                if (contactRegion != null) {
+                  contactRegion.toArray().foreach(v => {
+                    val arrays = JSON.parseObject(v.toString)
+                    //val map = JSON.toJavaObject(arrays,classOf[util.Map[String,String]])
+                    val map: mutable.Map[String, String] = JsonUtils.jsonObj2Map(arrays)
+                    //将json 转为Map
+                    //将******************************** 日期和requestId request_id封装到 map里面********************************，再将map转为json
+                    map.put("region_id", "2")
+                    map.put("request_id", "1")
+                    map.put("region_create_at", "0000")
+                    map.put("region_update_at", "0000")
+                    listBuffer += (JsonUtils.map2Json(map))
+                  })
+                }
+              }
+            }
+          }catch {
+            case e: Exception => e.printStackTrace()
+          }
+        }
+        listBuffer
+      })
+    }).flatMap(r => r)
+```
+

@@ -6,20 +6,22 @@
     <meta charset="utf-8">
     
 
-    <title>ELK容器的搭建 | 钢铁锅</title>
+    <title>Json与Scala类型的相互转换处理 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="[TOC] 来源容器  elk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name elk --hostname elk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小">
-<meta name="keywords" content="Docker,ELK">
+    <meta name="description" content="[TOC]  在开发过程中时常会有对json数据的一些处理，现做一些记录">
+<meta name="keywords" content="Json,Scala">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ELK容器的搭建">
-<meta property="og:url" content="http://gangtieguo.cn/2018/07/08/elk容器的搭建/index.html">
+<meta property="og:title" content="Json与Scala类型的相互转换处理">
+<meta property="og:url" content="http://gangtieguo.cn/2018/08/11/Json与Scala类型的一些互相转换处理/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] 来源容器  elk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name elk --hostname elk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小">
+<meta property="og:description" content="[TOC]  在开发过程中时常会有对json数据的一些处理，现做一些记录">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-07T02:46:49.490Z">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu547yxfu5j30a409iq2y.jpg">
+<meta property="og:updated_time" content="2018-08-10T17:26:04.793Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ELK容器的搭建">
-<meta name="twitter:description" content="[TOC] 来源容器  elk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name elk --hostname elk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小">
+<meta name="twitter:title" content="Json与Scala类型的相互转换处理">
+<meta name="twitter:description" content="[TOC]  在开发过程中时常会有对json数据的一些处理，现做一些记录">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu547yxfu5j30a409iq2y.jpg">
     
 
     
@@ -247,7 +249,7 @@ var _hmt = _hmt || [];
 
             
 
-            <section id="main"><article id="post-elk容器的搭建" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Json与Scala类型的一些互相转换处理" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -255,7 +257,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            ELK容器的搭建
+            Json与Scala类型的相互转换处理
         </h1>
     
 
@@ -264,8 +266,8 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/07/08/elk容器的搭建/">
-            <time datetime="2018-07-08T15:43:05.950Z" itemprop="datePublished">2018-07-08</time>
+        <a href="/2018/08/11/Json与Scala类型的一些互相转换处理/">
+            <time datetime="2018-08-10T17:19:05.443Z" itemprop="datePublished">2018-08-11</time>
         </a>
     </div>
 
@@ -273,13 +275,13 @@ var _hmt = _hmt || [];
                         
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/安装部署/">安装部署</a>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/ELK/">ELK</a>
+        <a class="tag-link" href="/tags/Json/">Json</a>, <a class="tag-link" href="/tags/Scala/">Scala</a>
     </div>
 
                     </div>
@@ -304,7 +306,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#来源容器-elk"><span class="toc-number">1.</span> <span class="toc-text">来源容器  elk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置Home"><span class="toc-number">2.</span> <span class="toc-text">设置Home</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装插件header"><span class="toc-number">3.</span> <span class="toc-text">安装插件header</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装nodejs"><span class="toc-number">3.1.</span> <span class="toc-text">安装nodejs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下载-header，安装grunt"><span class="toc-number">3.2.</span> <span class="toc-text">下载 header，安装grunt</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#header启动"><span class="toc-number">4.</span> <span class="toc-text">header启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#els不能通过root启动，创建用户"><span class="toc-number">5.</span> <span class="toc-text">els不能通过root启动，创建用户</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#修改文件所有者"><span class="toc-number">5.1.</span> <span class="toc-text">修改文件所有者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#es启动脚本"><span class="toc-number">5.2.</span> <span class="toc-text">es启动脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集群"><span class="toc-number">5.3.</span> <span class="toc-text">集群</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#elasticSearch"><span class="toc-number">5.3.1.</span> <span class="toc-text">elasticSearch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kibana"><span class="toc-number">5.3.2.</span> <span class="toc-text">kibana</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#logstash"><span class="toc-number">5.3.3.</span> <span class="toc-text">logstash</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存容器为镜像"><span class="toc-number">6.</span> <span class="toc-text">保存容器为镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成elk-容器"><span class="toc-number">7.</span> <span class="toc-text">生成elk 容器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#停止-删除elk-容器"><span class="toc-number">7.1.</span> <span class="toc-text">停止/删除elk 容器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">8.</span> <span class="toc-text">参考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#elk-操作命令"><span class="toc-number">9.</span> <span class="toc-text">elk 操作命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#es操作命令"><span class="toc-number">9.1.</span> <span class="toc-text">es操作命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-number">10.</span> <span class="toc-text">其他</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#测试实例"><span class="toc-number">1.</span> <span class="toc-text">测试实例</span></a></li></ol>
             </div>
 
 
@@ -332,63 +334,11 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
-<h2 id="来源容器-elk"><a href="#来源容器-elk" class="headerlink" title="来源容器  elk"></a>来源容器  elk</h2><p>新建容器，为减少工作量，引用的是有ssh服务的Docker镜像<strong>kinogmt/centos-ssh:6.7</strong>，生成容器os为基准。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --name elk --hostname elk kinogmt/centos-ssh:6.7 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小bug</p>
-</blockquote>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fu547yxfu5j30a409iq2y.jpg" alt=""></p>
+<p>在开发过程中时常会有对json数据的一些处理，现做一些记录</p>
 <a id="more"></a>
-<p>在容器中下载需要的elk的源包。做解压就不赘述，很多案例教程。</p>
-<blockquote>
-<p>我是采用的下载到宿主机，解压后，用 “docker cp 解压包目录  os:/usr/loca/“来传到容器内，比在容器内下载速度更快</p>
-</blockquote>
-<h2 id="设置Home"><a href="#设置Home" class="headerlink" title="设置Home"></a>设置Home</h2><p> <code>vim   ~/bashrc</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> ES_HOME=/usr/es</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$ES_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> KIBANA_HOME=/usr/kibana</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$KIBANA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> LOGSTASH_HOME=/usr/logstash</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$LOGSTASH_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> NODE_HOME=/usr/node</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$NODE_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> NODE_PATH=<span class="variable">$NODE_HOME</span>/lib/node_modules</span><br></pre></td></tr></table></figure>
-<p><code>source ~/.bashrc</code></p>
-<h2 id="安装插件header"><a href="#安装插件header" class="headerlink" title="安装插件header"></a>安装插件header</h2><h3 id="安装nodejs"><a href="#安装nodejs" class="headerlink" title="安装nodejs"></a>安装nodejs</h3><p>一般预装的版本不对</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum erase nodejs npm -y   # 卸载旧版本的nodejs</span><br><span class="line">rpm -qa &apos;node|npm&apos; | grep -v nodesource # 确认nodejs是否卸载干净</span><br><span class="line">yum install nodejs -y # 安装npm 安装的版本会有不对</span><br></pre></td></tr></table></figure>
-<p>下载合适版本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr</span><br><span class="line">wget https://npm.taobao.org/mirrors/node/latest-v4.x/node-v4.4.7-llinux-x64.tar.gz</span><br><span class="line">tar -zxvf node-v4.4.7-linux-x64.tar.gz</span><br><span class="line">mv node-v8.9.1-linux-x64 node</span><br></pre></td></tr></table></figure>
-<p>直接将node目录配置到home即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export NODE_HOME=/usr/node</span><br><span class="line">export PATH=$NODE_HOME/bin:$PATH</span><br></pre></td></tr></table></figure>
-<h3 id="下载-header，安装grunt"><a href="#下载-header，安装grunt" class="headerlink" title="下载 header，安装grunt"></a>下载 header，安装grunt</h3><p>（所有命令在hear的所在目录执行）</p>
-<p><code>wget https://github.com/mobz/elasticsearch-head/archive/master.zip</code></p>
-<p><code>unzip master.zip</code></p>
-<p>看当前 head 插件目录下有无 node_modules/grunt 目录：<br>没有：执行命令创建：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install grunt --save</span><br></pre></td></tr></table></figure>
-<p>安装 grunt：<br>grunt 是基于 Node.js 的项目构建工具，可以进行打包压缩、测试、执行等等的工作，head 插件就是通过 grunt 启动</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g grunt-cli</span><br></pre></td></tr></table></figure>
-<p>参考<a href="https://blog.csdn.net/ggwxk1990/article/details/78698648" target="_blank" rel="noopener">https://blog.csdn.net/ggwxk1990/article/details/78698648</a></p>
-<p> npm install 安装所下载的header包 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
-<h2 id="header启动"><a href="#header启动" class="headerlink" title="header启动"></a>header启动</h2><p>在 elasticsearch-head-master 目录下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grunt server  或者 npm run start</span><br></pre></td></tr></table></figure>
-<h2 id="els不能通过root启动，创建用户"><a href="#els不能通过root启动，创建用户" class="headerlink" title="els不能通过root启动，创建用户"></a>els不能通过root启动，创建用户</h2><pre><code>useradd elk
-groupadd elk
-usermod -a -G elk elk
-
-echo elk | passwd --stdin elk
-</code></pre><p>将elk添加到sudoers</p>
-<pre><code>echo &quot;elk ALL = (root) NOPASSWD:ALL&quot; | tee /etc/sudoers.d/elk
-chmod 0440 /etc/sudoers.d/elk
-</code></pre><p>解决sudo: sorry, you must have a tty to run sudo问题，在/etc/sudoer注释掉 Default requiretty 一行<br>    sudo sed -i ‘s/Defaults requiretty/Defaults:elk !requiretty/‘ /etc/sudoers</p>
-<h3 id="修改文件所有者"><a href="#修改文件所有者" class="headerlink" title="修改文件所有者"></a>修改文件所有者</h3><p><code>chown -R elk:elk /usr/es/</code></p>
-<p><strong>设置资源参数</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim  /etc/security/limits.d/90-nproc.conf</span><br></pre></td></tr></table></figure>
-<p><strong>添加</strong><br>     elk        soft    nproc     4096<br>   <!-- 更改docker-machine的资源 --><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker-machine ssh</span><br><span class="line">sysctl -w vm.max_map_count=655360</span><br></pre></td></tr></table></figure></p>
-<h3 id="es启动脚本"><a href="#es启动脚本" class="headerlink" title="es启动脚本"></a>es启动脚本</h3><pre><code>单机 su elk -c &quot;$ES_HOME/bin/elasticsearch -d&quot;
-ssh elk@elk1 &quot; $ES_HOME/bin/elasticsearch -d&quot;
-ssh root@elk1 &quot; su elk -c  $ES_HOME/bin/elasticsearch &quot;
-</code></pre><h3 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h3><h4 id="elasticSearch"><a href="#elasticSearch" class="headerlink" title="elasticSearch"></a>elasticSearch</h4><p>脚本 <code>vim  es-start.sh</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">sed -i <span class="string">'6c node.name: es1 '</span></span><br><span class="line"><span class="variable">$ES_HOME</span>/config/elasticsearch.yml</span><br><span class="line">su - elk -c  <span class="string">"<span class="variable">$ES_HOME</span>/bin/elasticsearch -d"</span></span><br><span class="line">ssh root@elk2 <span class="string">"sed -i '6c node.name: es2 ' <span class="variable">$ES_HOME</span>/config/elasticsearch.yml"</span></span><br><span class="line">ssh root@elk2 <span class="string">' su - elk -c  "$ES_HOME/bin/elasticsearch -d" '</span></span><br><span class="line">ssh root@elk3 <span class="string">"sed -i '6c node.name: es3 ' <span class="variable">$ES_HOME</span>/config/elasticsearch.yml"</span></span><br><span class="line">ssh root@elk3 <span class="string">' su - elk -c  "$ES_HOME/bin/elasticsearch -d" '</span></span><br></pre></td></tr></table></figure>
-<h4 id="kibana"><a href="#kibana" class="headerlink" title="kibana"></a>kibana</h4><p>启动单机（只需要启动单机） <code>bin/kibana</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">sed -i <span class="string">'3c http://elk1:9200 '</span></span><br><span class="line"><span class="variable">$KIBANA_HOME</span>/config/kibana.yml</span><br><span class="line">nohup <span class="variable">$KIBANA_HOME</span>/bin/kibana  &amp;</span><br><span class="line">ssh root@elk2 <span class="string">"sed -i '3c http://elk2:9200 ' <span class="variable">$KIBANA_HOME</span>/config/kibana.yml"</span></span><br><span class="line">ssh root@elk2 <span class="string">"nohup <span class="variable">$KIBANA_HOME</span>/bin/kibana &amp; "</span></span><br><span class="line">ssh root@elk3 <span class="string">"sed -i '3c   http://elk3:9200 ' <span class="variable">$KIBANA_HOME</span>/config/kibana.yml"</span></span><br><span class="line">ssh root@elk3 <span class="string">"nohup <span class="variable">$KIBANA_HOME</span>/bin/kibana &amp; "</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="logstash"><a href="#logstash" class="headerlink" title="logstash"></a>logstash</h4><p>单机启动   <code>$LOGSTASH_HOME/bin/logstash -f logstash.conf</code><br> <code>$LOGSTASH_HOME/bin/logstash -f 配置文件的目录</code><br></p>
-<p>集群启动脚本 <strong>logstash-start.sh</strong><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">nohup $LOGSTASH_HOME/bin/logstash -f  $LOGSTASH_HOME/conf/$1  &amp;</span><br><span class="line">ssh root@elk2 "nohup $LOGSTASH_HOME/bin/logstash -f  $LOGSTASH_HOME/conf/$1 &amp; "</span><br><span class="line">ssh root@elk3 "nohup $LOGSTASH_HOME/bin/logstash -f  $LOGSTASH_HOME/conf/$1 &amp; "</span><br></pre></td></tr></table></figure></p>
-<h2 id="保存容器为镜像"><a href="#保存容器为镜像" class="headerlink" title="保存容器为镜像"></a>保存容器为镜像</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit -m <span class="string">"elk镜像"</span>  --author=<span class="string">"yaosong"</span>  os  yaosong5/elk:1.0</span><br></pre></td></tr></table></figure>
-<h2 id="生成elk-容器"><a href="#生成elk-容器" class="headerlink" title="生成elk 容器"></a>生成elk 容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd --net=br --name elk1 --hostname elk1 yaosong5/elk:1.0 &amp;&gt; /dev/null</span><br><span class="line">docker run -itd --net=br --name elk2 --hostname elk2 yaosong5/elk:1.0 &amp;&gt; /dev/null</span><br><span class="line">docker run -itd --net=br --name elk3 --hostname elk3 yaosong5/elk:1.0 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
-<h3 id="停止-删除elk-容器"><a href="#停止-删除elk-容器" class="headerlink" title="停止/删除elk 容器"></a>停止/删除elk 容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker stop elk1</span><br><span class="line">docker stop elk2</span><br><span class="line">docker stop elk3</span><br><span class="line"></span><br><span class="line">docker rm elk1</span><br><span class="line">docker rm elk2</span><br><span class="line">docker rm elk3</span><br></pre></td></tr></table></figure>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><h2 id="elk-操作命令"><a href="#elk-操作命令" class="headerlink" title="elk 操作命令"></a>elk 操作命令</h2><h3 id="es操作命令"><a href="#es操作命令" class="headerlink" title="es操作命令"></a>es操作命令</h3><p><a href="http://www.yfshare.vip/2017/11/04/%E9%83%A8%E7%BD%B2FileBeat-logstash-elasticsearch%E9%9B%86%E7%BE%A4-kibana/#%E9%85%8D%E7%BD%AE-filebeart" target="_blank" rel="noopener">http://www.yfshare.vip/2017/11/04/%E9%83%A8%E7%BD%B2FileBeat-logstash-elasticsearch%E9%9B%86%E7%BE%A4-kibana/#%E9%85%8D%E7%BD%AE-filebeart</a></p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>yum erase nodejs npm -y   # 卸载旧版本的nodejs<br>rpm -qa ‘node|npm’ | grep -v nodesource # 确认nodejs是否卸载干净<br>yum install nodejs -y</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.&#123;<span class="type">JSON</span>, <span class="type">JSONArray</span>, <span class="type">JSONObject</span>&#125;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.<span class="type">ObjectMapper</span></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.module.scala.<span class="type">DefaultScalaModule</span></span><br><span class="line"><span class="keyword">import</span> net.minidev.json.parser.<span class="type">JSONParser</span></span><br><span class="line"><span class="keyword">import</span> scala.collection.<span class="type">JavaConversions</span>.mapAsScalaMap</span><br><span class="line"><span class="keyword">import</span> scala.collection.mutable</span><br><span class="line"><span class="keyword">import</span> java.util</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * json utils</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">JsonUtils</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">val</span> mapper: <span class="type">ObjectMapper</span> = <span class="keyword">new</span> <span class="type">ObjectMapper</span>()</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">toJsonString</span></span>(<span class="type">T</span>: <span class="type">Object</span>): <span class="type">String</span> = &#123;</span><br><span class="line">    mapper.registerModule(<span class="type">DefaultScalaModule</span>)</span><br><span class="line">    mapper.writeValueAsString(<span class="type">T</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">getArrayFromJson</span></span>(jsonStr: <span class="type">String</span>) = &#123;</span><br><span class="line">    <span class="type">JSON</span>.parseArray(jsonStr)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">getObjectFromJson</span></span>(jsonStr: <span class="type">String</span>): <span class="type">JSONObject</span> = &#123;</span><br><span class="line">    <span class="type">JSON</span>.parseObject(jsonStr)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 配合getObjectFromJson 使用把 JSONObject 变为 map</span></span><br><span class="line"><span class="comment">    * @param jsonObj</span></span><br><span class="line"><span class="comment">    * @return</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">jsonObj2Map</span></span>(jsonObj:<span class="type">JSONObject</span>): mutable.<span class="type">Map</span>[<span class="type">String</span>, <span class="type">String</span>] = &#123;</span><br><span class="line">    <span class="keyword">var</span> map = mutable.<span class="type">Map</span>[<span class="type">String</span>, <span class="type">String</span>]()</span><br><span class="line">    <span class="keyword">val</span> itr: util.<span class="type">Iterator</span>[<span class="type">String</span>] = jsonObj.keySet().iterator()</span><br><span class="line">    <span class="keyword">while</span> (itr.hasNext) &#123;</span><br><span class="line">      <span class="keyword">val</span> key = itr.next()</span><br><span class="line">      map += ((key, jsonObj.getString(key)))</span><br><span class="line">    &#125;</span><br><span class="line">    map</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * json 字符串转成 Map</span></span><br><span class="line"><span class="comment">    * #############有些情况下转换会有问题###############</span></span><br><span class="line"><span class="comment">    * @param json</span></span><br><span class="line"><span class="comment">    * @return</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">json2Map</span></span>(json: <span class="type">String</span>): mutable.<span class="type">HashMap</span>[<span class="type">String</span>,<span class="type">String</span>] =&#123;</span><br><span class="line">    <span class="keyword">val</span> map : mutable.<span class="type">HashMap</span>[<span class="type">String</span>,<span class="type">String</span>]= mutable.<span class="type">HashMap</span>()</span><br><span class="line">    <span class="keyword">val</span> jsonParser =<span class="keyword">new</span> <span class="type">JSONParser</span>()</span><br><span class="line">    <span class="comment">//将string转化为jsonObject</span></span><br><span class="line">    <span class="keyword">val</span> jsonObj: <span class="type">JSONObject</span> = jsonParser.parse(json).asInstanceOf[<span class="type">JSONObject</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取所有键</span></span><br><span class="line">    <span class="keyword">val</span> jsonKey = jsonObj.keySet()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> iter = jsonKey.iterator()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (iter.hasNext)&#123;</span><br><span class="line">      <span class="keyword">val</span> field = iter.next()</span><br><span class="line">      <span class="keyword">val</span> value = jsonObj.get(field).toString</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span>(value.startsWith(<span class="string">"&#123;"</span>)&amp;&amp;value.endsWith(<span class="string">"&#125;"</span>))&#123;</span><br><span class="line">        <span class="keyword">val</span> value = mapAsScalaMap(jsonObj.get(field).asInstanceOf[util.<span class="type">HashMap</span>[<span class="type">String</span>, <span class="type">String</span>]])</span><br><span class="line">        map.put(field,value.toString())</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        map.put(field,value)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    map</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * map 转换成 json 字符串</span></span><br><span class="line"><span class="comment">    * @param map</span></span><br><span class="line"><span class="comment">    * @return</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">map2Json</span></span>(map : mutable.<span class="type">Map</span>[<span class="type">String</span>,<span class="type">String</span>]): <span class="type">String</span> = &#123;</span><br><span class="line">    <span class="keyword">import</span> net.minidev.json.&#123;<span class="type">JSONObject</span>&#125;</span><br><span class="line">    <span class="keyword">import</span> scala.collection.<span class="type">JavaConversions</span>.mutableMapAsJavaMap</span><br><span class="line">    <span class="keyword">val</span> jsonString = <span class="type">JSONObject</span>.toJSONString(map)</span><br><span class="line">    jsonString</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试实例"><a href="#测试实例" class="headerlink" title="测试实例"></a>测试实例</h1><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">val</span> json = <span class="string">"[&#123;\"batchid\":305322456,\"amount\":20.0,\"count\":20&#125;,&#123;\"batchid\":305322488,\"amount\":\"10.0\",\"count\":\"10\"&#125;]"</span></span><br><span class="line">      <span class="keyword">val</span> array: <span class="type">JSONArray</span> = <span class="type">JsonUtils</span>.getArrayFromJson(json)</span><br><span class="line">      println(array)</span><br><span class="line">      array.toArray().foreach(json=&gt;&#123;</span><br><span class="line">        println(json)</span><br><span class="line">        <span class="keyword">val</span> jobj = json.asInstanceOf[<span class="type">JSONObject</span>]</span><br><span class="line">        println(jobj.get(<span class="string">"batchid"</span>))</span><br><span class="line">      &#125;)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">val</span> jsonStr = <span class="string">"&#123;\"batchid\":119,\"amount\":200.0,\"count\":200&#125;"</span></span><br><span class="line">      <span class="keyword">val</span> jsonObj: <span class="type">JSONObject</span> = <span class="type">JsonUtils</span>.getObjectFromJson(jsonStr)</span><br><span class="line">      println(jsonObj)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">val</span> jsonObj2: <span class="type">JSONObject</span> = <span class="type">JsonUtils</span>.getObjectFromJson(<span class="string">"&#123;'name':'Wang','age':18,'tag1':[&#123;'tn1':'100','tn2':'101','ts':'ts01'&#125;,&#123;'tn1':'100','tn2':'101','ts':'ts02'&#125;,&#123;'tn1':'100','tn2':'101','ts':'ts03'&#125;]&#125;"</span>)</span><br><span class="line">      println(jsonObj2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
             
 
@@ -467,7 +417,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/07/08/elk容器的搭建/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/08/11/Json与Scala类型的一些互相转换处理/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -476,19 +426,10 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/07/08/kafka启动脚本/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    kafka的启动及命令
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/06/26/Docker命令汇集/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/08/11/Spark读取Hbase/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Docker常用命令汇集</div>
+            <div class="article-nav-title">Spark读取HBase</div>
         </a>
     
 </nav>
