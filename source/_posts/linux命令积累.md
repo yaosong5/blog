@@ -1,5 +1,6 @@
 ---
 title:  linux命令积累
+date: 2018年08月11日 02时55分44秒
 tags:  [linux,开发]
 categories: Linux
 toc: true
@@ -48,5 +49,4 @@ sshfs  root@master:/usr/hadoop  /usr/hive/hadoop
 ## 查看端口是否被监听
 
 也可验证对应端口程序是否启动
-
 `netstat -nl|grep 10000`
