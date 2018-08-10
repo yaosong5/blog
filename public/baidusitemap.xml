@@ -4,6 +4,23 @@
 
     
   <url>
+    <loc>http://gangtieguo.cn/2018/08/07/Spark%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95%E8%BF%9C%E7%A8%8B%E9%9B%86%E7%BE%A4%E7%A8%8B%E5%BA%8F/</loc>
+    <lastmod>2018-08-10T18:28:52.168Z</lastmod>
+    <data>
+        <display>
+        <title>Spark本地调试远程集群程序</title>
+        <pubTime>2018-08-07T08:09:43.314Z</pubTime>
+        
+        <tag>Spark</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://gangtieguo.cn/2018/08/11/Spark%E8%AF%BB%E5%8F%96HBase%E8%A7%A3%E6%9E%90json%E5%88%9B%E5%BB%BA%E4%B8%B4%E6%97%B6%E8%A1%A8%E5%BD%95%E5%85%A5%E5%88%B0Hive%E8%A1%A8/</loc>
     <lastmod>2018-08-10T18:21:36.344Z</lastmod>
     <data>
@@ -388,23 +405,6 @@
              
               <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/07/Spark%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95%E8%BF%9C%E7%A8%8B%E9%9B%86%E7%BE%A4%E7%A8%8B%E5%BA%8F/</loc>
-    <lastmod>2018-08-07T08:15:31.620Z</lastmod>
-    <data>
-        <display>
-        <title>Spark本地调试远程集群程序</title>
-        <pubTime>2018-08-07T08:09:43.314Z</pubTime>
-        
-        <tag>Spark</tag>
-         
-         
-           
         </display>
     </data>
     </url>
