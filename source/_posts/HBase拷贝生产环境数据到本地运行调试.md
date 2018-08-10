@@ -20,6 +20,8 @@ toc: true
 
 再在本地集群上将数据插入到hbase
 
+<!-- more -->
+
 # 1、创建和线上同名通结构的表
 
 在线上执行 `describe 'beehive:a_up_rawdata'`
@@ -53,7 +55,7 @@ create 'beehive:a_up_rawdata',{NAME => 'cf', BLOOMFILTER => 'ROW', VERSIONS => '
 echo "get 'beehive:a_up_rawdata','530111199211287371',{COLUMN=>'cf:273468436_data'}"| hbase shell> hbaseout1.txt
 ```
 
-<!-- more -->
+
 
 解析: `get 'beehive:a_up_rawdata','530111199211287371',{COLUMN=>'cf:273468436_data'}`是执行的hbase的查询语句，将查询的结果存入到当前目录 **hbaseout1.txt**文件中
 

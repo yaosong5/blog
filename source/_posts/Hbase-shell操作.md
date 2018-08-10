@@ -70,12 +70,11 @@ get 'testtable','rowkey1', {COLUMN=>'cf:key1'}
 
 ```bash
 scan 'testtable',{COLUMNS=>cf:col1,LIMIT=>5} #可以添加STARTROW、TIMERANGE和FITLER等高级功能
-
 ```
 
 ### 查询表中的数据行数:
 
-语法：count <table>, {INTERVAL => intervalNum, CACHE => cacheNum}
+语法：`count <table>, {INTERVAL => intervalNum, CACHE => cacheNum}`
 
 ```Bash
 count 'testtable',{INTERVAL => 100, CACHE => 500}

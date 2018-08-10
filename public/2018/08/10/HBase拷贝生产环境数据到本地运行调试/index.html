@@ -23,7 +23,7 @@
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/0069RVTdgy1fu4ssvedr6j319a030wel.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fu50q6kl65j31kg0kymxw.jpg">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fu515ozpw6j31kw08b7dl.jpg">
-<meta property="og:updated_time" content="2018-08-10T15:53:52.004Z">
+<meta property="og:updated_time" content="2018-08-10T15:58:23.710Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HBase拷贝生产环境数据到本地运行调试">
 <meta name="twitter:description" content="[TOC]  由于线上环境要经过跳板机跳转，并且打包测试，上传jar包步骤多，不然的话，要进行各种端口转发，且有权限控制，不易在本地idea编辑器上进行程序运行及调试 现在想法是，将线上测试环境的数据拷贝小部分到本地自己搭建的集群，进行程序的逻辑和初期调试 此贴就是记录一些操作  这都是要基于本地有HBASE及其依赖组件的。 主要思路是，拷贝线上查询的结果到文件hbaseout1.txt，将hba">
@@ -348,6 +348,7 @@ var _hmt = _hmt || [];
 <p>这都是要基于本地有HBASE及其依赖组件的。</p>
 <p>主要思路是，拷贝线上查询的结果到文件hbaseout1.txt，将hbaseout1.txt文件sz导入本地</p>
 <p>再在本地集群上将数据插入到hbase</p>
+<a id="more"></a>
 <h1 id="1、创建和线上同名通结构的表"><a href="#1、创建和线上同名通结构的表" class="headerlink" title="1、创建和线上同名通结构的表"></a>1、创建和线上同名通结构的表</h1><p>在线上执行 <code>describe &#39;beehive:a_up_rawdata&#39;</code></p>
 <p>得到</p>
 <p><img src="https://ws4.sinaimg.cn/large/0069RVTdgy1fu4t1ryqfbj31kw074n4w.jpg" alt=""></p>
@@ -355,7 +356,6 @@ var _hmt = _hmt || [];
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hbase shell</span><br><span class="line">create_namespace &apos;beehive&apos;</span><br><span class="line"></span><br><span class="line">create &apos;beehive:a_up_rawdata&apos;,&#123;NAME =&gt; &apos;cf&apos;, BLOOMFILTER =&gt; &apos;ROW&apos;, VERSIONS =&gt; &apos;1&apos;, IN_MEMORY =&gt; &apos;false&apos;, KEEP_DELETED_CELLS =&gt; &apos;FALSE&apos;, DATA_BLOCK_ENCODING =&gt; &apos;NONE&apos;, COMPRESSION =&gt; &apos;NONE&apos;, TTL =&gt; &apos;FOREVER&apos;, MIN_VERSIONS =&gt; &apos;0&apos;, BLOCKCACHE =&gt; &apos;true&apos;, BLOCKSIZE =&gt; &apos;65536&apos;, REPLICATION_SCOPE =&gt; &apos;1&apos;&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="2、拷贝线上hbase数据"><a href="#2、拷贝线上hbase数据" class="headerlink" title="2、拷贝线上hbase数据"></a>2、拷贝线上hbase数据</h1><h2 id="查询结果导入文件"><a href="#查询结果导入文件" class="headerlink" title="查询结果导入文件"></a>查询结果导入文件</h2><p>在线上机器任意目录执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"get 'beehive:a_up_rawdata','530111199211287371',&#123;COLUMN=&gt;'cf:273468436_data'&#125;"</span>| hbase shell&gt; hbaseout1.txt</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
 <p>解析: <code>get &#39;beehive:a_up_rawdata&#39;,&#39;530111199211287371&#39;,{COLUMN=&gt;&#39;cf:273468436_data&#39;}</code>是执行的hbase的查询语句，将查询的结果存入到当前目录 <strong>hbaseout1.txt</strong>文件中</p>
 <h2 id="查询文件下载到本地"><a href="#查询文件下载到本地" class="headerlink" title="查询文件下载到本地"></a>查询文件下载到本地</h2><p><code>sz hbaseout1.txt</code></p>
 <h2 id="修改文件内容"><a href="#修改文件内容" class="headerlink" title="修改文件内容"></a>修改文件内容</h2><p>可以查看hbaseout1.txt中可以看到会有表头</p>

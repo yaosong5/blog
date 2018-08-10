@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC] hbase使用命令行操作，简单直接，方便快捷，掌握一点必备的基础命令。 HBase启动命令行 1$HBASE_HOME/bin/hbase shell">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-10T15:53:58.607Z">
+<meta property="og:updated_time" content="2018-08-10T15:58:55.863Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hbase-shell操作">
 <meta name="twitter:description" content="[TOC] hbase使用命令行操作，简单直接，方便快捷，掌握一点必备的基础命令。 HBase启动命令行 1$HBASE_HOME/bin/hbase shell">
@@ -343,7 +343,7 @@ var _hmt = _hmt || [];
 <h2 id="表数据的增删查改："><a href="#表数据的增删查改：" class="headerlink" title="表数据的增删查改："></a>表数据的增删查改：</h2><h3 id="添加数据："><a href="#添加数据：" class="headerlink" title="添加数据："></a>添加数据：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">put <span class="string">'testtable'</span>,<span class="string">'rowkey1'</span>,<span class="string">'cf:key1'</span>,<span class="string">'val1'</span></span><br></pre></td></tr></table></figure>
 <h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据:"></a>查询数据:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">get <span class="string">'testtable'</span>,<span class="string">'rowkey1'</span>,<span class="string">'cf:key1'</span></span><br><span class="line">get <span class="string">'testtable'</span>,<span class="string">'rowkey1'</span>, &#123;COLUMN=&gt;<span class="string">'cf:key1'</span>&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="扫描表"><a href="#扫描表" class="headerlink" title="扫描表:"></a>扫描表:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scan <span class="string">'testtable'</span>,&#123;COLUMNS=&gt;cf:col1,LIMIT=&gt;5&#125; <span class="comment">#可以添加STARTROW、TIMERANGE和FITLER等高级功能</span></span><br></pre></td></tr></table></figure>
-<h3 id="查询表中的数据行数"><a href="#查询表中的数据行数" class="headerlink" title="查询表中的数据行数:"></a>查询表中的数据行数:</h3><p>语法：count <table>, {INTERVAL =&gt; intervalNum, CACHE =&gt; cacheNum}</table></p>
+<h3 id="查询表中的数据行数"><a href="#查询表中的数据行数" class="headerlink" title="查询表中的数据行数:"></a>查询表中的数据行数:</h3><p>语法：<code>count &lt;table&gt;, {INTERVAL =&gt; intervalNum, CACHE =&gt; cacheNum}</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">count <span class="string">'testtable'</span>,&#123;INTERVAL =&gt; 100, CACHE =&gt; 500&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据:"></a>删除数据:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete <span class="string">'testtable'</span>,<span class="string">'rowkey1'</span>,<span class="string">'cf:key1'</span></span><br><span class="line">truncate <span class="string">'testtable'</span></span><br></pre></td></tr></table></figure>
 
