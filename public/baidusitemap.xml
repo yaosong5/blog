@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://gangtieguo.cn/2018/08/11/Json%E4%B8%8EScala%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%92%E7%9B%B8%E8%BD%AC%E6%8D%A2%E5%A4%84%E7%90%86/</loc>
+    <lastmod>2018-08-10T19:39:06.343Z</lastmod>
+    <data>
+        <display>
+        <title>Json与Scala类型的相互转换处理</title>
+        <pubTime>2018-08-10T17:19:05.443Z</pubTime>
+        
+        <tag>Json</tag>
+         
+        <tag>Scala</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://gangtieguo.cn/2018/05/10/Linux%E5%91%BD%E4%BB%A4%E7%A7%AF%E7%B4%AF/</loc>
     <lastmod>2018-08-10T19:37:12.313Z</lastmod>
     <data>
@@ -20,21 +42,6 @@
              
               <breadCrumb title="Linux" url="http://gangtieguo.cn/categories/Linux/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/11/Json%E4%B8%8EScala%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%92%E7%9B%B8%E8%BD%AC%E6%8D%A2%E5%A4%84%E7%90%86/</loc>
-    <lastmod>2018-08-10T19:36:40.122Z</lastmod>
-    <data>
-        <display>
-        <title></title>
-        <pubTime>2018-08-10T17:19:05.443Z</pubTime>
-        
-         
-           
         </display>
     </data>
     </url>
