@@ -6,22 +6,20 @@
     <meta charset="utf-8">
     
 
-    <title>Docker常用命令汇集 | 钢铁锅</title>
+    <title>HIVE搭建及启动 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name sla">
-<meta name="keywords" content="Docker">
+    <meta name="description" content="[TOC] 配置HOME下载hive包，并解压 1http://archive.apache.org/dist/ ln -s hive-2.1.1  /usr/hive vi ~/.bashrc 1234567export PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.j">
+<meta name="keywords" content="Docker,Hive">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker常用命令汇集">
-<meta property="og:url" content="http://gangtieguo.cn/2018/06/26/Docker命令汇集/index.html">
+<meta property="og:title" content="HIVE搭建及启动">
+<meta property="og:url" content="http://gangtieguo.cn/2018/07/20/Hive搭建及启动/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name sla">
+<meta property="og:description" content="[TOC] 配置HOME下载hive包，并解压 1http://archive.apache.org/dist/ ln -s hive-2.1.1  /usr/hive vi ~/.bashrc 1234567export PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.j">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu55c5h3g1j319i0eu0tg.jpg">
-<meta property="og:updated_time" content="2018-08-10T18:03:11.035Z">
+<meta property="og:updated_time" content="2018-08-13T03:31:50.444Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Docker常用命令汇集">
-<meta name="twitter:description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name sla">
-<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu55c5h3g1j319i0eu0tg.jpg">
+<meta name="twitter:title" content="HIVE搭建及启动">
+<meta name="twitter:description" content="[TOC] 配置HOME下载hive包，并解压 1http://archive.apache.org/dist/ ln -s hive-2.1.1  /usr/hive vi ~/.bashrc 1234567export PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.j">
     
 
     
@@ -249,7 +247,7 @@ var _hmt = _hmt || [];
 
             
 
-            <section id="main"><article id="post-Docker命令汇集" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Hive搭建及启动" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -257,7 +255,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            Docker常用命令汇集
+            HIVE搭建及启动
         </h1>
     
 
@@ -266,8 +264,8 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/06/26/Docker命令汇集/">
-            <time datetime="2018-06-26T02:33:37.714Z" itemprop="datePublished">2018-06-26</time>
+        <a href="/2018/07/20/Hive搭建及启动/">
+            <time datetime="2018-07-19T18:51:21.978Z" itemprop="datePublished">2018-07-20</time>
         </a>
     </div>
 
@@ -275,13 +273,13 @@ var _hmt = _hmt || [];
                         
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Docker/">Docker</a>
+        <a class="article-category-link" href="/categories/安装部署/">安装部署</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Hive/">Hive</a>
     </div>
 
                     </div>
@@ -306,7 +304,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker源配置"><span class="toc-number">1.</span> <span class="toc-text">Docker源配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建容器"><span class="toc-number">1.1.</span> <span class="toc-text">创建容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容器挂载目录"><span class="toc-number">1.2.</span> <span class="toc-text">容器挂载目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除所有未用的-Data-volumes"><span class="toc-number">1.3.</span> <span class="toc-text">删除所有未用的 Data volumes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#run-命令解释"><span class="toc-number">1.4.</span> <span class="toc-text">run 命令解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exec-进入后台容器"><span class="toc-number">1.5.</span> <span class="toc-text">exec 进入后台容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#logs查看容器启动日志"><span class="toc-number">1.6.</span> <span class="toc-text">logs查看容器启动日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看容器信息"><span class="toc-number">1.7.</span> <span class="toc-text">查看容器信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动-关闭-删除容器"><span class="toc-number">1.8.</span> <span class="toc-text">启动 关闭 删除容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cp容器宿主互拷文件"><span class="toc-number">1.9.</span> <span class="toc-text">cp容器宿主互拷文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除镜像"><span class="toc-number">1.10.</span> <span class="toc-text">删除镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存镜像"><span class="toc-number">1.11.</span> <span class="toc-text">保存镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker用DockerFile创建镜像"><span class="toc-number">1.12.</span> <span class="toc-text">Docker用DockerFile创建镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一键启动docker-compose-yml编排的所有服务"><span class="toc-number">1.13.</span> <span class="toc-text">一键启动docker-compose.yml编排的所有服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker改变标签"><span class="toc-number">1.14.</span> <span class="toc-text">Docker改变标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索docker镜像"><span class="toc-number">1.15.</span> <span class="toc-text">搜索docker镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#登录docker账户"><span class="toc-number">1.16.</span> <span class="toc-text">登录docker账户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#上传仓库"><span class="toc-number">1.17.</span> <span class="toc-text">上传仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容器保存为镜像，加载本地镜像-引用"><span class="toc-number">1.18.</span> <span class="toc-text">容器保存为镜像，加载本地镜像 引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存，加载容器命令："><span class="toc-number">1.19.</span> <span class="toc-text">保存，加载容器命令：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker-machine命令"><span class="toc-number">2.</span> <span class="toc-text">Docker-machine命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#列出docker-machine"><span class="toc-number">2.1.</span> <span class="toc-text">列出docker-machine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开启虚拟机"><span class="toc-number">2.2.</span> <span class="toc-text">开启虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关闭虚拟机"><span class="toc-number">2.3.</span> <span class="toc-text">关闭虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重启虚拟机"><span class="toc-number">2.4.</span> <span class="toc-text">重启虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除虚拟机"><span class="toc-number">2.5.</span> <span class="toc-text">删除虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置环境变量docker-machine"><span class="toc-number">2.6.</span> <span class="toc-text">设置环境变量docker-machine</span></a></li></ol></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#配置HOME"><span class="toc-number">1.</span> <span class="toc-text">配置HOME</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装mysql"><span class="toc-number">2.</span> <span class="toc-text">安装mysql</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hive元数据介绍"><span class="toc-number">2.1.</span> <span class="toc-text">Hive元数据介绍</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置Hive"><span class="toc-number">3.</span> <span class="toc-text">配置Hive</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive命令"><span class="toc-number">4.</span> <span class="toc-text">Hive命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#启动hive"><span class="toc-number">4.1.</span> <span class="toc-text">启动hive</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动hiveserver2"><span class="toc-number">4.2.</span> <span class="toc-text">启动hiveserver2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#beeline工具测试使用jdbc方式连接"><span class="toc-number">4.3.</span> <span class="toc-text">beeline工具测试使用jdbc方式连接</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#报错"><span class="toc-number">5.</span> <span class="toc-text">报错</span></a></li></ol>
             </div>
 
 
@@ -333,67 +331,45 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fu55c5h3g1j319i0eu0tg.jpg" alt=""></p>
-<p>[TOC]</p>
-<h1 id="Docker源配置"><a href="#Docker源配置" class="headerlink" title="Docker源配置"></a>Docker源配置</h1><p>  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：<br>  vi /etc/docker/daemon.json<br>  {“registry-mirrors”:[“<a href="http://c1f0a193.m.daocloud.io&quot;]" target="_blank" rel="noopener">http://c1f0a193.m.daocloud.io&quot;]</a> }</p>
-<p>启动容器</p>
-<pre><code>docker run -itd  --net=br  --name slave02 --hostname slave02 centos:hadoop-spark &amp;&gt; /dev/null
-如果以 /bin/bash启动的话，sshd服务不会启动(docker未知bug)
-</code></pre><h2 id="创建容器"><a href="#创建容器" class="headerlink" title="创建容器"></a>创建容器</h2><pre><code>--name    --hostname (同-h)  --net=    -d表示后台启动
-此命令不会打印出容器id
-docker run -itd  --net=br  --name hm --hostname hadoop-master kiwenlau/hadoop:1.0 &amp;&gt; /dev/null   （hadoop镜像）
-设置静态固定ip
-docker run -d --net=br --name=c6 --ip=192.168.33.6 nginx
-
-
-自动分配Ip
-docker run -d --net=br --name=c1 nginx
-
-设置docker默认ip段命令
-docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 --name master -h master --add-host slave01:172.17.0.3 --add-host slave02:172.17.0.4 centos:ssh-spark-hadoop
-</code></pre><h2 id="容器挂载目录"><a href="#容器挂载目录" class="headerlink" title="容器挂载目录"></a>容器挂载目录</h2><p>compose文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">volumes:</span><br><span class="line">	- /Users/yaosong/Yao/dev/hadoop/dfs/name:/root/hadoop/dfs/name</span><br></pre></td></tr></table></figure></p>
-<p>shell命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-v : </span><br><span class="line">docker run -it -v /<span class="built_in">test</span>:/soft centos /bin/bash</span><br></pre></td></tr></table></figure>
-<p>“:”前目录为宿主机目录，后目录为容器目录</p>
-<h2 id="删除所有未用的-Data-volumes"><a href="#删除所有未用的-Data-volumes" class="headerlink" title="删除所有未用的 Data volumes"></a>删除所有未用的 Data volumes</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume prune</span><br></pre></td></tr></table></figure>
-<h2 id="run-命令解释"><a href="#run-命令解释" class="headerlink" title="run 命令解释"></a>run 命令解释</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-d 是后台启动</span><br><span class="line">docker run -itd  --net=br  --name spark --hostname spark yaosong/spark:2.1.0 &amp;&gt; /dev/null</span><br><span class="line">sudo docker <span class="built_in">exec</span> -it spark bash（进入后台启动的容器）</span><br><span class="line">和下面一样（直接进入）</span><br><span class="line">docker run -it --net=br  --name spark --hostname spark yaosong/spark:2.1.0 bash</span><br></pre></td></tr></table></figure>
-<h2 id="exec-进入后台容器"><a href="#exec-进入后台容器" class="headerlink" title="exec 进入后台容器"></a>exec 进入后台容器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it spark bash</span><br><span class="line">docker <span class="built_in">exec</span> -it 容器名 bash</span><br><span class="line">执行命令 docker <span class="built_in">exec</span> -it 容器名 ip addr 可以拿到 a0 容器的 ip</span><br></pre></td></tr></table></figure>
-<h2 id="logs查看容器启动日志"><a href="#logs查看容器启动日志" class="headerlink" title="logs查看容器启动日志"></a>logs查看容器启动日志</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs -f -t --tail 100  kanbigdata_namenode_1</span><br></pre></td></tr></table></figure>
-<h2 id="查看容器信息"><a href="#查看容器信息" class="headerlink" title="查看容器信息"></a>查看容器信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker inspect hm</span><br><span class="line">执行命令 docker exec -it 容器名 ip addr 可以拿到 a0 容器的 ip</span><br></pre></td></tr></table></figure>
-<h2 id="启动-关闭-删除容器"><a href="#启动-关闭-删除容器" class="headerlink" title="启动 关闭 删除容器"></a>启动 关闭 删除容器</h2><pre><code>docker start 
-docker stop 容器名
-docker rm 容器名
-</code></pre><h2 id="cp容器宿主互拷文件"><a href="#cp容器宿主互拷文件" class="headerlink" title="cp容器宿主互拷文件"></a>cp容器宿主互拷文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker cp /Users/yaosong/Yao/etc.tar  f7e795c0fddd:/</span><br><span class="line">后为容器id:/目录</span><br></pre></td></tr></table></figure>
-<h2 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h2><pre><code>（根据镜像id删除）
-docker rmi 00de07ebadff
-用docker images -a 查看image id，
-也可docker rmi 镜像名:版本号
-</code></pre><h2 id="保存镜像"><a href="#保存镜像" class="headerlink" title="保存镜像"></a>保存镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker commit -m &quot;centos-6.9 with spark 2.2.0 and hadoop 2.8.0&quot;  os   centos:hadoop-spark</span><br><span class="line"></span><br><span class="line">docker commit -m &quot;bigdata:spark,hadoop,hive,mysql and shell  foundation&quot;   --author=&quot;yaosong&quot;  master   yao/os/bigdata:2.1</span><br></pre></td></tr></table></figure>
-<h2 id="Docker用DockerFile创建镜像"><a href="#Docker用DockerFile创建镜像" class="headerlink" title="Docker用DockerFile创建镜像"></a>Docker用DockerFile创建镜像</h2><pre><code>docker build -t hadoop:v1- &lt;Dockerfile
-docker build -t=&quot;hadoop:v1&quot; .  （.表示是当前文件夹，也就是dockerfile所在文件夹）
-docker build -f Dockerfile -t hadoop:v1 . 此命令也可
-</code></pre><h2 id="一键启动docker-compose-yml编排的所有服务"><a href="#一键启动docker-compose-yml编排的所有服务" class="headerlink" title="一键启动docker-compose.yml编排的所有服务"></a>一键启动docker-compose.yml编排的所有服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose -f docker-compose.yml up d</span><br></pre></td></tr></table></figure>
-<h2 id="Docker改变标签"><a href="#Docker改变标签" class="headerlink" title="Docker改变标签"></a>Docker改变标签</h2><p>docker tag IMAGEID(镜像id) REPOSITORY:TAG（仓库：标签）</p>
-<p><code>docker tag  b7a66cb0e8ba yaosong5/bigdata:1.0</code></p>
-<h2 id="搜索docker镜像"><a href="#搜索docker镜像" class="headerlink" title="搜索docker镜像"></a>搜索docker镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search yaosong5</span><br></pre></td></tr></table></figure>
-<h2 id="登录docker账户"><a href="#登录docker账户" class="headerlink" title="登录docker账户"></a>登录docker账户</h2><p><code>docker login</code> 登录docker hub中注册的账户</p>
-<h2 id="上传仓库"><a href="#上传仓库" class="headerlink" title="上传仓库"></a>上传仓库</h2><p><code>docker push yaosong5/elk:1.0</code></p>
-<h2 id="容器保存为镜像，加载本地镜像-引用"><a href="#容器保存为镜像，加载本地镜像-引用" class="headerlink" title="容器保存为镜像，加载本地镜像 引用"></a>容器保存为镜像，加载本地镜像 引用</h2><pre><code>docker save imageID &gt; filename
-docker load &lt;filename
-如：
-docker save 4f9e92e56941&gt;  /Users/yaosong/centosSparkHadoop.tar
-docker load &lt;/Users/yaosong/centosSparkHadoop.tar
-
-通过 image 保存的镜像会保存操作历史，可以回滚到历史版本。
-</code></pre><h2 id="保存，加载容器命令："><a href="#保存，加载容器命令：" class="headerlink" title="保存，加载容器命令："></a>保存，加载容器命令：</h2><pre><code>docker export containID &gt; filename
-docker import filename [newname]
-</code></pre><p>通过容器保存的镜像不会保存操作历史，所以文件小一点。<br>如果要运行通过容器加载的镜像， 需要在运行的时候加上相关命令。</p>
-<h1 id="Docker-machine命令"><a href="#Docker-machine命令" class="headerlink" title="Docker-machine命令"></a>Docker-machine命令</h1><h2 id="列出docker-machine"><a href="#列出docker-machine" class="headerlink" title="列出docker-machine"></a>列出docker-machine</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine ls</span><br></pre></td></tr></table></figure>
-<h2 id="开启虚拟机"><a href="#开启虚拟机" class="headerlink" title="开启虚拟机"></a>开启虚拟机</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine start default</span><br></pre></td></tr></table></figure>
-<h2 id="关闭虚拟机"><a href="#关闭虚拟机" class="headerlink" title="关闭虚拟机"></a>关闭虚拟机</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine stop default</span><br></pre></td></tr></table></figure>
-<h2 id="重启虚拟机"><a href="#重启虚拟机" class="headerlink" title="重启虚拟机"></a>重启虚拟机</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine restart default</span><br></pre></td></tr></table></figure>
-<h2 id="删除虚拟机"><a href="#删除虚拟机" class="headerlink" title="删除虚拟机"></a>删除虚拟机</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine rm default</span><br></pre></td></tr></table></figure>
-<h2 id="设置环境变量docker-machine"><a href="#设置环境变量docker-machine" class="headerlink" title="设置环境变量docker-machine"></a>设置环境变量docker-machine</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval $(docker-machine env default) # Setup the environment</span><br></pre></td></tr></table></figure>
+                <p>[TOC]</p>
+<h1 id="配置HOME"><a href="#配置HOME" class="headerlink" title="配置HOME"></a>配置HOME</h1><p>下载hive包，并解压</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://archive.apache.org/dist/</span><br></pre></td></tr></table></figure>
+<p><code>ln -s hive-2.1.1  /usr/hive</code></p>
+<p><strong>vi ~/.bashrc</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br><span class="line"><span class="variable">$HIVE_HOME</span>/bin/hive</span><br><span class="line"><span class="built_in">export</span> HIVE_HOME=/usr/hive</span><br><span class="line">PATH=<span class="variable">$HIVE_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="comment">#hive依赖于hadoop(可以不运行在同一主机，但是需要hadoop的配置)</span></span><br><span class="line"><span class="variable">$HADOOP_HOME</span>=/usr/hadoop</span><br></pre></td></tr></table></figure>
+<p><strong>source ~/.bashrc</strong></p>
+<a id="more"></a>
+<h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h1><blockquote>
+<h2 id="Hive元数据介绍"><a href="#Hive元数据介绍" class="headerlink" title="Hive元数据介绍"></a>Hive元数据介绍</h2><p>Hive 将元数据存储在 RDBMS 中，一般常用 MySQL 和 Derby。默认情况下，Hive 元数据保存在内嵌的 Derby 数据库中，只能允许一个会话连接，只适合简单的测试。实际生产环境中不适用， 为了支持多用户会话，则需要一个独立的元数据库，使用 MySQL 作为元数据库，Hive 内部对 MySQL 提供了很好的支持，配置一个独立的元数据库</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">yum install -y mysql-server</span><br><span class="line">chkconfig --add mysqld</span><br><span class="line">chkconfig mysqld on</span><br><span class="line">chkconfig --list mysqld</span><br><span class="line">service mysqld start</span><br><span class="line"></span><br><span class="line">mysql -u root -p</span><br><span class="line">Enter password:           //默认密码为空，输入后回车即可</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@localhost=password(<span class="string">'root'</span>); 　　密码设置为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@=password(<span class="string">'root'</span>);</span><br><span class="line">默认情况下Mysql只允许本地登录，所以只需配置root@localhost就好</span><br><span class="line">设置所有ip访问密码为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@%=password(<span class="string">'root'</span>); 　　　　　　密码设置为root （其实这一步可以不配）</span><br><span class="line">设置master访问密码为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@master=password(<span class="string">'root'</span>); 　　密码设置为root （其实这一步可以不配）</span><br><span class="line">查询密码</span><br><span class="line">select user,host,password from mysql.user;  　　查看密码是否设置成功</span><br><span class="line">设置所有ip可以通过root访问</span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">'root'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'root'</span> WITH GRANT OPTION;</span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">'hive'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'hive'</span> WITH GRANT OPTION;</span><br><span class="line"></span><br><span class="line">mysql -uroot -proot</span><br><span class="line">create user <span class="string">'hive'</span> identified by <span class="string">'hive'</span>;</span><br><span class="line">create user <span class="string">'hive'</span>@<span class="string">'%'</span> identified by <span class="string">'hive'</span>;</span><br><span class="line"></span><br><span class="line">create database hive;</span><br></pre></td></tr></table></figure>
+<h1 id="配置Hive"><a href="#配置Hive" class="headerlink" title="配置Hive"></a>配置Hive</h1><p><code>mkdir iotmp</code></p>
+<p><code>cp hive-default.xml.template hive-site.xml</code></p>
+<p><code>vim hive-site.xml</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionDriverName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.mysql.jdbc.Driver<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Driver class name for a JDBC metastore<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionURL<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>jdbc:mysql://localhost:3306/hive?characterEncoding=UTF-8<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>JDBC connect string for a JDBC metastore<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionUserName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>root<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Username to use against metastore database<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionPassword<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>root<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>password to use against metastore database<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.querylog.location<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/hive/iotmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Location of Hive run time structured log file<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.exec.local.scratchdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/hive/iotmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Local scratch space for Hive jobs<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.downloaded.resources.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/hive/iotmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Temporary local directory for added resources in the remote file system.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.uris<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>thrift://master:9083<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>Hive 的元数据可以存储在本地的 MySQL 中，但是大多数情况会是一个 mysql 集群，而且不在本地。所以在 hive 中需要开启远程 metastore。由于我是本地的 mysql，我就不配置下列属性了，但是如果是远程的 metastore，配置下面的属性。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.uris<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>Thrift URI for the remote metastore. Used by metastore client to connect to remote metastore.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.server2.transport.mode<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>http<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">description</span>&gt;</span>Server transport mode. "binary" or "http".<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">链接：https://www.jianshu.com/p/87b76a686216</span><br></pre></td></tr></table></figure></p>
+<h1 id="Hive命令"><a href="#Hive命令" class="headerlink" title="Hive命令"></a>Hive命令</h1><h2 id="启动hive"><a href="#启动hive" class="headerlink" title="启动hive"></a>启动hive</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$HIVE_HOME</span>/bin/hive</span><br><span class="line">如果调试，可以加上参数</span><br><span class="line"><span class="variable">$HIVE_HOME</span>/bin/hivehive -hiveconf hive.root.logger=DEBUG,console</span><br></pre></td></tr></table></figure>
+<h2 id="启动hiveserver2"><a href="#启动hiveserver2" class="headerlink" title="启动hiveserver2"></a>启动hiveserver2</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$HIVE_HOME</span>/bin/hive --service hiveserver2</span><br><span class="line"></span><br><span class="line">or nohup <span class="variable">$HIVE_HOME</span>/bin/hiveserver2 1&gt;/var/<span class="built_in">log</span>/hiveserver.log 2&gt;/var/<span class="built_in">log</span>/hiveserver.err &amp;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>hiveserver端口号默认是10000</p>
+</blockquote>
+<p><strong>hiveserver2是否启动</strong><br><code>netstat -nl|grep 10000</code></p>
+<h2 id="beeline工具测试使用jdbc方式连接"><a href="#beeline工具测试使用jdbc方式连接" class="headerlink" title="beeline工具测试使用jdbc方式连接"></a>beeline工具测试使用jdbc方式连接</h2><p>可以在部署了hive任意节点上用beeline去连接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$HIVE_HOME</span>/bin/beeline -u jdbc:hive2://hive:10000</span><br><span class="line">or</span><br><span class="line"><span class="variable">$HIVE_HOME</span>/bin/beeline -u jdbc:hive2://hive:10000 -n bigdata </span><br><span class="line">最后一个参数是用户</span><br><span class="line">or </span><br><span class="line"><span class="variable">$HIVE_HOME</span>/bin/beeline 回车，进入beeline的命令界面 </span><br><span class="line">输入命令连接hiveserver2 </span><br><span class="line">beeline&gt; !connect jdbc:hive2://hive:10000</span><br></pre></td></tr></table></figure>
+<p>使用beeline通过jdbc连接上之后就可以像client一样操作。</p>
+<p>hiveserver2会同时启动一个webui，端口号默认为10002，可以通过<a href="http://localhost:10002/访问" target="_blank" rel="noopener">http://localhost:10002/访问</a><br>界面中可以看到Session/Query/Software等信息。(此网页只可查看，不可以操作hive数据仓库)</p>
+<blockquote>
+<p>参考<a href="https://blog.csdn.net/lblblblblzdx/article/details/79760959" target="_blank" rel="noopener">https://blog.csdn.net/lblblblblzdx/article/details/79760959</a></p>
+<p>参考<a href="https://www.cnblogs.com/netuml/p/7841387.html" target="_blank" rel="noopener">https://www.cnblogs.com/netuml/p/7841387.html</a></p>
+</blockquote>
+<h1 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h1><blockquote>
+<p>报错 Hive 2.3.3 MetaException(message:Version information not found in metastore.)</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schematool -initSchema -dbType mysql</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>参考<a href="https://stackoverflow.com/questions/50230515/hive-2-3-3-metaexceptionmessageversion-information-not-found-in-metastore" target="_blank" rel="noopener">https://stackoverflow.com/questions/50230515/hive-2-3-3-metaexceptionmessageversion-information-not-found-in-metastore</a></p>
+<p><a href="http://sishuok.com/forum/blogPost/list/6221.html" target="_blank" rel="noopener">http://sishuok.com/forum/blogPost/list/6221.html</a></p>
+<p><a href="https://blog.csdn.net/nokia_hp/article/details/79054079" target="_blank" rel="noopener">https://blog.csdn.net/nokia_hp/article/details/79054079</a></p>
+</blockquote>
 
             
 
@@ -472,7 +448,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/06/26/Docker命令汇集/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/20/Hive搭建及启动/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -481,19 +457,19 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/07/08/elk容器的搭建/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/07/20/Docker-machine的搭建(与宿主机在同一ip段下)/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    ELK容器的搭建
+                    Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下
                 
             </div>
         </a>
     
     
-        <a href="/2018/06/21/各种快捷键/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/07/20/Docker构建免密登录/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">各种快捷键</div>
+            <div class="article-nav-title">Docker构建免密ssh免密镜像</div>
         </a>
     
 </nav>
