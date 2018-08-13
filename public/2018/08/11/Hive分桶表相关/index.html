@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta name="baidu-site-verification"content="WHXmBFaAkY"/>
+    <meta name="google-site-verification" content="vDyi3jVPymP4jOpfzY4F1zG4-FXD1T-A5unnDJuNxhs" />
+    <meta charset="utf-8">
+    
+
+    <title>Hive分桶表,分区表简单分析 | 钢铁锅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="[TOC] 对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。 分桶依赖于yarn的所以分桶的时候需要启动yarn">
+<meta name="keywords" content="Hive">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hive分桶表,分区表简单分析">
+<meta property="og:url" content="http://gangtieguo.cn/2018/08/11/Hive分桶表相关/index.html">
+<meta property="og:site_name" content="钢铁锅">
+<meta property="og:description" content="[TOC] 对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。 分桶依赖于yarn的所以分桶的时候需要启动yarn">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu7ufetxnpj30yw06fmx9.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu7uk05fz5j30x70a8mxm.jpg">
+<meta property="og:updated_time" content="2018-08-13T03:20:52.773Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hive分桶表,分区表简单分析">
+<meta name="twitter:description" content="[TOC] 对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。 分桶依赖于yarn的所以分桶的时候需要启动yarn">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu7ufetxnpj30yw06fmx9.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/Basketball-icon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+     <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">钢铁锅</span>
+            </a>
+            <nav id="main-nav">
+            <a class="main-nav-link" href="/."><i class="fa fa-home"></i>主页</a>
+            <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i>归档</a>
+            <a class="main-nav-link" href="/categories"><i class="fa fa-folder"></i>分类</a>
+            <a class="main-nav-link" href="/tags"><i class="fa fa-tags"></i>标签</a>
+            <a class="main-nav-link" href="/about"><i class="fa fa-user"></i>关于</a>
+
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/.">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     主页  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/archives">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     归档  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/categories">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     分类  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/tags">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     标签  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/about">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     关于  -->
+               <!--     </a>  -->
+               <!--   -->
+
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/venum.gif" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+         <!-- <button type="submit" class="search-form-submit"></button> -->
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+             
+
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/venum.gif" />
+            <h2 id="name">GTG</h2>
+            <h3 id="title">Nothing</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>四海为家</span>
+           
+        </div>
+      <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                38
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/yaosong5" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/gangtieguo/" target="_blank" title="weibo" class=tooltip>
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+
+        
+        
+    </div>
+
+
+</aside>
+
+
+            
+
+            <section id="main"><article id="post-Hive分桶表相关" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Hive分桶表,分区表简单分析
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/11/Hive分桶表相关/">
+            <time datetime="2018-08-11T03:21:32.532Z" itemprop="datePublished">2018-08-11</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Hive/">Hive</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article "  class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#分桶表创建"><span class="toc-number">1.</span> <span class="toc-text">分桶表创建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分桶模式的参数"><span class="toc-number">1.1.</span> <span class="toc-text">分桶模式的参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Update与分桶表关系"><span class="toc-number">1.2.</span> <span class="toc-text">Update与分桶表关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新语句"><span class="toc-number">1.3.</span> <span class="toc-text">更新语句:</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分桶表测试"><span class="toc-number">2.</span> <span class="toc-text">分桶表测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建表"><span class="toc-number">2.1.</span> <span class="toc-text">创建表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建数据"><span class="toc-number">2.2.</span> <span class="toc-text">创建数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读取本地文件"><span class="toc-number">2.3.</span> <span class="toc-text">读取本地文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注意"><span class="toc-number">3.</span> <span class="toc-text">注意</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#hive分桶表的使用场景"><span class="toc-number">4.</span> <span class="toc-text">hive分桶表的使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#结果如下"><span class="toc-number">4.1.</span> <span class="toc-text">结果如下</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设置分桶参数"><span class="toc-number">5.</span> <span class="toc-text">设置分桶参数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#重新创建表"><span class="toc-number">5.1.</span> <span class="toc-text">重新创建表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#再分别查看这几个文件"><span class="toc-number">5.2.</span> <span class="toc-text">再分别查看这几个文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#得到结果"><span class="toc-number">5.3.</span> <span class="toc-text">得到结果</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分桶表疑问"><span class="toc-number">6.</span> <span class="toc-text">分桶表疑问</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么每个桶里面的数据条数不一样"><span class="toc-number">6.1.</span> <span class="toc-text">为什么每个桶里面的数据条数不一样</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分桶表的意义："><span class="toc-number">7.</span> <span class="toc-text">分桶表的意义：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注意-1"><span class="toc-number">8.</span> <span class="toc-text">注意</span></a></li></ol>
+            </div>
+
+
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <p>[TOC]</p>
+<p>对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。</p>
+<p>分桶依赖于yarn的所以分桶的时候需要启动yarn</p>
+<a id="more"></a>
+<h1 id="分桶表创建"><a href="#分桶表创建" class="headerlink" title="分桶表创建"></a>分桶表创建</h1><p>#设置变量,设置分桶为true, 设置reduce数量是分桶的数量个数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> hive.enforce.bucketing = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">set</span> mapreduce.job.reduces=<span class="number">4</span>;</span><br></pre></td></tr></table></figure>
+<p>创建表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> person_buck(<span class="keyword">id</span> <span class="built_in">int</span>,<span class="keyword">name</span> <span class="keyword">string</span>,sex <span class="keyword">string</span>,age <span class="built_in">int</span>)</span><br><span class="line">clustered <span class="keyword">by</span>(<span class="keyword">id</span>) </span><br><span class="line">sorted <span class="keyword">by</span>(<span class="keyword">id</span> <span class="keyword">DESC</span>)</span><br><span class="line"><span class="keyword">into</span> <span class="number">4</span> buckets</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span></span><br><span class="line"><span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">开会往创建的分桶表插入数据(插入数据需要是已分桶, 且排序的)</span><br><span class="line">可以使用distribute by(id) sort by(id asc)  或是排序和分桶的字段相同的时候使用Cluster by(字段)</span><br><span class="line">注意使用cluster by  就等同于分桶+排序(sort)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">table</span> person_buck <span class="keyword">select</span> <span class="keyword">id</span>,<span class="keyword">name</span>,sex,age <span class="keyword">from</span> student <span class="keyword">distribute</span> <span class="keyword">by</span>(<span class="keyword">id</span>) <span class="keyword">sort</span> <span class="keyword">by</span>(<span class="keyword">id</span> <span class="keyword">asc</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="分桶模式的参数"><a href="#分桶模式的参数" class="headerlink" title="分桶模式的参数"></a>分桶模式的参数</h2><p>设置变量,设置分桶为true, 设置reduce数量是分桶的数量个数</p>
+<p>set hive.enforce.bucketing = true;</p>
+<p>不设置reduce的数量会使用默认的数量，默认的数量会和分桶的数量不一致，则不能分出正确分桶</p>
+<p>set mapreduce.job.reduces=4;</p>
+<p>本地模式</p>
+<p>set hive.exec.mode.local.auto=true</p>
+<p>动态分区</p>
+<p>–设置为true表示开启动态分区功能（默认为false）</p>
+<p>set hive.exec.dynamic.partition=true;</p>
+<p>–设置为nonstrict,表示允许所有分区都是动态的（默认为strict）</p>
+<p>set hive.exec.dynamic.partition.mode=nonstrict;</p>
+<h2 id="Update与分桶表关系"><a href="#Update与分桶表关系" class="headerlink" title="Update与分桶表关系"></a>Update与分桶表关系</h2><p>Hive对使用Update功能的表有特定的语法要求, 语法要求如下:<br>(1)要执行Update的表中, 建表时必须带有buckets(分桶)属性<br>(2)要执行Update的表中, 需要指定格式,其余格式目前赞不支持, 如:parquet格式, 目前只支持ORCFileformat和AcidOutputFormat<br>(3)要执行Update的表中, 建表时必须指定参数(‘transactional’ = true);<br>举例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table student (id bigint,name string) clustered by (name) into 2 buckets stored as orc TBLPROPERTIES(&apos;transactional&apos;=&apos;true&apos;);</span><br></pre></td></tr></table></figure>
+<h2 id="更新语句"><a href="#更新语句" class="headerlink" title="更新语句:"></a>更新语句:</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update student set id=&apos;444&apos; where name=&apos;tom&apos;;</span><br></pre></td></tr></table></figure>
+<h1 id="分桶表测试"><a href="#分桶表测试" class="headerlink" title="分桶表测试"></a>分桶表测试</h1><p>这个例子就是将分区的字段进行hash散列将数据分桶到分桶数个文件中去</p>
+<p>导入一个文件到分桶表里面</p>
+<h2 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_buk(<span class="keyword">id</span> <span class="built_in">int</span>,<span class="keyword">name</span> <span class="keyword">string</span>) clustered <span class="keyword">by</span>(<span class="keyword">id</span>)  sorted <span class="keyword">by</span>(<span class="keyword">id</span> <span class="keyword">DESC</span>) <span class="keyword">into</span> <span class="number">4</span> buckets <span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span><span class="string">``</span><span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="创建数据"><a href="#创建数据" class="headerlink" title="创建数据"></a>创建数据</h2><p><strong>cd /usr/hive/hivedata/</strong></p>
+<p><strong>vim buk.txt</strong> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1,数据库</span><br><span class="line">2,数学</span><br><span class="line">3,信息系统</span><br><span class="line">4,操作系统</span><br><span class="line">5,数据结构</span><br><span class="line">6,数据no</span><br><span class="line">7,数据other</span><br><span class="line">8,数据time</span><br><span class="line">9,数据操作</span><br><span class="line">10,数据挖掘</span><br><span class="line">11,数据挖机</span><br><span class="line">12,数据信号</span><br></pre></td></tr></table></figure>
+<h2 id="读取本地文件"><a href="#读取本地文件" class="headerlink" title="读取本地文件"></a>读取本地文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data local inpath &apos;/usr/hive/hivedata/buk.txt&apos; into table t_buk;</span><br></pre></td></tr></table></figure>
+<p>load方式这样导入数据到一个分桶表里面，是不会作出分桶的操作的，不会分成桶数个文件，还是一个文件在hdfs系统中</p>
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ol>
+<li>要想导入到数据到分桶表里面，必须是一个是已经是分桶的数据，比如已经形成了分桶数据个文件，才可以导入到分桶表里面，导数据的时候是不会将原来的数据形式变成分桶的数据形式</li>
+</ol>
+<h1 id="hive分桶表的使用场景"><a href="#hive分桶表的使用场景" class="headerlink" title="hive分桶表的使用场景"></a>hive分桶表的使用场景</h1><p>所以一般是在一个表中查询了数据然后在塞入到一个分区表里面，查询是走mapReduce程序，然后将数据按分桶表照分桶的策略写入到分桶表中</p>
+<p>形如</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_buk <span class="keyword">select</span> * <span class="keyword">from</span> other … …;</span><br></pre></td></tr></table></figure>
+<p>后面的</p>
+<p>清除数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">truncate</span> <span class="keyword">table</span> t_buk;</span><br></pre></td></tr></table></figure>
+<p>创建一个表来读取数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_p(<span class="keyword">id</span> <span class="built_in">int</span>,<span class="keyword">name</span> <span class="keyword">string</span>)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span></span><br><span class="line"><span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">'/usr/hive/hivedata/buk.txt'</span> <span class="keyword">into</span> <span class="keyword">table</span> t_p;</span><br></pre></td></tr></table></figure>
+<p> insert into table t_buk select id,name from t_p; </p>
+<p> insert overwirte 也可以</p>
+<h2 id="结果如下"><a href="#结果如下" class="headerlink" title="结果如下"></a>结果如下</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Number of reduce tasks is set to 0 since there&apos;s no reduce operator</span><br><span class="line">INFO  : number of splits:1</span><br><span class="line">INFO  : Submitting tokens for job: job_1502537431423_0011</span><br><span class="line">INFO  : The url to track the job: http://bigdata1:8088/proxy/application_1502537431423_0011/</span><br><span class="line">INFO  : Starting Job = job_1502537431423_0011, Tracking URL = http://bigdata1:8088/proxy/application_1502537431423_0011/</span><br><span class="line">INFO  : Kill Command = /home/bigdata/apps/hadoop/bin/hadoop job  -kill job_1502537431423_0011</span><br><span class="line">INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0</span><br><span class="line">INFO  : 2017-08-15 21:12:15,669 Stage-1 map = 0%,  reduce = 0%</span><br><span class="line">INFO  : 2017-08-15 21:12:32,386 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.27 sec</span><br><span class="line">INFO  : MapReduce Total cumulative CPU time: 1 seconds 270 msec</span><br><span class="line">INFO  : Ended Job = job_1502537431423_0011</span><br><span class="line">INFO  : Stage-4 is selected by condition resolver.</span><br><span class="line">INFO  : Stage-3 is filtered out by condition resolver.</span><br><span class="line">INFO  : Stage-5 is filtered out by condition resolver.</span><br><span class="line">INFO  : Moving data to: hdfs://bigdata1:9000/user/hive/warehouse/t_buk/.hive-staging_hive_2017-08-15_21-12-02_490_4088487413275551800-3/-ext-10000 from hdfs://bigdata1:9000/user/hive/warehouse/t_buk/.hive-staging_hive_2017-08-15_21-12-02_490_4088487413275551800-3/-ext-10002</span><br><span class="line">INFO  : Loading data to table default.t_buk from hdfs://bigdata1:9000/user/hive/warehouse/t_buk/.hive-staging_hive_2017-08-15_21-12-02_490_4088487413275551800-3/-ext-10000</span><br><span class="line">INFO  : Table default.t_buk stats: [numFiles=1, numRows=12, totalSize=167, rawDataSize=155]</span><br></pre></td></tr></table></figure>
+<p>查看hdfs管理页面 50070</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fu7ufetxnpj30yw06fmx9.jpg" alt=""></p>
+<p> 还是只有一文件，表示分桶不成功，没设reduce数量，使用默认的数量1，和我们期望分桶数量不一致</p>
+<h1 id="设置分桶参数"><a href="#设置分桶参数" class="headerlink" title="设置分桶参数"></a>设置分桶参数</h1><p>因为没有启动模式的开关，如下</p>
+<p>设置变量,设置分桶为true, 设置reduce数量是分桶的数量个数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">set hive.enforce.bucketing = true;</span><br><span class="line">set mapreduce.job.reduces=4;</span><br><span class="line">set hive.exec.mode.local.auto=true;</span><br><span class="line">set hive.exec.dynamic.partition=true;</span><br><span class="line">set hive.exec.dynamic.partition.mode=nonstrict;</span><br></pre></td></tr></table></figure>
+<h2 id="重新创建表"><a href="#重新创建表" class="headerlink" title="重新创建表"></a>重新创建表</h2><p>可以通过set hive.enforce.bucketing查看是否设置成功</p>
+<p>先查看sort by (id)；</p>
+<p>根据4个reduce来局部有序，每个reduce有序，但是从哪儿截断每个reduce并不确定</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">select id,name from t_p sort by (id);</span><br><span class="line">INFO  : Number of reduce tasks not specified. Defaulting to jobconf value of: 4</span><br><span class="line">INFO  : In order to change the average load for a reducer (in bytes):</span><br><span class="line">INFO  :   set hive.exec.reducers.bytes.per.reducer=&lt;number&gt;</span><br><span class="line">INFO  : In order to limit the maximum number of reducers:</span><br><span class="line">INFO  :   set hive.exec.reducers.max=&lt;number&gt;</span><br><span class="line">INFO  : In order to set a constant number of reducers:</span><br><span class="line">INFO  :   set mapreduce.job.reduces=&lt;number&gt;</span><br><span class="line">INFO  : number of splits:1</span><br><span class="line">INFO  : Submitting tokens for job: job_1502537431423_0012</span><br><span class="line">INFO  : The url to track the job: http://bigdata1:8088/proxy/application_1502537431423_0012/</span><br><span class="line">INFO  : Starting Job = job_1502537431423_0012, Tracking URL = http://bigdata1:8088/proxy/application_1502537431423_0012/</span><br><span class="line">INFO  : Kill Command = /home/bigdata/apps/hadoop/bin/hadoop job  -kill job_1502537431423_0012</span><br><span class="line">INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 4</span><br><span class="line">INFO  : 2017-08-15 21:26:14,284 Stage-1 map = 0%,  reduce = 0%</span><br><span class="line">INFO  : 2017-08-15 21:26:24,633 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.29 sec</span><br><span class="line">INFO  : 2017-08-15 21:26:38,745 Stage-1 map = 100%,  reduce = 50%, Cumulative CPU 6.99 sec</span><br><span class="line">INFO  : 2017-08-15 21:26:43,887 Stage-1 map = 100%,  reduce = 67%, Cumulative CPU 6.99 sec</span><br><span class="line">INFO  : 2017-08-15 21:26:46,970 Stage-1 map = 100%,  reduce = 75%, Cumulative CPU 9.06 sec</span><br><span class="line">INFO  : 2017-08-15 21:26:50,081 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 10.8 sec</span><br><span class="line">INFO  : MapReduce Total cumulative CPU time: 10 seconds 800 msec</span><br><span class="line">INFO  : Ended Job = job_1502537431423_0012</span><br><span class="line">+-----+----------+--+</span><br><span class="line">| id  |   name   |</span><br><span class="line">+-----+----------+--+</span><br><span class="line">| 4   | 操作系统     |</span><br><span class="line">| 8   | 数据time   |</span><br><span class="line">| 12  | 数据信号     |</span><br><span class="line">| 2   | 数学       |</span><br><span class="line">| 6   | 数据no     |</span><br><span class="line">| 1   | 数据库      |</span><br><span class="line">| 3   | 信息系统     |</span><br><span class="line">| 5   | 数据结构     |</span><br><span class="line">| 10  | 数据挖掘     |</span><br><span class="line">| 11  | 数据挖机     |</span><br><span class="line">| 7   | 数据other  |</span><br><span class="line">| 9   | 数据操作     |</span><br><span class="line">+-----+----------+--+</span><br></pre></td></tr></table></figure>
+<p>再试一次select 插入（将t_buk truncate也可，也可使用overwrite关键字）</p>
+<p> <code>insert overwrite table t_buk select id,name from t_p cluster by (id);</code></p>
+<p>再查看hdfs ui页面50070</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fu7uk05fz5j30x70a8mxm.jpg" alt=""></p>
+<h2 id="再分别查看这几个文件"><a href="#再分别查看这几个文件" class="headerlink" title="再分别查看这几个文件"></a>再分别查看这几个文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$HADOOP_HOME/bin/hadoop fs -cat /user/hive/warehouse/t_buk/000000_0</span><br><span class="line">$HADOOP_HOME/bin/hadoop fs -cat /user/hive/warehouse/t_buk/000001_0  </span><br><span class="line">$HADOOP_HOME/bin/hadoop fs -cat /user/hive/warehouse/t_buk/000002_0  </span><br><span class="line">$HADOOP_HOME/bin/hadoop fs -cat /user/hive/warehouse/t_buk/000003_0</span><br></pre></td></tr></table></figure>
+<h2 id="得到结果"><a href="#得到结果" class="headerlink" title="得到结果"></a>得到结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@master hivedata]$  hadoop fs -cat /user/hive/warehouse/t_buk/000000_0  </span><br><span class="line">4,操作系统</span><br><span class="line">8,数据time</span><br><span class="line">12,数据信号</span><br><span class="line">[bigdata@master hivedata]$  hadoop fs -cat /user/hive/warehouse/t_buk/000001_0  </span><br><span class="line">1,数据库</span><br><span class="line">5,数据结构</span><br><span class="line">9,数据操作</span><br><span class="line">[bigdata@master hivedata]$  hadoop fs -cat /user/hive/warehouse/t_buk/000002_0  </span><br><span class="line">2,数学</span><br><span class="line">6,数据no</span><br><span class="line">10,数据挖掘</span><br><span class="line">[bigdata@master hivedata]$  hadoop fs -cat /user/hive/warehouse/t_buk/000003_0</span><br><span class="line">3,信息系统</span><br><span class="line">7,数据other</span><br><span class="line">11,数据挖机</span><br></pre></td></tr></table></figure>
+<h1 id="分桶表疑问"><a href="#分桶表疑问" class="headerlink" title="分桶表疑问"></a>分桶表疑问</h1><h2 id="为什么每个桶里面的数据条数不一样"><a href="#为什么每个桶里面的数据条数不一样" class="headerlink" title="为什么每个桶里面的数据条数不一样"></a>为什么每个桶里面的数据条数不一样</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hash散列的时候数据可能将数据有的分的多，有的分的少</span><br></pre></td></tr></table></figure>
+<p>cluster by （id） 根据id分桶，桶内根据id排序，相当于 distribute by 和 sort by的集合，只是指定的字段都是同一个<br>用两个组合更加强大，分桶字段排序字段可以设置为不同</p>
+<h1 id="分桶表的意义："><a href="#分桶表的意义：" class="headerlink" title="分桶表的意义："></a>分桶表的意义：</h1><p>提高join操作的效率案例</p>
+<blockquote>
+<p>如果a表和b表已经是分桶表，而且分桶的字段都是是id字段<br>做这个join操作是，还需要做笛卡尔积吗？ 这样不需要，因为同一id哈希后的数据是一致的，这就是分桶表存在的意义</p>
+</blockquote>
+<h1 id="注意-1"><a href="#注意-1" class="headerlink" title="注意"></a>注意</h1><ol>
+<li>在分桶表中使用order by 是非常不建议的，这样会设置成一个reduce，强行将数据写入，一个reduce的内存会爆炸</li>
+<li><p>使用cluster by  就等同于分桶+排序(sort) </p>
+<p>insert overwrite table student_buck  select * from student cluster by(Sno) sort by(Sage);  报错,cluster 和 sort 不能共存</p>
+</li>
+</ol>
+
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+        <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           如果您觉得文章不错，就请我看场ufc直播🤓🤓🤓🤓🤓！
+        </span>
+        <br>
+      </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 支付宝打赏图案 -->
+        <img src="/css/images/alipay.jpg" alt="支付宝打赏" > 
+        <!-- 微信打赏图案 -->
+        <img src="/css/images/wechatpay.jpg" alt="微信打赏" >  
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            if($('#donate_guide').hasClass('hidden')){
+                $('#donate_guide').removeClass('hidden');
+            }else{
+                $('#donate_guide').addClass('hidden');
+            }
+        }
+    </script>
+</div>
+<! -- 添加捐赠图标 -->
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/11/Hive分桶表相关/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/08/11/Hive自定义函数流程/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Hive自定义函数UDF相关</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="lv-container" data-id="city" data-uid=MTAyMC8zNjM2MS8xMjg5Ng==></div>
+</section>
+    
+
+</section>
+            
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-book"></i>最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
+                            <p class="item-title"><a href="/2018/08/11/Hive分桶表相关/" class="title">Hive分桶表,分区表简单分析</a></p>
+                            <p class="item-date"><time datetime="2018-08-11T03:21:32.532Z" itemprop="datePublished">2018-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
+                            <p class="item-title"><a href="/2018/08/11/Hive自定义函数流程/" class="title">Hive自定义函数UDF相关</a></p>
+                            <p class="item-date"><time datetime="2018-08-11T03:16:01.806Z" itemprop="datePublished">2018-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
+                            <p class="item-title"><a href="/2018/08/11/Hive sql相关/" class="title">Hive建表及sql相关</a></p>
+                            <p class="item-date"><time datetime="2018-08-11T02:31:24.062Z" itemprop="datePublished">2018-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
+                            <p class="item-title"><a href="/2018/08/11/Json与Scala类型的一些互相转换处理/" class="title">Json与Scala类型的相互转换处理</a></p>
+                            <p class="item-date"><time datetime="2018-08-10T17:19:05.443Z" itemprop="datePublished">2018-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
+                            <p class="item-title"><a href="/2018/08/11/Spark读取Hbase/" class="title">Spark读取HBase</a></p>
+                            <p class="item-date"><time datetime="2018-08-10T16:18:11.706Z" itemprop="datePublished">2018-08-11</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-archive"></i>归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-folder"></i>分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-folder"></i>标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDH/">CDH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/">HBase</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase，操作/">HBase，操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HIVE/">HIVE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/">Json</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kakfa/">Kakfa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkSQL/">SparkSQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es/">es</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zk/">zk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/使用/">使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-tags"></i>标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/tags/CDH/" style="font-size: 10px;">CDH</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/ELK/" style="font-size: 12.5px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HBase/" style="font-size: 15px;">HBase</a> <a href="/tags/HBase，操作/" style="font-size: 10px;">HBase，操作</a> <a href="/tags/HIVE/" style="font-size: 10px;">HIVE</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Kakfa/" style="font-size: 10px;">Kakfa</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 17.5px;">Spark</a> <a href="/tags/SparkSQL/" style="font-size: 10px;">SparkSQL</a> <a href="/tags/es/" style="font-size: 10px;">es</a> <a href="/tags/git/" style="font-size: 12.5px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/zk/" style="font-size: 10px;">zk</a> <a href="/tags/使用/" style="font-size: 10px;">使用</a> <a href="/tags/命令/" style="font-size: 12.5px;">命令</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/开发/" style="font-size: 12.5px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title"><i class="fa fa-link"></i>链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://gangtieguo.cn"  target="_blank">GTG</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol ==='https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 GTG<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+    </div>
+</footer>
+        
+    
+    
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+
+         if (typeof LivereTower === 'function') { return; }
+
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+    </script>
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+  <!-- City版安装代码已完成 -->
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

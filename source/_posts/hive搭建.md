@@ -146,17 +146,6 @@ Hive 的元数据可以存储在本地的 MySQL 中，但是大多数情况会�
 
 # Hive命令
 
-## 启动hiveserver2
-
-```bash
-$HIVE_HOME/bin/hive --service hiveserver2
-```
-
-> hiveserver端口号默认是10000
-
-**hiveserver2是否启动**
-`netstat -nl|grep 10000`
-
 ## 启动hive
 
 ```bash
@@ -165,10 +154,32 @@ $HIVE_HOME/bin/hive
 $HIVE_HOME/bin/hivehive -hiveconf hive.root.logger=DEBUG,console
 ```
 
-## beeline工具测试使用jdbc方式连接
+## 启动hiveserver2
 
 ```bash
-$HIVE_HOME/bin/beeline -u jdbc:hive2://localhost:10000
+$HIVE_HOME/bin/hive --service hiveserver2
+
+or nohup $HIVE_HOME/bin/hiveserver2 1>/var/log/hiveserver.log 2>/var/log/hiveserver.err &
+```
+
+> hiveserver端口号默认是10000
+
+**hiveserver2是否启动**
+`netstat -nl|grep 10000`
+
+## beeline工具测试使用jdbc方式连接
+
+可以在部署了hive任意节点上用beeline去连接
+
+```bash
+$HIVE_HOME/bin/beeline -u jdbc:hive2://hive:10000
+or
+$HIVE_HOME/bin/beeline -u jdbc:hive2://hive:10000 -n bigdata 
+最后一个参数是用户
+or 
+$HIVE_HOME/bin/beeline 回车，进入beeline的命令界面 
+输入命令连接hiveserver2 
+beeline> !connect jdbc:hive2://hive:10000 
 ```
 
 使用beeline通过jdbc连接上之后就可以像client一样操作。

@@ -4,6 +4,132 @@
 
     
   <url>
+    <loc>http://gangtieguo.cn/2018/08/11/Hive%E5%88%86%E6%A1%B6%E8%A1%A8%E7%9B%B8%E5%85%B3/</loc>
+    <lastmod>2018-08-13T03:20:52.773Z</lastmod>
+    <data>
+        <display>
+        <title>Hive分桶表,分区表简单分析</title>
+        <pubTime>2018-08-11T03:21:32.532Z</pubTime>
+        
+        <tag>Hive</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/11/Hive%20sql%E7%9B%B8%E5%85%B3/</loc>
+    <lastmod>2018-08-13T03:20:39.546Z</lastmod>
+    <data>
+        <display>
+        <title>Hive建表及sql相关</title>
+        <pubTime>2018-08-11T02:31:24.062Z</pubTime>
+        
+        <tag>Hive</tag>
+         
+        <tag>使用</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/20/Hive%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2018-08-13T03:20:18.349Z</lastmod>
+    <data>
+        <display>
+        <title>HIVE搭建</title>
+        <pubTime>2018-07-19T18:51:21.978Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>HIVE</tag>
+         
+         
+           
+             
+              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/11/Hive%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E6%B5%81%E7%A8%8B/</loc>
+    <lastmod>2018-08-13T03:19:44.441Z</lastmod>
+    <data>
+        <display>
+        <title>Hive自定义函数UDF相关</title>
+        <pubTime>2018-08-11T03:16:01.806Z</pubTime>
+        
+        <tag>Hive</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/11/Spark%E8%AF%BB%E5%8F%96HBase%E8%A7%A3%E6%9E%90json%E5%88%9B%E5%BB%BA%E4%B8%B4%E6%97%B6%E8%A1%A8%E5%BD%95%E5%85%A5%E5%88%B0Hive%E8%A1%A8/</loc>
+    <lastmod>2018-08-11T03:42:36.401Z</lastmod>
+    <data>
+        <display>
+        <title>Spark读取HBase解析json创建临时表录入到Hive表</title>
+        <pubTime>2018-08-10T16:09:46.585Z</pubTime>
+        
+        <tag>Spark</tag>
+         
+        <tag>SparkSQL</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/06/21/Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAJenkins/</loc>
+    <lastmod>2018-08-11T02:00:14.159Z</lastmod>
+    <data>
+        <display>
+        <title>Centos7上搭建Jenkins</title>
+        <pubTime>2018-06-21T14:11:28.272Z</pubTime>
+        
+        <tag>Jenkins</tag>
+         
+         
+           
+             
+              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://gangtieguo.cn/2018/08/11/Json%E4%B8%8EScala%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%92%E7%9B%B8%E8%BD%AC%E6%8D%A2%E5%A4%84%E7%90%86/</loc>
     <lastmod>2018-08-10T19:39:06.343Z</lastmod>
     <data>
@@ -182,26 +308,6 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/06/21/Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAJenkins/</loc>
-    <lastmod>2018-08-10T18:32:28.065Z</lastmod>
-    <data>
-        <display>
-        <title>Centos7上搭建Jenkins</title>
-        <pubTime>2018-06-21T14:11:28.272Z</pubTime>
-        
-        <tag>Jenkins</tag>
-         
-         
-           
-             
-              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://gangtieguo.cn/2018/05/21/%E8%BD%AC%E7%A7%BBGithub%E5%8D%9A%E5%AE%A2%E5%88%B0%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
     <lastmod>2018-08-10T18:32:14.487Z</lastmod>
     <data>
@@ -230,28 +336,6 @@
         <pubTime>2018-08-07T08:09:43.314Z</pubTime>
         
         <tag>Spark</tag>
-         
-         
-           
-             
-              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/11/Spark%E8%AF%BB%E5%8F%96HBase%E8%A7%A3%E6%9E%90json%E5%88%9B%E5%BB%BA%E4%B8%B4%E6%97%B6%E8%A1%A8%E5%BD%95%E5%85%A5%E5%88%B0Hive%E8%A1%A8/</loc>
-    <lastmod>2018-08-10T18:21:36.344Z</lastmod>
-    <data>
-        <display>
-        <title>Spark读取HBase解析json创建临时表录入到Hive表</title>
-        <pubTime>2018-08-10T16:09:46.585Z</pubTime>
-        
-        <tag>Spark</tag>
-         
-        <tag>SparkSOL</tag>
          
          
            
@@ -567,28 +651,6 @@
     
     
     
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/07/20/hive%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2018-08-07T06:26:06.556Z</lastmod>
-    <data>
-        <display>
-        <title>HIVE搭建</title>
-        <pubTime>2018-07-19T18:51:21.978Z</pubTime>
-        
-        <tag>Docker</tag>
-         
-        <tag>HIVE</tag>
-         
-         
-           
-             
-              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-          
-        </display>
-    </data>
-    </url>
-
     
   <url>
     <loc>http://gangtieguo.cn/2018/07/09/flink%E5%AE%B9%E5%99%A8%E6%90%AD%E5%BB%BA/</loc>

@@ -1,7 +1,7 @@
 ---
 title: Spark读取HBase解析json创建临时表录入到Hive表
 date: 2018年08月06日 22时15分52秒
-tags: [Spark,SparkSOL]
+tags: [Spark,SparkSQL]
 categories: 大数据
 toc: true
 ---
