@@ -1,7 +1,7 @@
 ---
 title: Hive搭建及启动
 date: 2018年08月06日 22时15分52秒
-tags: [Docker,Hive]
+tags: [Hive,Docker]
 categories: 安装部署
 toc: true
 ---

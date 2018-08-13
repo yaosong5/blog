@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://gangtieguo.cn/2018/07/20/Hive%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%90%AF%E5%8A%A8/</loc>
-    <lastmod>2018-08-13T06:17:22.032Z</lastmod>
+    <lastmod>2018-08-13T06:23:38.453Z</lastmod>
     <data>
         <display>
         <title>Hive搭建及启动</title>
@@ -19,6 +19,26 @@
            
              
               <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/11/Hive%E5%88%86%E6%A1%B6%E8%A1%A8%E7%9B%B8%E5%85%B3/</loc>
+    <lastmod>2018-08-13T06:22:41.643Z</lastmod>
+    <data>
+        <display>
+        <title>Hive分桶表,分区表简单分析</title>
+        <pubTime>2018-08-11T03:21:32.532Z</pubTime>
+        
+        <tag>Hive</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
           
         </display>
     </data>
@@ -80,26 +100,6 @@
         <tag>HBase</tag>
          
         <tag>操作</tag>
-         
-         
-           
-             
-              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/11/Hive%E5%88%86%E6%A1%B6%E8%A1%A8%E7%9B%B8%E5%85%B3/</loc>
-    <lastmod>2018-08-13T03:20:52.773Z</lastmod>
-    <data>
-        <display>
-        <title>Hive分桶表,分区表简单分析</title>
-        <pubTime>2018-08-11T03:21:32.532Z</pubTime>
-        
-        <tag>Hive</tag>
          
          
            

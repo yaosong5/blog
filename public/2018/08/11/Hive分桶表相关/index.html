@@ -8,21 +8,22 @@
 
     <title>Hive分桶表,分区表简单分析 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="[TOC] 对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。 分桶依赖于yarn的所以分桶的时候需要启动yarn">
+    <meta name="description" content="[TOC]  对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。 分桶依赖于yarn的所以分桶的时候需要启动yarn">
 <meta name="keywords" content="Hive">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hive分桶表,分区表简单分析">
 <meta property="og:url" content="http://gangtieguo.cn/2018/08/11/Hive分桶表相关/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] 对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。 分桶依赖于yarn的所以分桶的时候需要启动yarn">
+<meta property="og:description" content="[TOC]  对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。 分桶依赖于yarn的所以分桶的时候需要启动yarn">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/0069RVTdgy1fu81tzpekzj305z06j3yc.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu7ufetxnpj30yw06fmx9.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu7uk05fz5j30x70a8mxm.jpg">
-<meta property="og:updated_time" content="2018-08-13T03:20:52.773Z">
+<meta property="og:updated_time" content="2018-08-13T06:22:41.643Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hive分桶表,分区表简单分析">
-<meta name="twitter:description" content="[TOC] 对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。 分桶依赖于yarn的所以分桶的时候需要启动yarn">
-<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu7ufetxnpj30yw06fmx9.jpg">
+<meta name="twitter:description" content="[TOC]  对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。 分桶依赖于yarn的所以分桶的时候需要启动yarn">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/0069RVTdgy1fu81tzpekzj305z06j3yc.jpg">
     
 
     
@@ -335,6 +336,7 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
+<p><img src="https://ws2.sinaimg.cn/large/0069RVTdgy1fu81tzpekzj305z06j3yc.jpg" alt=""></p>
 <p>对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。</p>
 <p>分桶依赖于yarn的所以分桶的时候需要启动yarn</p>
 <a id="more"></a>
