@@ -1,7 +1,7 @@
 ---
 title:  kafka的启动及常用命令
 date: 2018年06月21日 22时15分52秒
-tags:  [Kakfa]
+tags:  [Kafka]
 categories: 大数据
 toc: true
 ---
@@ -28,83 +28,58 @@ ssh root@slave02 "$KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/conf
 
 jps -ml 查看kafka的运行情况
 
-
-
 ## 启动
 
-```sql
- nohup  $KAFKA_HOME/bin/kafka-server-start.sh  $KAFKA_HOME/config/server.properties > /dev/null 2>&1 &
+```bash
+nohup  $KAFKA_HOME/bin/kafka-server-start.sh  $KAFKA_HOME/config/server.properties > /dev/null 2>&1 &
 ```
 
+## 创建 topic
 
-​    
-
-## 创建topic
-
-```sql
+```bash
 $KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper zk1:2181 --replication-factor 2 --partitions 1 --topic shuaige
+
 ```
 
 ## 查看消费位置
 
-  
-
-```sql
+```bash
 sh  $KAFKA_HOME/bin/kafka-run-class.sh kafka.tools.ConsumerOffsetChecker --zookeeper zk1:2181 --group testGroup
+
 ```
 
+## 查看某个 Topic 的详情
 
-
-## 查看某个Topic的详情
-
-  
-
-```sql
+```bash
 sh  $KAFKA_HOME/bin/kafka-topics.sh --topic test --describe --zookeeper zk1:2181
+
 ```
-
-
 
 ## 创建生产者
 
-```sql
+```bash
 $KAFKA_HOME/bin/kafka-console-producer.sh --broker-list master:9092 --topic shuaige
+
 ```
 
+## 创建消费者
 
-
-##创建消费者
-```sql
+```bash
 $KAFKA_HOME/bin/kafka-console-consumer.sh --zookeeper zk1:2181 --topic shuaige --from-beginning
+
 ```
 
+## 查看所有 topic
 
+zk 表示 zk 的地址 地址表示 zookeeper 的地址
 
-## 查看所有topic  
-
-zk表示zk的地址 地址表示zookeeper的地址
-
-```sql
+```
 $KAFKA_HOME/bin/kafka-topics.sh --list --zookeeper  zk1:2181
+
 ```
 
+## 删除 topic
 
-
-## 删除topic
-
-```sql
+```
 sh $KAFKA_HOME/bin/kafka-topics.sh --delete --zookeeper zk1:2181 --topic test
 ```
-
-> 需要server.properties中设置delete.topic.enable=true否则只是标记删除或者直接重启。
-
-
-
-
-
-
-
-
-
-
-

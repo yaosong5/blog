@@ -8,13 +8,15 @@ toc: true
 
 [TOC]
 
-在hive做统计的时候，总是涉及到做累计的报表处理，下面案列就是来做相应处理
+在 hive 做统计的时候，总是涉及到做累计的报表处理，下面案列就是来做相应处理
 
 # 准备
 
 ## 创建数据文件
 
-**vim /usr/hive/hivedata/t_sales.dat**
+（在hadoop所在的机器）
+
+**vim /usr/hadoop/hivedata/t_sales.dat**
 
 ```
 舒肤佳,2018-06,5
@@ -29,57 +31,66 @@ toc: true
 美姿,2018-07,5
 ```
 
-<!-- more -->
+上传到hdfs
+
+```shell
+hadoop fs -put /usr/hadoop/hivedata/t_sales.dat /local/hivedata/t_sales.dat
+```
+
+
 
 ## 创建表及读取数据
 
 ```sql
 create table t_sales(brandname string,month string,sales int)
 row format delimited fields terminated by ',';
-load data local inpath '/usr/hive/hivedata/t_sales.dat' into table t_access_times;
+load data inpath '/local/hivedata/t_sales.dat' into table t_sales;
 ```
+
+如果是上传本地文件（如果在hive所在主机上） 则在load  data 后加 local，如 `load data local inpath '/usr/hadoop/hivedata/t_sales.dat' into table t_sales;`
 
 
 
 # 1、先求每个品牌的月总金额
 
-```sql
+```
 select brandname,month,sum(sales) as all_sales from t_sales group by brandname,month
 ```
+
+![](https://ws1.sinaimg.cn/large/0069RVTdgy1fu87l2nswej31500smq3k.jpg)
 
 
 
 # 2、将月总金额自连接
 
 ```sql
-select A.brandname,A.month,max(A.sales) as sales,sum(B.sales) as accumulate
-from 
-(select brandname,month,sum(sales) as sales from t_access_times group by brandname,month) A 
-inner join 
-(select brandname,month,sum(sales) as sales from t_access_times group by brandname,month) B
-on
+select * from  (select brandname,month,sum(sales) as sal from t_sales group by brandname,month) A 
+    inner join 
+   (select brandname,month,sum(sales) as sal from t_sales group by brandname,month) B
+    on
 A.brandname=B.brandname
-where B.month <= A.month
+where 
+B.month <= A.month;
 ```
+
+![](https://ws1.sinaimg.cn/large/006tNbRwgy1fu88kcmiosj31ik0zgq4y.jpg)
+
+
 
 
 
 # 3、从上一步的结果中进行分组查询
 
-分组的字段是a.brandname a.month
+分组的字段是 a.brandname a.month
 
-求月累计值：  将b.month <= a.month的所有b.salary求和即可
+求月累计值： 将 b.month <= a.month 的所有 b.sals求和即可
 
-进行分组查询，分组的字段是a.name a.month
-
-求月累计值：  将b.month <= a.month的所有b.sales求和即可
-
-```sql
+```
 select A.brandname,A.month,max(A.sales) as sales,sum(B.sales) as accumulate
 from 
-(select brandname,month,sum(sales) as sales from t_access_times group by brandname,month) A 
+(select brandname,month,sum(sales) as sales from t_sales group by brandname,month) A 
 inner join 
-(select brandname,month,sum(sales) as sales from t_access_times group by brandname,month) B
+(select brandname,month,sum(sales) as sales from t_sales group by brandname,month) B
 on
 A.brandname=B.brandname
 where B.month <= A.month
@@ -87,3 +98,4 @@ group by A.brandname,A.month
 order by A.brandname,A.month;
 ```
 
+![](https://ws4.sinaimg.cn/large/006tNbRwgy1fu88tmmjfqj31ag0vamyy.jpg)

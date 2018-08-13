@@ -4,6 +4,68 @@
 
     
   <url>
+    <loc>http://gangtieguo.cn/2018/08/13/Hive%E7%B4%AF%E8%AE%A1%E6%8A%A5%E8%A1%A8/</loc>
+    <lastmod>2018-08-13T10:20:29.282Z</lastmod>
+    <data>
+        <display>
+        <title>Hive累计报表</title>
+        <pubTime>2018-08-13T03:49:13.857Z</pubTime>
+        
+        <tag>Hive</tag>
+         
+        <tag>报表</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/11/Hive%E5%88%86%E6%A1%B6%E8%A1%A8%E7%9B%B8%E5%85%B3/</loc>
+    <lastmod>2018-08-13T09:00:52.971Z</lastmod>
+    <data>
+        <display>
+        <title>Hive分桶表,分区表简单分析</title>
+        <pubTime>2018-08-11T03:21:32.532Z</pubTime>
+        
+        <tag>Hive</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/08/kafka%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E5%8F%8A%E5%91%BD%E4%BB%A4/</loc>
+    <lastmod>2018-08-13T07:35:49.854Z</lastmod>
+    <data>
+        <display>
+        <title>kafka的启动及常用命令</title>
+        <pubTime>2018-07-08T15:58:00.558Z</pubTime>
+        
+        <tag>Kafka</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://gangtieguo.cn/2018/08/13/Kafka%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</loc>
     <lastmod>2018-08-13T07:30:23.298Z</lastmod>
     <data>
@@ -46,48 +108,6 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/07/08/kafka%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E5%8F%8A%E5%91%BD%E4%BB%A4/</loc>
-    <lastmod>2018-08-13T07:20:56.607Z</lastmod>
-    <data>
-        <display>
-        <title>kafka的启动及常用命令</title>
-        <pubTime>2018-07-08T15:58:00.558Z</pubTime>
-        
-        <tag>Kakfa</tag>
-         
-         
-           
-             
-              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/13/Hive%E7%B4%AF%E8%AE%A1%E6%8A%A5%E8%A1%A8/</loc>
-    <lastmod>2018-08-13T06:48:50.499Z</lastmod>
-    <data>
-        <display>
-        <title>Hive累计报表</title>
-        <pubTime>2018-08-13T03:49:13.857Z</pubTime>
-        
-        <tag>Hive</tag>
-         
-        <tag>报表</tag>
-         
-         
-           
-             
-              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://gangtieguo.cn/2018/07/20/Hive%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%90%AF%E5%8A%A8/</loc>
     <lastmod>2018-08-13T06:23:38.453Z</lastmod>
     <data>
@@ -103,26 +123,6 @@
            
              
               <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/11/Hive%E5%88%86%E6%A1%B6%E8%A1%A8%E7%9B%B8%E5%85%B3/</loc>
-    <lastmod>2018-08-13T06:22:41.643Z</lastmod>
-    <data>
-        <display>
-        <title>Hive分桶表,分区表简单分析</title>
-        <pubTime>2018-08-11T03:21:32.532Z</pubTime>
-        
-        <tag>Hive</tag>
-         
-         
-           
-             
-              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
           
         </display>
     </data>
