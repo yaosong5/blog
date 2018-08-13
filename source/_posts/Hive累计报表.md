@@ -41,7 +41,7 @@ load data local inpath '/usr/hive/hivedata/t_sales.dat' into table t_access_time
 
 
 
-# 1、先求个用户的月总金额
+# 1、先求每个品牌的月总金额
 
 ```sql
 select brandname,month,sum(sales) as all_sales from t_sales group by brandname,month
@@ -49,29 +49,41 @@ select brandname,month,sum(sales) as all_sales from t_sales group by brandname,m
 
 
 
-# 2、将自连接
+# 2、将月总金额自连接
 
-# 3、
+```sql
+select A.brandname,A.month,max(A.sales) as sales,sum(B.sales) as accumulate
+from 
+(select brandname,month,sum(sales) as sales from t_access_times group by brandname,month) A 
+inner join 
+(select brandname,month,sum(sales) as sales from t_access_times group by brandname,month) B
+on
+A.brandname=B.brandname
+where B.month <= A.month
+```
+
+
+
+# 3、从上一步的结果中进行分组查询
+
+分组的字段是a.brandname a.month
+
+求月累计值：  将b.month <= a.month的所有b.salary求和即可
 
 进行分组查询，分组的字段是a.name a.month
 
 求月累计值：  将b.month <= a.month的所有b.sales求和即可
 
-```
+```sql
 select A.brandname,A.month,max(A.sales) as sales,sum(B.sales) as accumulate
 from 
 (select brandname,month,sum(sales) as sales from t_access_times group by brandname,month) A 
-
 inner join 
 (select brandname,month,sum(sales) as sales from t_access_times group by brandname,month) B
 on
-
 A.brandname=B.brandname
-
 where B.month <= A.month
-
 group by A.brandname,A.month
-
 order by A.brandname,A.month;
 ```
 

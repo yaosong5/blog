@@ -6,19 +6,19 @@
     <meta charset="utf-8">
     
 
-    <title>kafka的启动及命令 | 钢铁锅</title>
+    <title>kafka的启动及常用命令 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="kafka的启动脚本kafka-startall.sh 1234567891011#!/bin/bashsed -e &apos;1c borker.id=0&apos; $KAFKA_HOME/config/server.properties$KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.propertiesssh ro">
 <meta name="keywords" content="Kakfa">
 <meta property="og:type" content="article">
-<meta property="og:title" content="kafka的启动及命令">
-<meta property="og:url" content="http://gangtieguo.cn/2018/07/08/kafka启动脚本/index.html">
+<meta property="og:title" content="kafka的启动及常用命令">
+<meta property="og:url" content="http://gangtieguo.cn/2018/07/08/kafka启动脚本及命令/index.html">
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="kafka的启动脚本kafka-startall.sh 1234567891011#!/bin/bashsed -e &apos;1c borker.id=0&apos; $KAFKA_HOME/config/server.properties$KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.propertiesssh ro">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-10T16:53:05.439Z">
+<meta property="og:updated_time" content="2018-08-13T07:20:56.607Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="kafka的启动及命令">
+<meta name="twitter:title" content="kafka的启动及常用命令">
 <meta name="twitter:description" content="kafka的启动脚本kafka-startall.sh 1234567891011#!/bin/bashsed -e &apos;1c borker.id=0&apos; $KAFKA_HOME/config/server.properties$KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.propertiesssh ro">
     
 
@@ -207,11 +207,11 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                37
+                39
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                38
+                39
                 <span>标签</span>
             </div>
         </div>
@@ -247,7 +247,7 @@ var _hmt = _hmt || [];
 
             
 
-            <section id="main"><article id="post-kafka启动脚本" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-kafka启动脚本及命令" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -255,7 +255,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            kafka的启动及命令
+            kafka的启动及常用命令
         </h1>
     
 
@@ -264,7 +264,7 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/07/08/kafka启动脚本/">
+        <a href="/2018/07/08/kafka启动脚本及命令/">
             <time datetime="2018-07-08T15:58:00.558Z" itemprop="datePublished">2018-07-08</time>
         </a>
     </div>
@@ -304,7 +304,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka的启动脚本"><span class="toc-number">1.</span> <span class="toc-text">kafka的启动脚本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka的shell命令"><span class="toc-number">2.</span> <span class="toc-text">kafka的shell命令</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka的启动脚本"><span class="toc-number">1.</span> <span class="toc-text">kafka的启动脚本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka的shell命令"><span class="toc-number">2.</span> <span class="toc-text">kafka的shell命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#启动"><span class="toc-number">2.1.</span> <span class="toc-text">启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建topic"><span class="toc-number">2.2.</span> <span class="toc-text">创建topic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看消费位置"><span class="toc-number">2.3.</span> <span class="toc-text">查看消费位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看某个Topic的详情"><span class="toc-number">2.4.</span> <span class="toc-text">查看某个Topic的详情</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建生产者"><span class="toc-number">2.5.</span> <span class="toc-text">创建生产者</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看所有topic"><span class="toc-number">2.6.</span> <span class="toc-text">查看所有topic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除topic"><span class="toc-number">2.7.</span> <span class="toc-text">删除topic</span></a></li></ol></li></ol>
             </div>
 
 
@@ -334,7 +334,20 @@ var _hmt = _hmt || [];
                 <h1 id="kafka的启动脚本"><a href="#kafka的启动脚本" class="headerlink" title="kafka的启动脚本"></a>kafka的启动脚本</h1><pre><code>kafka-startall.sh
 </code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">sed -e <span class="string">'1c borker.id=0'</span> <span class="variable">$KAFKA_HOME</span>/config/server.properties</span><br><span class="line"><span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties</span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '1c borker.id=1 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '5c host.name=slave01 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '6c advertised.host.name=slave01 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"<span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '1c borker.id=2 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '5c host.name=slave02 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '6c advertised.host.name=slave02 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"<span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h1 id="kafka的shell命令"><a href="#kafka的shell命令" class="headerlink" title="kafka的shell命令"></a>kafka的shell命令</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/usr/kafka/bin/kafka-topics.sh --create --zookeeper hbasezk1:2181 --replication-factor 2 --partitions 1 --topic shuaige</span><br><span class="line">/usr/kafka/bin/kafka-console-producer.sh --broker-list master:9092 --topic shuaige</span><br><span class="line"></span><br><span class="line"><span class="comment">#在一台服务器上创建一个订阅者</span></span><br><span class="line">/usr/kafka/bin/kafka-console-consumer.sh --zookeeper hbasezk1:2181 --topic shuaige --from-beginning</span><br><span class="line">/kafka-topics.sh --list --zookeeper localhost:12181</span><br></pre></td></tr></table></figure>
+<h1 id="kafka的shell命令"><a href="#kafka的shell命令" class="headerlink" title="kafka的shell命令"></a>kafka的shell命令</h1><p>jps -ml 查看kafka的运行情况</p>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup  $KAFKA_HOME/bin/kafka-server-start.sh  $KAFKA_HOME/config/server.properties &gt; /dev/<span class="literal">null</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> &amp;</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<h2 id="创建topic"><a href="#创建topic" class="headerlink" title="创建topic"></a>创建topic</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$KAFKA_HOME/bin/kafka-topics.sh <span class="comment">--create --zookeeper zk1:2181 --replication-factor 2 --partitions 1 --topic shuaige</span></span><br></pre></td></tr></table></figure>
+<h2 id="查看消费位置"><a href="#查看消费位置" class="headerlink" title="查看消费位置"></a>查看消费位置</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh  $KAFKA_HOME/bin/kafka-run-class.sh kafka.tools.ConsumerOffsetChecker <span class="comment">--zookeeper zk1:2181 --group testGroup</span></span><br></pre></td></tr></table></figure>
+<h2 id="查看某个Topic的详情"><a href="#查看某个Topic的详情" class="headerlink" title="查看某个Topic的详情"></a>查看某个Topic的详情</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh  $KAFKA_HOME/bin/kafka-topics.sh <span class="comment">--topic test --describe --zookeeper zk1:2181</span></span><br></pre></td></tr></table></figure>
+<h2 id="创建生产者"><a href="#创建生产者" class="headerlink" title="创建生产者"></a>创建生产者</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$KAFKA_HOME/bin/kafka-console-producer.sh <span class="comment">--broker-list master:9092 --topic shuaige</span></span><br></pre></td></tr></table></figure>
+<p>##创建消费者<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$KAFKA_HOME/bin/kafka-console-consumer.sh <span class="comment">--zookeeper zk1:2181 --topic shuaige --from-beginning</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="查看所有topic"><a href="#查看所有topic" class="headerlink" title="查看所有topic"></a>查看所有topic</h2><p>zk表示zk的地址 地址表示zookeeper的地址</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$KAFKA_HOME/bin/kafka-topics.sh <span class="comment">--list --zookeeper  zk1:2181</span></span><br></pre></td></tr></table></figure>
+<h2 id="删除topic"><a href="#删除topic" class="headerlink" title="删除topic"></a>删除topic</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh $KAFKA_HOME/bin/kafka-topics.sh <span class="comment">--delete --zookeeper zk1:2181 --topic test</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要server.properties中设置delete.topic.enable=true否则只是标记删除或者直接重启。</p>
+</blockquote>
 
             
 
@@ -413,7 +426,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/07/08/kafka启动脚本/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/08/kafka启动脚本及命令/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -466,6 +479,24 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/安装部署/">安装部署</a></p>
+                            <p class="item-title"><a href="/2018/08/13/Kafka集群配置及配置文件/" class="title">Kafka集群配置及配置文件</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:54:35.320Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/总结/">总结</a></p>
+                            <p class="item-title"><a href="/2018/08/13/Kafka小知识点/" class="title">Kafka知识点总结</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:50:40.913Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
                             <p class="item-title"><a href="/2018/08/13/Hive累计报表/" class="title">Hive累计报表</a></p>
                             <p class="item-date"><time datetime="2018-08-13T03:49:13.857Z" itemprop="datePublished">2018-08-13</time></p>
@@ -490,24 +521,6 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/08/11/Hive sql相关/" class="title">Hive建表及sql相关</a></p>
-                            <p class="item-date"><time datetime="2018-08-11T02:31:24.062Z" itemprop="datePublished">2018-08-11</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/08/11/Json与Scala类型的一些互相转换处理/" class="title">Json与Scala类型的相互转换处理</a></p>
-                            <p class="item-date"><time datetime="2018-08-10T17:19:05.443Z" itemprop="datePublished">2018-08-11</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -517,7 +530,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-archive"></i>归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
         </div>
     </div>
 
@@ -526,7 +539,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -535,7 +548,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDH/">CDH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/">HBase</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/">Json</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kakfa/">Kakfa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkSQL/">SparkSQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es/">es</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zk/">zk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/使用/">使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/报表/">报表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作/">操作</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDH/">CDH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/">HBase</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/">Json</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kakfa/">Kakfa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkSQL/">SparkSQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es/">es</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zk/">zk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/使用/">使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/报表/">报表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作/">操作</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -544,7 +557,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-tags"></i>标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/tags/CDH/" style="font-size: 10px;">CDH</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/ELK/" style="font-size: 12px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HBase/" style="font-size: 16px;">HBase</a> <a href="/tags/Hadoop/" style="font-size: 12px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 14px;">Hexo</a> <a href="/tags/Hive/" style="font-size: 18px;">Hive</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 12px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Kakfa/" style="font-size: 10px;">Kakfa</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 16px;">Spark</a> <a href="/tags/SparkSQL/" style="font-size: 10px;">SparkSQL</a> <a href="/tags/es/" style="font-size: 10px;">es</a> <a href="/tags/git/" style="font-size: 12px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/zk/" style="font-size: 10px;">zk</a> <a href="/tags/使用/" style="font-size: 10px;">使用</a> <a href="/tags/命令/" style="font-size: 12px;">命令</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/开发/" style="font-size: 12px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/报表/" style="font-size: 10px;">报表</a> <a href="/tags/操作/" style="font-size: 10px;">操作</a>
+            <a href="/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/tags/CDH/" style="font-size: 10px;">CDH</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/ELK/" style="font-size: 12px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HBase/" style="font-size: 16px;">HBase</a> <a href="/tags/Hadoop/" style="font-size: 12px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 14px;">Hexo</a> <a href="/tags/Hive/" style="font-size: 18px;">Hive</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 12px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Kafka/" style="font-size: 12px;">Kafka</a> <a href="/tags/Kakfa/" style="font-size: 10px;">Kakfa</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 16px;">Spark</a> <a href="/tags/SparkSQL/" style="font-size: 10px;">SparkSQL</a> <a href="/tags/es/" style="font-size: 10px;">es</a> <a href="/tags/git/" style="font-size: 12px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/zk/" style="font-size: 10px;">zk</a> <a href="/tags/使用/" style="font-size: 10px;">使用</a> <a href="/tags/命令/" style="font-size: 12px;">命令</a> <a href="/tags/大数据/" style="font-size: 12px;">大数据</a> <a href="/tags/开发/" style="font-size: 12px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/报表/" style="font-size: 10px;">报表</a> <a href="/tags/操作/" style="font-size: 10px;">操作</a>
         </div>
     </div>
 
