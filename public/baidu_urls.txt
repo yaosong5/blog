@@ -1,1 +1,1 @@
-http://gangtieguo.cn/2018/08/11/Hive分桶表相关/
+http://gangtieguo.cn/2018/08/13/Hive累计报表/
