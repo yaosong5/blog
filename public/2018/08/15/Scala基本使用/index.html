@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta name="baidu-site-verification"content="WHXmBFaAkY"/>
+    <meta name="google-site-verification" content="vDyi3jVPymP4jOpfzY4F1zG4-FXD1T-A5unnDJuNxhs" />
+    <meta charset="utf-8">
+    
+
+    <title>Scala基本使用-杂记 | 钢铁锅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="[TOC] 不需要变化 val 定义方法1def m1(x:Int,y:Int):Int=x*y">
+<meta name="keywords" content="Scala">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scala基本使用-杂记">
+<meta property="og:url" content="http://gangtieguo.cn/2018/08/15/Scala基本使用/index.html">
+<meta property="og:site_name" content="钢铁锅">
+<meta property="og:description" content="[TOC] 不需要变化 val 定义方法1def m1(x:Int,y:Int):Int=x*y">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-15T16:48:24.703Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scala基本使用-杂记">
+<meta name="twitter:description" content="[TOC] 不需要变化 val 定义方法1def m1(x:Int,y:Int):Int=x*y">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/Basketball-icon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+     <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">钢铁锅</span>
+            </a>
+            <nav id="main-nav">
+            <a class="main-nav-link" href="/."><i class="fa fa-home"></i>主页</a>
+            <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i>归档</a>
+            <a class="main-nav-link" href="/categories"><i class="fa fa-folder"></i>分类</a>
+            <a class="main-nav-link" href="/tags"><i class="fa fa-tags"></i>标签</a>
+            <a class="main-nav-link" href="/about"><i class="fa fa-user"></i>关于</a>
+
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/.">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     主页  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/archives">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     归档  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/categories">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     分类  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/tags">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     标签  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/about">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     关于  -->
+               <!--     </a>  -->
+               <!--   -->
+
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/venum.gif" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+         <!-- <button type="submit" class="search-form-submit"></button> -->
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+             
+
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/venum.gif" />
+            <h2 id="name">GTG</h2>
+            <h3 id="title">Nothing</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>四海为家</span>
+           
+        </div>
+      <div class="article-info profile-block">
+            <div class="article-info-block">
+                55
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                42
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/yaosong5" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/gangtieguo/" target="_blank" title="weibo" class=tooltip>
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+
+        
+        
+    </div>
+
+
+</aside>
+
+
+            
+
+            <section id="main"><article id="post-Scala基本使用" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Scala基本使用-杂记
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/15/Scala基本使用/">
+            <time datetime="2018-08-15T15:52:20.469Z" itemprop="datePublished">2018-08-15</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/语言/">语言</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Scala/">Scala</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article "  class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义方法"><span class="toc-number">1.</span> <span class="toc-text">定义方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数的定义-gt"><span class="toc-number">2.</span> <span class="toc-text">函数的定义=&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数和方法的区别"><span class="toc-number">3.</span> <span class="toc-text">函数和方法的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#神奇的下划线"><span class="toc-number">4.</span> <span class="toc-text">神奇的下划线</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数组、映射、元组、集合"><span class="toc-number"></span> <span class="toc-text">数组、映射、元组、集合</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数组"><span class="toc-number">1.</span> <span class="toc-text">数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map方法"><span class="toc-number">2.</span> <span class="toc-text">map方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#trait-关键字"><span class="toc-number">2.1.</span> <span class="toc-text">trait 关键字</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组的常用函数"><span class="toc-number">3.</span> <span class="toc-text">数组的常用函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#apply方法"><span class="toc-number">3.1.</span> <span class="toc-text">apply方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#元组"><span class="toc-number">4.</span> <span class="toc-text">元组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#将对偶的转成映射"><span class="toc-number">4.1.</span> <span class="toc-text">将对偶的转成映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拉链操作"><span class="toc-number">4.2.</span> <span class="toc-text">拉链操作</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#集合"><span class="toc-number"></span> <span class="toc-text">集合</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#foreach"><span class="toc-number">1.</span> <span class="toc-text">foreach</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Map"><span class="toc-number">2.</span> <span class="toc-text">Map</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#List"><span class="toc-number">3.</span> <span class="toc-text">List</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fold可以指定初始值"><span class="toc-number">4.</span> <span class="toc-text">fold可以指定初始值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#aggregate-聚合"><span class="toc-number">5.</span> <span class="toc-text">aggregate 聚合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#union-并集"><span class="toc-number">6.</span> <span class="toc-text">union 并集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#intersect交集"><span class="toc-number">7.</span> <span class="toc-text">intersect交集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#diff差集"><span class="toc-number">8.</span> <span class="toc-text">diff差集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flatten-将数据压缩"><span class="toc-number">9.</span> <span class="toc-text">flatten 将数据压缩</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对象"><span class="toc-number"></span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单例对象"><span class="toc-number">1.</span> <span class="toc-text">单例对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#伴生对象"><span class="toc-number">2.</span> <span class="toc-text">伴生对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#apply方法-1"><span class="toc-number">2.1.</span> <span class="toc-text">apply方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用程序对象"><span class="toc-number">3.</span> <span class="toc-text">应用程序对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构造函数"><span class="toc-number">4.</span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#柯里化的两种表达方式"><span class="toc-number">5.</span> <span class="toc-text">柯里化的两种表达方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承-代理-装饰-之间的区别"><span class="toc-number">6.</span> <span class="toc-text">继承 代理 装饰 之间的区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#泛型"><span class="toc-number"></span> <span class="toc-text">泛型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#gt-lt-gt-lt-在scala中都是方法"><span class="toc-number">1.</span> <span class="toc-text">&gt; &lt; &gt;= &lt;=在scala中都是方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#视图定界-view-bound-lt"><span class="toc-number">1.1.</span> <span class="toc-text">视图定界 view bound &lt;%</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上下文定界-content-bound"><span class="toc-number">1.2.</span> <span class="toc-text">上下文定界 : content bound</span></a></li></ol></li></ol>
+            </div>
+
+
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <p>[TOC]</p>
+<p>不需要变化 val</p>
+<h2 id="定义方法"><a href="#定义方法" class="headerlink" title="定义方法"></a>定义方法</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span><span class="title"> m1</span></span>(x:<span class="type">Int</span>,y:<span class="type">Int</span>):<span class="type">Int</span>=x*y</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="函数的定义-gt"><a href="#函数的定义-gt" class="headerlink" title="函数的定义=&gt;"></a>函数的定义=&gt;</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> func:<span class="type">Int</span> =&gt;<span class="type">String</span>=&#123;x=x.toString&#125;</span><br><span class="line">也可以写成</span><br><span class="line"><span class="keyword">val</span> func1=(x:<span class="type">Int</span>)=&gt;x.toString</span><br></pre></td></tr></table></figure>
+<h2 id="函数和方法的区别"><a href="#函数和方法的区别" class="headerlink" title="函数和方法的区别"></a>函数和方法的区别</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">定义一个方法</span><br><span class="line"><span class="function"><span class="keyword">def</span><span class="title"> m2</span></span>(f:(<span class="type">Int</span>,<span class="type">Int</span>)=&gt;<span class="type">Int</span>) =f(<span class="number">2</span>,<span class="number">6</span>)</span><br><span class="line">定义一个函数</span><br><span class="line"><span class="keyword">val</span> f2 =(x:<span class="type">Int</span>,y:<span class="type">Int</span>) =&gt;x-y</span><br><span class="line">调用</span><br><span class="line">f2(m2)</span><br></pre></td></tr></table></figure>
+<h2 id="神奇的下划线"><a href="#神奇的下划线" class="headerlink" title="神奇的下划线"></a>神奇的下划线</h2><p>将方法转换成函数</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span><span class="title"> m2</span></span>(x:<span class="type">Int</span>,y:<span class="type">Int</span>):<span class="type">Int</span> = x+y</span><br><span class="line"><span class="keyword">val</span> f2(a:<span class="type">Int</span>,y:<span class="type">Int</span>)=&gt;x+y</span><br><span class="line"><span class="keyword">val</span> f2 = m2 _</span><br></pre></td></tr></table></figure>
+<h1 id="数组、映射、元组、集合"><a href="#数组、映射、元组、集合" class="headerlink" title="数组、映射、元组、集合"></a>数组、映射、元组、集合</h1><h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> arr = <span class="keyword">new</span> <span class="type">Array</span>[<span class="type">Int</span>](<span class="number">10</span>) <span class="comment">//创建数组，无值</span></span><br><span class="line"><span class="keyword">val</span> arr1 = <span class="type">Array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>)  <span class="comment">//直接实例化</span></span><br><span class="line"><span class="keyword">for</span>(e&lt;- arr) **<span class="keyword">yield</span>** e*<span class="number">2</span>; 用<span class="keyword">yield</span>关键字可以生成一个新的数组 生成的类型和循环的类型是一样的</span><br></pre></td></tr></table></figure>
+<h2 id="map方法"><a href="#map方法" class="headerlink" title="map方法"></a>map方法</h2><p>map方法是将每一个元素拿来操作<br>arr.map(_*2) map方法更好用  map是排序？</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> a = <span class="type">Array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>)</span><br><span class="line">a.map((x:<span class="type">Int</span>)=&gt;x*<span class="number">10</span>)<span class="comment">//匿名函数</span></span><br></pre></td></tr></table></figure>
+<p>由于知道a中的数据类型 可以将Int省略<br>a.map(x=&gt;x<em>10)<br>还可以用<em>占位符，进行进一步的省略<br>a.map(</em> </em> 10)</p>
+<p>所有偶数取出来然后再乘以10<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">arr.filter((x:<span class="type">Int</span>)=&gt;x%<span class="number">2</span>==<span class="number">0</span>)</span><br><span class="line">arr.filter(x=&gt;x%<span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">arr.filter(_%<span class="number">2</span>==<span class="number">0</span>)</span><br><span class="line">arr.filter(_%<span class="number">2</span>==<span class="number">0</span>).map(_*<span class="number">10</span>)</span><br><span class="line"><span class="keyword">val</span> p =  println _</span><br></pre></td></tr></table></figure></p>
+<p>可以将方法转换成函数用利用 _</p>
+<h3 id="trait-关键字"><a href="#trait-关键字" class="headerlink" title="trait 关键字"></a>trait 关键字</h3><h2 id="数组的常用函数"><a href="#数组的常用函数" class="headerlink" title="数组的常用函数"></a>数组的常用函数</h2><p>在超类<br>TraversableLike中定义了这些函数<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> arr = <span class="type">Array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>)</span><br><span class="line">arr.sum 总数</span><br><span class="line">arr.sorted 排序</span><br><span class="line">arr.sorted.reverse 逆序</span><br><span class="line">arr.sortBy(x=&gt;x)按照本身来排序</span><br><span class="line">arr.sortWith(_&gt;_)从大到小排序 &lt; 从小到大排序</span><br><span class="line">arr.sortWith((x,y))</span><br><span class="line">##</span><br></pre></td></tr></table></figure></p>
+<p>映射 类比java中的map<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> m = <span class="type">Map</span>(<span class="string">"a"</span>-&gt;<span class="number">1</span>,<span class="string">"b"</span>-&gt;<span class="number">2</span>)</span><br><span class="line">m(<span class="string">"a"</span>) 取值</span><br></pre></td></tr></table></figure></p>
+<p>里边的值不能更改<br>如果是mulitble的包就可以更改了<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m.getOrElse(<span class="string">"c"</span>,<span class="number">0</span>) 找c 如果没有c就创建<span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="apply方法"><a href="#apply方法" class="headerlink" title="apply方法"></a>apply方法</h3><h2 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h2><p>val t = (1,”spark”,2.0); 值类型都不一定</p>
+<p>m.+=((“c”,1))  与 m+=(“m”-&gt;1) 写法相同<br>val t,(x,y,z) = (“a”,1,2.0)<br>t是变量，x y z 是键 对应三个值，取值的时候 直接用x就可以取值</p>
+<h3 id="将对偶的转成映射"><a href="#将对偶的转成映射" class="headerlink" title="将对偶的转成映射"></a>将对偶的转成映射</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> arr  = <span class="type">Array</span>((<span class="string">"a"</span>,<span class="number">1</span>),(<span class="string">"b"</span>,<span class="number">2</span>))</span><br><span class="line">arr.toMap 就可以转成映射</span><br></pre></td></tr></table></figure>
+<h3 id="拉链操作"><a href="#拉链操作" class="headerlink" title="拉链操作"></a>拉链操作</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> a = <span class="type">Array</span>(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>)</span><br><span class="line"><span class="keyword">val</span> b = <span class="type">Array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</span><br><span class="line">a.zip(b)</span><br></pre></td></tr></table></figure>
+<p>将其拉在一起变成数组，元素为元组</p>
+<h1 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h1><p>序列Seq,集Set,映射Map<br>集合分为可变和不可变的 mutable 和 immutable<br>注意和val的对比<br>将0插入来lst前面生成一个新的集合</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> lst2 = <span class="number">1</span> :: lst1; </span><br><span class="line"><span class="keyword">val</span> lst3 = lst1.::(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">val</span> lst4 = <span class="number">0</span> +: lst1</span><br><span class="line"><span class="keyword">val</span> lst5 = lst1.+:(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>将一个元素添加到lst后面产生一个新的集合</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> lst6 = lst1:+<span class="number">3</span></span><br><span class="line"><span class="keyword">val</span> lst0 = <span class="type">List</span>(<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>)</span><br></pre></td></tr></table></figure>
+<p>将2个list合并成一个新的List</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> lst7 = lst1 ++ lst0</span><br></pre></td></tr></table></figure>
+<p>将lst0插入到lst前面生成一个新的集合</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> lst8 = lst1 ++: lst0</span><br></pre></td></tr></table></figure>
+<h2 id="foreach"><a href="#foreach" class="headerlink" title="foreach"></a>foreach</h2><p>foreach是将其值取出来，不会新生成一个集合<br>map将值取出来会新生成一个集合</p>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>Map本身不支持排序<br>但是有toList方法 无括号，可以支持排序</p>
+<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = <span class="type">List</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+<p>list.par转成并行化集合<br>list.par.reduce(_+_) 将其放在多个reduce中执行，数据量大的时候将会变得很快<br>reduce不是并行集合的话，就是调用的底层<br>reduceLeft(不能并行了)</p>
+<h2 id="fold可以指定初始值"><a href="#fold可以指定初始值" class="headerlink" title="fold可以指定初始值"></a>fold可以指定初始值</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.par.fold(<span class="number">0</span>)(_+_)</span><br></pre></td></tr></table></figure>
+<h2 id="aggregate-聚合"><a href="#aggregate-聚合" class="headerlink" title="aggregate 聚合"></a>aggregate 聚合</h2><p>需要传两个函数，第一个函数是对元素进行操作，第二函数是对局部操作的结果进行操作</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">List</span>（<span class="type">List</span>(<span class="number">1</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">8</span>),<span class="type">List</span>(<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)）</span><br><span class="line">list.aggregate(<span class="number">0</span>)(_+_.sum,_+_)</span><br></pre></td></tr></table></figure>
+<h2 id="union-并集"><a href="#union-并集" class="headerlink" title="union 并集"></a>union 并集</h2><h2 id="intersect交集"><a href="#intersect交集" class="headerlink" title="intersect交集"></a>intersect交集</h2><h2 id="diff差集"><a href="#diff差集" class="headerlink" title="diff差集"></a>diff差集</h2><h2 id="flatten-将数据压缩"><a href="#flatten-将数据压缩" class="headerlink" title="flatten 将数据压缩"></a>flatten 将数据压缩</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">List</span>（<span class="type">List</span>(<span class="number">1</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">8</span>),<span class="type">List</span>(<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)）</span><br><span class="line">listAll.flatten</span><br><span class="line"><span class="type">List</span>(<span class="number">1</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">8</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>) 产生新的集合</span><br></pre></td></tr></table></figure>
+<h1 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h1><p>主构造器里面的所有方法都会被执行</p>
+<h2 id="单例对象"><a href="#单例对象" class="headerlink" title="单例对象"></a>单例对象</h2><p>所有的object都是一个单例（把class替换成object）<br>不要new，直接等于类名就是调用的一个单例对象</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span><span class="title"> Dog</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span><span class="title"> main</span></span>()&#123;</span><br><span class="line">  <span class="keyword">val</span> d = <span class="type">Dog</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="伴生对象"><a href="#伴生对象" class="headerlink" title="伴生对象"></a>伴生对象</h2><p>就是对象名和类名一样，并且在一个scala文件中<br>可以和类互相访问私有属性<br>scala中返回的就是unit就是返回的一个括号</p>
+<h3 id="apply方法-1"><a href="#apply方法-1" class="headerlink" title="apply方法"></a>apply方法</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Object</span> <span class="type">Dog</span>&#123;</span><br><span class="line"> <span class="function"><span class="keyword">def</span><span class="title"> apply</span></span>():<span class="type">Unit</span> = &#123;</span><br><span class="line">  print ();</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">def</span><span class="title"> apply</span></span>(name:<span class="type">String</span>):<span class="type">Unit</span> = &#123;</span><br><span class="line">  print(name)</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">def</span><span class="title"> main</span></span>()&#123;</span><br><span class="line"> <span class="comment">//会调用第一个无参数的apply方法</span></span><br><span class="line"> <span class="keyword">val</span> d1 = <span class="type">Dog</span>()</span><br><span class="line"> <span class="comment">//会调用第有参数的apply方法</span></span><br><span class="line"> <span class="keyword">val</span> d2 = <span class="type">Dog</span>(<span class="string">"haha"</span>);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="应用程序对象"><a href="#应用程序对象" class="headerlink" title="应用程序对象"></a>应用程序对象</h2><p>没有什么实际作用</p>
+<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>用this关键字定义辅助构造器<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span><span class="title"> this</span></span>(name:<span class="type">String</span>,age:<span class="type">Int</span>,gender:<span class="type">String</span>)&#123;</span><br><span class="line"><span class="comment">//每个服务构造器必须以主构造器或者其他的辅助构造器的调用开始</span></span><br><span class="line"><span class="comment">//主构造器就是类名上直接填写参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>函数与方法的互换， 神奇的下划线<br>要想传到map里面，必须得是函数</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span><span class="title">  fangfa方法</span></span></span><br><span class="line"><span class="function"><span class="title">val  func 函数</span></span></span><br><span class="line"><span class="function"><span class="title">val arr = Array</span></span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>)</span><br><span class="line">arr.map(func(<span class="number">5</span>))</span><br><span class="line">arr.map(func())</span><br><span class="line"><span class="keyword">val</span> m = fangfa _  方法func转成函数</span><br><span class="line">fangfa()  也可以转函数</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span><span class="title"> m</span></span>(x:<span class="type">Int</span>) = (y:int)=&gt;x*y</span><br></pre></td></tr></table></figure>
+<h2 id="柯里化的两种表达方式"><a href="#柯里化的两种表达方式" class="headerlink" title="柯里化的两种表达方式"></a>柯里化的两种表达方式</h2><p>柯里化是主要是通过类型类匹配的</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span><span class="title"> m1</span></span>(x:<span class="type">Int</span>) = (y:<span class="type">Int</span>)=&gt;x*y</span><br><span class="line"><span class="function"><span class="keyword">def</span><span class="title"> m2</span></span>(x:<span class="type">Int</span>)(y:<span class="type">Int</span>)=&gt;x*y</span><br></pre></td></tr></table></figure>
+<p>柯里化会先执行一部分，返回一个函数<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">def</span><span class="title"> multi= </span></span>(x:<span class="type">Int</span>) =&gt;&#123;</span><br><span class="line">    x*x</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span><span class="title"> main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> arr = <span class="type">Array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">4</span>)</span><br><span class="line">    <span class="keyword">val</span> a1 = multi(<span class="number">10</span>)</span><br><span class="line">    println(<span class="string">s"平方式：<span class="subst">$&#123;a1&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//按照规则 map只能参数只能是函数，multi是一个方法，但是在柯里化的时候，会先返回一个中间结果是函数</span></span><br><span class="line">    <span class="keyword">val</span> a2 = arr.map(multi)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="继承-代理-装饰-之间的区别"><a href="#继承-代理-装饰-之间的区别" class="headerlink" title="继承 代理 装饰 之间的区别"></a>继承 代理 装饰 之间的区别</h2><p>继承是类的增强</p>
+<p>代理是对实例，方法的增强</p>
+<p>装饰也是对方法的增强</p>
+<p>implicit def 隐式的<br>隐式转化的包在predef中</p>
+<h1 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h1><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;? <span class="keyword">extends</span> clazz&gt; 传入的数据是clazz的子类   </span><br><span class="line">&lt;? <span class="keyword">super</span> clazz&gt; 传入的数据是clazz的父类</span><br></pre></td></tr></table></figure>
+<h2 id="gt-lt-gt-lt-在scala中都是方法"><a href="#gt-lt-gt-lt-在scala中都是方法" class="headerlink" title="&gt; &lt; &gt;= &lt;=在scala中都是方法"></a>&gt; &lt; &gt;= &lt;=在scala中都是方法</h2><h3 id="视图定界-view-bound-lt"><a href="#视图定界-view-bound-lt" class="headerlink" title="视图定界 view bound &lt;%"></a>视图定界 view bound &lt;%</h3><p>相当于传入了一个隐式转换的函数<br>一定要传入一个隐式转换函数</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span><span class="title"> Chooser </span>[t &lt;% <span class="type">Order</span>[<span class="type">T</span>]]</span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span><span class="title"> choose</span></span>(first <span class="type">T</span>,second <span class="type">T</span>) :<span class="type">T</span> =&#123;</span><br><span class="line">  <span class="comment">//val ord = implicitly[Ordering[T]]</span></span><br><span class="line">  <span class="comment">// if(ord.gt(first,second))) first else second;</span></span><br><span class="line">   <span class="keyword">if</span>(first.compare(second) &gt; <span class="number">0</span>) first <span class="keyword">else</span> second;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">implict <span class="class"><span class="keyword">object</span><span class="title"> girlOrdering extends Ordering</span>[girl]</span>&#123;</span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">def</span><span class="title"> compare</span></span>(x:girl,y:girl):<span class="type">Int</span> = &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">== 和这个实现的效果是一样的,只是取了一个名字</span><br><span class="line"><span class="keyword">implicit</span> <span class="keyword">val</span> girlOrder = <span class="keyword">new</span> <span class="type">Ordering</span>[<span class="type">Girl</span>]&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="上下文定界-content-bound"><a href="#上下文定界-content-bound" class="headerlink" title="上下文定界 : content bound"></a>上下文定界 : content bound</h3><p>相当于传入了一个隐式转换的值</p>
+<p>关于实体类Predef的关系</p>
+
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+        <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           如果您觉得文章不错，就请我看场ufc直播🤓🤓🤓🤓🤓！
+        </span>
+        <br>
+      </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 支付宝打赏图案 -->
+        <img src="/css/images/alipay.jpg" alt="支付宝打赏" > 
+        <!-- 微信打赏图案 -->
+        <img src="/css/images/wechatpay.jpg" alt="微信打赏" >  
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            if($('#donate_guide').hasClass('hidden')){
+                $('#donate_guide').removeClass('hidden');
+            }else{
+                $('#donate_guide').addClass('hidden');
+            }
+        }
+    </script>
+</div>
+<! -- 添加捐赠图标 -->
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/15/Scala基本使用/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/08/15/Spark算子/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Spark算子
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/08/15/Hadoop-HA/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Hadoop-HA</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="lv-container" data-id="city" data-uid=MTAyMC8zNjM2MS8xMjg5Ng==></div>
+</section>
+    
+
+</section>
+            
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-book"></i>最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
+                            <p class="item-title"><a href="/2018/08/16/ Spark任务RDD执行主要流程/" class="title">Spark任务执行主要流程</a></p>
+                            <p class="item-date"><time datetime="2018-08-15T18:18:20.757Z" itemprop="datePublished">2018-08-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
+                            <p class="item-title"><a href="/2018/08/16/SparkSQL介绍/" class="title">SparkSQL介绍</a></p>
+                            <p class="item-date"><time datetime="2018-08-15T18:04:32.317Z" itemprop="datePublished">2018-08-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
+                            <p class="item-title"><a href="/2018/08/16/Spark-On-yarn/" class="title">Spark-On-Yarn模式</a></p>
+                            <p class="item-date"><time datetime="2018-08-15T17:58:01.513Z" itemprop="datePublished">2018-08-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
+                            <p class="item-title"><a href="/2018/08/16/SparkStreaming介绍/" class="title">SparkStreaming介绍</a></p>
+                            <p class="item-date"><time datetime="2018-08-15T17:50:47.842Z" itemprop="datePublished">2018-08-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
+                            <p class="item-title"><a href="/2018/08/16/SparkRDD介绍/" class="title">SparkRDD介绍</a></p>
+                            <p class="item-date"><time datetime="2018-08-15T16:49:49.734Z" itemprop="datePublished">2018-08-16</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-archive"></i>归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-folder"></i>分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">23</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-folder"></i>标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDH/">CDH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/">HBase</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HDFS/">HDFS</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/">Json</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDD/">RDD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkSQL/">SparkSQL</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkStreaming/">SparkStreaming</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es/">es</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zk/">zk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/使用/">使用</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/原理/">原理</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/报表/">报表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作/">操作</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-tags"></i>标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/tags/CDH/" style="font-size: 10px;">CDH</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/ELK/" style="font-size: 11.43px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HBase/" style="font-size: 14.29px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 12.86px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.71px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 12.86px;">Hexo</a> <a href="/tags/Hive/" style="font-size: 14.29px;">Hive</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 11.43px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Kafka/" style="font-size: 14.29px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/RDD/" style="font-size: 10px;">RDD</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 18.57px;">Spark</a> <a href="/tags/SparkSQL/" style="font-size: 11.43px;">SparkSQL</a> <a href="/tags/SparkStreaming/" style="font-size: 11.43px;">SparkStreaming</a> <a href="/tags/es/" style="font-size: 10px;">es</a> <a href="/tags/git/" style="font-size: 11.43px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/zk/" style="font-size: 10px;">zk</a> <a href="/tags/使用/" style="font-size: 11.43px;">使用</a> <a href="/tags/原理/" style="font-size: 17.14px;">原理</a> <a href="/tags/命令/" style="font-size: 11.43px;">命令</a> <a href="/tags/大数据/" style="font-size: 11.43px;">大数据</a> <a href="/tags/开发/" style="font-size: 11.43px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/报表/" style="font-size: 10px;">报表</a> <a href="/tags/操作/" style="font-size: 10px;">操作</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title"><i class="fa fa-link"></i>链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://gangtieguo.cn"  target="_blank">GTG</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol ==='https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 GTG<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+    </div>
+</footer>
+        
+    
+    
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+
+         if (typeof LivereTower === 'function') { return; }
+
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+    </script>
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+  <!-- City版安装代码已完成 -->
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

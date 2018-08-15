@@ -12,7 +12,7 @@ typora-copy-images-to: ipic
 
 ![](https://ws1.sinaimg.cn/large/006tNbRwgy1fu56b6k2qjj316y0s0jtg.jpg)
 
-# 创建hbasezk镜像
+# 创建hbase镜像
 
 ##   拷贝源码
 
