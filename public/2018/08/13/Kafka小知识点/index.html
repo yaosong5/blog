@@ -6,20 +6,24 @@
     <meta charset="utf-8">
     
 
-    <title>Kafka知识点总结 | 钢铁锅</title>
+    <title>Kafka初步总结 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="[TOC] kafka是采用的是类jms模式，与类jms模式区别是：  ​    jms两种模式：1，推送的话可以多个，2拉取的话只能一个消费者，因为消费完，消息数据就会不存在了 kafka解决了这种弊端，拉取模式下也可以多个消费者，因为消息可以持久化到硬盘，就算消费了也是存在的 Kafka中ack机制是为了保证消息完整被处理  消息队列和rpc调用的一些区别： ​    消息队列并不关心是哪个消">
+    <meta name="description" content="[TOC]   Kafka是一个分布式消息队列：生产者、消费者的功能。它提供了类似于JMS的特性，但是在设计实现上完全不同，此外它并不是JMS规范的实现。 Kafka对消息保存时根据Topic进行归类，发送消息者称为Producer,消息接受者称为Consumer,此外kafka集群有多个kafka实例组成，每个实例(server)成为broker。 无论是kafka集群，还是producer和c">
 <meta name="keywords" content="Kafka">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kafka知识点总结">
+<meta property="og:title" content="Kafka初步总结">
 <meta property="og:url" content="http://gangtieguo.cn/2018/08/13/Kafka小知识点/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] kafka是采用的是类jms模式，与类jms模式区别是：  ​    jms两种模式：1，推送的话可以多个，2拉取的话只能一个消费者，因为消费完，消息数据就会不存在了 kafka解决了这种弊端，拉取模式下也可以多个消费者，因为消息可以持久化到硬盘，就算消费了也是存在的 Kafka中ack机制是为了保证消息完整被处理  消息队列和rpc调用的一些区别： ​    消息队列并不关心是哪个消">
+<meta property="og:description" content="[TOC]   Kafka是一个分布式消息队列：生产者、消费者的功能。它提供了类似于JMS的特性，但是在设计实现上完全不同，此外它并不是JMS规范的实现。 Kafka对消息保存时根据Topic进行归类，发送消息者称为Producer,消息接受者称为Consumer,此外kafka集群有多个kafka实例组成，每个实例(server)成为broker。 无论是kafka集群，还是producer和c">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-13T07:30:23.298Z">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu895melcpj30zd0ckdgd.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/0069RVTdgy1fu894keo4oj310n0hd0tv.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fu89ajoxc5j30mf0fnt9d.jpg">
+<meta property="og:updated_time" content="2018-08-15T03:54:57.767Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kafka知识点总结">
-<meta name="twitter:description" content="[TOC] kafka是采用的是类jms模式，与类jms模式区别是：  ​    jms两种模式：1，推送的话可以多个，2拉取的话只能一个消费者，因为消费完，消息数据就会不存在了 kafka解决了这种弊端，拉取模式下也可以多个消费者，因为消息可以持久化到硬盘，就算消费了也是存在的 Kafka中ack机制是为了保证消息完整被处理  消息队列和rpc调用的一些区别： ​    消息队列并不关心是哪个消">
+<meta name="twitter:title" content="Kafka初步总结">
+<meta name="twitter:description" content="[TOC]   Kafka是一个分布式消息队列：生产者、消费者的功能。它提供了类似于JMS的特性，但是在设计实现上完全不同，此外它并不是JMS规范的实现。 Kafka对消息保存时根据Topic进行归类，发送消息者称为Producer,消息接受者称为Consumer,此外kafka集群有多个kafka实例组成，每个实例(server)成为broker。 无论是kafka集群，还是producer和c">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu895melcpj30zd0ckdgd.jpg">
     
 
     
@@ -207,11 +211,11 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                39
+                42
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                38
+                39
                 <span>标签</span>
             </div>
         </div>
@@ -255,7 +259,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            Kafka知识点总结
+            Kafka初步总结
         </h1>
     
 
@@ -304,7 +308,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1、kafka是什么"><span class="toc-number">1.</span> <span class="toc-text">1、kafka是什么</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2、kafka生产数据时的分组策略"><span class="toc-number">2.</span> <span class="toc-text">2、kafka生产数据时的分组策略</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3、kafka如何保证数据的完全生产"><span class="toc-number">3.</span> <span class="toc-text">3、kafka如何保证数据的完全生产</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4、broker如何保存数据"><span class="toc-number">4.</span> <span class="toc-text">4、broker如何保存数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5、partition如何分布在不同的broker上"><span class="toc-number">5.</span> <span class="toc-text">5、partition如何分布在不同的broker上</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6、consumerGroup的组员和partition之间如何做负载均衡"><span class="toc-number">6.</span> <span class="toc-text">6、consumerGroup的组员和partition之间如何做负载均衡</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7、如何保证kafka消费者消费数据是全局有序的"><span class="toc-number">7.</span> <span class="toc-text">7、如何保证kafka消费者消费数据是全局有序的</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#JMS的基础"><span class="toc-number">1.</span> <span class="toc-text">JMS的基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JMS消息传输模型"><span class="toc-number">2.</span> <span class="toc-text">JMS消息传输模型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka是什么"><span class="toc-number"></span> <span class="toc-text">kafka是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Kafka核心组件"><span class="toc-number"></span> <span class="toc-text">Kafka核心组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么需要消息队列"><span class="toc-number"></span> <span class="toc-text">为什么需要消息队列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#消息队列和rpc调用区别"><span class="toc-number"></span> <span class="toc-text">消息队列和rpc调用区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka生产数据时的分组策略"><span class="toc-number"></span> <span class="toc-text">kafka生产数据时的分组策略</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka如何保证数据的完全生产"><span class="toc-number"></span> <span class="toc-text">kafka如何保证数据的完全生产</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#broker如何保存数据"><span class="toc-number"></span> <span class="toc-text">broker如何保存数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#partition如何分布在不同的broker上"><span class="toc-number"></span> <span class="toc-text">partition如何分布在不同的broker上</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#consumerGroup的组员和partition之间如何做负载均衡"><span class="toc-number"></span> <span class="toc-text">consumerGroup的组员和partition之间如何做负载均衡</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何保证kafka消费者消费数据是全局有序的"><span class="toc-number"></span> <span class="toc-text">如何保证kafka消费者消费数据是全局有序的</span></a>
             </div>
 
 
@@ -332,14 +336,25 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
-<p><strong>kafka是采用的是类jms模式，与类jms模式区别是</strong>： </p>
-<p>​    jms两种模式：1，推送的话可以多个，2拉取的话只能一个消费者，因为消费完，消息数据就会不存在了 kafka解决了这种弊端，拉取模式下也可以多个消费者，因为消息可以持久化到硬盘，就算消费了也是存在的</p>
-<p>Kafka中ack机制是为了保证消息完整被处理 </p>
-<p><strong>消息队列和rpc调用的一些区别：</strong></p>
-<p>​    消息队列并不关心是哪个消费者消费了数据，发布成功后就不必管消息队列的内容是否被消费，但是rpc调用的话，必须要给调用的系统返回一个状态码</p>
-<p>以下为针对Kafka的一些总结</p>
+<blockquote>
+<p> Kafka是一个分布式消息队列：生产者、消费者的功能。它提供了类似于JMS的特性，但是在设计实现上完全不同，此外它并不是JMS规范的实现。<br> Kafka对消息保存时根据Topic进行归类，发送消息者称为Producer,消息接受者称为Consumer,此外kafka集群有多个kafka实例组成，每个实例(server)成为broker。<br> 无论是kafka集群，还是producer和consumer都依赖于zookeeper集群保存一些meta信息，来保证系统可用性</p>
+</blockquote>
+<h3 id="JMS的基础"><a href="#JMS的基础" class="headerlink" title="JMS的基础"></a>JMS的基础</h3><p>JMS是什么：JMS是Java提供的一套技术规范</p>
+<p>JMS干什么用：用来异构系统 集成通信，缓解系统瓶颈，提高系统的伸缩性增强系统用户体验，使得系统模块化和组件化变得可行并更加灵活</p>
+<p>通过什么方式：生产消费者模式（生产者、服务器、消费者）</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fu895melcpj30zd0ckdgd.jpg" alt=""></p>
+<p>jdk，kafka，activemq……</p>
 <a id="more"></a>
-<h1 id="1、kafka是什么"><a href="#1、kafka是什么" class="headerlink" title="1、kafka是什么"></a>1、kafka是什么</h1><pre><code>类JMS消息队列，结合JMS中的两种模式，可以有多个消费者主动拉取数据，在JMS中只有点对点模式才有消费者主动拉取数据。
+<h3 id="JMS消息传输模型"><a href="#JMS消息传输模型" class="headerlink" title="JMS消息传输模型"></a>JMS消息传输模型</h3><p>点对点模式<strong>（一对一，消费者主动拉取数据，消息收到后消息清除）</strong></p>
+<p>点对点模型通常是一个基于拉取或者轮询的消息传送模型，这种模型从队列中请求信息，而不是将消息推送到客户端。这个模型的特点是发送到队列的消息被<strong>一个且只有一个接收者接收处理</strong>，即使有多个消息监听者也是如此。</p>
+<p>发布/订阅模式<strong>（一对多，数据生产后，推送给所有订阅者）</strong></p>
+<p>发布订阅模型则是一个基于推送的消息传送模型。发布订阅模型可以有多种不同的订阅者，临时订阅者只在主动监听主题时才接收消息，而持久订阅者则监听主题的所有消息，<strong>即时当前订阅者不可用，处于离线状态</strong>。</p>
+<p><img src="https://ws2.sinaimg.cn/large/0069RVTdgy1fu894keo4oj310n0hd0tv.jpg" alt=""></p>
+<p>queue.put（object）  数据生产</p>
+<p>queue.take(object)    数据消费</p>
+<p><strong>kafka是采用的类jms模式，与类jms模式区别是</strong>： </p>
+<p>jms两种模式：1，推送的话可以多个，2拉取的话只能一个消费者，因为消费完，消息数据就会不存在了 kafka解决了这种弊端，拉取模式下也可以多个消费者，因为消息可以持久化到硬盘，就算消费了也是存在的。Kafka中ack机制是为了保证消息完整被处理 </p>
+<h1 id="kafka是什么"><a href="#kafka是什么" class="headerlink" title="kafka是什么"></a>kafka是什么</h1><pre><code>类JMS消息队列，结合JMS中的两种模式，可以有多个消费者主动拉取数据，在JMS中只有点对点模式才有消费者主动拉取数据。
 kafka是一个生产-消费模型。
 Producer：生产者，只负责数据生产，生产者的代码可以集成到任务系统中。 
           数据的分发策略由producer决定，默认是defaultPartition  Utils.abs(key.hashCode) % numPartitions
@@ -351,16 +366,22 @@ Topic:目标发送的目的地，这是一个逻辑上的概念，落到磁盘�
         特别强调，和mysql中主从有区别，mysql做主从是为了读写分离，在kafka中读写操作都是leader。
 ConsumerGroup：数据消费者组，ConsumerGroup可以有多个，每个ConsumerGroup消费的数据都是一样的。
                可以把多个consumer线程划分为一个组，组里面所有成员共同消费一个topic的数据，组员之间不能重复消费。
-</code></pre><h1 id="2、kafka生产数据时的分组策略"><a href="#2、kafka生产数据时的分组策略" class="headerlink" title="2、kafka生产数据时的分组策略"></a>2、kafka生产数据时的分组策略</h1><pre><code>默认是defaultPartition  Utils.abs(key.hashCode) % numPartitions
+</code></pre><h2 id="Kafka核心组件"><a href="#Kafka核心组件" class="headerlink" title="Kafka核心组件"></a>Kafka核心组件</h2><p>Topic ：消息根据Topic进行归类<br>Producer：发送消息者<br>Consumer：消息接受者<br>broker：每个kafka实例(server)<br>Zookeeper：依赖集群保存meta信息。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fu89ajoxc5j30mf0fnt9d.jpg" alt=""></p>
+<h2 id="为什么需要消息队列"><a href="#为什么需要消息队列" class="headerlink" title="为什么需要消息队列"></a>为什么需要消息队列</h2><p>消息系统的核心作用就是三点：解耦，异步和并行</p>
+<p>以用户注册的案列来说明消息系统的作用</p>
+<h2 id="消息队列和rpc调用区别"><a href="#消息队列和rpc调用区别" class="headerlink" title="消息队列和rpc调用区别"></a>消息队列和rpc调用区别</h2><p>​    消息队列并不关心是哪个消费者消费了数据，发布成功后就不必管消息队列的内容是否被消费，但是rpc调用的话，必须要给调用的系统返回一个状态码</p>
+<p>以下为针对Kafka的一些总结</p>
+<h1 id="kafka生产数据时的分组策略"><a href="#kafka生产数据时的分组策略" class="headerlink" title="kafka生产数据时的分组策略"></a>kafka生产数据时的分组策略</h1><pre><code>默认是defaultPartition  Utils.abs(key.hashCode) % numPartitions
 上文中的key是producer在发送数据时传入的，produer.send(KeyedMessage(topic,myPartitionKey,messageContent))
-</code></pre><h1 id="3、kafka如何保证数据的完全生产"><a href="#3、kafka如何保证数据的完全生产" class="headerlink" title="3、kafka如何保证数据的完全生产"></a>3、kafka如何保证数据的完全生产</h1><pre><code>ack机制：broker表示发来的数据已确认接收无误，表示数据已经保存到磁盘。
+</code></pre><h1 id="kafka如何保证数据的完全生产"><a href="#kafka如何保证数据的完全生产" class="headerlink" title="kafka如何保证数据的完全生产"></a>kafka如何保证数据的完全生产</h1><pre><code>ack机制：broker表示发来的数据已确认接收无误，表示数据已经保存到磁盘。
 0：不等待broker返回确认消息
 1：等待topic中某个partition leader保存成功的状态反馈
 -1：等待topic中某个partition 所有副本都保存成功的状态反馈
-</code></pre><h1 id="4、broker如何保存数据"><a href="#4、broker如何保存数据" class="headerlink" title="4、broker如何保存数据"></a>4、broker如何保存数据</h1><pre><code>在理论环境下，broker按照顺序读写的机制，可以每秒保存600M的数据。主要通过pagecache机制，尽可能的利用当前物理机器上的空闲内存来做缓存。
+</code></pre><h1 id="broker如何保存数据"><a href="#broker如何保存数据" class="headerlink" title="broker如何保存数据"></a>broker如何保存数据</h1><pre><code>在理论环境下，broker按照顺序读写的机制，可以每秒保存600M的数据。主要通过pagecache机制，尽可能的利用当前物理机器上的空闲内存来做缓存。
 当前topic所属的broker，必定有一个该topic的partition，partition是一个磁盘目录。partition的目录中有多个segment组合(index,log)
-</code></pre><h1 id="5、partition如何分布在不同的broker上"><a href="#5、partition如何分布在不同的broker上" class="headerlink" title="5、partition如何分布在不同的broker上"></a>5、partition如何分布在不同的broker上</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">int</span> i = <span class="number">0</span></span><br><span class="line">    list&#123;kafka01,kafka02,kafka03&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">        brIndex = i%broker;</span><br><span class="line">        hostName = list.get(brIndex)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h1 id="6、consumerGroup的组员和partition之间如何做负载均衡"><a href="#6、consumerGroup的组员和partition之间如何做负载均衡" class="headerlink" title="6、consumerGroup的组员和partition之间如何做负载均衡"></a>6、consumerGroup的组员和partition之间如何做负载均衡</h1><pre><code>最好是一一对应，一个partition对应一个consumer。
+</code></pre><h1 id="partition如何分布在不同的broker上"><a href="#partition如何分布在不同的broker上" class="headerlink" title="partition如何分布在不同的broker上"></a>partition如何分布在不同的broker上</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">int</span> i = <span class="number">0</span></span><br><span class="line">    list&#123;kafka01,kafka02,kafka03&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">        brIndex = i%broker;</span><br><span class="line">        hostName = list.get(brIndex)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="consumerGroup的组员和partition之间如何做负载均衡"><a href="#consumerGroup的组员和partition之间如何做负载均衡" class="headerlink" title="consumerGroup的组员和partition之间如何做负载均衡"></a>consumerGroup的组员和partition之间如何做负载均衡</h1><pre><code>最好是一一对应，一个partition对应一个consumer。
 如果consumer的数量过多，必然有空闲的consumer。
 
 算法：
@@ -370,8 +391,7 @@ ConsumerGroup：数据消费者组，ConsumerGroup可以有多个，每个Consum
     根据consumer.id排序: C0,C1
     计算倍数: M = [P0,P1,P2,P3].size / [C0,C1].size,本例值M=2(向上取整)
     然后依次分配partitions: C0 = [P0,P1],C1=[P2,P3],即Ci = [P(i * M),P((i + 1) * M -1)]
-</code></pre><h1 id="7、如何保证kafka消费者消费数据是全局有序的"><a href="#7、如何保证kafka消费者消费数据是全局有序的" class="headerlink" title="7、如何保证kafka消费者消费数据是全局有序的"></a>7、如何保证kafka消费者消费数据是全局有序的</h1><pre><code>伪命题
-如果要全局有序的，必须保证生产有序，存储有序，消费有序。
+</code></pre><h1 id="如何保证kafka消费者消费数据是全局有序的"><a href="#如何保证kafka消费者消费数据是全局有序的" class="headerlink" title="如何保证kafka消费者消费数据是全局有序的"></a>如何保证kafka消费者消费数据是全局有序的</h1><pre><code>如果要全局有序的，必须保证生产有序，存储有序，消费有序。
 由于生产可以做集群，存储可以分片，消费可以设置为一个consumerGroup，要保证全局有序，就需要保证每个环节都有序。
 只有一个可能，就是一个生产者，一个partition，一个消费者。这种场景和大数据应用场景相悖。
 1.生产者是集群模式--》全局序号管理器
@@ -509,6 +529,33 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
+                            <p class="item-title"><a href="/2018/08/15/HBase性能分析/" class="title">HBase原理性能分析</a></p>
+                            <p class="item-date"><time datetime="2018-08-15T07:24:37.471Z" itemprop="datePublished">2018-08-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/组件/">组件</a></p>
+                            <p class="item-title"><a href="/2018/08/14/Kafka读取数据性能/" class="title">Kafka读写数据</a></p>
+                            <p class="item-date"><time datetime="2018-08-14T11:47:22.892Z" itemprop="datePublished">2018-08-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/组件/">组件</a></p>
+                            <p class="item-title"><a href="/2018/08/14/Kafka深入解析/" class="title">Kafka深入解析</a></p>
+                            <p class="item-date"><time datetime="2018-08-14T07:43:27.968Z" itemprop="datePublished">2018-08-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/安装部署/">安装部署</a></p>
                             <p class="item-title"><a href="/2018/08/13/Kafka集群配置及配置文件/" class="title">Kafka集群配置及配置文件</a></p>
                             <p class="item-date"><time datetime="2018-08-13T06:54:35.320Z" itemprop="datePublished">2018-08-13</time></p>
@@ -519,35 +566,8 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/总结/">总结</a></p>
-                            <p class="item-title"><a href="/2018/08/13/Kafka小知识点/" class="title">Kafka知识点总结</a></p>
+                            <p class="item-title"><a href="/2018/08/13/Kafka小知识点/" class="title">Kafka初步总结</a></p>
                             <p class="item-date"><time datetime="2018-08-13T06:50:40.913Z" itemprop="datePublished">2018-08-13</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/08/13/Hive累计报表/" class="title">Hive累计报表</a></p>
-                            <p class="item-date"><time datetime="2018-08-13T03:49:13.857Z" itemprop="datePublished">2018-08-13</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/08/11/Hive分桶表相关/" class="title">Hive分桶表,分区表简单分析</a></p>
-                            <p class="item-date"><time datetime="2018-08-11T03:21:32.532Z" itemprop="datePublished">2018-08-11</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/08/11/Hive自定义函数流程/" class="title">Hive自定义函数UDF相关</a></p>
-                            <p class="item-date"><time datetime="2018-08-11T03:16:01.806Z" itemprop="datePublished">2018-08-11</time></p>
                         </div>
                     </li>
                 
@@ -560,7 +580,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-archive"></i>归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
         </div>
     </div>
 
@@ -569,7 +589,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a><span class="category-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -578,7 +598,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDH/">CDH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/">HBase</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/">Json</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkSQL/">SparkSQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es/">es</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zk/">zk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/使用/">使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/报表/">报表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作/">操作</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDH/">CDH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/">HBase</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/">Json</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkSQL/">SparkSQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es/">es</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zk/">zk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/使用/">使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/原理/">原理</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/报表/">报表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作/">操作</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -587,7 +607,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-tags"></i>标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/tags/CDH/" style="font-size: 10px;">CDH</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/ELK/" style="font-size: 12px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HBase/" style="font-size: 16px;">HBase</a> <a href="/tags/Hadoop/" style="font-size: 12px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 14px;">Hexo</a> <a href="/tags/Hive/" style="font-size: 18px;">Hive</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 12px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Kafka/" style="font-size: 14px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 16px;">Spark</a> <a href="/tags/SparkSQL/" style="font-size: 10px;">SparkSQL</a> <a href="/tags/es/" style="font-size: 10px;">es</a> <a href="/tags/git/" style="font-size: 12px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/zk/" style="font-size: 10px;">zk</a> <a href="/tags/使用/" style="font-size: 10px;">使用</a> <a href="/tags/命令/" style="font-size: 12px;">命令</a> <a href="/tags/大数据/" style="font-size: 12px;">大数据</a> <a href="/tags/开发/" style="font-size: 12px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/报表/" style="font-size: 10px;">报表</a> <a href="/tags/操作/" style="font-size: 10px;">操作</a>
+            <a href="/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/tags/CDH/" style="font-size: 10px;">CDH</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/ELK/" style="font-size: 12px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HBase/" style="font-size: 18px;">HBase</a> <a href="/tags/Hadoop/" style="font-size: 12px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 14px;">Hexo</a> <a href="/tags/Hive/" style="font-size: 18px;">Hive</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 12px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Kafka/" style="font-size: 18px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 16px;">Spark</a> <a href="/tags/SparkSQL/" style="font-size: 10px;">SparkSQL</a> <a href="/tags/es/" style="font-size: 10px;">es</a> <a href="/tags/git/" style="font-size: 12px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/zk/" style="font-size: 10px;">zk</a> <a href="/tags/使用/" style="font-size: 10px;">使用</a> <a href="/tags/原理/" style="font-size: 14px;">原理</a> <a href="/tags/命令/" style="font-size: 12px;">命令</a> <a href="/tags/大数据/" style="font-size: 12px;">大数据</a> <a href="/tags/开发/" style="font-size: 12px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/报表/" style="font-size: 10px;">报表</a> <a href="/tags/操作/" style="font-size: 10px;">操作</a>
         </div>
     </div>
 

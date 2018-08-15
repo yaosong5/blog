@@ -1,1 +1,1 @@
-http://gangtieguo.cn/2018/08/13/Kafka集群配置及配置文件/
+http://gangtieguo.cn/2018/08/15/HBase性能分析/

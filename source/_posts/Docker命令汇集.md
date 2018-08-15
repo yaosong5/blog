@@ -69,10 +69,10 @@ docker volume prune
 
 ```Bash
 -d 是后台启动
-docker run -itd  --net=br  --name spark --hostname spark yaosong/spark:2.1.0 &> /dev/null
+docker run -itd  --net=br  --name spark --hostname spark yaosong5/spark:2.1.0 &> /dev/null
 sudo docker exec -it spark bash（进入后台启动的容器）
 和下面一样（直接进入）
-docker run -it --net=br  --name spark --hostname spark yaosong/spark:2.1.0 bash
+docker run -it --net=br  --name spark --hostname spark yaosong5/spark:2.1.0 bash
 ```
 
 ## exec 进入后台容器

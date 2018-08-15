@@ -37,7 +37,7 @@ toc: true
 hadoop fs -put /usr/hadoop/hivedata/t_sales.dat /local/hivedata/t_sales.dat
 ```
 
-
+<!-- more -->
 
 ## 创建表及读取数据
 

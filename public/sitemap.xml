@@ -2,9 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://gangtieguo.cn/2018/08/15/HBase%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/</loc>
+    
+    <lastmod>2018-08-15T11:24:22.389Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/14/Kafka%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E6%80%A7%E8%83%BD/</loc>
+    
+    <lastmod>2018-08-15T07:23:24.298Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/13/Kafka%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</loc>
+    
+    <lastmod>2018-08-15T03:54:57.767Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/08/kafka%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E5%8F%8A%E5%91%BD%E4%BB%A4/</loc>
+    
+    <lastmod>2018-08-14T11:36:16.094Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://gangtieguo.cn/2018/08/13/Hive%E7%B4%AF%E8%AE%A1%E6%8A%A5%E8%A1%A8/</loc>
     
-    <lastmod>2018-08-13T10:20:29.282Z</lastmod>
+    <lastmod>2018-08-14T08:48:15.072Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/14/Kafka%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90/</loc>
+    
+    <lastmod>2018-08-14T08:30:28.045Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/06/26/Docker%E5%91%BD%E4%BB%A4%E6%B1%87%E9%9B%86/</loc>
+    
+    <lastmod>2018-08-13T16:18:59.121Z</lastmod>
     
   </url>
   
@@ -12,20 +54,6 @@
     <loc>http://gangtieguo.cn/2018/08/11/Hive%E5%88%86%E6%A1%B6%E8%A1%A8%E7%9B%B8%E5%85%B3/</loc>
     
     <lastmod>2018-08-13T09:00:52.971Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://gangtieguo.cn/2018/07/08/kafka%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E5%8F%8A%E5%91%BD%E4%BB%A4/</loc>
-    
-    <lastmod>2018-08-13T07:35:49.854Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/13/Kafka%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</loc>
-    
-    <lastmod>2018-08-13T07:30:23.298Z</lastmod>
     
   </url>
   
@@ -145,13 +173,6 @@
     <loc>http://gangtieguo.cn/2018/08/07/Spark%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95%E8%BF%9C%E7%A8%8B%E9%9B%86%E7%BE%A4%E7%A8%8B%E5%BA%8F/</loc>
     
     <lastmod>2018-08-10T18:29:43.521Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://gangtieguo.cn/2018/06/26/Docker%E5%91%BD%E4%BB%A4%E6%B1%87%E9%9B%86/</loc>
-    
-    <lastmod>2018-08-10T18:03:11.035Z</lastmod>
     
   </url>
   

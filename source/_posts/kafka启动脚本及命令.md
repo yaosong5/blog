@@ -32,13 +32,13 @@ jps -ml 查看kafka的运行情况
 
 ```bash
 nohup  $KAFKA_HOME/bin/kafka-server-start.sh  $KAFKA_HOME/config/server.properties > /dev/null 2>&1 &
+/usr/kafka/bin/kafka-server-start.sh -daemon /usr/kafka/config/server.properties
 ```
 
 ## 创建 topic
 
 ```bash
-$KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper zk1:2181 --replication-factor 2 --partitions 1 --topic shuaige
-
+$KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper zk1:2181 --replication-factor 2 --partitions 3 --topic shuaige
 ```
 
 ## 查看消费位置
@@ -58,8 +58,7 @@ sh  $KAFKA_HOME/bin/kafka-topics.sh --topic test --describe --zookeeper zk1:2181
 ## 创建生产者
 
 ```bash
-$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list master:9092 --topic shuaige
-
+$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list kafka1:9092 --topic shuaige
 ```
 
 ## 创建消费者
@@ -73,13 +72,12 @@ $KAFKA_HOME/bin/kafka-console-consumer.sh --zookeeper zk1:2181 --topic shuaige -
 
 zk 表示 zk 的地址 地址表示 zookeeper 的地址
 
-```
+```Bash
 $KAFKA_HOME/bin/kafka-topics.sh --list --zookeeper  zk1:2181
-
 ```
 
 ## 删除 topic
 
-```
+```bash
 sh $KAFKA_HOME/bin/kafka-topics.sh --delete --zookeeper zk1:2181 --topic test
 ```
