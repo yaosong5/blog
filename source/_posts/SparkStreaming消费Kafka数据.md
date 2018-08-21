@@ -16,7 +16,7 @@ Streaming消费Kafka有两种方式
 
 #### 2、direct方式 1.3.6后推出
 
-executor和kafka的partition是一一对应的（是rdd的分区和kafka对应，如果一个executor的rdd有多个分区，那么一个executor可以对应多个partition）必须自己来管理偏移量，最好把偏移量写在zk里面
+executor和kafka的partition是一一对应的（是rdd的分区和kafka对应，如果一个executor的rdd有多个分区，那么一个executor可以对应多个partition）必须自己来管理偏移量，最好把偏移量写在zk或者其他第三方介质里面
 
 <!-- more -->
 

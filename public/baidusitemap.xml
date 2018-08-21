@@ -4,16 +4,16 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/08/16/%20Spark%E4%BB%BB%E5%8A%A1RDD%E6%89%A7%E8%A1%8C%E4%B8%BB%E8%A6%81%E6%B5%81%E7%A8%8B/</loc>
-    <lastmod>2018-08-15T18:20:29.673Z</lastmod>
+    <loc>http://gangtieguo.cn/2018/08/20/Shuffle%E4%B8%AD%E7%9A%84%E6%9C%BA%E5%88%B6/</loc>
+    <lastmod>2018-08-21T07:41:58.602Z</lastmod>
     <data>
         <display>
-        <title>Spark任务执行主要流程</title>
-        <pubTime>2018-08-15T18:18:20.757Z</pubTime>
+        <title>Shuffle中的机制</title>
+        <pubTime>2018-08-20T02:12:26.791Z</pubTime>
         
-        <tag>Spark</tag>
-         
         <tag>原理</tag>
+         
+        <tag>Hadoop</tag>
          
          
            
@@ -26,8 +26,47 @@
 
     
   <url>
+    <loc>http://gangtieguo.cn/2018/08/15/Spark%E7%AE%97%E5%AD%90/</loc>
+    <lastmod>2018-08-20T01:44:42.481Z</lastmod>
+    <data>
+        <display>
+        <title>Spark算子案例</title>
+        <pubTime>2018-08-15T15:52:40.133Z</pubTime>
+        
+        <tag>Spark</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/15/SparkStreaming%E6%B6%88%E8%B4%B9Kafka%E6%95%B0%E6%8D%AE/</loc>
+    <lastmod>2018-08-20T01:39:18.490Z</lastmod>
+    <data>
+        <display>
+        <title>SparkStreaming消费Kafka数据</title>
+        <pubTime>2018-08-15T15:53:30.330Z</pubTime>
+        
+        <tag>Spark</tag>
+         
+        <tag>SparkStreaming</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://gangtieguo.cn/2018/08/16/SparkSQL%E4%BB%8B%E7%BB%8D/</loc>
-    <lastmod>2018-08-15T18:16:07.186Z</lastmod>
+    <lastmod>2018-08-20T01:38:13.848Z</lastmod>
     <data>
         <display>
         <title>SparkSQL介绍</title>
@@ -36,6 +75,138 @@
         <tag>Spark</tag>
          
         <tag>SparkSQL</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/15/Scala%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</loc>
+    <lastmod>2018-08-17T10:34:09.033Z</lastmod>
+    <data>
+        <display>
+        <title>Scala基本使用-杂记</title>
+        <pubTime>2018-08-15T15:52:20.469Z</pubTime>
+        
+        <tag>Scala</tag>
+         
+         
+           
+             
+              <breadCrumb title="语言" url="http://gangtieguo.cn/categories/%E8%AF%AD%E8%A8%80/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/16/SparkRDD%E4%BB%8B%E7%BB%8D/</loc>
+    <lastmod>2018-08-17T03:41:37.916Z</lastmod>
+    <data>
+        <display>
+        <title>SparkRDD介绍</title>
+        <pubTime>2018-08-15T16:49:49.734Z</pubTime>
+        
+        <tag>Spark</tag>
+         
+        <tag>原理</tag>
+         
+        <tag>RDD</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/16/Spark-On-yarn/</loc>
+    <lastmod>2018-08-17T02:19:27.066Z</lastmod>
+    <data>
+        <display>
+        <title>Spark-On-Yarn模式</title>
+        <pubTime>2018-08-15T17:58:01.513Z</pubTime>
+        
+        <tag>Spark</tag>
+         
+        <tag>使用</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/15/Hdfs%E7%BB%93%E6%9E%84%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%8F%8A%E8%AF%BB%E5%86%99%E6%B5%81%E7%A8%8B/</loc>
+    <lastmod>2018-08-16T15:48:44.374Z</lastmod>
+    <data>
+        <display>
+        <title>Hdfs结构性能分析及读写流程</title>
+        <pubTime>2018-08-15T15:55:15.892Z</pubTime>
+        
+        <tag>原理</tag>
+         
+        <tag>HDFS</tag>
+         
+        <tag>Hadoop</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/15/Hadoop-%E6%9E%84%E6%88%90%E5%8F%8AHA-/</loc>
+    <lastmod>2018-08-16T10:52:49.096Z</lastmod>
+    <data>
+        <display>
+        <title>Hadoop-HA-Federation机制</title>
+        <pubTime>2018-08-15T15:21:34.817Z</pubTime>
+        
+        <tag>Hadoop</tag>
+         
+         
+           
+             
+              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/16/%20Spark%E4%BB%BB%E5%8A%A1RDD%E6%89%A7%E8%A1%8C%E4%B8%BB%E8%A6%81%E6%B5%81%E7%A8%8B/</loc>
+    <lastmod>2018-08-15T18:20:29.673Z</lastmod>
+    <data>
+        <display>
+        <title>Spark任务执行主要流程</title>
+        <pubTime>2018-08-15T18:18:20.757Z</pubTime>
+        
+        <tag>Spark</tag>
+         
+        <tag>原理</tag>
          
          
            
@@ -70,25 +241,6 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/08/15/SparkStreaming%E6%B6%88%E8%B4%B9Kafka%E6%95%B0%E6%8D%AE/</loc>
-    <lastmod>2018-08-15T18:12:44.594Z</lastmod>
-    <data>
-        <display>
-        <title>SparkStreaming消费Kafka数据</title>
-        <pubTime>2018-08-15T15:53:30.330Z</pubTime>
-        
-        <tag>Spark</tag>
-         
-        <tag>SparkStreaming</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://gangtieguo.cn/2018/08/16/SparkStreaming%E4%BB%8B%E7%BB%8D/</loc>
     <lastmod>2018-08-15T18:09:40.373Z</lastmod>
     <data>
@@ -113,72 +265,6 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/08/16/Spark-On-yarn/</loc>
-    <lastmod>2018-08-15T18:03:29.959Z</lastmod>
-    <data>
-        <display>
-        <title>Spark-On-Yarn模式</title>
-        <pubTime>2018-08-15T17:58:01.513Z</pubTime>
-        
-        <tag>Spark</tag>
-         
-        <tag>使用</tag>
-         
-         
-           
-             
-              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/16/SparkRDD%E4%BB%8B%E7%BB%8D/</loc>
-    <lastmod>2018-08-15T17:47:57.767Z</lastmod>
-    <data>
-        <display>
-        <title>SparkRDD介绍</title>
-        <pubTime>2018-08-15T16:49:49.734Z</pubTime>
-        
-        <tag>Spark</tag>
-         
-        <tag>原理</tag>
-         
-        <tag>RDD</tag>
-         
-         
-           
-             
-              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/15/Scala%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</loc>
-    <lastmod>2018-08-15T16:48:24.703Z</lastmod>
-    <data>
-        <display>
-        <title>Scala基本使用-杂记</title>
-        <pubTime>2018-08-15T15:52:20.469Z</pubTime>
-        
-        <tag>Scala</tag>
-         
-         
-           
-             
-              <breadCrumb title="语言" url="http://gangtieguo.cn/categories/%E8%AF%AD%E8%A8%80/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://gangtieguo.cn/2018/08/16/Hadoop%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/</loc>
     <lastmod>2018-08-15T16:35:09.347Z</lastmod>
     <data>
@@ -188,9 +274,9 @@
         
         <tag>原理</tag>
          
-        <tag>Hadoop</tag>
-         
         <tag>HDFS</tag>
+         
+        <tag>Hadoop</tag>
          
          
            
@@ -212,33 +298,9 @@
         
         <tag>原理</tag>
          
-        <tag>Hadoop</tag>
-         
         <tag>HDFS</tag>
          
-         
-           
-             
-              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/15/HDFS%E8%AF%BB%E5%86%99%E6%B5%81%E7%A8%8B/</loc>
-    <lastmod>2018-08-15T15:55:47.438Z</lastmod>
-    <data>
-        <display>
-        <title>Hdfs读写流程</title>
-        <pubTime>2018-08-15T15:55:15.892Z</pubTime>
-        
-        <tag>原理</tag>
-         
         <tag>Hadoop</tag>
-         
-        <tag>HDFS</tag>
          
          
            
@@ -261,46 +323,6 @@
         <tag>Spark</tag>
          
         <tag>原理</tag>
-         
-         
-           
-             
-              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/15/Spark%E7%AE%97%E5%AD%90/</loc>
-    <lastmod>2018-08-15T15:52:47.848Z</lastmod>
-    <data>
-        <display>
-        <title>Spark算子</title>
-        <pubTime>2018-08-15T15:52:40.133Z</pubTime>
-        
-        <tag>Spark</tag>
-         
-         
-           
-             
-              <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/15/Hadoop-HA/</loc>
-    <lastmod>2018-08-15T15:47:33.308Z</lastmod>
-    <data>
-        <display>
-        <title>Hadoop-HA</title>
-        <pubTime>2018-08-15T15:21:34.817Z</pubTime>
-        
-        <tag>Hadoop</tag>
          
          
            
@@ -1052,9 +1074,9 @@
         <title>Hadoop&Spark组合容器的搭建</title>
         <pubTime>2018-07-08T17:06:20.114Z</pubTime>
         
-        <tag>Docker</tag>
-         
         <tag>Spark</tag>
+         
+        <tag>Docker</tag>
          
         <tag>Hadoop</tag>
          
@@ -1189,9 +1211,9 @@
         <title>spring集成权限校验</title>
         <pubTime>2018-05-08T10:34:55.000Z</pubTime>
         
-        <tag>Java</tag>
-         
         <tag>开发</tag>
+         
+        <tag>Java</tag>
          
         <tag>技术</tag>
          

@@ -14,6 +14,10 @@ sc.textfile("hdfs://master:9000/wc").flatMap(_.split("分隔符")).map((_,1)).re
 
 <!-- more -->
 
+当rdd形成过程中，worker的分区中只是预留了存放数据的位置，只有当action触发的时候，worker的分区中才会存在数据
+
+
+
 # spark的分区与hdfs数据块的关系
 
 Partitioner函数不但决定了RDD本身的分片数量，也决定了parent RDD Shuffle输出时的分片数量。
@@ -33,6 +37,23 @@ RDD（ResilientDistributed Dataset）叫做分布式数据集，是Spark中最�
  4）一个Partitioner，即RDD的分片函数。当前Spark中实现了两种类型的分片函数，一个是基于哈希的HashPartitioner，另外一个是基于范围的RangePartitioner。只有对于于key-value的RDD，才会有Partitioner，非key-value的RDD的Parititioner的值是None。Partitioner函数不但决定了RDD本身的分片数量，也决定了parent RDD Shuffle输出时的分片数量。
 
  5）一个列表，存储存取每个Partition的优先位置（preferredlocation）。对于一个HDFS文件来说，**这个列表保存的就是每个****Partition所在的块的位置**。按照“移动数据不如移动计算”的理念，Spark在进行任务调度的时候，会尽可能地将计算任务分配到其所要处理数据块的存储位置。 血缘依赖
+
+RDD 5个特性 
+一个function作用一个partition 
+如果是key-value格式的有一个默认的partitioner 默认是hashpartitioner 
+如果是从hdfs这种文件系统类型读取的数据，会有一个prefered location，因为在大数据领域宁愿移动计算，也不愿移动数据，通常叫做数据本地化， 
+
+# RDD数据读取
+
+rdd向hdfs中读取数据是一行一行读取放在迭代器里面，而不是一下子全部读取数据
+
+rdd向hdfs中读取数据，hdfs文件有几个数据块就会创建几个分区 
+
+读取数据还是用的hadoop的inputFormat来读取的
+
+# RDD的生成方式
+
+
 
 ## RDD算子
 

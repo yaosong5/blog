@@ -16,7 +16,7 @@ toc: true
 
 Driver程序在YARN中运行，应用的运行结果不能在客户端显示，所以最好运行那些将结果最终保存在外部存储介质（如HDFS、Redis、Mysql）而非stdout输出的应用程序，客户端的终端显示的仅是作为YARN的job的简单运行状况。
 
-```shell
+```bash
 ./bin/spark-submit --class org.apache.spark.examples.SparkPi \
 --master yarn \
 --deploy-mode cluster \

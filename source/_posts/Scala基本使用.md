@@ -8,7 +8,9 @@ toc: true
 
 [TOC]
 
-不需要变化 val
+Var和val
+
+var 修饰的变量可改变，val 修饰的变量不可改变；但真的如此吗？事实上，var 修饰的对象引用可以改变，val 修饰的则不可改变，但对象的状态却是可以改变的。
 
 ## 定义方法
 ```scala
@@ -209,11 +211,7 @@ list.aggregate(0)(_+_.sum,_+_)
 
 
 
-## union 并集
-
-## intersect交集
-
-## diff差集
+union 并集，intersect交集，diff差集
 
 
 ## flatten 将数据压缩
@@ -230,7 +228,7 @@ List(1,7,9,8,0,1,2,3) 产生新的集合
 主构造器里面的所有方法都会被执行
 ## 单例对象
 所有的object都是一个单例（把class替换成object）
-不要new，直接等于类名就是调用的一个单例对象
+不要new，直接等于类名就是调用的一个**单例对象**
 
 ```scala
 object Dog{
@@ -243,7 +241,7 @@ object Dog{
 
 ## 伴生对象
 就是对象名和类名一样，并且在一个scala文件中
-可以和类互相访问私有属性
+可以和类**互相访问私有属性**
 scala中返回的就是unit就是返回的一个括号
 ### apply方法
 ```scala
@@ -307,14 +305,11 @@ def m2(x:Int)(y:Int)=>x*y
   }
 
   def main(args: Array[String]): Unit = {
-
     val arr = Array(1,2,3,5,4)
     val a1 = multi(10)
     println(s"平方式：${a1}")
-
     //按照规则 map只能参数只能是函数，multi是一个方法，但是在柯里化的时候，会先返回一个中间结果是函数
     val a2 = arr.map(multi)
-
   }
 
 ```
@@ -325,8 +320,7 @@ def m2(x:Int)(y:Int)=>x*y
 
 装饰也是对方法的增强
 
-implicit def 隐式的
-隐式转化的包在predef中
+implicit def 隐式的，隐式转化的包在predef中
 # 泛型
 
 ```scala
@@ -336,7 +330,9 @@ implicit def 隐式的
 
 
 
-## > < >= <=在scala中都是方法
+## > < >= <=
+
+以上操作符，在scala中都是方法
 
 ### 视图定界 view bound <%
 相当于传入了一个隐式转换的函数
@@ -349,9 +345,7 @@ class Chooser [t <% Order[T]]{
   // if(ord.gt(first,second))) first else second;
    if(first.compare(second) > 0) first else second;
   }
-
 }
-
 ```
 
 ```scala

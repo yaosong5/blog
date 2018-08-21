@@ -1,1 +1,1 @@
-http://gangtieguo.cn/2018/08/16/ Spark任务RDD执行主要流程/
+http://gangtieguo.cn/2018/08/20/Shuffle中的机制/
