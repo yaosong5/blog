@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fuhbuwapflj30zc0j4mxv.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fuhbdybylfj30z40hyq3f.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fufyt54ouvj30cq03c0so.jpg">
-<meta property="og:updated_time" content="2018-08-21T07:43:43.926Z">
+<meta property="og:updated_time" content="2018-08-21T07:46:40.114Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shuffle中的机制">
 <meta name="twitter:description" content="[TOC] 官方的shuffle流程  介绍一下shuffle的原理提到MapReduce，就不得不提一下shuffle。 MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map">
@@ -352,7 +352,7 @@ var _hmt = _hmt || [];
 </li>
 <li><p>如果设定了Combiner，将在排序输出的基础上进行。Combiner就是一个Mini Reducer，它在执行Map任务的节点本身运行，先对Map的输出作一次简单的Reduce，有些数据可能像这样：<code>“a”/1， “a”/1， “a”/1，</code>会合并成 <code>“a”/3</code>，使得更少的数据会被写入磁盘和传送到Reducer。</p>
 </li>
-<li><p>Spill文件保存在由mapred.local.dir指定的目录中，Map任务结束后删除。每当内存中的数据达到spill阀值的时候，都会产生一个新的spill文件，所以在Map任务写完他的最后一个输出记录的时候，可能会有多个spill文件，在Map任务完成前，所有的spill文件将会被归并排序为一个索引文件和数据文件。这是一个多路归并过程，最大归并路数由io.sort.factor 控制(默认是10)。比如：“aaa”从某个map task读取过来时值是5，从另外一个map 读取时值是8，因为它们有相同的key，所以得merge成group。什么是group。对于“aaa”就是像这样的：{“aaa”, [5, 8, 2, …]}，数组中的值就是从不同溢写文件中读取出来的，然后再把这些值加起来。请注意，因为merge是将多个溢写文件合并到一个文件，所以可能也有相同的key存在。如果设定了Combiner，会使用combiner来合并相同key，这是map端的结果。</p>
+<li><p>Spill文件保存在由mapred.local.dir指定的目录中，Map任务结束后删除。每当内存中的数据达到spill阀值的时候，都会产生一个新的spill文件，所以在Map任务写完他的最后一个输出记录的时候，可能会有多个spill文件，在Map任务完成前，所有的spill文件将会被归并排序为一个索引文件和数据文件。这是一个多路归并过程，最大归并路数由io.sort.factor 控制(默认是10)。比如：“a”从某个map task读取过来时值是7，从另外一个map 读取时值是6，因为它们有相同的key，所以得merge成group。什么是group。对于“a”就是像这样的：{“a”, [7, 6, 2, …]}，数组中的值就是从不同溢写文件中读取出来的，然后再把这些值加起来。请注意，因为merge是将多个溢写文件合并到一个文件，所以可能也有相同的key存在。如果设定了Combiner，会使用combiner来合并相同key，这是map端的结果。</p>
 </li>
 </ol>
 <h2 id="map端与reduce端的交互"><a href="#map端与reduce端的交互" class="headerlink" title="map端与reduce端的交互"></a>map端与reduce端的交互</h2><p>Reduce是怎么知道从哪些TaskTrackers中获取Map的输出呢？当Map任务完成之后，会通知他们的父TaskTracker，告知状态更新，然后TaskTracker再转告JobTracker，这些通知信息是通过心跳通信机制传输的，因此针对以一个特定的作业，jobtracker知道Map输出与tasktrackers的映射关系。Reducer中有一个线程会间歇的向JobTracker询问Map输出的地址，直到把所有的数据都取到。在Reducer取走了Map输出之后，TaskTracker不会立即删除这些数据，因为Reducer可能会失败，他们会在整个作业完成之后，JobTracker告知他们要删除的时候才去删除</p>
