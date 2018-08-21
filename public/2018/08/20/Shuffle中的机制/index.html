@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fuhbuwapflj30zc0j4mxv.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fuhbdybylfj30z40hyq3f.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fufyt54ouvj30cq03c0so.jpg">
-<meta property="og:updated_time" content="2018-08-21T07:41:58.602Z">
+<meta property="og:updated_time" content="2018-08-21T07:43:43.926Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shuffle中的机制">
 <meta name="twitter:description" content="[TOC] 官方的shuffle流程  介绍一下shuffle的原理提到MapReduce，就不得不提一下shuffle。 MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map">
@@ -309,7 +309,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#介绍一下shuffle的原理"><span class="toc-number">1.</span> <span class="toc-text">介绍一下shuffle的原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#shuffle过程分析"><span class="toc-number">1.1.</span> <span class="toc-text">shuffle过程分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map端"><span class="toc-number">1.2.</span> <span class="toc-text">map端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map端与reduce端的交互"><span class="toc-number">1.3.</span> <span class="toc-text">map端与reduce端的交互</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reduce端过程"><span class="toc-number">1.4.</span> <span class="toc-text">reduce端过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Speculative-Execution"><span class="toc-number">1.4.1.</span> <span class="toc-text">Speculative Execution</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#任务分片与hdfs文件大小及文件块之间的关系"><span class="toc-number">2.</span> <span class="toc-text">任务分片与hdfs文件大小及文件块之间的关系</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#介绍一下shuffle的原理"><span class="toc-number">1.</span> <span class="toc-text">介绍一下shuffle的原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#shuffle过程分析"><span class="toc-number">1.1.</span> <span class="toc-text">shuffle过程分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map端"><span class="toc-number">1.2.</span> <span class="toc-text">map端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map端与reduce端的交互"><span class="toc-number">1.3.</span> <span class="toc-text">map端与reduce端的交互</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reduce端过程"><span class="toc-number">1.4.</span> <span class="toc-text">reduce端过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Speculative-Execution"><span class="toc-number">1.5.</span> <span class="toc-text">Speculative Execution</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#任务分片与hdfs文件大小及文件块之间的关系"><span class="toc-number">2.</span> <span class="toc-text">任务分片与hdfs文件大小及文件块之间的关系</span></a></li></ol>
             </div>
 
 
@@ -363,7 +363,7 @@ var _hmt = _hmt || [];
 <li>Merge阶段。这里的merge如map端的merge动作，只是数组中存放的是不同map端copy来的数值。Copy过来的数据会先放入内存缓冲区中，这里的缓冲区大小要比map端的更为灵活，它基于JVM的heap size设置，因为Shuffle阶段Reducer不运行，所以应该把绝大部分的内存都给Shuffle用。这里需要强调的是，merge有三种形式：1)内存到内存 （默认不启用） 2)内存到磁盘  3)磁盘到磁盘。当内存中的数据量到达一定阈值，就启动内存到磁盘的merge，这个过程中如果你设置有Combiner，也是会启用的，然后在磁盘中生成了众多的溢写文件。第二种merge方式一直在运行，直到没有map端的数据时才结束，然后启动第三种磁盘到磁盘的merge方式生成最终的那个文件。</li>
 <li>Reducer的输入文件。不断地merge后，最后会生成一个文件。这个文件可能存在于磁盘上，也可能存在于内存中。就读取速度来说对于内存中，直接作为Reducer的输入，但默认情况下，这个文件是存放于磁盘中的。当Reducer的输入文件已定，整个Shuffle才最终结束。然后就是Reducer执行，一般是把结果放到HDFS上。</li>
 </ol>
-<h3 id="Speculative-Execution"><a href="#Speculative-Execution" class="headerlink" title="Speculative Execution"></a>Speculative Execution</h3><p>是指当一个job的所有task都在running的时候，当某个task的进度比平均进度慢时才会启动一个和当前Task一模一样的任务，当其中一个task完成之后另外一个会被中止，所以Speculative Task不是重复Task而是对Task执行时候的一种优化策略</p>
+<h2 id="Speculative-Execution"><a href="#Speculative-Execution" class="headerlink" title="Speculative Execution"></a>Speculative Execution</h2><p>是指当一个job的所有task都在running的时候，当某个task的进度比平均进度慢时才会启动一个和当前Task一模一样的任务，当其中一个task完成之后另外一个会被中止，所以Speculative Task不是重复Task而是对Task执行时候的一种优化策略</p>
 <h1 id="任务分片与hdfs文件大小及文件块之间的关系"><a href="#任务分片与hdfs文件大小及文件块之间的关系" class="headerlink" title="任务分片与hdfs文件大小及文件块之间的关系"></a>任务分片与hdfs文件大小及文件块之间的关系</h1><p>在上面mapReduce中可以看到，任务的执行是基于hdfs文件的，任务分片和文件大小，文件块大小都有一定的联系。</p>
 <p>任务切片：将任务划分成切片<strong>，一个切片交给一个task实例</strong>处理，只是一个逻辑的偏移量划分而已</p>
 <p>1.在map task执行时，它的输入数据来源于HDFS的block，当然在MapReduce概念中，map task只读取split。Split与block的对应关系可能是多对一，默认是一对一。</p>

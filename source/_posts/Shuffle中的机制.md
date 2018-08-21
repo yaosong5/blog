@@ -69,7 +69,7 @@ map端的所有工作结束后，最终生成的这个文件也存放在TaskTrac
 
 
 
-### Speculative Execution
+## Speculative Execution
 
 是指当一个job的所有task都在running的时候，当某个task的进度比平均进度慢时才会启动一个和当前Task一模一样的任务，当其中一个task完成之后另外一个会被中止，所以Speculative Task不是重复Task而是对Task执行时候的一种优化策略
 
