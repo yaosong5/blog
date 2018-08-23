@@ -14,7 +14,9 @@ sc.textfile("hdfs://master:9000/wc").flatMap(_.split("分隔符")).map((_,1)).re
 
 <!-- more -->
 
-当rdd形成过程中，worker的分区中只是预留了存放数据的位置，只有当action触发的时候，worker的分区中才会存在数据
+当rdd形成过程中，worker的分区中只是预留了存放数据的位置，只有当action触发的时候，worker的分区中才会存在数据，sparkSubmit submit的命令行默认的是driver ，RDD的创建都是在在driver上创建的 
+
+
 
 
 

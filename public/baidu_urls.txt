@@ -1,1 +1,1 @@
-http://gangtieguo.cn/2018/08/20/Shuffle中的机制/
+http://gangtieguo.cn/2018/08/20/MapReduce中Shuffle中的机制/

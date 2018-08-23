@@ -247,7 +247,7 @@ var _hmt = _hmt || [];
             
 
             <section id="main">
-    <article id="post-Shuffle中的机制" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-MapReduce中Shuffle中的机制" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -255,7 +255,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/20/Shuffle中的机制/">Shuffle中的机制</a>
+            <a class="article-title" href="/2018/08/20/MapReduce中Shuffle中的机制/">MapReduce中Shuffle中的机制</a>
         </h1>
     
 
@@ -264,7 +264,7 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/08/20/Shuffle中的机制/">
+        <a href="/2018/08/20/MapReduce中Shuffle中的机制/">
             <time datetime="2018-08-20T02:12:26.791Z" itemprop="datePublished">2018-08-20</time>
         </a>
     </div>
@@ -293,10 +293,10 @@ var _hmt = _hmt || [];
             <p><p>[TOC]</p>
 <p>官方的shuffle流程</p>
 <p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg" alt=""></p>
-<h1 id="介绍一下shuffle的原理"><a href="#介绍一下shuffle的原理" class="headerlink" title="介绍一下shuffle的原理"></a>介绍一下shuffle的原理</h1><p>提到MapReduce，就不得不提一下shuffle。</p>
+<h1 id="shuffle原理"><a href="#shuffle原理" class="headerlink" title="shuffle原理"></a>shuffle原理</h1><p>提到MapReduce，就不得不提一下shuffle。</p>
 <p>MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map 任务完成后，它会生成一些中间文件，这些中间文件将会作为Reduce 任务的输入数据。Reduce 任务的主要目标就是把前面若干个Map 的输出汇总到一起并输出。</p></p>
             <p class="article-more-link">
-                <a href="/2018/08/20/Shuffle中的机制/#more">查看更多</a>
+                <a href="/2018/08/20/MapReduce中Shuffle中的机制/#more">查看更多</a>
             </p>
         
 
@@ -348,7 +348,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/08/20/Shuffle中的机制/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/08/20/MapReduce中Shuffle中的机制/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -1222,7 +1222,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
 
 
-    <article id="post-Spark启动流程" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Spark启动流程及一些小总结" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -1230,7 +1230,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/15/Spark启动流程/">Spark启动流程</a>
+            <a class="article-title" href="/2018/08/15/Spark启动流程及一些小总结/">Spark启动流程及一些小总结</a>
         </h1>
     
 
@@ -1239,7 +1239,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/08/15/Spark启动流程/">
+        <a href="/2018/08/15/Spark启动流程及一些小总结/">
             <time datetime="2018-08-15T15:54:20.258Z" itemprop="datePublished">2018-08-15</time>
         </a>
     </div>
@@ -1265,9 +1265,14 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><p>[TOC]</p></p>
+            <p><p>[TOC]</p>
+<h1 id="spark的架构模型"><a href="#spark的架构模型" class="headerlink" title="spark的架构模型"></a>spark的架构模型</h1><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg" alt=""></p>
+<h1 id="角色功能"><a href="#角色功能" class="headerlink" title="角色功能"></a>角色功能</h1><p>Driver：以spark-submit提交程序为例，执行该命令的主机为driver（在任意一台安装了spark（spark submit）的机器上启动一个任务的客户端也就是Driver 。客户端与集群需要建立链接，建立的这个链接对象叫做sparkContext，只有这个对象创建成功才标志这这个客户端与spark集群链接成功。SparkContext是driver进程中的一个对象，提交任务的时候，指定了每台机器需要多少个核cores，需要的内存 ）</p>
+<p>Master: 给任务提供资源，分配资源，master跟worker通信，报活和更新资源 </p>
+<p>Worker:  以子进程的方式启动executor</p>
+<p>Executor：Driver提交程序到executor(CoarseGrainedExecutorBankend)，执行任务的进程，exector是task运行的容器</p></p>
             <p class="article-more-link">
-                <a href="/2018/08/15/Spark启动流程/#more">查看更多</a>
+                <a href="/2018/08/15/Spark启动流程及一些小总结/#more">查看更多</a>
             </p>
         
 
@@ -1319,7 +1324,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/08/15/Spark启动流程/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/08/15/Spark启动流程及一些小总结/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -1347,7 +1352,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/08/20/Shuffle中的机制/" class="title">Shuffle中的机制</a></p>
+                            <p class="item-title"><a href="/2018/08/20/MapReduce中Shuffle中的机制/" class="title">MapReduce中Shuffle中的机制</a></p>
                             <p class="item-date"><time datetime="2018-08-20T02:12:26.791Z" itemprop="datePublished">2018-08-20</time></p>
                         </div>
                     </li>

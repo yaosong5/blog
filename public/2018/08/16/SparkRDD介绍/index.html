@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/0069RVTdgy1fuawo5mvk1j31c20bq3zz.jpg">
 <meta property="og:image" content="file://localhost/Users/yaosong/Library/Group%20Containers/UBF8T346G9.Office/msoclip1/01/clip_image002.gif">
-<meta property="og:updated_time" content="2018-08-17T03:41:37.916Z">
+<meta property="og:updated_time" content="2018-08-21T10:05:36.979Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SparkRDD介绍">
 <meta name="twitter:description" content="[TOC] 1sc.textfile(&quot;hdfs://master:9000/wc&quot;).flatMap(_.split(&quot;分隔符&quot;)).map((_,1)).reduceByKey(_+_).saveAsTextFile(&quot;hdfs://master:9000/wcResult&quot;)">
@@ -337,7 +337,7 @@ var _hmt = _hmt || [];
                 <p>[TOC]</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sc.textfile(<span class="string">"hdfs://master:9000/wc"</span>).flatMap(_.split(<span class="string">"分隔符"</span>)).map((_,<span class="number">1</span>)).reduceByKey(_+_).saveAsTextFile(<span class="string">"hdfs://master:9000/wcResult"</span>)</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<p>当rdd形成过程中，worker的分区中只是预留了存放数据的位置，只有当action触发的时候，worker的分区中才会存在数据</p>
+<p>当rdd形成过程中，worker的分区中只是预留了存放数据的位置，只有当action触发的时候，worker的分区中才会存在数据，sparkSubmit submit的命令行默认的是driver ，RDD的创建都是在在driver上创建的 </p>
 <h1 id="spark的分区与hdfs数据块的关系"><a href="#spark的分区与hdfs数据块的关系" class="headerlink" title="spark的分区与hdfs数据块的关系"></a>spark的分区与hdfs数据块的关系</h1><p>Partitioner函数不但决定了RDD本身的分片数量，也决定了parent RDD Shuffle输出时的分片数量。</p>
 <h1 id="SparkRDD"><a href="#SparkRDD" class="headerlink" title="SparkRDD"></a>SparkRDD</h1><p>RDD（ResilientDistributed Dataset）叫做分布式数据集，是Spark中最基本的数据抽象，它代表一个不可变、可分区、里面的元素可并行计算的集合。RDD具有数据流模型的特点：自动容错、位置感知性调度和可伸缩性。RDD允许用户在执行多个查询时显式地将工作集缓存在内存中，后续的查询能够重用工作集，这极大地提升了查询速度。</p>
 <p><img src="https://ws1.sinaimg.cn/large/0069RVTdgy1fuawo5mvk1j31c20bq3zz.jpg" alt=""></p>
@@ -640,7 +640,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/08/20/Shuffle中的机制/" class="title">Shuffle中的机制</a></p>
+                            <p class="item-title"><a href="/2018/08/20/MapReduce中Shuffle中的机制/" class="title">MapReduce中Shuffle中的机制</a></p>
                             <p class="item-date"><time datetime="2018-08-20T02:12:26.791Z" itemprop="datePublished">2018-08-20</time></p>
                         </div>
                     </li>

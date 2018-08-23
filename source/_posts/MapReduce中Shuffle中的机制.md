@@ -1,5 +1,5 @@
 ---
-title: Shuffle中的机制
+title: MapReduce中Shuffle中的机制
 date: 2018年08月06日 22时15分52秒
 tags: [Hadoop,原理]
 categories: 大数据
@@ -12,7 +12,7 @@ toc: true
 
 ![](https://ws2.sinaimg.cn/large/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg)
 
-# 介绍一下shuffle的原理
+# shuffle原理
 
 提到MapReduce，就不得不提一下shuffle。
 

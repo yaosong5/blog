@@ -6,24 +6,24 @@
     <meta charset="utf-8">
     
 
-    <title>Shuffle中的机制 | 钢铁锅</title>
+    <title>MapReduce中Shuffle中的机制 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="[TOC] 官方的shuffle流程  介绍一下shuffle的原理提到MapReduce，就不得不提一下shuffle。 MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map">
+    <meta name="description" content="[TOC] 官方的shuffle流程  shuffle原理提到MapReduce，就不得不提一下shuffle。 MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map 任务完成后">
 <meta name="keywords" content="原理,Hadoop">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Shuffle中的机制">
-<meta property="og:url" content="http://gangtieguo.cn/2018/08/20/Shuffle中的机制/index.html">
+<meta property="og:title" content="MapReduce中Shuffle中的机制">
+<meta property="og:url" content="http://gangtieguo.cn/2018/08/20/MapReduce中Shuffle中的机制/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] 官方的shuffle流程  介绍一下shuffle的原理提到MapReduce，就不得不提一下shuffle。 MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map">
+<meta property="og:description" content="[TOC] 官方的shuffle流程  shuffle原理提到MapReduce，就不得不提一下shuffle。 MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map 任务完成后">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fuhbuwapflj30zc0j4mxv.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fuhbdybylfj30z40hyq3f.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fufyt54ouvj30cq03c0so.jpg">
-<meta property="og:updated_time" content="2018-08-21T07:46:40.114Z">
+<meta property="og:updated_time" content="2018-08-21T10:06:40.273Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shuffle中的机制">
-<meta name="twitter:description" content="[TOC] 官方的shuffle流程  介绍一下shuffle的原理提到MapReduce，就不得不提一下shuffle。 MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map">
+<meta name="twitter:title" content="MapReduce中Shuffle中的机制">
+<meta name="twitter:description" content="[TOC] 官方的shuffle流程  shuffle原理提到MapReduce，就不得不提一下shuffle。 MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map 任务完成后">
 <meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg">
     
 
@@ -252,7 +252,7 @@ var _hmt = _hmt || [];
 
             
 
-            <section id="main"><article id="post-Shuffle中的机制" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-MapReduce中Shuffle中的机制" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -260,7 +260,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            Shuffle中的机制
+            MapReduce中Shuffle中的机制
         </h1>
     
 
@@ -269,7 +269,7 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/08/20/Shuffle中的机制/">
+        <a href="/2018/08/20/MapReduce中Shuffle中的机制/">
             <time datetime="2018-08-20T02:12:26.791Z" itemprop="datePublished">2018-08-20</time>
         </a>
     </div>
@@ -309,7 +309,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#介绍一下shuffle的原理"><span class="toc-number">1.</span> <span class="toc-text">介绍一下shuffle的原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#shuffle过程分析"><span class="toc-number">1.1.</span> <span class="toc-text">shuffle过程分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map端"><span class="toc-number">1.2.</span> <span class="toc-text">map端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map端与reduce端的交互"><span class="toc-number">1.3.</span> <span class="toc-text">map端与reduce端的交互</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reduce端过程"><span class="toc-number">1.4.</span> <span class="toc-text">reduce端过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Speculative-Execution"><span class="toc-number">1.5.</span> <span class="toc-text">Speculative Execution</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#任务分片与hdfs文件大小及文件块之间的关系"><span class="toc-number">2.</span> <span class="toc-text">任务分片与hdfs文件大小及文件块之间的关系</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#shuffle原理"><span class="toc-number">1.</span> <span class="toc-text">shuffle原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#shuffle过程分析"><span class="toc-number">1.1.</span> <span class="toc-text">shuffle过程分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map端"><span class="toc-number">1.2.</span> <span class="toc-text">map端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map端与reduce端的交互"><span class="toc-number">1.3.</span> <span class="toc-text">map端与reduce端的交互</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reduce端过程"><span class="toc-number">1.4.</span> <span class="toc-text">reduce端过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Speculative-Execution"><span class="toc-number">1.5.</span> <span class="toc-text">Speculative Execution</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#任务分片与hdfs文件大小及文件块之间的关系"><span class="toc-number">2.</span> <span class="toc-text">任务分片与hdfs文件大小及文件块之间的关系</span></a></li></ol>
             </div>
 
 
@@ -339,7 +339,7 @@ var _hmt = _hmt || [];
                 <p>[TOC]</p>
 <p>官方的shuffle流程</p>
 <p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg" alt=""></p>
-<h1 id="介绍一下shuffle的原理"><a href="#介绍一下shuffle的原理" class="headerlink" title="介绍一下shuffle的原理"></a>介绍一下shuffle的原理</h1><p>提到MapReduce，就不得不提一下shuffle。</p>
+<h1 id="shuffle原理"><a href="#shuffle原理" class="headerlink" title="shuffle原理"></a>shuffle原理</h1><p>提到MapReduce，就不得不提一下shuffle。</p>
 <p>MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map 任务完成后，它会生成一些中间文件，这些中间文件将会作为Reduce 任务的输入数据。Reduce 任务的主要目标就是把前面若干个Map 的输出汇总到一起并输出。</p>
 <a id="more"></a>
 <p> 我们知道每个reduce task输入的key都是按照key排序的。但是每个map的输出只是简单的key-value而非key-valuelist，所以shuffle的工作就是将map输出转化为reducer的输入的过程。Shuffle过程是指map产生输出结果开始，包括系统执行分区partition，排序sort，聚合Combiner（如有）以及传送map的输出到Reducer作为输入的过程。</p>
@@ -471,7 +471,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/08/20/Shuffle中的机制/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/08/20/MapReduce中Shuffle中的机制/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -516,7 +516,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/08/20/Shuffle中的机制/" class="title">Shuffle中的机制</a></p>
+                            <p class="item-title"><a href="/2018/08/20/MapReduce中Shuffle中的机制/" class="title">MapReduce中Shuffle中的机制</a></p>
                             <p class="item-date"><time datetime="2018-08-20T02:12:26.791Z" itemprop="datePublished">2018-08-20</time></p>
                         </div>
                     </li>

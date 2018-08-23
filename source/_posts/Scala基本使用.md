@@ -334,7 +334,71 @@ implicit def 隐式的，隐式转化的包在predef中
 
 以上操作符，在scala中都是方法
 
+
+
+
+
 ### 视图定界 view bound <%
+
+scala泛型
+
+```scala
+class Person[T] { 
+def chooser[T <: Comparable[T]](firit: T, second: T): T = { 
+	first 
+	} 
+} 
+```
+
+
+隐式转换：我自己的隐式上下文
+
+```scala
+object MyPredef{ 
+implicit 函数 
+implicit 值 
+} 
+```
+
+
+viewbound要求传入一个隐式转换函数
+
+```scala
+class Chooser[T <% Ordered[T]] { 
+def bigger(first: T, second: T) : T = { 
+	if(first > second) first else second 
+	} 
+} 
+
+
+class Chooser[T] { 
+def bigger(first: T, second: T)(implicit ord: T => Ordered[T]) : T = { 
+	if(first > second) first else second 
+	} 
+} 
+```
+
+
+contextbound要求传入一个隐式转换值
+
+```scala
+class Chooser[T: Ordering] { 
+def bigger(first: T, second: T) : T = { 
+val ord = implicitly[Ordering[T]] 
+if(ord.gt(first, second)) first else second 
+} 
+} 
+class Chooser[T] { 
+def bigger(first: T, second: T)(implicit ord : Ordering[T]) : T = { 
+if(ord.gt(first, second)) first else second 
+} 
+} 
+```
+
+
+[+T] 
+[-T]
+
 相当于传入了一个隐式转换的函数
 一定要传入一个隐式转换函数
 
