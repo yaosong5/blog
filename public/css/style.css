@@ -249,10 +249,7 @@ code {
     float: left;
     width: 58.666666666666664%;
     margin: 0 0.666666666666667%;
-    display: inline;
-    float: left;
-    width: 58.666666666666664%;
-    margin: 0 0.666666666666667%;
+    width: 100%;
   }
 }
 @media screen and (min-width: 560px) and (max-width: 799px) {
