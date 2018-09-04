@@ -80,7 +80,8 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 # theme: yelee
-theme: icarus
+theme: maupassant-hexo-master
+# theme: icarus
 #theme: hexo-theme-icarus-master
 
 
