@@ -8,6 +8,8 @@ toc: true
 
 [TOC]
 
+![](https://ws4.sinaimg.cn/large/006tNbRwgy1fukx028pz0j313t0op400.jpg)
+
 Var和val
 
 var 修饰的变量可改变，val 修饰的变量不可改变；但真的如此吗？事实上，var 修饰的对象引用可以改变，val 修饰的则不可改变，但对象的状态却是可以改变的。

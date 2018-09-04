@@ -2,16 +2,464 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://gangtieguo.cn/2018/08/15/Spark%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%80%BB%E7%BB%93/</loc>
+    <loc>http://gangtieguo.cn/2018/08/24/Spark%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3/</loc>
     
-    <lastmod>2018-08-23T10:16:36.006Z</lastmod>
+    <lastmod>2018-09-04T07:19:29.767Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/11/Hive%20sql%E7%9B%B8%E5%85%B3/</loc>
+    
+    <lastmod>2018-08-30T04:00:08.449Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287665/</loc>
+    
+    <lastmod>2018-08-30T03:11:11.829Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287199/</loc>
+    
+    <lastmod>2018-08-30T02:19:21.590Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/05/08/docs/15355953289166/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.917Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/05/08/docs/15355953289130/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.913Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953289095/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.910Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953289057/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.906Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953289019/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.902Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288980/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.898Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288944/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.895Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288908/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.891Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288875/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.888Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288836/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.884Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/05/17/docs/15355953288789/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.879Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288754/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.876Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288722/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.872Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288689/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.869Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288658/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.866Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288624/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.863Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288590/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.859Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288552/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.855Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288517/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.852Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288481/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.848Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288442/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.844Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288408/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.841Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288375/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.838Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288339/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.834Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288292/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.830Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288260/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.826Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288227/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.823Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288193/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.819Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288158/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.816Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288121/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.812Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288087/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.809Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288050/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.805Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953288016/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.802Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287983/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.798Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287946/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.795Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287910/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.791Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287877/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.788Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287840/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.784Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287798/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.780Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287764/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.777Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287731/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.773Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287698/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.770Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287630/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.763Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287597/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.760Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287564/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.757Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287531/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.753Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287498/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.750Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287463/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.747Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287427/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.743Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287392/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.739Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287356/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.736Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287320/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.732Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287283/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.729Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287241/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.724Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355953287158/</loc>
+    
+    <lastmod>2018-08-30T02:15:28.716Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/30/docs/15355929916048/</loc>
+    
+    <lastmod>2018-08-30T01:37:26.564Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://gangtieguo.cn/2018/08/15/Scala%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</loc>
     
-    <lastmod>2018-08-21T14:15:18.959Z</lastmod>
+    <lastmod>2018-08-24T09:24:13.619Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/05/10/Linux%E5%91%BD%E4%BB%A4%E7%A7%AF%E7%B4%AF/</loc>
+    
+    <lastmod>2018-08-24T02:14:22.229Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/06/26/Docker%E5%91%BD%E4%BB%A4%E6%B1%87%E9%9B%86/</loc>
+    
+    <lastmod>2018-08-24T02:13:02.239Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/20/Docker-machine%E7%9A%84%E6%90%AD%E5%BB%BA(%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%9C%A8%E5%90%8C%E4%B8%80ip%E6%AE%B5%E4%B8%8B)/</loc>
+    
+    <lastmod>2018-08-24T02:01:15.797Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/16/SparkRDD%E4%BB%8B%E7%BB%8D/</loc>
+    
+    <lastmod>2018-08-24T01:34:10.728Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://gangtieguo.cn/2018/08/15/Spark%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%80%BB%E7%BB%93/</loc>
+    
+    <lastmod>2018-08-23T16:50:45.753Z</lastmod>
     
   </url>
   
@@ -19,13 +467,6 @@
     <loc>http://gangtieguo.cn/2018/08/20/MapReduce%E4%B8%ADShuffle%E4%B8%AD%E7%9A%84%E6%9C%BA%E5%88%B6/</loc>
     
     <lastmod>2018-08-21T10:06:40.273Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/16/SparkRDD%E4%BB%8B%E7%BB%8D/</loc>
-    
-    <lastmod>2018-08-21T10:05:36.979Z</lastmod>
     
   </url>
   
@@ -68,13 +509,6 @@
     <loc>http://gangtieguo.cn/2018/08/15/Hadoop-%E6%9E%84%E6%88%90%E5%8F%8AHA-/</loc>
     
     <lastmod>2018-08-16T10:52:49.096Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/16/%20Spark%E4%BB%BB%E5%8A%A1RDD%E6%89%A7%E8%A1%8C%E4%B8%BB%E8%A6%81%E6%B5%81%E7%A8%8B/</loc>
-    
-    <lastmod>2018-08-15T18:20:29.673Z</lastmod>
     
   </url>
   
@@ -163,13 +597,6 @@
   </url>
   
   <url>
-    <loc>http://gangtieguo.cn/2018/06/26/Docker%E5%91%BD%E4%BB%A4%E6%B1%87%E9%9B%86/</loc>
-    
-    <lastmod>2018-08-13T16:18:59.121Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://gangtieguo.cn/2018/08/11/Hive%E5%88%86%E6%A1%B6%E8%A1%A8%E7%9B%B8%E5%85%B3/</loc>
     
     <lastmod>2018-08-13T09:00:52.971Z</lastmod>
@@ -187,13 +614,6 @@
     <loc>http://gangtieguo.cn/2018/08/11/Spark%E8%AF%BB%E5%8F%96HBase%E8%A7%A3%E6%9E%90json%E5%88%9B%E5%BB%BA%E4%B8%B4%E6%97%B6%E8%A1%A8%E5%BD%95%E5%85%A5%E5%88%B0Hive%E8%A1%A8/</loc>
     
     <lastmod>2018-08-13T06:16:38.124Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://gangtieguo.cn/2018/08/11/Hive%20sql%E7%9B%B8%E5%85%B3/</loc>
-    
-    <lastmod>2018-08-13T03:20:39.546Z</lastmod>
     
   </url>
   
@@ -219,13 +639,6 @@
   </url>
   
   <url>
-    <loc>http://gangtieguo.cn/2018/05/10/Linux%E5%91%BD%E4%BB%A4%E7%A7%AF%E7%B4%AF/</loc>
-    
-    <lastmod>2018-08-10T19:37:12.313Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://gangtieguo.cn/2018/07/20/Docker%E6%9E%84%E5%BB%BA%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</loc>
     
     <lastmod>2018-08-10T19:24:44.124Z</lastmod>
@@ -236,13 +649,6 @@
     <loc>http://gangtieguo.cn/2018/07/10/CoudearManager%E6%90%AD%E5%BB%BA/</loc>
     
     <lastmod>2018-08-10T19:05:49.436Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://gangtieguo.cn/2018/07/20/Docker-machine%E7%9A%84%E6%90%AD%E5%BB%BA(%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%9C%A8%E5%90%8C%E4%B8%80ip%E6%AE%B5%E4%B8%8B)/</loc>
-    
-    <lastmod>2018-08-10T18:48:52.042Z</lastmod>
     
   </url>
   

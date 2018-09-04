@@ -206,11 +206,11 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                56
+                114
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                42
+                43
                 <span>标签</span>
             </div>
         </div>
@@ -247,7 +247,7 @@ var _hmt = _hmt || [];
             
 
             <section id="main">
-    <article id="post-Hive分桶表相关" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-docs/15355953288339" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -255,7 +255,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/11/Hive分桶表相关/">Hive分桶表,分区表简单分析</a>
+            <a class="article-title" href="/2018/08/30/docs/15355953288339/">Json与Scala类型的相互转换处理</a>
         </h1>
     
 
@@ -264,8 +264,8 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/08/11/Hive分桶表相关/">
-            <time datetime="2018-08-11T03:21:32.532Z" itemprop="datePublished">2018-08-11</time>
+        <a href="/2018/08/30/docs/15355953288339/">
+            <time datetime="2018-08-30T02:15:28.834Z" itemprop="datePublished">2018-08-30</time>
         </a>
     </div>
 
@@ -279,7 +279,7 @@ var _hmt = _hmt || [];
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Hive/">Hive</a>
+        <a class="tag-link" href="/tags/Json/">Json</a>, <a class="tag-link" href="/tags/Scala/">Scala</a>
     </div>
 
                     </div>
@@ -291,11 +291,10 @@ var _hmt = _hmt || [];
         <div class="article-entry" itemprop="articleBody">
         
             <p><p>[TOC]</p>
-<p><img src="https://ws2.sinaimg.cn/large/0069RVTdgy1fu81tzpekzj305z06j3yc.jpg" alt=""></p>
-<p>对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。</p>
-<p>分桶依赖于yarn的所以分桶的时候需要启动yarn</p></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fu5817otq1j31kw0mojzv.jpg" alt=""></p>
+<p>在开发过程中时常会有对json数据的一些处理，现做一些记录</p></p>
             <p class="article-more-link">
-                <a href="/2018/08/11/Hive分桶表相关/#more">查看更多</a>
+                <a href="/2018/08/30/docs/15355953288339/#more">查看更多</a>
             </p>
         
 
@@ -347,7 +346,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/08/11/Hive分桶表相关/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953288339/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -357,7 +356,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
 
 
-    <article id="post-Hive自定义函数流程" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-docs/15355953288292" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -365,7 +364,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/11/Hive自定义函数流程/">Hive自定义函数UDF相关</a>
+            <a class="article-title" href="/2018/08/30/docs/15355953288292/">Centos7上搭建Jenkins</a>
         </h1>
     
 
@@ -374,8 +373,116 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/08/11/Hive自定义函数流程/">
-            <time datetime="2018-08-11T03:16:01.806Z" itemprop="datePublished">2018-08-11</time>
+        <a href="/2018/08/30/docs/15355953288292/">
+            <time datetime="2018-08-30T02:15:28.829Z" itemprop="datePublished">2018-08-30</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/安装部署/">安装部署</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Jenkins/">Jenkins</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>之前用yum模式安装，总是启动报错，解决了一番，未找到解决方案，后直接下载war包进行安装部署</p>
+<p>默认安装了Java<br></p>
+            <p class="article-more-link">
+                <a href="/2018/08/30/docs/15355953288292/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953288292/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-docs/15355953288260" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/30/docs/15355953288260/">Hive自定义函数UDF相关</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/30/docs/15355953288260/">
+            <time datetime="2018-08-30T02:15:28.826Z" itemprop="datePublished">2018-08-30</time>
         </a>
     </div>
 
@@ -415,7 +522,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 <p>add jar只在一次会话中生效</p>
 </blockquote></p>
             <p class="article-more-link">
-                <a href="/2018/08/11/Hive自定义函数流程/#more">查看更多</a>
+                <a href="/2018/08/30/docs/15355953288260/#more">查看更多</a>
             </p>
         
 
@@ -467,7 +574,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/08/11/Hive自定义函数流程/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953288260/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -477,7 +584,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
 
 
-    <article id="post-Hive sql相关" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-docs/15355953288227" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -485,7 +592,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/11/Hive sql相关/">Hive建表及sql相关</a>
+            <a class="article-title" href="/2018/08/30/docs/15355953288227/">Hive建表及sql相关</a>
         </h1>
     
 
@@ -494,8 +601,8 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/08/11/Hive sql相关/">
-            <time datetime="2018-08-11T02:31:24.062Z" itemprop="datePublished">2018-08-11</time>
+        <a href="/2018/08/30/docs/15355953288227/">
+            <time datetime="2018-08-30T02:15:28.823Z" itemprop="datePublished">2018-08-30</time>
         </a>
     </div>
 
@@ -524,7 +631,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 <p><img src="https://ws1.sinaimg.cn/large/0069RVTdgy1fu5k3varq8j31880g8js9.jpg" alt=""></p>
 <p>hive主要是做离线日志分析的，不是为了做单行的事务控制的数据<br>新版hive也支持单行数据的读取，但是效率非常低，所以也没有什么updata语句</p></p>
             <p class="article-more-link">
-                <a href="/2018/08/11/Hive sql相关/#more">查看更多</a>
+                <a href="/2018/08/30/docs/15355953288227/#more">查看更多</a>
             </p>
         
 
@@ -576,7 +683,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/08/11/Hive sql相关/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953288227/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -586,7 +693,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
 
 
-    <article id="post-Json与Scala类型的一些互相转换处理" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-docs/15355953288193" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -594,7 +701,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/11/Json与Scala类型的一些互相转换处理/">Json与Scala类型的相互转换处理</a>
+            <a class="article-title" href="/2018/08/30/docs/15355953288193/">Spark读取HBase解析json创建临时表录入到Hive表</a>
         </h1>
     
 
@@ -603,226 +710,8 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/08/11/Json与Scala类型的一些互相转换处理/">
-            <time datetime="2018-08-10T17:19:05.443Z" itemprop="datePublished">2018-08-11</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/大数据/">大数据</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Json/">Json</a>, <a class="tag-link" href="/tags/Scala/">Scala</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-       
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>[TOC]</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fu5817otq1j31kw0mojzv.jpg" alt=""></p>
-<p>在开发过程中时常会有对json数据的一些处理，现做一些记录</p></p>
-            <p class="article-more-link">
-                <a href="/2018/08/11/Json与Scala类型的一些互相转换处理/#more">查看更多</a>
-            </p>
-        
-
-        </div>
-
-        <footer class="article-footer">
-
-        
-            <div class="share-container">
-
-
-    <div class="bdsharebuttonbox">
-    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
-    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
-    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
-</div>
-<script>
-window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-<style>
-    .bdshare_popup_box {
-        border-radius: 4px;
-        border: #e1e1e1 solid 1px;
-    }
-    .bdshare-button-style0-16 a,
-    .bdshare-button-style0-16 .bds_more {
-        padding-left: 20px;
-        margin: 6px 10px 6px 0;
-    }
-    .bdshare_dialog_list a,
-    .bdshare_popup_list a,
-    .bdshare_popup_bottom a {
-        font-family: 'Microsoft Yahei';
-    }
-    .bdshare_popup_top {
-        display: none;
-    }
-    .bdshare_popup_bottom {
-        height: auto;
-        padding: 5px;
-    }
-</style>
-
-
-</div>
-
-            
-    
-        <a href="http://gangtieguo.cn/2018/08/11/Json与Scala类型的一些互相转换处理/#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Spark读取Hbase" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/11/Spark读取Hbase/">Spark读取HBase</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/08/11/Spark读取Hbase/">
-            <time datetime="2018-08-10T16:18:11.706Z" itemprop="datePublished">2018-08-11</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/大数据/">大数据</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/HBase/">HBase</a>, <a class="tag-link" href="/tags/Spark/">Spark</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-       
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>[TOC]</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fu552ugvkxj30ys0han0l.jpg" alt=""></p>
-<p>Spark读取Hbase</p></p>
-            <p class="article-more-link">
-                <a href="/2018/08/11/Spark读取Hbase/#more">查看更多</a>
-            </p>
-        
-
-        </div>
-
-        <footer class="article-footer">
-
-        
-            <div class="share-container">
-
-
-    <div class="bdsharebuttonbox">
-    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
-    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
-    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
-</div>
-<script>
-window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-<style>
-    .bdshare_popup_box {
-        border-radius: 4px;
-        border: #e1e1e1 solid 1px;
-    }
-    .bdshare-button-style0-16 a,
-    .bdshare-button-style0-16 .bds_more {
-        padding-left: 20px;
-        margin: 6px 10px 6px 0;
-    }
-    .bdshare_dialog_list a,
-    .bdshare_popup_list a,
-    .bdshare_popup_bottom a {
-        font-family: 'Microsoft Yahei';
-    }
-    .bdshare_popup_top {
-        display: none;
-    }
-    .bdshare_popup_bottom {
-        height: auto;
-        padding: 5px;
-    }
-</style>
-
-
-</div>
-
-            
-    
-        <a href="http://gangtieguo.cn/2018/08/11/Spark读取Hbase/#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Spark读取HBase解析json创建临时表录入到Hive表" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/11/Spark读取HBase解析json创建临时表录入到Hive表/">Spark读取HBase解析json创建临时表录入到Hive表</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/08/11/Spark读取HBase解析json创建临时表录入到Hive表/">
-            <time datetime="2018-08-10T16:09:46.585Z" itemprop="datePublished">2018-08-11</time>
+        <a href="/2018/08/30/docs/15355953288193/">
+            <time datetime="2018-08-30T02:15:28.819Z" itemprop="datePublished">2018-08-30</time>
         </a>
     </div>
 
@@ -854,7 +743,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 <p>主要将内容拆分成几块，spark读取HBase，spark解析json将json数组中每个元素拆成一条（比如json数组有10个元素，需要解析平铺成19个json，那么对应临时表中就是19条记录，对应查询插入到hive也就是19条记录）</p>
 <p>spark读取本地HBase</p></p>
             <p class="article-more-link">
-                <a href="/2018/08/11/Spark读取HBase解析json创建临时表录入到Hive表/#more">查看更多</a>
+                <a href="/2018/08/30/docs/15355953288193/#more">查看更多</a>
             </p>
         
 
@@ -906,7 +795,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/08/11/Spark读取HBase解析json创建临时表录入到Hive表/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953288193/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -916,7 +805,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
 
 
-    <article id="post-HBase拷贝生产环境数据到本地运行调试" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-docs/15355953288158" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -924,7 +813,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/10/HBase拷贝生产环境数据到本地运行调试/">HBase拷贝生产环境数据到本地Spark解析运行调试</a>
+            <a class="article-title" href="/2018/08/30/docs/15355953288158/">Kafka集群配置及配置文件</a>
         </h1>
     
 
@@ -933,343 +822,8 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/08/10/HBase拷贝生产环境数据到本地运行调试/">
-            <time datetime="2018-08-10T10:19:15.453Z" itemprop="datePublished">2018-08-10</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/大数据/">大数据</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/HBase/">HBase</a>, <a class="tag-link" href="/tags/操作/">操作</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-       
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>[TOC]</p>
-<blockquote>
-<p>由于线上环境要经过跳板机跳转，并且打包测试，上传jar包步骤多，不然的话，要进行各种端口转发，且有权限控制，不易在本地idea编辑器上进行程序运行及调试</p>
-<p>现在想法是，将线上测试环境的数据拷贝小部分到本地自己搭建的集群，进行程序的逻辑和初期调试</p>
-<p>此贴就是记录一些操作</p>
-</blockquote>
-<p>这都是要基于本地有HBASE及其依赖组件的。</p>
-<p>主要思路是，拷贝线上查询的结果到文件hbaseout1.txt，将hbaseout1.txt文件sz导入本地</p>
-<p>再在本地集群上将数据插入到hbase</p></p>
-            <p class="article-more-link">
-                <a href="/2018/08/10/HBase拷贝生产环境数据到本地运行调试/#more">查看更多</a>
-            </p>
-        
-
-        </div>
-
-        <footer class="article-footer">
-
-        
-            <div class="share-container">
-
-
-    <div class="bdsharebuttonbox">
-    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
-    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
-    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
-</div>
-<script>
-window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-<style>
-    .bdshare_popup_box {
-        border-radius: 4px;
-        border: #e1e1e1 solid 1px;
-    }
-    .bdshare-button-style0-16 a,
-    .bdshare-button-style0-16 .bds_more {
-        padding-left: 20px;
-        margin: 6px 10px 6px 0;
-    }
-    .bdshare_dialog_list a,
-    .bdshare_popup_list a,
-    .bdshare_popup_bottom a {
-        font-family: 'Microsoft Yahei';
-    }
-    .bdshare_popup_top {
-        display: none;
-    }
-    .bdshare_popup_bottom {
-        height: auto;
-        padding: 5px;
-    }
-</style>
-
-
-</div>
-
-            
-    
-        <a href="http://gangtieguo.cn/2018/08/10/HBase拷贝生产环境数据到本地运行调试/#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Hbase-shell操作" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/10/Hbase-shell操作/">Hbase-shell操作</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/08/10/Hbase-shell操作/">
-            <time datetime="2018-08-10T09:27:05.100Z" itemprop="datePublished">2018-08-10</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/大数据/">大数据</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/HBase/">HBase</a>, <a class="tag-link" href="/tags/Shell/">Shell</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-       
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>[TOC]</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fu5599pvv8j30y60b0dfw.jpg" alt=""></p>
-<p>hbase使用命令行操作，简单直接，方便快捷，掌握一点必备的基础命令。</p>
-<p>HBase启动命令行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$HBASE_HOME</span>/bin/hbase shell</span><br></pre></td></tr></table></figure></p>
-            <p class="article-more-link">
-                <a href="/2018/08/10/Hbase-shell操作/#more">查看更多</a>
-            </p>
-        
-
-        </div>
-
-        <footer class="article-footer">
-
-        
-            <div class="share-container">
-
-
-    <div class="bdsharebuttonbox">
-    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
-    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
-    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
-</div>
-<script>
-window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-<style>
-    .bdshare_popup_box {
-        border-radius: 4px;
-        border: #e1e1e1 solid 1px;
-    }
-    .bdshare-button-style0-16 a,
-    .bdshare-button-style0-16 .bds_more {
-        padding-left: 20px;
-        margin: 6px 10px 6px 0;
-    }
-    .bdshare_dialog_list a,
-    .bdshare_popup_list a,
-    .bdshare_popup_bottom a {
-        font-family: 'Microsoft Yahei';
-    }
-    .bdshare_popup_top {
-        display: none;
-    }
-    .bdshare_popup_bottom {
-        height: auto;
-        padding: 5px;
-    }
-</style>
-
-
-</div>
-
-            
-    
-        <a href="http://gangtieguo.cn/2018/08/10/Hbase-shell操作/#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Spark本地调试远程集群程序" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/07/Spark本地调试远程集群程序/">Spark本地调试远程集群程序</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/08/07/Spark本地调试远程集群程序/">
-            <time datetime="2018-08-07T08:09:43.314Z" itemprop="datePublished">2018-08-07</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/大数据/">大数据</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Spark/">Spark</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-       
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>[TOC]</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fu562ur7pxj317o0s2qfq.jpg" alt=""></p>
-<p>由于在生产环境中进行调试spark程序需要进行打包和各种跳板机跳转，最好在本地搭一套集群来进行一些代码基础检查。</p></p>
-            <p class="article-more-link">
-                <a href="/2018/08/07/Spark本地调试远程集群程序/#more">查看更多</a>
-            </p>
-        
-
-        </div>
-
-        <footer class="article-footer">
-
-        
-            <div class="share-container">
-
-
-    <div class="bdsharebuttonbox">
-    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
-    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
-    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
-</div>
-<script>
-window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-<style>
-    .bdshare_popup_box {
-        border-radius: 4px;
-        border: #e1e1e1 solid 1px;
-    }
-    .bdshare-button-style0-16 a,
-    .bdshare-button-style0-16 .bds_more {
-        padding-left: 20px;
-        margin: 6px 10px 6px 0;
-    }
-    .bdshare_dialog_list a,
-    .bdshare_popup_list a,
-    .bdshare_popup_bottom a {
-        font-family: 'Microsoft Yahei';
-    }
-    .bdshare_popup_top {
-        display: none;
-    }
-    .bdshare_popup_bottom {
-        height: auto;
-        padding: 5px;
-    }
-</style>
-
-
-</div>
-
-            
-    
-        <a href="http://gangtieguo.cn/2018/08/07/Spark本地调试远程集群程序/#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-zookeeper配置" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/07/zookeeper配置/">Zookeeper的配置容器的搭建</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/08/07/zookeeper配置/">
-            <time datetime="2018-08-06T19:06:03.170Z" itemprop="datePublished">2018-08-07</time>
+        <a href="/2018/08/30/docs/15355953288158/">
+            <time datetime="2018-08-30T02:15:28.816Z" itemprop="datePublished">2018-08-30</time>
         </a>
     </div>
 
@@ -1283,7 +837,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/zk/">zk</a>
+        <a class="tag-link" href="/tags/Kafka/">Kafka</a>, <a class="tag-link" href="/tags/大数据/">大数据</a>
     </div>
 
                     </div>
@@ -1294,11 +848,10 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><p>[TOC]<br><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fu554uqh0pj31660fwta8.jpg" alt=""></p>
-<p>在usr目录下下载zk包，并且解压到/usr/目录，改名为zk，所以$ZK_HOME为/usr/zk</p>
-<h1 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /usr/zk/data</span><br><span class="line">mkdir -p /usr/zk/logs</span><br><span class="line">touch /usr/zk/data/myid</span><br></pre></td></tr></table></figure></p>
+            <p><p>[TOC]</p>
+<h1 id="Kafka集群部署"><a href="#Kafka集群部署" class="headerlink" title="Kafka集群部署"></a>Kafka集群部署</h1><p>kafka默认推荐的是2.11开头的，如果系统中没有其他软件依赖于Scala的话，就使用2.11版本的<br>scala是依赖于zookeeper的，所以需要给zookeeper配置地址</p></p>
             <p class="article-more-link">
-                <a href="/2018/08/07/zookeeper配置/#more">查看更多</a>
+                <a href="/2018/08/30/docs/15355953288158/#more">查看更多</a>
             </p>
         
 
@@ -1350,7 +903,452 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/08/07/zookeeper配置/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953288158/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-docs/15355953288121" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/30/docs/15355953288121/">Hive分桶表,分区表简单分析</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/30/docs/15355953288121/">
+            <time datetime="2018-08-30T02:15:28.812Z" itemprop="datePublished">2018-08-30</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Hive/">Hive</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]</p>
+<p><img src="https://ws2.sinaimg.cn/large/0069RVTdgy1fu81tzpekzj305z06j3yc.jpg" alt=""></p>
+<p>对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。</p>
+<p>分桶依赖于yarn的所以分桶的时候需要启动yarn</p></p>
+            <p class="article-more-link">
+                <a href="/2018/08/30/docs/15355953288121/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953288121/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-docs/15355953288087" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/30/docs/15355953288087/">Kafka深入解析</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/30/docs/15355953288087/">
+            <time datetime="2018-08-30T02:15:28.809Z" itemprop="datePublished">2018-08-30</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/组件/">组件</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Kafka/">Kafka</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]</p>
+<h1 id="Kafka结构"><a href="#Kafka结构" class="headerlink" title="Kafka结构"></a>Kafka结构</h1><ul>
+<li><strong>Producer</strong> ：消息生产者，就是向kafka broker发消息的客户端。</li>
+</ul>
+<ul>
+<li><p><strong>Consumer</strong> ：消息消费者，向kafka broker取消息的客户端</p>
+</li>
+<li><p><strong>Topic</strong> ：可以理解为一个队列</p></p>
+            <p class="article-more-link">
+                <a href="/2018/08/30/docs/15355953288087/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953288087/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-docs/15355953288050" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/30/docs/15355953288050/">Hive累计报表</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/30/docs/15355953288050/">
+            <time datetime="2018-08-30T02:15:28.805Z" itemprop="datePublished">2018-08-30</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Hive/">Hive</a>, <a class="tag-link" href="/tags/报表/">报表</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]</p>
+<p>在 hive 做统计的时候，总是涉及到做累计的报表处理，下面案列就是来做相应处理</p>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><h2 id="创建数据文件"><a href="#创建数据文件" class="headerlink" title="创建数据文件"></a>创建数据文件</h2><p>（在hadoop所在的机器）</p>
+<p><strong>vim /usr/hadoop/hivedata/t_sales.dat</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">舒肤佳,2018-06,5</span><br><span class="line">舒肤佳,2018-06,15</span><br><span class="line">美姿,2018-06,5</span><br><span class="line">舒肤佳,2018-06,8</span><br><span class="line">美姿,2018-06,25</span><br><span class="line">舒肤佳,2018-06,5</span><br><span class="line">舒肤佳,2018-07,4</span><br><span class="line">舒肤佳,2018-07,6</span><br><span class="line">美姿,2018-07,10</span><br><span class="line">美姿,2018-07,5</span><br></pre></td></tr></table></figure>
+<p>上传到hdfs</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -put /usr/hadoop/hivedata/t_sales.dat /local/hivedata/t_sales.dat</span><br></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2018/08/30/docs/15355953288050/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953288050/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-docs/15355953288016" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/30/docs/15355953288016/">kafka的启动及常用命令</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/30/docs/15355953288016/">
+            <time datetime="2018-08-30T02:15:28.802Z" itemprop="datePublished">2018-08-30</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Kafka/">Kafka</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h1 id="kafka的启动脚本"><a href="#kafka的启动脚本" class="headerlink" title="kafka的启动脚本"></a>kafka的启动脚本</h1><pre><code>kafka-startall.sh
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">sed -e <span class="string">'1c borker.id=0'</span> <span class="variable">$KAFKA_HOME</span>/config/server.properties</span><br><span class="line"><span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties</span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '1c borker.id=1 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '5c host.name=slave01 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '6c advertised.host.name=slave01 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"<span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '1c borker.id=2 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '5c host.name=slave02 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '6c advertised.host.name=slave02 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"<span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2018/08/30/docs/15355953288016/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953288016/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -1361,7 +1359,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/2/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">下一页 &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/2/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/4/">下一页 &raquo;</a>
     </nav>
 </section>
             
@@ -1377,45 +1375,45 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/08/20/MapReduce中Shuffle中的机制/" class="title">MapReduce中Shuffle中的机制</a></p>
-                            <p class="item-date"><time datetime="2018-08-20T02:12:26.791Z" itemprop="datePublished">2018-08-20</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/博客/">博客</a></p>
+                            <p class="item-title"><a href="/2018/08/30/docs/15355953289095/" class="title">源文件提交到仓库</a></p>
+                            <p class="item-date"><time datetime="2018-08-30T02:15:28.910Z" itemprop="datePublished">2018-08-30</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/08/16/ Spark任务RDD执行主要流程/" class="title">Spark任务执行主要流程</a></p>
-                            <p class="item-date"><time datetime="2018-08-15T18:18:20.757Z" itemprop="datePublished">2018-08-16</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/碎片知识/">碎片知识</a></p>
+                            <p class="item-title"><a href="/2018/08/30/docs/15355953289057/" class="title">命令积累</a></p>
+                            <p class="item-date"><time datetime="2018-08-30T02:15:28.906Z" itemprop="datePublished">2018-08-30</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/08/16/SparkSQL介绍/" class="title">SparkSQL介绍</a></p>
-                            <p class="item-date"><time datetime="2018-08-15T18:04:32.317Z" itemprop="datePublished">2018-08-16</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/环境配置/">环境配置</a></p>
+                            <p class="item-title"><a href="/2018/08/30/docs/15355953289019/" class="title">Docker安装Hadoop集群【引用】</a></p>
+                            <p class="item-date"><time datetime="2018-08-30T02:15:28.902Z" itemprop="datePublished">2018-08-30</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/08/16/Spark-On-yarn/" class="title">Spark-On-Yarn模式</a></p>
-                            <p class="item-date"><time datetime="2018-08-15T17:58:01.513Z" itemprop="datePublished">2018-08-16</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/安装部署/">安装部署</a></p>
+                            <p class="item-title"><a href="/2018/08/30/docs/15355953288980/" class="title">FLINK容器的搭建</a></p>
+                            <p class="item-date"><time datetime="2018-08-30T02:15:28.898Z" itemprop="datePublished">2018-08-30</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/08/16/SparkStreaming介绍/" class="title">SparkStreaming介绍</a></p>
-                            <p class="item-date"><time datetime="2018-08-15T17:50:47.842Z" itemprop="datePublished">2018-08-16</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/安装部署/">安装部署</a></p>
+                            <p class="item-title"><a href="/2018/08/30/docs/15355953288944/" class="title">Hadoop&amp;Spark组合容器的搭建</a></p>
+                            <p class="item-date"><time datetime="2018-08-30T02:15:28.895Z" itemprop="datePublished">2018-08-30</time></p>
                         </div>
                     </li>
                 
@@ -1428,7 +1426,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-archive"></i>归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">30</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">85</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">12</span></li></ul>
         </div>
     </div>
 
@@ -1437,7 +1435,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a><span class="category-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1446,7 +1444,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDH/">CDH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/">HBase</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HDFS/">HDFS</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/">Json</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDD/">RDD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkSQL/">SparkSQL</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkStreaming/">SparkStreaming</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es/">es</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zk/">zk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/使用/">使用</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/原理/">原理</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/报表/">报表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作/">操作</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDH/">CDH</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">28</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/">HBase</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HDFS/">HDFS</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/">Json</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDD/">RDD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">24</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkSQL/">SparkSQL</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkStreaming/">SparkStreaming</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es/">es</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zk/">zk</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/使用/">使用</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/原理/">原理</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安装部署/">安装部署</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/报表/">报表</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作/">操作</a><span class="tag-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1455,7 +1453,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-tags"></i>标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/tags/CDH/" style="font-size: 10px;">CDH</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/ELK/" style="font-size: 11.43px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HBase/" style="font-size: 14.29px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 12.86px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.71px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 12.86px;">Hexo</a> <a href="/tags/Hive/" style="font-size: 14.29px;">Hive</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 11.43px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Kafka/" style="font-size: 14.29px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/RDD/" style="font-size: 10px;">RDD</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 18.57px;">Spark</a> <a href="/tags/SparkSQL/" style="font-size: 11.43px;">SparkSQL</a> <a href="/tags/SparkStreaming/" style="font-size: 11.43px;">SparkStreaming</a> <a href="/tags/es/" style="font-size: 10px;">es</a> <a href="/tags/git/" style="font-size: 11.43px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/zk/" style="font-size: 10px;">zk</a> <a href="/tags/使用/" style="font-size: 11.43px;">使用</a> <a href="/tags/原理/" style="font-size: 17.14px;">原理</a> <a href="/tags/命令/" style="font-size: 11.43px;">命令</a> <a href="/tags/大数据/" style="font-size: 11.43px;">大数据</a> <a href="/tags/开发/" style="font-size: 11.43px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/报表/" style="font-size: 10px;">报表</a> <a href="/tags/操作/" style="font-size: 10px;">操作</a>
+            <a href="/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/tags/CDH/" style="font-size: 10px;">CDH</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/ELK/" style="font-size: 11.43px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HBase/" style="font-size: 14.29px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 12.86px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.71px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 12.86px;">Hexo</a> <a href="/tags/Hive/" style="font-size: 14.29px;">Hive</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 11.43px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Kafka/" style="font-size: 14.29px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/RDD/" style="font-size: 10px;">RDD</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 18.57px;">Spark</a> <a href="/tags/SparkSQL/" style="font-size: 11.43px;">SparkSQL</a> <a href="/tags/SparkStreaming/" style="font-size: 11.43px;">SparkStreaming</a> <a href="/tags/es/" style="font-size: 10px;">es</a> <a href="/tags/git/" style="font-size: 11.43px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/zk/" style="font-size: 10px;">zk</a> <a href="/tags/使用/" style="font-size: 11.43px;">使用</a> <a href="/tags/原理/" style="font-size: 17.14px;">原理</a> <a href="/tags/命令/" style="font-size: 11.43px;">命令</a> <a href="/tags/大数据/" style="font-size: 11.43px;">大数据</a> <a href="/tags/安装部署/" style="font-size: 10px;">安装部署</a> <a href="/tags/开发/" style="font-size: 11.43px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/报表/" style="font-size: 10px;">报表</a> <a href="/tags/操作/" style="font-size: 10px;">操作</a>
         </div>
     </div>
 

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta name="baidu-site-verification"content="WHXmBFaAkY"/>
+    <meta name="google-site-verification" content="vDyi3jVPymP4jOpfzY4F1zG4-FXD1T-A5unnDJuNxhs" />
+    <meta charset="utf-8">
+    
+
+    <title>Hdfs结构性能分析及读写流程 | 钢铁锅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="[TOC]">
+<meta name="keywords" content="Hadoop,HDFS,原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hdfs结构性能分析及读写流程">
+<meta property="og:url" content="http://gangtieguo.cn/2018/08/30/docs/15355953287630/index.html">
+<meta property="og:site_name" content="钢铁锅">
+<meta property="og:description" content="[TOC]">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/4ee70fb7-cfdc-4010-a387-986e268b5a1e.jpg">
+<meta property="og:image" content="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/2d3df4da-f64b-4ccf-967b-9ade7c2ab46f.jpg">
+<meta property="og:image" content="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/8fa4e8c2-8b29-4809-8219-b383aa6d8664.jpg">
+<meta property="og:image" content="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/2a0de522-13be-4777-b2f4-68377648bbb4.jpg">
+<meta property="og:image" content="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/d6a7699e-3158-4cfc-ab83-9fec25286004.jpg">
+<meta property="og:updated_time" content="2018-08-30T02:15:28.763Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hdfs结构性能分析及读写流程">
+<meta name="twitter:description" content="[TOC]">
+<meta name="twitter:image" content="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/4ee70fb7-cfdc-4010-a387-986e268b5a1e.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/Basketball-icon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+     <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">钢铁锅</span>
+            </a>
+            <nav id="main-nav">
+            <a class="main-nav-link" href="/."><i class="fa fa-home"></i>主页</a>
+            <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i>归档</a>
+            <a class="main-nav-link" href="/categories"><i class="fa fa-folder"></i>分类</a>
+            <a class="main-nav-link" href="/tags"><i class="fa fa-tags"></i>标签</a>
+            <a class="main-nav-link" href="/about"><i class="fa fa-user"></i>关于</a>
+
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/.">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     主页  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/archives">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     归档  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/categories">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     分类  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/tags">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     标签  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/about">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     关于  -->
+               <!--     </a>  -->
+               <!--   -->
+
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/venum.gif" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+         <!-- <button type="submit" class="search-form-submit"></button> -->
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+             
+
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/venum.gif" />
+            <h2 id="name">GTG</h2>
+            <h3 id="title">Nothing</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>四海为家</span>
+           
+        </div>
+      <div class="article-info profile-block">
+            <div class="article-info-block">
+                114
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                43
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/yaosong5" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/gangtieguo/" target="_blank" title="weibo" class=tooltip>
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+
+        
+        
+    </div>
+
+
+</aside>
+
+
+            
+
+            <section id="main"><article id="post-docs/15355953287630" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Hdfs结构性能分析及读写流程
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/30/docs/15355953287630/">
+            <time datetime="2018-08-30T02:15:28.763Z" itemprop="datePublished">2018-08-30</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/HDFS/">HDFS</a>, <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article "  class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#namenode和secondaryNameNode最好不要放在一台机器上"><span class="toc-number">1.</span> <span class="toc-text">namenode和secondaryNameNode最好不要放在一台机器上</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#hdfs中namenode和datanode的初始化"><span class="toc-number">2.</span> <span class="toc-text">hdfs中namenode和datanode的初始化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#把一个hdfs的一个节点加入到另一个集群"><span class="toc-number">3.</span> <span class="toc-text">把一个hdfs的一个节点加入到另一个集群</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如果集群够大，上百台机器"><span class="toc-number">4.</span> <span class="toc-text">如果集群够大，上百台机器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#namenode管理元数据"><span class="toc-number">5.</span> <span class="toc-text">namenode管理元数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#所以引入了secondaryNameNode"><span class="toc-number">5.1.</span> <span class="toc-text">所以引入了secondaryNameNode</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#edits文件定期转为元数据"><span class="toc-number">5.1.1.</span> <span class="toc-text">edits文件定期转为元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#secondaryNameNode的出现"><span class="toc-number">5.1.2.</span> <span class="toc-text">secondaryNameNode的出现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为了防止namenode宕机导致了数据丢失"><span class="toc-number">5.2.</span> <span class="toc-text">为了防止namenode宕机导致了数据丢失</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hdfs的结构"><span class="toc-number">6.</span> <span class="toc-text">Hdfs的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hdfs写操作"><span class="toc-number">6.1.</span> <span class="toc-text">Hdfs写操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hdfs读操作"><span class="toc-number">7.</span> <span class="toc-text">Hdfs读操作</span></a></li></ol>
+            </div>
+
+
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <p>[TOC]</p>
+<a id="more"></a>
+<h1 id="namenode和secondaryNameNode最好不要放在一台机器上"><a href="#namenode和secondaryNameNode最好不要放在一台机器上" class="headerlink" title="namenode和secondaryNameNode最好不要放在一台机器上"></a>namenode和secondaryNameNode最好不要放在一台机器上</h1><p>宕机可能导致数据不能恢复<br>测试环境或者学习环境可以弄在一台机器上</p>
+<h1 id="hdfs中namenode和datanode的初始化"><a href="#hdfs中namenode和datanode的初始化" class="headerlink" title="hdfs中namenode和datanode的初始化"></a>hdfs中namenode和datanode的初始化</h1><p>hdfs会在配置文件中配置一个datanode的工作目录元数据<br>查看目录结构 tree hddata/<br><img src="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/4ee70fb7-cfdc-4010-a387-986e268b5a1e.jpg" alt="img"><br>datanode的工作目录是在datanode启动后初始化的<br>而hadoop namenode format 只会初始name的工作目录，和datanode没有关系</p>
+<h1 id="把一个hdfs的一个节点加入到另一个集群"><a href="#把一个hdfs的一个节点加入到另一个集群" class="headerlink" title="把一个hdfs的一个节点加入到另一个集群"></a>把一个hdfs的一个节点加入到另一个集群</h1><p>必须要将hdfs datanode的工作目录删除，不然持有上一个集群的datanode的工作目录，会认为是一个误操作，为了防止丢失数据，不会让其连接上</p>
+<h1 id="如果集群够大，上百台机器"><a href="#如果集群够大，上百台机器" class="headerlink" title="如果集群够大，上百台机器"></a>如果集群够大，上百台机器</h1><p>那么在hdfs上面，是需要配置机架感知</p>
+<h1 id="namenode管理元数据"><a href="#namenode管理元数据" class="headerlink" title="namenode管理元数据"></a>namenode管理元数据</h1><p>namenode会将元数据放在内存里面，这样方便快速对数据的请求<br>但是放在内存中是不安全的，所有就序列化到fsimage里面<br><img src="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/2d3df4da-f64b-4ccf-967b-9ade7c2ab46f.jpg" alt="img"><br>就像jvm中dump，将内存中所有数据dump出去<br>假如<br><img src="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/8fa4e8c2-8b29-4809-8219-b383aa6d8664.jpg" alt="img"><br>所以存大文件划算，因为元数据消耗的内存都是一样的<br><img src="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/2a0de522-13be-4777-b2f4-68377648bbb4.jpg" alt="img"><br>但是内存中的数据量太大，不可能经常序列化，所以需要定时序列化</p>
+<h2 id="所以引入了secondaryNameNode"><a href="#所以引入了secondaryNameNode" class="headerlink" title="所以引入了secondaryNameNode"></a>所以引入了secondaryNameNode</h2><p>更新元数据的时候，不可能去直接跟更改元数据fsimage文件，因为文件是线性结构，假如遇到更改中间内容会很不方便，所有就将操作信息记录在edits日志文件中，只是记录操作信息</p>
+<h3 id="edits文件定期转为元数据"><a href="#edits文件定期转为元数据" class="headerlink" title="edits文件定期转为元数据"></a>edits文件定期转为元数据</h3><p>为了防止edits过多，导致在启动hdfs集群datanode的时候会很慢，因为需要将edits通过转化形成为元数据fsimage文件，所以应该定期将edits文件转换为fsimage元数据，然后将fsimage替换掉</p>
+<h3 id="secondaryNameNode的出现"><a href="#secondaryNameNode的出现" class="headerlink" title="secondaryNameNode的出现"></a>secondaryNameNode的出现</h3><p>如果nameNode来做上面的edits转换为元数据的话，由于消耗的资源太大，就不能为其他比如从hdfs中读取数据服务提供资源，或者提供服务的效果不好<br>所以这个时候就把合并操作交给secondNameNode来做<br>这个过程叫做checkpoint<br><img src="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/d6a7699e-3158-4cfc-ab83-9fec25286004.jpg" alt="img"></p>
+<h2 id="为了防止namenode宕机导致了数据丢失"><a href="#为了防止namenode宕机导致了数据丢失" class="headerlink" title="为了防止namenode宕机导致了数据丢失"></a>为了防止namenode宕机导致了数据丢失</h2><p>可以在hdfs-site.xml文件中在多个机器上的目录来保存name的edits，fsimage文件</p>
+<p> <code>&lt;property&gt;`</code>    <name>dfs.name.dir</name><code>&lt;value&gt;/home/bigdata/names1,/home/bigdata/names2&lt;/value&gt;</code>`</p>
+<p>配置的多个的话，会同时往这两个目录中写</p>
+<p>如果不配置这个默认的目录是core-site.xml文件中配置的hadoop的临时文件<br> <code>&lt;property&gt; 
+​       &lt;name&gt;hadoop.tmp.dir&lt;/name&gt; 
+​       &lt;value&gt;/home/bigdata/apps/hadoop-2.6.4/tmp&lt;/value&gt; 
+   &lt;/property&gt;</code></p>
+<h1 id="Hdfs的结构"><a href="#Hdfs的结构" class="headerlink" title="Hdfs的结构"></a>Hdfs的结构</h1><p>1.HDFS集群分为两大角色：NameNode、DataNode （secondary NameNode）<br>2.NameNode负责管理整个文件系统的元数据<br>记录文件在哪里<br>3.DataNode 负责管理用户的文件数据块<br>不负责切块，负责保管<br>4.文件会按照固定的大小（blocksize）切成若干块后分布式存储在若干台datanode上<br>5.每一个文件块可以有多个副本，并存放在不同的datanode上<br>副本不会放在同一个机器上，因为副本就是防止宕机，<br>6.Datanode会定期向Namenode汇报自身所保存的文件block信息，而namenode则会负责保持文件的副本数量<br>因为datanode如果宕机的话，name该机器上的对应的副本数据将会消失，这样需要将其在其他机器上进行恢复，恢复的话，就需要上面就需要数据和未宕机时的数据尽量保持一致，所以需要依赖于datanode定期汇报，不然差距的数据会很大<br>7.HDFS的内部工作机制对客户端保持透明，客户端请求访问HDFS都是通过向namenode申请来进行</p>
+<h2 id="Hdfs写操作"><a href="#Hdfs写操作" class="headerlink" title="Hdfs写操作"></a>Hdfs写操作</h2><p> 详细步骤解析</p>
+<p>1、根namenode通信请求上传文件，namenode检查目标文件是否已存在，父目录是否存在</p>
+<p>不存在则会返回path not exist异常</p>
+<p>2、namenode返回是否可以上传</p>
+<p>3、client请求第一个 block（0-128m）该传输到哪些datanode服务器上</p>
+<p>返回该block存放的位置，及其副本的信息存放的位置</p>
+<p>4、namenode返回3个datanode服务器ABC</p>
+<p>副本选择策略</p>
+<p>考虑空间和距离的因素，网络跳转的跳数，比如说机架的位置，</p>
+<p>第一台是看谁比较近（机架），因为传输比较快，副本则是是看谁比较远，防止机架出问题（如断电），干扰性更小</p>
+<p>而集群全线崩塌</p>
+<p>5、client请求3台dn中的一台A上传数据（本质上是一个RPC调用，建立pipeline），A收到请求会继续调用B，然后B调用C，将真个pipeline建立完成，逐级返回客户端</p>
+<p>这样是防止整个流程变慢，同时创建通道，先建立通道pipeline,通道</p>
+<p>6、client开始往A上传第一个block（先从磁盘读取数据放到一个本地内存缓存bytebuf），以packet为单位，A收到一个packet就会传给B，B传给C；A每传一个packet会放入一个应答队列等待应答</p>
+<p>因为等一个block写满之后再传送，速度会很慢，所以是接收一个packet就会写入到管道流pipeline中。</p>
+<p>只要上传一个成功，则客户端视为上传成功，因为如果没上传成功，namenode会进行异步的复制副本的信息</p>
+<p>7、当一个block传输完成之后，client再次请求<strong>namenode</strong>上传第二个block的服务器。</p>
+<p>注：写的过程中，namenode记录下来了文件路径，文件有几个block也记录下来了，每个block分配到哪些机器上也记录下到了，及其每个block的副本信息，副本在那几个机器上。</p>
+<p>校验的时候不是一个packet（一批chunk，共64k）校验，而是以一个chunk来校验，一个chunk是512byte（字节）</p>
+<h1 id="Hdfs读操作"><a href="#Hdfs读操作" class="headerlink" title="Hdfs读操作"></a>Hdfs读操作</h1><p>1、跟namenode通信查询元数据，找到文件块所在的datanode服务器</p>
+<p>2、挑选一台datanode（就近原则，然后随机）服务器，请求建立socket流</p>
+<p>3、datanode开始发送数据（从磁盘里面读取数据放入流，以packet为单位来做校验）</p>
+<p>4、客户端以packet为单位接收，现在本地缓存，然后写入目标文件</p>
+
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+        <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           如果您觉得文章不错，就请我看场ufc直播🤓🤓🤓🤓🤓！
+        </span>
+        <br>
+      </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 支付宝打赏图案 -->
+        <img src="/css/images/alipay.jpg" alt="支付宝打赏" > 
+        <!-- 微信打赏图案 -->
+        <img src="/css/images/wechatpay.jpg" alt="微信打赏" >  
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            if($('#donate_guide').hasClass('hidden')){
+                $('#donate_guide').removeClass('hidden');
+            }else{
+                $('#donate_guide').addClass('hidden');
+            }
+        }
+    </script>
+</div>
+<! -- 添加捐赠图标 -->
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953287630/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/08/30/docs/15355953287665/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Hadoop-HA-Federation机制
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/08/30/docs/15355953287597/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Spark-On-Yarn模式</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="lv-container" data-id="city" data-uid=MTAyMC8zNjM2MS8xMjg5Ng==></div>
+</section>
+    
+
+</section>
+            
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-book"></i>最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/博客/">博客</a></p>
+                            <p class="item-title"><a href="/2018/08/30/docs/15355953289095/" class="title">源文件提交到仓库</a></p>
+                            <p class="item-date"><time datetime="2018-08-30T02:15:28.910Z" itemprop="datePublished">2018-08-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/碎片知识/">碎片知识</a></p>
+                            <p class="item-title"><a href="/2018/08/30/docs/15355953289057/" class="title">命令积累</a></p>
+                            <p class="item-date"><time datetime="2018-08-30T02:15:28.906Z" itemprop="datePublished">2018-08-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/环境配置/">环境配置</a></p>
+                            <p class="item-title"><a href="/2018/08/30/docs/15355953289019/" class="title">Docker安装Hadoop集群【引用】</a></p>
+                            <p class="item-date"><time datetime="2018-08-30T02:15:28.902Z" itemprop="datePublished">2018-08-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/安装部署/">安装部署</a></p>
+                            <p class="item-title"><a href="/2018/08/30/docs/15355953288980/" class="title">FLINK容器的搭建</a></p>
+                            <p class="item-date"><time datetime="2018-08-30T02:15:28.898Z" itemprop="datePublished">2018-08-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/安装部署/">安装部署</a></p>
+                            <p class="item-title"><a href="/2018/08/30/docs/15355953288944/" class="title">Hadoop&amp;Spark组合容器的搭建</a></p>
+                            <p class="item-date"><time datetime="2018-08-30T02:15:28.895Z" itemprop="datePublished">2018-08-30</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-archive"></i>归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">85</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">12</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-folder"></i>分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-folder"></i>标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDH/">CDH</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">28</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/">HBase</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HDFS/">HDFS</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/">Json</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDD/">RDD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">24</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkSQL/">SparkSQL</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkStreaming/">SparkStreaming</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es/">es</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zk/">zk</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/使用/">使用</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/原理/">原理</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安装部署/">安装部署</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/报表/">报表</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作/">操作</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-tags"></i>标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/tags/CDH/" style="font-size: 10px;">CDH</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/ELK/" style="font-size: 11.43px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HBase/" style="font-size: 14.29px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 12.86px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.71px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 12.86px;">Hexo</a> <a href="/tags/Hive/" style="font-size: 14.29px;">Hive</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 11.43px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Kafka/" style="font-size: 14.29px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/RDD/" style="font-size: 10px;">RDD</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 18.57px;">Spark</a> <a href="/tags/SparkSQL/" style="font-size: 11.43px;">SparkSQL</a> <a href="/tags/SparkStreaming/" style="font-size: 11.43px;">SparkStreaming</a> <a href="/tags/es/" style="font-size: 10px;">es</a> <a href="/tags/git/" style="font-size: 11.43px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/zk/" style="font-size: 10px;">zk</a> <a href="/tags/使用/" style="font-size: 11.43px;">使用</a> <a href="/tags/原理/" style="font-size: 17.14px;">原理</a> <a href="/tags/命令/" style="font-size: 11.43px;">命令</a> <a href="/tags/大数据/" style="font-size: 11.43px;">大数据</a> <a href="/tags/安装部署/" style="font-size: 10px;">安装部署</a> <a href="/tags/开发/" style="font-size: 11.43px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/报表/" style="font-size: 10px;">报表</a> <a href="/tags/操作/" style="font-size: 10px;">操作</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title"><i class="fa fa-link"></i>链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://gangtieguo.cn"  target="_blank">GTG</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol ==='https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 GTG<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+    </div>
+</footer>
+        
+    
+    
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+
+         if (typeof LivereTower === 'function') { return; }
+
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+    </script>
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+  <!-- City版安装代码已完成 -->
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
