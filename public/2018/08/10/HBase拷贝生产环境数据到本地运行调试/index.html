@@ -1,68 +1,41 @@
-extends base
-
-block title
-  title= page.title + ' | ' + config.title
-
-block content
-  .post
-    h1.post-title= page.title
-    .post-meta= page.date.format('ll')
-      if page.categories.length > 0
-        span= ' | '
-        span.category
-          for category in page.categories.toArray()
-            a(href=url_for(category.path))= category.name
-      if theme.busuanzi == true
-        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
-        span#busuanzi_container_page_pv= ' | '
-          span#busuanzi_value_page_pv
-          span= ' ' + __('Hits')
-      if theme.wordcount == true
-        include _partial/wordcount.pug
-    if theme.disqus
-      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
-    if theme.changyan
-      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
-        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
-        span= ' ' + __('Comment')
-      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
-    if theme.valine.enable
-      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
-        span.valine-comment-count(data-xid=url_for(page.path))
-        span= ' ' + __('Comment')
-    if page.toc
-      div(class='clear')
-        div(id='toc' class='toc-article')
-          div(class='toc-title')= __('contents')
-          != toc(page.content, {list_number: theme.toc_number})
-    .post-content
-      != page.content
-    if theme.donate.enable == true
-      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
-
-    if theme.post_copyright.enable == true
-      div
-        ul.post-copyright
-          li.post-copyright-author
-            strong= __('copyright_author_prefix')
-            = theme.post_copyright.author
-          li.post-copyright-link
-            strong= __('copyright_link_prefix')
-            a(href='/' + page.path)= page.permalink
-          li.post-copyright-license
-            strong= __('copyright_declare_prefix')
-            if theme.post_copyright.copyright_text
-              != theme.post_copyright.copyright_text
-            else
-              != __('copyright_default_text')
-      br
-
-    if theme.shareto == true
-      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
-      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
-
-    include _partial/tag.pug
-    include _partial/post_nav.pug
-
-    if page.comments
-      include _partial/comments.pug
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="纵浪大化中，不喜亦不悲"><title>HBase拷贝生产环境数据到本地Spark解析运行调试 | 钢铁锅</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">HBase拷贝生产环境数据到本地Spark解析运行调试</h1><a id="logo" href="/.">钢铁锅</a><p class="description">应尽便须尽，无复独多虑</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">HBase拷贝生产环境数据到本地Spark解析运行调试</h1><div class="post-meta">Aug 10, 2018<span> | </span><span class="category"><a href="/categories/大数据/">大数据</a></span></div><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1、创建和线上同名通结构的表"><span class="toc-number">1.</span> <span class="toc-text">1、创建和线上同名通结构的表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2、拷贝线上hbase数据"><span class="toc-number">2.</span> <span class="toc-text">2、拷贝线上hbase数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查询结果导入文件"><span class="toc-number">2.1.</span> <span class="toc-text">查询结果导入文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查询文件下载到本地"><span class="toc-number">2.2.</span> <span class="toc-text">查询文件下载到本地</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改文件内容"><span class="toc-number">2.3.</span> <span class="toc-text">修改文件内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改文件编码"><span class="toc-number">2.4.</span> <span class="toc-text">修改文件编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重新组合文件"><span class="toc-number">2.5.</span> <span class="toc-text">重新组合文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将数据导入到本地hbase"><span class="toc-number">2.6.</span> <span class="toc-text">将数据导入到本地hbase</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3、校验查看"><span class="toc-number">3.</span> <span class="toc-text">3、校验查看</span></a></li></ol></div></div><div class="post-content"><p>[TOC]</p>
+<blockquote>
+<p>由于线上环境要经过跳板机跳转，并且打包测试，上传jar包步骤多，不然的话，要进行各种端口转发，且有权限控制，不易在本地idea编辑器上进行程序运行及调试</p>
+<p>现在想法是，将线上测试环境的数据拷贝小部分到本地自己搭建的集群，进行程序的逻辑和初期调试</p>
+<p>此贴就是记录一些操作</p>
+</blockquote>
+<p>这都是要基于本地有HBASE及其依赖组件的。</p>
+<p>主要思路是，拷贝线上查询的结果到文件hbaseout1.txt，将hbaseout1.txt文件sz导入本地</p>
+<p>再在本地集群上将数据插入到hbase</p>
+<a id="more"></a>
+<h1 id="1、创建和线上同名通结构的表"><a href="#1、创建和线上同名通结构的表" class="headerlink" title="1、创建和线上同名通结构的表"></a>1、创建和线上同名通结构的表</h1><p>在线上执行 <code>describe &#39;beehive:a_up_rawdata&#39;</code></p>
+<p>得到</p>
+<p><img src="https://ws4.sinaimg.cn/large/0069RVTdgy1fu4t1ryqfbj31kw074n4w.jpg" alt=""></p>
+<p>在本地执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hbase shell</span><br><span class="line">create_namespace &apos;beehive&apos;</span><br><span class="line"></span><br><span class="line">create &apos;beehive:a_up_rawdata&apos;,&#123;NAME =&gt; &apos;cf&apos;, BLOOMFILTER =&gt; &apos;ROW&apos;, VERSIONS =&gt; &apos;1&apos;, IN_MEMORY =&gt; &apos;false&apos;, KEEP_DELETED_CELLS =&gt; &apos;FALSE&apos;, DATA_BLOCK_ENCODING =&gt; &apos;NONE&apos;, COMPRESSION =&gt; &apos;NONE&apos;, TTL =&gt; &apos;FOREVER&apos;, MIN_VERSIONS =&gt; &apos;0&apos;, BLOCKCACHE =&gt; &apos;true&apos;, BLOCKSIZE =&gt; &apos;65536&apos;, REPLICATION_SCOPE =&gt; &apos;1&apos;&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="2、拷贝线上hbase数据"><a href="#2、拷贝线上hbase数据" class="headerlink" title="2、拷贝线上hbase数据"></a>2、拷贝线上hbase数据</h1><h2 id="查询结果导入文件"><a href="#查询结果导入文件" class="headerlink" title="查询结果导入文件"></a>查询结果导入文件</h2><p>在线上机器任意目录执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"get 'beehive:a_up_rawdata','530111199211287371',&#123;COLUMN=&gt;'cf:273468436_data'&#125;"</span>| hbase shell&gt; hbaseout1.txt</span><br></pre></td></tr></table></figure>
+<p>解析: <code>get &#39;beehive:a_up_rawdata&#39;,&#39;530111199211287371&#39;,{COLUMN=&gt;&#39;cf:273468436_data&#39;}</code>是执行的hbase的查询语句，将查询的结果存入到当前目录 <strong>hbaseout1.txt</strong>文件中</p>
+<h2 id="查询文件下载到本地"><a href="#查询文件下载到本地" class="headerlink" title="查询文件下载到本地"></a>查询文件下载到本地</h2><p><code>sz hbaseout1.txt</code></p>
+<h2 id="修改文件内容"><a href="#修改文件内容" class="headerlink" title="修改文件内容"></a>修改文件内容</h2><p>可以查看hbaseout1.txt中可以看到会有表头</p>
+<p><img src="https://ws2.sinaimg.cn/large/0069RVTdgy1fu4s99k250j31g208qgs4.jpg" alt=""></p>
+<p>需要将这部分表头数据删除，组成标准的导入文件</p>
+<h2 id="修改文件编码"><a href="#修改文件编码" class="headerlink" title="修改文件编码"></a>修改文件编码</h2><p><img src="https://ws1.sinaimg.cn/large/0069RVTdgy1fu4shn9bpnj31l203i0tv.jpg" alt=""></p>
+<p>在通过 hbase shell 查看中文值时, 是 unicode 编码格式，使得直接查看中文值不太方便。如果要查看需要把 unicode 编码进行 decode</p>
+<p>将查询结果导出来</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span> (<span class="string">'需要转码内容'</span>.decode(<span class="string">'utf-8'</span>))</span><br><span class="line"></span><br><span class="line">命令样例</span><br><span class="line">python 2.7 </span><br><span class="line">	<span class="built_in">print</span> (<span class="string">'***\xE4\xBD\xA010009 '</span>.decode(<span class="string">'utf-8'</span>))</span><br><span class="line">python 3 </span><br><span class="line">	<span class="built_in">print</span> <span class="string">'***\xE4\xBD\xA010009 '</span>.decode(<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
+<p>可以有更友好的将内容设置为文件名，然后将转码后重新写入到一个文件，后续会更新</p>
+<p>转码过后，文字显示正确</p>
+<p><img src="https://ws4.sinaimg.cn/large/0069RVTdgy1fu4sp3u3w6j31ak0f27fi.jpg" alt=""></p>
+<h2 id="重新组合文件"><a href="#重新组合文件" class="headerlink" title="重新组合文件"></a>重新组合文件</h2><p>由于导入到hbase命令为 **<code>格式：hbase [类][分隔符] [行键，列族][表] [导入文件</code>]</p>
+<p>由于我这次导入的文件里面有“,”，所有将分隔符设置为“|”</p>
+<p>更改后的文件格式为</p>
+<p><img src="https://ws2.sinaimg.cn/large/0069RVTdgy1fu4ssvedr6j319a030wel.jpg" alt=""></p>
+<p>将文件上传到hdfs</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -put hadoop fs -put hbaseout1.txt /<span class="built_in">local</span>/</span><br></pre></td></tr></table></figure>
+<h2 id="将数据导入到本地hbase"><a href="#将数据导入到本地hbase" class="headerlink" title="将数据导入到本地hbase"></a>将数据导入到本地hbase</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase org.apache.hadoop.hbase.mapreduce.ImportTsv  -Dimporttsv.separator=<span class="string">"|"</span>  -Dimporttsv.columns=HBASE_ROW_KEY,cf:273468436_data beehive:a_up_rawdata /<span class="built_in">local</span>/hbaseout2.txt</span><br></pre></td></tr></table></figure>
+<h1 id="3、校验查看"><a href="#3、校验查看" class="headerlink" title="3、校验查看"></a>3、校验查看</h1><p>在hue上查看hbase内容，显示有数据</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fu50q6kl65j31kg0kymxw.jpg" alt=""></p>
+<p>在hbase shell 查看</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fu515ozpw6j31kw08b7dl.jpg" alt=""></p>
+</div><div class="tags"><a href="/tags/HBase/">HBase</a><a href="/tags/操作/">操作</a></div><div class="post-nav"><a class="pre" href="/2018/08/11/Spark读取HBase解析json创建临时表录入到Hive表/">Spark读取HBase解析json创建临时表录入到Hive表</a><a class="next" href="/2018/08/10/Hbase-shell操作/">Hbase-shell操作</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://gangtieguo.cn"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Mysql/" style="font-size: 15px;">Mysql</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/Jenkins/" style="font-size: 15px;">Jenkins</a> <a href="/tags/CDH/" style="font-size: 15px;">CDH</a> <a href="/tags/Docker-machine/" style="font-size: 15px;">Docker-machine</a> <a href="/tags/安装部署/" style="font-size: 15px;">安装部署</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/HBase/" style="font-size: 15px;">HBase</a> <a href="/tags/原理/" style="font-size: 15px;">原理</a> <a href="/tags/操作/" style="font-size: 15px;">操作</a> <a href="/tags/HDFS/" style="font-size: 15px;">HDFS</a> <a href="/tags/Shell/" style="font-size: 15px;">Shell</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/使用/" style="font-size: 15px;">使用</a> <a href="/tags/报表/" style="font-size: 15px;">报表</a> <a href="/tags/Json/" style="font-size: 15px;">Json</a> <a href="/tags/Scala/" style="font-size: 15px;">Scala</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/开发/" style="font-size: 15px;">开发</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Ambari/" style="font-size: 15px;">Ambari</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/SSH/" style="font-size: 15px;">SSH</a> <a href="/tags/Spark/" style="font-size: 15px;">Spark</a> <a href="/tags/Yarn/" style="font-size: 15px;">Yarn</a> <a href="/tags/SparkSQL/" style="font-size: 15px;">SparkSQL</a> <a href="/tags/RDD/" style="font-size: 15px;">RDD</a> <a href="/tags/SparkStreaming/" style="font-size: 15px;">SparkStreaming</a> <a href="/tags/ELK/" style="font-size: 15px;">ELK</a> <a href="/tags/es/" style="font-size: 15px;">es</a> <a href="/tags/FLINK/" style="font-size: 15px;">FLINK</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/命令/" style="font-size: 15px;">命令</a> <a href="/tags/Hue/" style="font-size: 15px;">Hue</a> <a href="/tags/技术/" style="font-size: 15px;">技术</a> <a href="/tags/zk/" style="font-size: 15px;">zk</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Other/" style="font-size: 15px;">Other</a> <a href="/tags/快捷键/" style="font-size: 15px;">快捷键</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Idea/" style="font-size: 15px;">Idea</a> <a href="/tags/Finder/" style="font-size: 15px;">Finder</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/">Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/">Spark-on-Yarn源码解析(三)client做的事情</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/">Spark-on-Yarn源码解析(二)Spark-Submit解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/">Spark-on-Yarn源码解析(一)Yarn任务解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/20/MapReduce中Shuffle中的机制/">MapReduce中Shuffle中的机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkSQL介绍/">SparkSQL介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/Spark-On-yarn/">Spark-On-Yarn模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkStreaming介绍/">SparkStreaming介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkRDD介绍/">SparkRDD介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/Hadoop零碎知识点/">Hadoop零碎知识点</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">钢铁锅.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

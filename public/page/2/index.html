@@ -1,55 +1,46 @@
-extends base
-
-block title
-  if config.subtitle
-    title= config.title + ' | ' + config.subtitle
-  else
-    title= config.title
-
-block content
-  for post in page.posts.toArray()
-    .post
-      h1.post-title
-        include _partial/helpers.pug
-        a(href=url_for(post.path))
-          +title(post)
-      .post-meta= post.date.format(config.date_format)
-      if theme.disqus
-        a.disqus-comment-count(data-disqus-identifier=post.path, href=url_for(post.path) + '#disqus_thread')
-      if theme.changyan
-        a.ds-thread-count(href=url_for(post.path) + '#SOHUCS')
-          span.cy_cmt_count(id='sourceId::' + post.date.valueOf() style='margin: 0 3px 0 1px;') 0
-          span= ' ' + __('Comment')
-      if post.description
-        .post-content
-          != post.description
-      else if post.excerpt
-        .post-content
-          != post.excerpt
-      else if post.content
-        - var br = 0
-        - for (var i = 0; i < 5; ++i) {
-          - br = post.content.indexOf('\n',br+1)
-          if br<0
-            - break
-          if br >150
-            - break
-        - }
-        if br < 0
-          .post-content
-            != post.content
-        else
-          .post-content
-            != post.content.substring(0, br)
-      p(class='readmore')
-        a(href=url_for(post.path))= __('Readmore')
-
-  include _partial/paginator.pug
-  if theme.disqus
-    script(id='dsq-count-scr', src='//'+ theme.disqus + '.disqus.com/count.js', async)
-  if theme.changyan
-    script#cy_cmt_num(src='https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=' + theme.changyan, async)
-  if config.mathjax
-    include _partial/mathjax.pug
-  if config.mathjax2
-    include _partial/mathjax2.pug
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="纵浪大化中，不喜亦不悲"><title>钢铁锅 | 应尽便须尽，无复独多虑</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">钢铁锅</h1><a id="logo" href="/.">钢铁锅</a><p class="description">应尽便须尽，无复独多虑</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/2018/08/15/HDFS元数据备份流程/">HDFS元数据备份流程</a></h1><div class="post-meta">2018-08-15</div><div class="post-content"><p>[TOC]</p></div><p class="readmore"><a href="/2018/08/15/HDFS元数据备份流程/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/15/Hdfs结构性能分析及读写流程/">Hdfs结构性能分析及读写流程</a></h1><div class="post-meta">2018-08-15</div><div class="post-content"><p>[TOC]</p></div><p class="readmore"><a href="/2018/08/15/Hdfs结构性能分析及读写流程/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/15/Spark启动流程及一些小总结/">Spark启动流程及一些小总结</a></h1><div class="post-meta">2018-08-15</div><div class="post-content"><p>[TOC]</p>
+<h1 id="spark的架构模型"><a href="#spark的架构模型" class="headerlink" title="spark的架构模型"></a>spark的架构模型</h1><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg" alt=""></p>
+<h1 id="角色功能"><a href="#角色功能" class="headerlink" title="角色功能"></a>角色功能</h1><p>Driver：以spark-submit提交程序为例，执行该命令的主机为driver（在任意一台安装了spark（spark submit）的机器上启动一个任务的客户端也就是Driver 。客户端与集群需要建立链接，建立的这个链接对象叫做sparkContext，只有这个对象创建成功才标志这这个客户端与spark集群链接成功。SparkContext是driver进程中的一个对象，提交任务的时候，指定了每台机器需要多少个核cores，需要的内存 ）</p>
+<p>Master: 给任务提供资源，分配资源，master跟worker通信，报活和更新资源 </p>
+<p>Worker:  以子进程的方式启动executor</p>
+<p>Executor：Driver提交程序到executor(CoarseGrainedExecutorBankend)，执行任务的进程，exector是task运行的容器</p></div><p class="readmore"><a href="/2018/08/15/Spark启动流程及一些小总结/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/15/SparkStreaming消费Kafka数据/">SparkStreaming消费Kafka数据</a></h1><div class="post-meta">2018-08-15</div><div class="post-content"><p>[TOC]</p>
+<p>Streaming消费Kafka有两种方式</p>
+<h4 id="1、reciver方式"><a href="#1、reciver方式" class="headerlink" title="1、reciver方式"></a>1、reciver方式</h4><p>根据时间来划分批次，缺点：有可能一个时间段会出现数据爆炸，有保存log到hdfs机制，但消耗大（zk来管理偏移量）</p>
+<h4 id="2、direct方式-1-3-6后推出"><a href="#2、direct方式-1-3-6后推出" class="headerlink" title="2、direct方式 1.3.6后推出"></a>2、direct方式 1.3.6后推出</h4><p>executor和kafka的partition是一一对应的（是rdd的分区和kafka对应，如果一个executor的rdd有多个分区，那么一个executor可以对应多个partition）必须自己来管理偏移量，最好把偏移量写在zk或者其他第三方介质里面</p></div><p class="readmore"><a href="/2018/08/15/SparkStreaming消费Kafka数据/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/15/Spark算子/">Spark算子案例</a></h1><div class="post-meta">2018-08-15</div><div class="post-content"><p>[TOC]</p>
+<h1 id="HelloWord？WorldCount"><a href="#HelloWord？WorldCount" class="headerlink" title="HelloWord？WorldCount"></a>HelloWord？WorldCount</h1><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sc.textfile(<span class="string">"hdfs://master:9000/wc"</span>).flatMap(_.split(<span class="string">"分隔符"</span>)).map((_,<span class="number">1</span>)).reduceByKey(_+_).saveAsTextFile(<span class="string">"hdfs://master:9000/wcResult"</span>)</span><br></pre></td></tr></table></figure>
+<p>数据最开始在Driver，计算的时候数据会流入worker<br>当rdd形成过程中，worker的分区中只是预留了存放数据的位置，只有当action触发的时候，worker的分区中才会存在数据</p>
+<p>Spark的运算都是通过算子进行RDD的转换及运算，那我们对算子进行简单熟悉<a href="http://homepage.cs.latrobe.edu.au/zhe/ZhenHeSparkRDDAPIExamples.html" target="_blank" rel="noopener">参考RDD算子实例</a></p></div><p class="readmore"><a href="/2018/08/15/Spark算子/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/15/Scala基本使用/">Scala基本使用-杂记</a></h1><div class="post-meta">2018-08-15</div><div class="post-content"><p>[TOC]</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fukx028pz0j313t0op400.jpg" alt=""></p>
+<p>Var和val</p>
+<p>var 修饰的变量可改变，val 修饰的变量不可改变；但真的如此吗？事实上，var 修饰的对象引用可以改变，val 修饰的则不可改变，但对象的状态却是可以改变的。</p>
+<h2 id="定义方法"><a href="#定义方法" class="headerlink" title="定义方法"></a>定义方法</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span><span class="title"> m1</span></span>(x:<span class="type">Int</span>,y:<span class="type">Int</span>):<span class="type">Int</span>=x*y</span><br></pre></td></tr></table></figure></div><p class="readmore"><a href="/2018/08/15/Scala基本使用/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/15/Hadoop-构成及HA-/">Hadoop-HA-Federation机制</a></h1><div class="post-meta">2018-08-15</div><div class="post-content"><p>[TOC]</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fubqgn0culj31eo0nm401.jpg" alt=""></p>
+<p>（1）hadoop-HA集群运作机制介绍</p>
+<p>所谓HA，即高可用（7*24小时不中断服务）</p>
+<p>实现高可用最关键的是消除单点故障</p>
+<p>hadoop-ha严格来说应该分成各个组件的HA机制——HDFS的HA、YARN的HA</p>
+<p>（2）HDFS的HA机制详解</p>
+<p>通过双namenode消除单点故障</p>
+<p>双namenode协调工作的要点：</p>
+<p>​    A、元数据管理方式需要改变：</p>
+<p>​    内存中各自保存一份元数据</p>
+<p>​    Edits日志只能有一份，只有Active状态的namenode节点可以做写操作</p>
+<p>​    两个namenode都可以读取edits</p>
+<p>​    共享的edits放在一个共享存储中管理（qjournal和NFS两个主流实现）</p>
+<p>​    B、需要一个状态管理功能模块</p>
+<p>​    实现了一个zkfailover，常驻在每一个namenode所在的节点</p>
+<p>​    每一个zkfailover负责监控自己所在namenode节点，利用zk进行状态标识</p>
+<p>​    当需要进行状态切换时，由zkfailover来负责切换</p>
+<p>​    切换时需要防止brain split现象的发生</p>
+<p>Hadoop-HA的主要思想是有两个NameNode，一个作为主NameNode，一个作为standby，两个NameNode使用同一个命名空间。通过zookeepr（JournalNode）来进行协调，实现NameNode的主备切换。</p></div><p class="readmore"><a href="/2018/08/15/Hadoop-构成及HA-/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/15/HBase性能分析/">no-title</a></h1><div class="post-meta">2018-08-15</div><div class="post-content"><p>[TOC]</p>
+<p><img src="https://ws3.sinaimg.cn/large/0069RVTdgy1fuap8gxtquj31ca0ncdij.jpg" alt=""></p>
+<h1 id="HBase介绍"><a href="#HBase介绍" class="headerlink" title="HBase介绍"></a>HBase介绍</h1><p>HBase表很大：一个表可以有数十亿行，上百万列；</p>
+<p>HBase的表将会分成很多个分区，每个分区部分会存在不同的机器上<br>分区是为了便于查询，放在不同机器上，io也增大，假如一个机器的io的是100m，两个就为200m，读取速度就变快了==&gt;<strong>多台机器的io能得到充分利用</strong></p></div><p class="readmore"><a href="/2018/08/15/HBase性能分析/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/14/Kafka读取数据性能/">Kafka读写数据</a></h1><div class="post-meta">2018-08-14</div><div class="post-content"><p>[TOC]</p>
+<p>首先kafka依赖于操作系统的pageCache机制，尽可能的把空闲的内存作为一个磁盘，只有发生缺页的才会放在磁盘中</p></div><p class="readmore"><a href="/2018/08/14/Kafka读取数据性能/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/14/Kafka深入解析/">Kafka深入解析</a></h1><div class="post-meta">2018-08-14</div><div class="post-content"><p>[TOC]</p>
+<h1 id="Kafka结构"><a href="#Kafka结构" class="headerlink" title="Kafka结构"></a>Kafka结构</h1><ul>
+<li><strong>Producer</strong> ：消息生产者，就是向kafka broker发消息的客户端。</li>
+</ul>
+<ul>
+<li><p><strong>Consumer</strong> ：消息消费者，向kafka broker取消息的客户端</p>
+</li>
+<li><p><strong>Topic</strong> ：可以理解为一个队列</p></div><p class="readmore"><a href="/2018/08/14/Kafka深入解析/">阅读全文</a></p></div><nav class="page-navigator"><a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">下一页</a></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://gangtieguo.cn"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Mysql/" style="font-size: 15px;">Mysql</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/Jenkins/" style="font-size: 15px;">Jenkins</a> <a href="/tags/CDH/" style="font-size: 15px;">CDH</a> <a href="/tags/Docker-machine/" style="font-size: 15px;">Docker-machine</a> <a href="/tags/安装部署/" style="font-size: 15px;">安装部署</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/HBase/" style="font-size: 15px;">HBase</a> <a href="/tags/原理/" style="font-size: 15px;">原理</a> <a href="/tags/操作/" style="font-size: 15px;">操作</a> <a href="/tags/HDFS/" style="font-size: 15px;">HDFS</a> <a href="/tags/Shell/" style="font-size: 15px;">Shell</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/使用/" style="font-size: 15px;">使用</a> <a href="/tags/报表/" style="font-size: 15px;">报表</a> <a href="/tags/Json/" style="font-size: 15px;">Json</a> <a href="/tags/Scala/" style="font-size: 15px;">Scala</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/开发/" style="font-size: 15px;">开发</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Ambari/" style="font-size: 15px;">Ambari</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/SSH/" style="font-size: 15px;">SSH</a> <a href="/tags/Spark/" style="font-size: 15px;">Spark</a> <a href="/tags/Yarn/" style="font-size: 15px;">Yarn</a> <a href="/tags/SparkSQL/" style="font-size: 15px;">SparkSQL</a> <a href="/tags/RDD/" style="font-size: 15px;">RDD</a> <a href="/tags/SparkStreaming/" style="font-size: 15px;">SparkStreaming</a> <a href="/tags/ELK/" style="font-size: 15px;">ELK</a> <a href="/tags/es/" style="font-size: 15px;">es</a> <a href="/tags/FLINK/" style="font-size: 15px;">FLINK</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/命令/" style="font-size: 15px;">命令</a> <a href="/tags/Hue/" style="font-size: 15px;">Hue</a> <a href="/tags/技术/" style="font-size: 15px;">技术</a> <a href="/tags/zk/" style="font-size: 15px;">zk</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Other/" style="font-size: 15px;">Other</a> <a href="/tags/快捷键/" style="font-size: 15px;">快捷键</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Idea/" style="font-size: 15px;">Idea</a> <a href="/tags/Finder/" style="font-size: 15px;">Finder</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/">Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/">Spark-on-Yarn源码解析(三)client做的事情</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/">Spark-on-Yarn源码解析(二)Spark-Submit解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/">Spark-on-Yarn源码解析(一)Yarn任务解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/20/MapReduce中Shuffle中的机制/">MapReduce中Shuffle中的机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkSQL介绍/">SparkSQL介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/Spark-On-yarn/">Spark-On-Yarn模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkStreaming介绍/">SparkStreaming介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkRDD介绍/">SparkRDD介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/Hadoop零碎知识点/">Hadoop零碎知识点</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">钢铁锅.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

@@ -1,68 +1,42 @@
-extends base
-
-block title
-  title= page.title + ' | ' + config.title
-
-block content
-  .post
-    h1.post-title= page.title
-    .post-meta= page.date.format('ll')
-      if page.categories.length > 0
-        span= ' | '
-        span.category
-          for category in page.categories.toArray()
-            a(href=url_for(category.path))= category.name
-      if theme.busuanzi == true
-        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
-        span#busuanzi_container_page_pv= ' | '
-          span#busuanzi_value_page_pv
-          span= ' ' + __('Hits')
-      if theme.wordcount == true
-        include _partial/wordcount.pug
-    if theme.disqus
-      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
-    if theme.changyan
-      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
-        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
-        span= ' ' + __('Comment')
-      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
-    if theme.valine.enable
-      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
-        span.valine-comment-count(data-xid=url_for(page.path))
-        span= ' ' + __('Comment')
-    if page.toc
-      div(class='clear')
-        div(id='toc' class='toc-article')
-          div(class='toc-title')= __('contents')
-          != toc(page.content, {list_number: theme.toc_number})
-    .post-content
-      != page.content
-    if theme.donate.enable == true
-      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
-
-    if theme.post_copyright.enable == true
-      div
-        ul.post-copyright
-          li.post-copyright-author
-            strong= __('copyright_author_prefix')
-            = theme.post_copyright.author
-          li.post-copyright-link
-            strong= __('copyright_link_prefix')
-            a(href='/' + page.path)= page.permalink
-          li.post-copyright-license
-            strong= __('copyright_declare_prefix')
-            if theme.post_copyright.copyright_text
-              != theme.post_copyright.copyright_text
-            else
-              != __('copyright_default_text')
-      br
-
-    if theme.shareto == true
-      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
-      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
-
-    include _partial/tag.pug
-    include _partial/post_nav.pug
-
-    if page.comments
-      include _partial/comments.pug
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="纵浪大化中，不喜亦不悲"><title>Hdfs结构性能分析及读写流程 | 钢铁锅</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Hdfs结构性能分析及读写流程</h1><a id="logo" href="/.">钢铁锅</a><p class="description">应尽便须尽，无复独多虑</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Hdfs结构性能分析及读写流程</h1><div class="post-meta">Aug 15, 2018<span> | </span><span class="category"><a href="/categories/大数据/">大数据</a></span></div><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#namenode和secondaryNameNode最好不要放在一台机器上"><span class="toc-number">1.</span> <span class="toc-text">namenode和secondaryNameNode最好不要放在一台机器上</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#hdfs中namenode和datanode的初始化"><span class="toc-number">2.</span> <span class="toc-text">hdfs中namenode和datanode的初始化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#把一个hdfs的一个节点加入到另一个集群"><span class="toc-number">3.</span> <span class="toc-text">把一个hdfs的一个节点加入到另一个集群</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如果集群够大，上百台机器"><span class="toc-number">4.</span> <span class="toc-text">如果集群够大，上百台机器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#namenode管理元数据"><span class="toc-number">5.</span> <span class="toc-text">namenode管理元数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#所以引入了secondaryNameNode"><span class="toc-number">5.1.</span> <span class="toc-text">所以引入了secondaryNameNode</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#edits文件定期转为元数据"><span class="toc-number">5.1.1.</span> <span class="toc-text">edits文件定期转为元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#secondaryNameNode的出现"><span class="toc-number">5.1.2.</span> <span class="toc-text">secondaryNameNode的出现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为了防止namenode宕机导致了数据丢失"><span class="toc-number">5.2.</span> <span class="toc-text">为了防止namenode宕机导致了数据丢失</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hdfs的结构"><span class="toc-number">6.</span> <span class="toc-text">Hdfs的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hdfs写操作"><span class="toc-number">6.1.</span> <span class="toc-text">Hdfs写操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hdfs读操作"><span class="toc-number">7.</span> <span class="toc-text">Hdfs读操作</span></a></li></ol></div></div><div class="post-content"><p>[TOC]</p>
+<a id="more"></a>
+<h1 id="namenode和secondaryNameNode最好不要放在一台机器上"><a href="#namenode和secondaryNameNode最好不要放在一台机器上" class="headerlink" title="namenode和secondaryNameNode最好不要放在一台机器上"></a>namenode和secondaryNameNode最好不要放在一台机器上</h1><p>宕机可能导致数据不能恢复<br>测试环境或者学习环境可以弄在一台机器上</p>
+<h1 id="hdfs中namenode和datanode的初始化"><a href="#hdfs中namenode和datanode的初始化" class="headerlink" title="hdfs中namenode和datanode的初始化"></a>hdfs中namenode和datanode的初始化</h1><p>hdfs会在配置文件中配置一个datanode的工作目录元数据<br>查看目录结构 tree hddata/<br><img src="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/4ee70fb7-cfdc-4010-a387-986e268b5a1e.jpg" alt="img"><br>datanode的工作目录是在datanode启动后初始化的<br>而hadoop namenode format 只会初始name的工作目录，和datanode没有关系</p>
+<h1 id="把一个hdfs的一个节点加入到另一个集群"><a href="#把一个hdfs的一个节点加入到另一个集群" class="headerlink" title="把一个hdfs的一个节点加入到另一个集群"></a>把一个hdfs的一个节点加入到另一个集群</h1><p>必须要将hdfs datanode的工作目录删除，不然持有上一个集群的datanode的工作目录，会认为是一个误操作，为了防止丢失数据，不会让其连接上</p>
+<h1 id="如果集群够大，上百台机器"><a href="#如果集群够大，上百台机器" class="headerlink" title="如果集群够大，上百台机器"></a>如果集群够大，上百台机器</h1><p>那么在hdfs上面，是需要配置机架感知</p>
+<h1 id="namenode管理元数据"><a href="#namenode管理元数据" class="headerlink" title="namenode管理元数据"></a>namenode管理元数据</h1><p>namenode会将元数据放在内存里面，这样方便快速对数据的请求<br>但是放在内存中是不安全的，所有就序列化到fsimage里面<br><img src="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/2d3df4da-f64b-4ccf-967b-9ade7c2ab46f.jpg" alt="img"><br>就像jvm中dump，将内存中所有数据dump出去<br>假如<br><img src="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/8fa4e8c2-8b29-4809-8219-b383aa6d8664.jpg" alt="img"><br>所以存大文件划算，因为元数据消耗的内存都是一样的<br><img src="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/2a0de522-13be-4777-b2f4-68377648bbb4.jpg" alt="img"><br>但是内存中的数据量太大，不可能经常序列化，所以需要定时序列化</p>
+<h2 id="所以引入了secondaryNameNode"><a href="#所以引入了secondaryNameNode" class="headerlink" title="所以引入了secondaryNameNode"></a>所以引入了secondaryNameNode</h2><p>更新元数据的时候，不可能去直接跟更改元数据fsimage文件，因为文件是线性结构，假如遇到更改中间内容会很不方便，所有就将操作信息记录在edits日志文件中，只是记录操作信息</p>
+<h3 id="edits文件定期转为元数据"><a href="#edits文件定期转为元数据" class="headerlink" title="edits文件定期转为元数据"></a>edits文件定期转为元数据</h3><p>为了防止edits过多，导致在启动hdfs集群datanode的时候会很慢，因为需要将edits通过转化形成为元数据fsimage文件，所以应该定期将edits文件转换为fsimage元数据，然后将fsimage替换掉</p>
+<h3 id="secondaryNameNode的出现"><a href="#secondaryNameNode的出现" class="headerlink" title="secondaryNameNode的出现"></a>secondaryNameNode的出现</h3><p>如果nameNode来做上面的edits转换为元数据的话，由于消耗的资源太大，就不能为其他比如从hdfs中读取数据服务提供资源，或者提供服务的效果不好<br>所以这个时候就把合并操作交给secondNameNode来做<br>这个过程叫做checkpoint<br><img src="file:///var/folders/9p/dbpbsyq158n7y12303j34hxm0000gp/T/WizNote/3172cdcb-77fe-4f72-8882-12fe40ddef6a/index_files/d6a7699e-3158-4cfc-ab83-9fec25286004.jpg" alt="img"></p>
+<h2 id="为了防止namenode宕机导致了数据丢失"><a href="#为了防止namenode宕机导致了数据丢失" class="headerlink" title="为了防止namenode宕机导致了数据丢失"></a>为了防止namenode宕机导致了数据丢失</h2><p>可以在hdfs-site.xml文件中在多个机器上的目录来保存name的edits，fsimage文件</p>
+<p> <code>&lt;property&gt;`</code>    <name>dfs.name.dir</name><code>&lt;value&gt;/home/bigdata/names1,/home/bigdata/names2&lt;/value&gt;</code>`</p>
+<p>配置的多个的话，会同时往这两个目录中写</p>
+<p>如果不配置这个默认的目录是core-site.xml文件中配置的hadoop的临时文件<br> <code>&lt;property&gt; 
+​       &lt;name&gt;hadoop.tmp.dir&lt;/name&gt; 
+​       &lt;value&gt;/home/bigdata/apps/hadoop-2.6.4/tmp&lt;/value&gt; 
+   &lt;/property&gt;</code></p>
+<h1 id="Hdfs的结构"><a href="#Hdfs的结构" class="headerlink" title="Hdfs的结构"></a>Hdfs的结构</h1><p>1.HDFS集群分为两大角色：NameNode、DataNode （secondary NameNode）<br>2.NameNode负责管理整个文件系统的元数据<br>记录文件在哪里<br>3.DataNode 负责管理用户的文件数据块<br>不负责切块，负责保管<br>4.文件会按照固定的大小（blocksize）切成若干块后分布式存储在若干台datanode上<br>5.每一个文件块可以有多个副本，并存放在不同的datanode上<br>副本不会放在同一个机器上，因为副本就是防止宕机，<br>6.Datanode会定期向Namenode汇报自身所保存的文件block信息，而namenode则会负责保持文件的副本数量<br>因为datanode如果宕机的话，name该机器上的对应的副本数据将会消失，这样需要将其在其他机器上进行恢复，恢复的话，就需要上面就需要数据和未宕机时的数据尽量保持一致，所以需要依赖于datanode定期汇报，不然差距的数据会很大<br>7.HDFS的内部工作机制对客户端保持透明，客户端请求访问HDFS都是通过向namenode申请来进行</p>
+<h2 id="Hdfs写操作"><a href="#Hdfs写操作" class="headerlink" title="Hdfs写操作"></a>Hdfs写操作</h2><p> 详细步骤解析</p>
+<p>1、根namenode通信请求上传文件，namenode检查目标文件是否已存在，父目录是否存在</p>
+<p>不存在则会返回path not exist异常</p>
+<p>2、namenode返回是否可以上传</p>
+<p>3、client请求第一个 block（0-128m）该传输到哪些datanode服务器上</p>
+<p>返回该block存放的位置，及其副本的信息存放的位置</p>
+<p>4、namenode返回3个datanode服务器ABC</p>
+<p>副本选择策略</p>
+<p>考虑空间和距离的因素，网络跳转的跳数，比如说机架的位置，</p>
+<p>第一台是看谁比较近（机架），因为传输比较快，副本则是是看谁比较远，防止机架出问题（如断电），干扰性更小</p>
+<p>而集群全线崩塌</p>
+<p>5、client请求3台dn中的一台A上传数据（本质上是一个RPC调用，建立pipeline），A收到请求会继续调用B，然后B调用C，将真个pipeline建立完成，逐级返回客户端</p>
+<p>这样是防止整个流程变慢，同时创建通道，先建立通道pipeline,通道</p>
+<p>6、client开始往A上传第一个block（先从磁盘读取数据放到一个本地内存缓存bytebuf），以packet为单位，A收到一个packet就会传给B，B传给C；A每传一个packet会放入一个应答队列等待应答</p>
+<p>因为等一个block写满之后再传送，速度会很慢，所以是接收一个packet就会写入到管道流pipeline中。</p>
+<p>只要上传一个成功，则客户端视为上传成功，因为如果没上传成功，namenode会进行异步的复制副本的信息</p>
+<p>7、当一个block传输完成之后，client再次请求<strong>namenode</strong>上传第二个block的服务器。</p>
+<p>注：写的过程中，namenode记录下来了文件路径，文件有几个block也记录下来了，每个block分配到哪些机器上也记录下到了，及其每个block的副本信息，副本在那几个机器上。</p>
+<p>校验的时候不是一个packet（一批chunk，共64k）校验，而是以一个chunk来校验，一个chunk是512byte（字节）</p>
+<h1 id="Hdfs读操作"><a href="#Hdfs读操作" class="headerlink" title="Hdfs读操作"></a>Hdfs读操作</h1><p>1、跟namenode通信查询元数据，找到文件块所在的datanode服务器</p>
+<p>2、挑选一台datanode（就近原则，然后随机）服务器，请求建立socket流</p>
+<p>3、datanode开始发送数据（从磁盘里面读取数据放入流，以packet为单位来做校验）</p>
+<p>4、客户端以packet为单位接收，现在本地缓存，然后写入目标文件</p>
+</div><div class="tags"><a href="/tags/Hadoop/">Hadoop</a><a href="/tags/原理/">原理</a><a href="/tags/HDFS/">HDFS</a></div><div class="post-nav"><a class="pre" href="/2018/08/15/HDFS元数据备份流程/">HDFS元数据备份流程</a><a class="next" href="/2018/08/15/Spark启动流程及一些小总结/">Spark启动流程及一些小总结</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://gangtieguo.cn"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Mysql/" style="font-size: 15px;">Mysql</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/Jenkins/" style="font-size: 15px;">Jenkins</a> <a href="/tags/CDH/" style="font-size: 15px;">CDH</a> <a href="/tags/Docker-machine/" style="font-size: 15px;">Docker-machine</a> <a href="/tags/安装部署/" style="font-size: 15px;">安装部署</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/HBase/" style="font-size: 15px;">HBase</a> <a href="/tags/原理/" style="font-size: 15px;">原理</a> <a href="/tags/操作/" style="font-size: 15px;">操作</a> <a href="/tags/HDFS/" style="font-size: 15px;">HDFS</a> <a href="/tags/Shell/" style="font-size: 15px;">Shell</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/使用/" style="font-size: 15px;">使用</a> <a href="/tags/报表/" style="font-size: 15px;">报表</a> <a href="/tags/Json/" style="font-size: 15px;">Json</a> <a href="/tags/Scala/" style="font-size: 15px;">Scala</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/开发/" style="font-size: 15px;">开发</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Ambari/" style="font-size: 15px;">Ambari</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/SSH/" style="font-size: 15px;">SSH</a> <a href="/tags/Spark/" style="font-size: 15px;">Spark</a> <a href="/tags/Yarn/" style="font-size: 15px;">Yarn</a> <a href="/tags/SparkSQL/" style="font-size: 15px;">SparkSQL</a> <a href="/tags/RDD/" style="font-size: 15px;">RDD</a> <a href="/tags/SparkStreaming/" style="font-size: 15px;">SparkStreaming</a> <a href="/tags/ELK/" style="font-size: 15px;">ELK</a> <a href="/tags/es/" style="font-size: 15px;">es</a> <a href="/tags/FLINK/" style="font-size: 15px;">FLINK</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/命令/" style="font-size: 15px;">命令</a> <a href="/tags/Hue/" style="font-size: 15px;">Hue</a> <a href="/tags/技术/" style="font-size: 15px;">技术</a> <a href="/tags/zk/" style="font-size: 15px;">zk</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Other/" style="font-size: 15px;">Other</a> <a href="/tags/快捷键/" style="font-size: 15px;">快捷键</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Idea/" style="font-size: 15px;">Idea</a> <a href="/tags/Finder/" style="font-size: 15px;">Finder</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/">Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/">Spark-on-Yarn源码解析(三)client做的事情</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/">Spark-on-Yarn源码解析(二)Spark-Submit解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/">Spark-on-Yarn源码解析(一)Yarn任务解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/20/MapReduce中Shuffle中的机制/">MapReduce中Shuffle中的机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkSQL介绍/">SparkSQL介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/Spark-On-yarn/">Spark-On-Yarn模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkStreaming介绍/">SparkStreaming介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkRDD介绍/">SparkRDD介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/Hadoop零碎知识点/">Hadoop零碎知识点</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">钢铁锅.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

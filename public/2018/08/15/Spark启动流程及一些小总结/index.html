@@ -1,68 +1,39 @@
-extends base
-
-block title
-  title= page.title + ' | ' + config.title
-
-block content
-  .post
-    h1.post-title= page.title
-    .post-meta= page.date.format('ll')
-      if page.categories.length > 0
-        span= ' | '
-        span.category
-          for category in page.categories.toArray()
-            a(href=url_for(category.path))= category.name
-      if theme.busuanzi == true
-        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
-        span#busuanzi_container_page_pv= ' | '
-          span#busuanzi_value_page_pv
-          span= ' ' + __('Hits')
-      if theme.wordcount == true
-        include _partial/wordcount.pug
-    if theme.disqus
-      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
-    if theme.changyan
-      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
-        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
-        span= ' ' + __('Comment')
-      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
-    if theme.valine.enable
-      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
-        span.valine-comment-count(data-xid=url_for(page.path))
-        span= ' ' + __('Comment')
-    if page.toc
-      div(class='clear')
-        div(id='toc' class='toc-article')
-          div(class='toc-title')= __('contents')
-          != toc(page.content, {list_number: theme.toc_number})
-    .post-content
-      != page.content
-    if theme.donate.enable == true
-      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
-
-    if theme.post_copyright.enable == true
-      div
-        ul.post-copyright
-          li.post-copyright-author
-            strong= __('copyright_author_prefix')
-            = theme.post_copyright.author
-          li.post-copyright-link
-            strong= __('copyright_link_prefix')
-            a(href='/' + page.path)= page.permalink
-          li.post-copyright-license
-            strong= __('copyright_declare_prefix')
-            if theme.post_copyright.copyright_text
-              != theme.post_copyright.copyright_text
-            else
-              != __('copyright_default_text')
-      br
-
-    if theme.shareto == true
-      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
-      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
-
-    include _partial/tag.pug
-    include _partial/post_nav.pug
-
-    if page.comments
-      include _partial/comments.pug
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="纵浪大化中，不喜亦不悲"><title>Spark启动流程及一些小总结 | 钢铁锅</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Spark启动流程及一些小总结</h1><a id="logo" href="/.">钢铁锅</a><p class="description">应尽便须尽，无复独多虑</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Spark启动流程及一些小总结</h1><div class="post-meta">Aug 15, 2018<span> | </span><span class="category"><a href="/categories/大数据/">大数据</a></span></div><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#spark的架构模型"><span class="toc-number">1.</span> <span class="toc-text">spark的架构模型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#角色功能"><span class="toc-number">2.</span> <span class="toc-text">角色功能</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Driver端"><span class="toc-number">2.1.</span> <span class="toc-text">Driver端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#master与worker交互"><span class="toc-number">2.2.</span> <span class="toc-text">master与worker交互</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#资源分配策略"><span class="toc-number">2.3.</span> <span class="toc-text">资源分配策略</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RDD整个运行流程"><span class="toc-number">3.</span> <span class="toc-text">RDD整个运行流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Driver与executor交互"><span class="toc-number">3.1.</span> <span class="toc-text">Driver与executor交互</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RDD的构建详细阶段"><span class="toc-number">4.</span> <span class="toc-text">RDD的构建详细阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一阶段-rdd创建"><span class="toc-number">4.1.</span> <span class="toc-text">第一阶段 rdd创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二阶段-DAGScheduler"><span class="toc-number">4.2.</span> <span class="toc-text">第二阶段 DAGScheduler</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三阶段-TaskScheduler"><span class="toc-number">4.3.</span> <span class="toc-text">第三阶段 TaskScheduler</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第四阶段-任务执行"><span class="toc-number">4.4.</span> <span class="toc-text">第四阶段 任务执行</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#task与读取hdfs数据的关系"><span class="toc-number">5.</span> <span class="toc-text">task与读取hdfs数据的关系</span></a></li></ol></div></div><div class="post-content"><p>[TOC]</p>
+<h1 id="spark的架构模型"><a href="#spark的架构模型" class="headerlink" title="spark的架构模型"></a>spark的架构模型</h1><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg" alt=""></p>
+<h1 id="角色功能"><a href="#角色功能" class="headerlink" title="角色功能"></a>角色功能</h1><p>Driver：以spark-submit提交程序为例，执行该命令的主机为driver（在任意一台安装了spark（spark submit）的机器上启动一个任务的客户端也就是Driver 。客户端与集群需要建立链接，建立的这个链接对象叫做sparkContext，只有这个对象创建成功才标志这这个客户端与spark集群链接成功。SparkContext是driver进程中的一个对象，提交任务的时候，指定了每台机器需要多少个核cores，需要的内存 ）</p>
+<p>Master: 给任务提供资源，分配资源，master跟worker通信，报活和更新资源 </p>
+<p>Worker:  以子进程的方式启动executor</p>
+<p>Executor：Driver提交程序到executor(CoarseGrainedExecutorBankend)，执行任务的进程，exector是task运行的容器</p>
+<a id="more"></a>
+<h2 id="Driver端"><a href="#Driver端" class="headerlink" title="Driver端"></a>Driver端</h2><p>driver创建sparkContext于spark集群建立连接，然后向master申请资源，master来调度决定向worker的哪台机器上执行 ，在合适的worker（资源分配策略）上以子进程的方式启动excutor来执行 （Class.forName()会只在自己的进程里面执行，反射是在同一进程 ，启动java子进程的方法 是另一个进程，debug跳不到子进程中去，进程之间进行方法调用只有rpc才可以 ）此过程只是启动executor，最终任务的执行需要等到action触发，提交程序最终也是提交到executor上，在整个过程中，</p>
+<blockquote>
+<p>driver提交一个application时就会在driver主机生成一个sparkSubmit进程来监控任务的执行情况。action触发程序运行后，executor只会通过driverClinet与driver交互，applicationMaster 不负责具体某个任务的进度 ,只负责资源的调度和监控。driver在action的时候才会把任务提交给executor。</p>
+</blockquote>
+<h2 id="master与worker交互"><a href="#master与worker交互" class="headerlink" title="master与worker交互"></a>master与worker交互</h2><p>worker和master以进程方式启动后 ，worker会向master进行注册,worker在启动的时候，会在spark env中指定worker的资源，如果没指定的话，会默认使用机器的所有核数，所有内存-1G的内存，预留1G给操作系统，然后worker会告知master自己拥有的资源，如核数cores，内存等。在之后的过程中，worker会实时向master发送心跳报活。</p>
+<h2 id="资源分配策略"><a href="#资源分配策略" class="headerlink" title="资源分配策略"></a>资源分配策略</h2><p>spark任务资源分配有两种策略：尽量打散 和尽量集中</p>
+<p>以task1需要2core为例：</p>
+<p>尽量打散是尽可能的将任务分散到不同的worker来启动exector，机器1分配1core，机器2分配1core</p>
+<p>尽量集中是尽可能在更少的机器上来启动worker并启动exector，在分配的机器上尽可能多的分配资源，达到集中在更少的机器上的目的。如在机器1上分配2core（前提是机器1 剩余core数&gt;=2）</p>
+<h1 id="RDD整个运行流程"><a href="#RDD整个运行流程" class="headerlink" title="RDD整个运行流程"></a>RDD整个运行流程</h1><p>首先rdd产生过后，经过一系列的处理，构成相互依赖，在有宽依赖的情况下会划分stage，构成一个有向无环图也就是DAG，整个rdd的构建，完成在action触发之前，action触发就会将task提交到executor容器中运行</p>
+<h2 id="Driver与executor交互"><a href="#Driver与executor交互" class="headerlink" title="Driver与executor交互"></a>Driver与executor交互</h2><p>在任务提交的时候，会将driver信息封装，先告诉给master，master再告诉给worker，然后worker启动executor进程的时候，会将信息告诉给executor，故而最终exector能获取到driver的信息</p>
+<p>在executor创建成功后，就会和driver建立连接，而不再与Master通信，这样是为了减少Master压力，也不让Master成为性能瓶颈。</p>
+<p>由于executor有可能在很多台机器上启动，driver无法知晓在哪台机器上启动有exector，所以需要executor和driver进行rpc通信（netty或者akka）主动建立连接。建立通信后exector向driver汇报状态及其执行进度，driver向executor提交计算任务，然后在executor中执行，只有当RDD触发action的时候，driver才将taskset以stage的形式提交任务给executor，任务的最细粒度是task</p>
+<p>然后executor就跟driver进行通信，Rdd执行逻辑的时候就不再通过Master，这是为了减少Master压力，也不让Master成为性能瓶颈。</p>
+<h1 id="RDD的构建详细阶段"><a href="#RDD的构建详细阶段" class="headerlink" title="RDD的构建详细阶段"></a>RDD的构建详细阶段</h1><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fuhtcjutpej30e007hmxg.jpg" alt=""></p>
+<h2 id="第一阶段-rdd创建"><a href="#第一阶段-rdd创建" class="headerlink" title="第一阶段 rdd创建"></a>第一阶段 rdd创建</h2><p>rdd创建都是在driver中执行，只有运行时有数据流向rdd才会提交到executor。如hdfs中读取数据，会产生很多的RDD….，RDD之间存在着依赖关系， RDD之间的<strong>转换</strong>都是由transformation产生的（故transformation返回对象为RDD），<strong>在action触发后</strong>，DAG就确定了RDD就形成了数据的流向hdfs-&gt;RDD1-&gt;RDD2-&gt;RDD3….-&gt;RDDn</p>
+<h2 id="第二阶段-DAGScheduler"><a href="#第二阶段-DAGScheduler" class="headerlink" title="第二阶段 DAGScheduler"></a>第二阶段 DAGScheduler</h2><p>stage的划分，也就是DAGScheduler的执行</p>
+<p>stage切分依据：有宽依赖（后面对宽窄依赖有说明）就会切分，更明确的说就是有shuffle的时候切分</p>
+<p>宽依赖：遇到shuffle就是宽依赖<br>窄依赖：没有shuffle就是窄依赖 </p>
+<p>把DAG切分成stage，然后以taskSet(流水线task的集合，所有的task业务逻辑都是一样的，只是计算的数据块不同，因为每一个task只计算一个分区，且taskSet集合中的任务会并行操作）</p>
+<p>task由master决定在哪个executor上运行，之后由driver提交task到executor来执行</p>
+<blockquote>
+<p>前面的stage先提交，因为stage的划分意味着有shuffle，那么后面stage会依赖前面stage的数据，故此前面stage先提交。</p>
+</blockquote>
+<p>Action触发的时候，DAG就可以确定了，transformation的调用都是在driver中完成的，一旦调用了action，会提交这个任务。</p>
+<h2 id="第三阶段-TaskScheduler"><a href="#第三阶段-TaskScheduler" class="headerlink" title="第三阶段 TaskScheduler"></a>第三阶段 TaskScheduler</h2><p><strong>TaskScheduler</strong></p>
+<p><strong>cluster Manager</strong> ：就是Master，启动work上的executor<br><strong>stragling tasks</strong>：例子：当100个任务，99都完成了，剩下了一个任务1，会再启动和剩下的一模一样的任务2，任务1和任务2谁先完成，就用谁的结果</p>
+<h2 id="第四阶段-任务执行"><a href="#第四阶段-任务执行" class="headerlink" title="第四阶段 任务执行"></a>第四阶段 任务执行</h2><p>Block Manager管理数据</p>
+<p>也就是action触发，数据开始流通，driver提交task到worker上的executor，执行真正的业务逻辑</p>
+<p>计算完成之后，若将这些结果数据collect聚合，则会将所有executor的部分结果聚合在一起，比如count、sum的，多个worker中每一个worker只会保存一部分数据，driver保存了所有数据，、都是在driver里面</p>
+<h1 id="task与读取hdfs数据的关系"><a href="#task与读取hdfs数据的关系" class="headerlink" title="task与读取hdfs数据的关系"></a>task与读取hdfs数据的关系</h1><p>task提交之后，如果向hdfs中拉取数据，driver已经将要获取数据的元数据都已经获取到了，task会和分区数挂钩，在executor上一个task读取一个分区。<strong>task读取数据不是一下将所有数据加载到内存里面，是先构建一个迭代器，拿到一条处理一条</strong>。处理完成之后会将数据保存在executor的内存中，如果内存放不下，就将数据持久化到磁盘上</p>
+</div><div class="tags"><a href="/tags/原理/">原理</a><a href="/tags/Spark/">Spark</a></div><div class="post-nav"><a class="pre" href="/2018/08/15/Hdfs结构性能分析及读写流程/">Hdfs结构性能分析及读写流程</a><a class="next" href="/2018/08/15/SparkStreaming消费Kafka数据/">SparkStreaming消费Kafka数据</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://gangtieguo.cn"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Mysql/" style="font-size: 15px;">Mysql</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/Jenkins/" style="font-size: 15px;">Jenkins</a> <a href="/tags/CDH/" style="font-size: 15px;">CDH</a> <a href="/tags/Docker-machine/" style="font-size: 15px;">Docker-machine</a> <a href="/tags/安装部署/" style="font-size: 15px;">安装部署</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/HBase/" style="font-size: 15px;">HBase</a> <a href="/tags/原理/" style="font-size: 15px;">原理</a> <a href="/tags/操作/" style="font-size: 15px;">操作</a> <a href="/tags/HDFS/" style="font-size: 15px;">HDFS</a> <a href="/tags/Shell/" style="font-size: 15px;">Shell</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/使用/" style="font-size: 15px;">使用</a> <a href="/tags/报表/" style="font-size: 15px;">报表</a> <a href="/tags/Json/" style="font-size: 15px;">Json</a> <a href="/tags/Scala/" style="font-size: 15px;">Scala</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/开发/" style="font-size: 15px;">开发</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Ambari/" style="font-size: 15px;">Ambari</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/SSH/" style="font-size: 15px;">SSH</a> <a href="/tags/Spark/" style="font-size: 15px;">Spark</a> <a href="/tags/Yarn/" style="font-size: 15px;">Yarn</a> <a href="/tags/SparkSQL/" style="font-size: 15px;">SparkSQL</a> <a href="/tags/RDD/" style="font-size: 15px;">RDD</a> <a href="/tags/SparkStreaming/" style="font-size: 15px;">SparkStreaming</a> <a href="/tags/ELK/" style="font-size: 15px;">ELK</a> <a href="/tags/es/" style="font-size: 15px;">es</a> <a href="/tags/FLINK/" style="font-size: 15px;">FLINK</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/命令/" style="font-size: 15px;">命令</a> <a href="/tags/Hue/" style="font-size: 15px;">Hue</a> <a href="/tags/技术/" style="font-size: 15px;">技术</a> <a href="/tags/zk/" style="font-size: 15px;">zk</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Other/" style="font-size: 15px;">Other</a> <a href="/tags/快捷键/" style="font-size: 15px;">快捷键</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Idea/" style="font-size: 15px;">Idea</a> <a href="/tags/Finder/" style="font-size: 15px;">Finder</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/">Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/">Spark-on-Yarn源码解析(三)client做的事情</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/">Spark-on-Yarn源码解析(二)Spark-Submit解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/">Spark-on-Yarn源码解析(一)Yarn任务解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/20/MapReduce中Shuffle中的机制/">MapReduce中Shuffle中的机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkSQL介绍/">SparkSQL介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/Spark-On-yarn/">Spark-On-Yarn模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkStreaming介绍/">SparkStreaming介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkRDD介绍/">SparkRDD介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/Hadoop零碎知识点/">Hadoop零碎知识点</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">钢铁锅.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

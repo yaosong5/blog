@@ -1,68 +1,58 @@
-extends base
-
-block title
-  title= page.title + ' | ' + config.title
-
-block content
-  .post
-    h1.post-title= page.title
-    .post-meta= page.date.format('ll')
-      if page.categories.length > 0
-        span= ' | '
-        span.category
-          for category in page.categories.toArray()
-            a(href=url_for(category.path))= category.name
-      if theme.busuanzi == true
-        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
-        span#busuanzi_container_page_pv= ' | '
-          span#busuanzi_value_page_pv
-          span= ' ' + __('Hits')
-      if theme.wordcount == true
-        include _partial/wordcount.pug
-    if theme.disqus
-      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
-    if theme.changyan
-      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
-        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
-        span= ' ' + __('Comment')
-      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
-    if theme.valine.enable
-      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
-        span.valine-comment-count(data-xid=url_for(page.path))
-        span= ' ' + __('Comment')
-    if page.toc
-      div(class='clear')
-        div(id='toc' class='toc-article')
-          div(class='toc-title')= __('contents')
-          != toc(page.content, {list_number: theme.toc_number})
-    .post-content
-      != page.content
-    if theme.donate.enable == true
-      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
-
-    if theme.post_copyright.enable == true
-      div
-        ul.post-copyright
-          li.post-copyright-author
-            strong= __('copyright_author_prefix')
-            = theme.post_copyright.author
-          li.post-copyright-link
-            strong= __('copyright_link_prefix')
-            a(href='/' + page.path)= page.permalink
-          li.post-copyright-license
-            strong= __('copyright_declare_prefix')
-            if theme.post_copyright.copyright_text
-              != theme.post_copyright.copyright_text
-            else
-              != __('copyright_default_text')
-      br
-
-    if theme.shareto == true
-      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
-      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
-
-    include _partial/tag.pug
-    include _partial/post_nav.pug
-
-    if page.comments
-      include _partial/comments.pug
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="纵浪大化中，不喜亦不悲"><title>MapReduce中Shuffle中的机制 | 钢铁锅</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">MapReduce中Shuffle中的机制</h1><a id="logo" href="/.">钢铁锅</a><p class="description">应尽便须尽，无复独多虑</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">MapReduce中Shuffle中的机制</h1><div class="post-meta">Aug 20, 2018<span> | </span><span class="category"><a href="/categories/大数据/">大数据</a></span></div><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#shuffle原理"><span class="toc-number">1.</span> <span class="toc-text">shuffle原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#shuffle过程分析"><span class="toc-number">1.1.</span> <span class="toc-text">shuffle过程分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map端"><span class="toc-number">1.2.</span> <span class="toc-text">map端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map端与reduce端的交互"><span class="toc-number">1.3.</span> <span class="toc-text">map端与reduce端的交互</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reduce端过程"><span class="toc-number">1.4.</span> <span class="toc-text">reduce端过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Speculative-Execution"><span class="toc-number">1.5.</span> <span class="toc-text">Speculative Execution</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#任务分片与hdfs文件大小及文件块之间的关系"><span class="toc-number">2.</span> <span class="toc-text">任务分片与hdfs文件大小及文件块之间的关系</span></a></li></ol></div></div><div class="post-content"><p>[TOC]</p>
+<p>官方的shuffle流程</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg" alt=""></p>
+<h1 id="shuffle原理"><a href="#shuffle原理" class="headerlink" title="shuffle原理"></a>shuffle原理</h1><p>提到MapReduce，就不得不提一下shuffle。</p>
+<p>MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map 任务完成后，它会生成一些中间文件，这些中间文件将会作为Reduce 任务的输入数据。Reduce 任务的主要目标就是把前面若干个Map 的输出汇总到一起并输出。</p>
+<a id="more"></a>
+<p> 我们知道每个reduce task输入的key都是按照key排序的。但是每个map的输出只是简单的key-value而非key-valuelist，所以shuffle的工作就是将map输出转化为reducer的输入的过程。Shuffle过程是指map产生输出结果开始，包括系统执行分区partition，排序sort，聚合Combiner（如有）以及传送map的输出到Reducer作为输入的过程。</p>
+<h2 id="shuffle过程分析"><a href="#shuffle过程分析" class="headerlink" title="shuffle过程分析"></a>shuffle过程分析</h2><p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fuhbuwapflj30zc0j4mxv.jpg" alt=""></p>
+<h2 id="map端"><a href="#map端" class="headerlink" title="map端"></a>map端</h2><ol>
+<li><p>从map段开始分析，当Map开始产生输出的时候，并不是简单吧数据写到磁盘，因为频繁的操作会导致性能严重下降，首先将数据写入到一个环形缓冲区（每个maptask都会有一个环形缓冲区，默认100M，可以通过io.sort.mb属性来设置具体的大小）并做一些预排序，以提升效率，当缓冲区中的数据量达到一个特定的阀值(io.sort.mb * io.sort.spill.percent，其中io.sort.spill.percent 默认是0.80，即默认为 80MB），溢写线程启动。</p>
+</li>
+<li><p>系统将会启动一个后台线程把缓冲区中的内容spill 到磁盘。即会锁定这80MB的内存，执行溢写过程。Map task的输出结果还可以往剩下的20MB内存中写，互不影响。在spill过程中，Map的输出将会继续写入到缓冲区，但如果缓冲区已经满了，Map就会被阻塞直到spill完成。spill线程在把缓冲区的数据写到磁盘前，会对他</p>
+<p>进行一个<strong>二次排序</strong>，<strong>首先根据数据所属的partition排序（快速排序），然后每个partition中再按Key排序</strong>。输出包括一个<strong>索引文件和数据文件</strong>。</p>
+</li>
+<li><p>如果设定了Combiner，将在排序输出的基础上进行。Combiner就是一个Mini Reducer，它在执行Map任务的节点本身运行，先对Map的输出作一次简单的Reduce，有些数据可能像这样：<code>“a”/1， “a”/1， “a”/1，</code>会合并成 <code>“a”/3</code>，使得更少的数据会被写入磁盘和传送到Reducer。</p>
+</li>
+<li><p>Spill文件保存在由mapred.local.dir指定的目录中，Map任务结束后删除。每当内存中的数据达到spill阀值的时候，都会产生一个新的spill文件，所以在Map任务写完他的最后一个输出记录的时候，可能会有多个spill文件，在Map任务完成前，所有的spill文件将会被归并排序为一个索引文件和数据文件。这是一个多路归并过程，最大归并路数由io.sort.factor 控制(默认是10)。比如：“a”从某个map task读取过来时值是7，从另外一个map 读取时值是6，因为它们有相同的key，所以得merge成group。什么是group。对于“a”就是像这样的：{“a”, [7, 6, 2, …]}，数组中的值就是从不同溢写文件中读取出来的，然后再把这些值加起来。请注意，因为merge是将多个溢写文件合并到一个文件，所以可能也有相同的key存在。如果设定了Combiner，会使用combiner来合并相同key，这是map端的结果。</p>
+</li>
+</ol>
+<h2 id="map端与reduce端的交互"><a href="#map端与reduce端的交互" class="headerlink" title="map端与reduce端的交互"></a>map端与reduce端的交互</h2><p>Reduce是怎么知道从哪些TaskTrackers中获取Map的输出呢？当Map任务完成之后，会通知他们的父TaskTracker，告知状态更新，然后TaskTracker再转告JobTracker，这些通知信息是通过心跳通信机制传输的，因此针对以一个特定的作业，jobtracker知道Map输出与tasktrackers的映射关系。Reducer中有一个线程会间歇的向JobTracker询问Map输出的地址，直到把所有的数据都取到。在Reducer取走了Map输出之后，TaskTracker不会立即删除这些数据，因为Reducer可能会失败，他们会在整个作业完成之后，JobTracker告知他们要删除的时候才去删除</p>
+<p>map端的所有工作结束后，最终生成的这个文件也存放在TaskTracker够得着的某个本地目录内。每个reduce task不断地通过RPC从JobTracker那里获取map task是否完成的信息，如果reduce task得到通知，获知某台TaskTracker上的map task执行完成，Shuffle的后半段过程开始启动。<br>简单地说，reduce task在执行之前的工作就是不断地拉取当前job里每个map task的最终结果，然后对从不同地方拉取过来的数据不断地做merge，也最终形成一个文件作为reduce task的输入文件。</p>
+<h2 id="reduce端过程"><a href="#reduce端过程" class="headerlink" title="reduce端过程"></a>reduce端过程</h2><p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fuhbdybylfj30z40hyq3f.jpg" alt=""></p>
+<ol>
+<li>Copy过程，简单地拉取数据。Reduce进程启动一些数据copy线程(Fetcher)，通过HTTP方式请求map task所在的TaskTracker获取map task的输出文件。因为map task早已结束，这些文件就归TaskTracker管理在本地磁盘中。</li>
+<li>Merge阶段。这里的merge如map端的merge动作，只是数组中存放的是不同map端copy来的数值。Copy过来的数据会先放入内存缓冲区中，这里的缓冲区大小要比map端的更为灵活，它基于JVM的heap size设置，因为Shuffle阶段Reducer不运行，所以应该把绝大部分的内存都给Shuffle用。这里需要强调的是，merge有三种形式：1)内存到内存 （默认不启用） 2)内存到磁盘  3)磁盘到磁盘。当内存中的数据量到达一定阈值，就启动内存到磁盘的merge，这个过程中如果你设置有Combiner，也是会启用的，然后在磁盘中生成了众多的溢写文件。第二种merge方式一直在运行，直到没有map端的数据时才结束，然后启动第三种磁盘到磁盘的merge方式生成最终的那个文件。</li>
+<li>Reducer的输入文件。不断地merge后，最后会生成一个文件。这个文件可能存在于磁盘上，也可能存在于内存中。就读取速度来说对于内存中，直接作为Reducer的输入，但默认情况下，这个文件是存放于磁盘中的。当Reducer的输入文件已定，整个Shuffle才最终结束。然后就是Reducer执行，一般是把结果放到HDFS上。</li>
+</ol>
+<h2 id="Speculative-Execution"><a href="#Speculative-Execution" class="headerlink" title="Speculative Execution"></a>Speculative Execution</h2><p>是指当一个job的所有task都在running的时候，当某个task的进度比平均进度慢时才会启动一个和当前Task一模一样的任务，当其中一个task完成之后另外一个会被中止，所以Speculative Task不是重复Task而是对Task执行时候的一种优化策略</p>
+<h1 id="任务分片与hdfs文件大小及文件块之间的关系"><a href="#任务分片与hdfs文件大小及文件块之间的关系" class="headerlink" title="任务分片与hdfs文件大小及文件块之间的关系"></a>任务分片与hdfs文件大小及文件块之间的关系</h1><p>在上面mapReduce中可以看到，任务的执行是基于hdfs文件的，任务分片和文件大小，文件块大小都有一定的联系。</p>
+<p>任务切片：将任务划分成切片<strong>，一个切片交给一个task实例</strong>处理，只是一个逻辑的偏移量划分而已</p>
+<p>1.在map task执行时，它的输入数据来源于HDFS的block，当然在MapReduce概念中，map task只读取split。Split与block的对应关系可能是多对一，默认是一对一。</p>
+<p>采用的算法是：</p>
+<p><strong>分片大小范围可以在 mapred-site.xml 中设置，mapred.min.split.size mapred.max.split.size，</strong>minSplitSize 大小默认为 1B，<strong>maxSplitSize 大小默认为 Long.MAX_VALUE = 9223372036854775807</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">miniSize = <span class="number">1</span></span><br><span class="line">maxSize = Long.MAXVALUE</span><br><span class="line">splitSize = Math.max(miniSize,Math.min(maxSize,blockSize))</span><br></pre></td></tr></table></figure>
+<p>默认情况下，任务分片的大小为hdfs的blocksize 也就是块大小</p>
+<p><strong>所以在我们没有设置分片的范围的时候，分片大小是由 block 块大小决定的，和它的大小一样。比如把一个 258MB 的文件上传到 HDFS 上，假设 block 块大小是 128MB，那么它就会被分成三个 block 块，与之对应产生三个 split</strong>，所以最终会产生三个 map task。我又发现了另一个问题，第三个 block 块里存的文件大小只有 2MB，而它的 block 块大小是 128MB，那它实际占用 Linux file system 的多大空间？**</p>
+<p><strong>答案是实际的文件大小，而非一个块的大小</strong></p>
+<p>切片的流程</p>
+<ol>
+<li><p>遍历输入目录下的文件，得到文件集合 list</p>
+</li>
+<li><p>遍历文件集合list，循环操作集合下的文件</p>
+<p>获取文件的blocksize 文件块，获取文件的长度，得到切片信息（split[文件路径,切片编号,偏移量范围]）,将各切片对象放入到一个splitList里面</p>
+</li>
+</ol>
+<ol start="3">
+<li><p>遍历完成后，将切片信息splitList序列化到一个split描述文件中</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fufyt54ouvj30cq03c0so.jpg" alt=""></p>
+</li>
+</ol>
+<p>默认情况下，默认的TextInputFormat对任务切片是按文件规划切片，不管文件多小，都会是一个单独的切片，这样如果有大量小文件，就会产生大量的maptask，处理效率极其低下</p>
+<p>对于以上原理，如果读取的是很多小文件，会产生大量的小切片，造成大量的maptask运行，对应的解决方法：</p>
+<ol>
+<li>将小文件合并之后再上传到hdfs</li>
+<li>如果小文件已经上传了，可以写MapReduce程序将小文件合并</li>
+<li>可以用另一种InputFormat：CombineInputFormat(它可以将多个文件划分到一个切片中)</li>
+</ol>
+</div><div class="tags"><a href="/tags/Hadoop/">Hadoop</a><a href="/tags/原理/">原理</a></div><div class="post-nav"><a class="pre" href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/">Spark-on-Yarn源码解析(一)Yarn任务解析</a><a class="next" href="/2018/08/16/SparkSQL介绍/">SparkSQL介绍</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://gangtieguo.cn"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Mysql/" style="font-size: 15px;">Mysql</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/Jenkins/" style="font-size: 15px;">Jenkins</a> <a href="/tags/CDH/" style="font-size: 15px;">CDH</a> <a href="/tags/Docker-machine/" style="font-size: 15px;">Docker-machine</a> <a href="/tags/安装部署/" style="font-size: 15px;">安装部署</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/HBase/" style="font-size: 15px;">HBase</a> <a href="/tags/原理/" style="font-size: 15px;">原理</a> <a href="/tags/操作/" style="font-size: 15px;">操作</a> <a href="/tags/HDFS/" style="font-size: 15px;">HDFS</a> <a href="/tags/Shell/" style="font-size: 15px;">Shell</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/使用/" style="font-size: 15px;">使用</a> <a href="/tags/报表/" style="font-size: 15px;">报表</a> <a href="/tags/Json/" style="font-size: 15px;">Json</a> <a href="/tags/Scala/" style="font-size: 15px;">Scala</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/开发/" style="font-size: 15px;">开发</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Ambari/" style="font-size: 15px;">Ambari</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/SSH/" style="font-size: 15px;">SSH</a> <a href="/tags/Spark/" style="font-size: 15px;">Spark</a> <a href="/tags/Yarn/" style="font-size: 15px;">Yarn</a> <a href="/tags/SparkSQL/" style="font-size: 15px;">SparkSQL</a> <a href="/tags/RDD/" style="font-size: 15px;">RDD</a> <a href="/tags/SparkStreaming/" style="font-size: 15px;">SparkStreaming</a> <a href="/tags/ELK/" style="font-size: 15px;">ELK</a> <a href="/tags/es/" style="font-size: 15px;">es</a> <a href="/tags/FLINK/" style="font-size: 15px;">FLINK</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/命令/" style="font-size: 15px;">命令</a> <a href="/tags/Hue/" style="font-size: 15px;">Hue</a> <a href="/tags/技术/" style="font-size: 15px;">技术</a> <a href="/tags/zk/" style="font-size: 15px;">zk</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Other/" style="font-size: 15px;">Other</a> <a href="/tags/快捷键/" style="font-size: 15px;">快捷键</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Idea/" style="font-size: 15px;">Idea</a> <a href="/tags/Finder/" style="font-size: 15px;">Finder</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/">Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/">Spark-on-Yarn源码解析(三)client做的事情</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/">Spark-on-Yarn源码解析(二)Spark-Submit解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/">Spark-on-Yarn源码解析(一)Yarn任务解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/20/MapReduce中Shuffle中的机制/">MapReduce中Shuffle中的机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkSQL介绍/">SparkSQL介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/Spark-On-yarn/">Spark-On-Yarn模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkStreaming介绍/">SparkStreaming介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkRDD介绍/">SparkRDD介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/Hadoop零碎知识点/">Hadoop零碎知识点</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">钢铁锅.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
