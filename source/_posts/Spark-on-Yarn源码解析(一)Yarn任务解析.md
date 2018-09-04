@@ -17,6 +17,9 @@ spark-on-yarn系列
 
 
 
+
+
+
 了解spark-on-yarn,首先我们了解一下yarn提交的流程，俗话说，欲练此功，错了，我们还是先看吧
 
 # yarn任务的提交
