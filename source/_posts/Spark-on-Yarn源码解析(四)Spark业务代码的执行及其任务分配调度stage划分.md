@@ -33,7 +33,7 @@ object WordCount {
   }
 }
 ```
-
+<!--more-->
 # sparkContext的初始化
 
 对于Spark程序入口为SparkContext,当我们使用spark-submit/spark-shell等命令来启动一个客户端,客户端与集群需要建立链接，建立的这个链接对象就叫做sparkContext，只有这个对象创建成功才标志这这个客户端与spark集群链接成功。现就将从SparkContext展开来描述一下Spark的任务启动和执行流程。
