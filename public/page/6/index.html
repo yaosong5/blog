@@ -206,11 +206,11 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                114
+                117
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                43
+                44
                 <span>标签</span>
             </div>
         </div>
@@ -247,6 +247,511 @@ var _hmt = _hmt || [];
             
 
             <section id="main">
+    <article id="post-docs/15355953287427" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/30/docs/15355953287427/">Spark启动流程及一些小总结</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/30/docs/15355953287427/">
+            <time datetime="2018-08-30T02:15:28.743Z" itemprop="datePublished">2018-08-30</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]</p>
+<h1 id="spark的架构模型"><a href="#spark的架构模型" class="headerlink" title="spark的架构模型"></a>spark的架构模型</h1><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg" alt=""></p>
+<h1 id="角色功能"><a href="#角色功能" class="headerlink" title="角色功能"></a>角色功能</h1><p>Driver：以spark-submit提交程序为例，执行该命令的主机为driver（在任意一台安装了spark（spark submit）的机器上启动一个任务的客户端也就是Driver 。客户端与集群需要建立链接，建立的这个链接对象叫做sparkContext，只有这个对象创建成功才标志这这个客户端与spark集群链接成功。SparkContext是driver进程中的一个对象，提交任务的时候，指定了每台机器需要多少个核cores，需要的内存 ）</p>
+<p>Master: 给任务提供资源，分配资源，master跟worker通信，报活和更新资源 </p>
+<p>Worker:  以子进程的方式启动executor</p>
+<p>Executor：Driver提交程序到executor(CoarseGrainedExecutorBankend)，执行任务的进程，exector是task运行的容器</p></p>
+            <p class="article-more-link">
+                <a href="/2018/08/30/docs/15355953287427/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953287427/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-docs/15355953287392" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/30/docs/15355953287392/">SparkRDD介绍</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/30/docs/15355953287392/">
+            <time datetime="2018-08-30T02:15:28.739Z" itemprop="datePublished">2018-08-30</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/RDD/">RDD</a>, <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sc.textfile(<span class="string">"hdfs://master:9000/wc"</span>).flatMap(_.split(<span class="string">"分隔符"</span>)).map((_,<span class="number">1</span>)).reduceByKey(_+_).saveAsTextFile(<span class="string">"hdfs://master:9000/wcResult"</span>)</span><br></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2018/08/30/docs/15355953287392/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953287392/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-docs/15355953287356" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/30/docs/15355953287356/">Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/30/docs/15355953287356/">
+            <time datetime="2018-08-30T02:15:28.736Z" itemprop="datePublished">2018-08-30</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Docker/">Docker</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Docker-machine/">Docker-machine</a>, <a class="tag-link" href="/tags/安装部署/">安装部署</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>此文纯属命令记录，后续更新原理解说</p>
+<h1 id="更改virtual0的ip"><a href="#更改virtual0的ip" class="headerlink" title="更改virtual0的ip"></a>更改virtual0的ip</h1><p> VBoxManage hostonlyif ipconfig vboxnet0 –ip 192.168.33.253 –netmask 255.255.255.0</p></p>
+            <p class="article-more-link">
+                <a href="/2018/08/30/docs/15355953287356/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953287356/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-docs/15355953287320" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/30/docs/15355953287320/">Docker常用命令汇集</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/30/docs/15355953287320/">
+            <time datetime="2018-08-30T02:15:28.732Z" itemprop="datePublished">2018-08-30</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Docker/">Docker</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fu55c5h3g1j319i0eu0tg.jpg" alt=""></p>
+<p>[TOC]</p>
+<h1 id="Docker源配置"><a href="#Docker源配置" class="headerlink" title="Docker源配置"></a>Docker源配置</h1><p>  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：<br>  vi /etc/docker/daemon.json<br>  {“registry-mirrors”:[“<a href="http://c1f0a193.m.daocloud.io&quot;]" target="_blank" rel="noopener">http://c1f0a193.m.daocloud.io&quot;]</a> }</p>
+<p>启动容器</p>
+<pre><code>docker run -itd  --net=br  --name slave02 --hostname slave02 centos:hadoop-spark &amp;&gt; /dev/null
+如果以 /bin/bash启动的话，sshd服务不会启动(docker未知bug)
+</code></pre><h2 id="创建容器"><a href="#创建容器" class="headerlink" title="创建容器"></a>创建容器</h2><pre><code>--name    --hostname (同-h)  --net=    -d表示后台启动
+此命令不会打印出容器id
+docker run -itd  --net=br  --name hm --hostname hadoop-master kiwenlau/hadoop:1.0 &amp;&gt; /dev/null   （hadoop镜像）
+设置静态固定ip
+docker run -d --net=br --name=c6 --ip=192.168.33.6 nginx
+
+
+自动分配Ip
+docker run -d --net=br --name=c1 nginx
+
+设置docker默认ip段命令
+docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 --name master -h master --add-host slave01:172.17.0.3 --add-host slave02:172.17.0.4 centos:ssh-spark-hadoop
+</code></pre><h2 id="容器挂载目录"><a href="#容器挂载目录" class="headerlink" title="容器挂载目录"></a>容器挂载目录</h2><p>compose文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">volumes:</span><br><span class="line">	- /Users/yaosong/Yao/dev/hadoop/dfs/name:/root/hadoop/dfs/name</span><br></pre></td></tr></table></figure></p>
+<p>shell命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-v : </span><br><span class="line">docker run -it -v /<span class="built_in">test</span>:/soft centos /bin/bash</span><br></pre></td></tr></table></figure>
+<p>“:”前目录为宿主机目录，后目录为容器目录</p>
+<blockquote>
+<p>在virtualbox中设置共享文件夹的share名称对应mac的目录<br>虚拟机中的目录<br>sudo mount -t vboxsf share  /Users/yaosong/Yao/share/<br>sudo mount -t vboxsf vagrant /Users/yaosong</p>
+</blockquote>
+<h2 id="删除所有未用的-Data-volumes"><a href="#删除所有未用的-Data-volumes" class="headerlink" title="删除所有未用的 Data volumes"></a>删除所有未用的 Data volumes</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume prune</span><br></pre></td></tr></table></figure>
+<h2 id="run-命令解释"><a href="#run-命令解释" class="headerlink" title="run 命令解释"></a>run 命令解释</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-d 是后台启动</span><br><span class="line">docker run -itd  --net=br  --name spark --hostname spark yaosong5/spark:2.1.0 &amp;&gt; /dev/null</span><br><span class="line">sudo docker <span class="built_in">exec</span> -it spark bash（进入后台启动的容器）</span><br><span class="line">和下面一样（直接进入）</span><br><span class="line">docker run -it --net=br  --name spark --hostname spark yaosong5/spark:2.1.0 bash</span><br></pre></td></tr></table></figure>
+<h2 id="exec-进入后台容器"><a href="#exec-进入后台容器" class="headerlink" title="exec 进入后台容器"></a>exec 进入后台容器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it spark bash</span><br><span class="line">docker <span class="built_in">exec</span> -it 容器名 bash</span><br><span class="line">执行命令 docker <span class="built_in">exec</span> -it 容器名 ip addr 可以拿到 a0 容器的 ip</span><br></pre></td></tr></table></figure>
+<h2 id="logs查看容器启动日志"><a href="#logs查看容器启动日志" class="headerlink" title="logs查看容器启动日志"></a>logs查看容器启动日志</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs -f -t --tail 100  kanbigdata_namenode_1</span><br></pre></td></tr></table></figure>
+<h2 id="查看容器信息"><a href="#查看容器信息" class="headerlink" title="查看容器信息"></a>查看容器信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker inspect hm</span><br><span class="line">执行命令 docker exec -it 容器名 ip addr 可以拿到 a0 容器的 ip</span><br></pre></td></tr></table></figure>
+<h2 id="启动-关闭-删除容器"><a href="#启动-关闭-删除容器" class="headerlink" title="启动 关闭 删除容器"></a>启动 关闭 删除容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker start </span><br><span class="line">docker stop 容器名</span><br><span class="line">docker rm 容器名</span><br></pre></td></tr></table></figure>
+<h2 id="cp容器宿主互拷文件"><a href="#cp容器宿主互拷文件" class="headerlink" title="cp容器宿主互拷文件"></a>cp容器宿主互拷文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker cp /Users/yaosong/Yao/etc.tar  f7e795c0fddd:/</span><br><span class="line">后为容器id:/目录</span><br></pre></td></tr></table></figure>
+<h2 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">（根据镜像id删除）</span><br><span class="line">docker rmi 00de07ebadff</span><br><span class="line">用docker images -a 查看image id，</span><br><span class="line">也可docker rmi 镜像名:版本号</span><br></pre></td></tr></table></figure>
+<h2 id="保存镜像"><a href="#保存镜像" class="headerlink" title="保存镜像"></a>保存镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker commit -m "centos-6.9 with spark 2.2.0 and hadoop 2.8.0"  os   centos:hadoop-spark</span><br><span class="line"></span><br><span class="line">docker commit -m "bigdata:spark,hadoop,hive,mysql and shell  foundation"   --author="yaosong"  master   yao/os/bigdata:2.1</span><br></pre></td></tr></table></figure>
+<h2 id="Docker用DockerFile创建镜像"><a href="#Docker用DockerFile创建镜像" class="headerlink" title="Docker用DockerFile创建镜像"></a>Docker用DockerFile创建镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker build -t hadoop:v1- &lt;Dockerfile</span><br><span class="line">docker build -t="hadoop:v1" .  （.表示是当前文件夹，也就是dockerfile所在文件夹）</span><br><span class="line">docker build -f Dockerfile -t hadoop:v1 . 此命令也可</span><br></pre></td></tr></table></figure>
+<h2 id="一键启动docker-compose-yml编排的所有服务"><a href="#一键启动docker-compose-yml编排的所有服务" class="headerlink" title="一键启动docker-compose.yml编排的所有服务"></a>一键启动docker-compose.yml编排的所有服务</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose -f docker-compose.yml up d</span><br></pre></td></tr></table></figure>
+<h2 id="Docker改变标签"><a href="#Docker改变标签" class="headerlink" title="Docker改变标签"></a>Docker改变标签</h2><p>docker tag IMAGEID(镜像id) REPOSITORY:TAG（仓库：标签）</p>
+<p><code>docker tag  b7a66cb0e8ba yaosong5/bigdata:1.0</code></p>
+<h2 id="搜索docker镜像"><a href="#搜索docker镜像" class="headerlink" title="搜索docker镜像"></a>搜索docker镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search yaosong5</span><br></pre></td></tr></table></figure>
+<h2 id="登录docker账户"><a href="#登录docker账户" class="headerlink" title="登录docker账户"></a>登录docker账户</h2><p><code>docker login</code> 登录docker hub中注册的账户</p>
+<h2 id="上传仓库"><a href="#上传仓库" class="headerlink" title="上传仓库"></a>上传仓库</h2><p><code>docker push yaosong5/elk:1.0</code></p>
+<h2 id="容器保存为镜像，加载本地镜像-引用"><a href="#容器保存为镜像，加载本地镜像-引用" class="headerlink" title="容器保存为镜像，加载本地镜像 引用"></a>容器保存为镜像，加载本地镜像 引用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker save imageID &gt; filename</span><br><span class="line">docker load &lt;filename</span><br><span class="line">如：</span><br><span class="line">docker save 4f9e92e56941&gt;  /Users/yaosong/centosSparkHadoop.tar</span><br><span class="line">docker load &lt;/Users/yaosong/centosSparkHadoop.tar</span><br><span class="line"></span><br><span class="line">通过 image 保存的镜像会保存操作历史，可以回滚到历史版本。</span><br></pre></td></tr></table></figure>
+<h2 id="保存，加载容器命令："><a href="#保存，加载容器命令：" class="headerlink" title="保存，加载容器命令："></a>保存，加载容器命令：</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker export containID &gt; filename</span><br><span class="line">docker import filename [newname]</span><br></pre></td></tr></table></figure>
+<p>通过容器保存的镜像不会保存操作历史，所以文件小一点。<br>如果要运行通过容器加载的镜像， 需要在运行的时候加上相关命令。</p>
+<h1 id="Docker-machine命令"><a href="#Docker-machine命令" class="headerlink" title="Docker-machine命令"></a>Docker-machine命令</h1><h2 id="列出docker-machine"><a href="#列出docker-machine" class="headerlink" title="列出docker-machine"></a>列出docker-machine</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine ls</span><br></pre></td></tr></table></figure>
+<h2 id="开启虚拟机"><a href="#开启虚拟机" class="headerlink" title="开启虚拟机"></a>开启虚拟机</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine start default</span><br></pre></td></tr></table></figure>
+<h2 id="关闭虚拟机"><a href="#关闭虚拟机" class="headerlink" title="关闭虚拟机"></a>关闭虚拟机</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine stop default</span><br></pre></td></tr></table></figure>
+<h2 id="重启虚拟机"><a href="#重启虚拟机" class="headerlink" title="重启虚拟机"></a>重启虚拟机</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine restart default</span><br></pre></td></tr></table></figure>
+<h2 id="删除虚拟机"><a href="#删除虚拟机" class="headerlink" title="删除虚拟机"></a>删除虚拟机</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine rm default</span><br></pre></td></tr></table></figure>
+<h2 id="设置环境变量docker-machine"><a href="#设置环境变量docker-machine" class="headerlink" title="设置环境变量docker-machine"></a>设置环境变量docker-machine</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> $(docker-machine env default) <span class="comment"># Setup the environment</span></span><br></pre></td></tr></table></figure>
+
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/30/docs/15355953287320/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-docs/15355953287283" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -637,7 +1142,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 <h2 id="帮助我们改进-MWeb"><a href="#帮助我们改进-MWeb" class="headerlink" title="帮助我们改进 MWeb"></a>帮助我们改进 MWeb</h2><p>如果你喜欢 MWeb，想让它变得更好，你可以：</p>
 <ol>
 <li>推荐 MWeb，让更多的人知道。</li>
-<li>给我们发反馈和建议：<a href="mailto:&#99;&#111;&#x64;&#101;&#x72;&#102;&#x6f;&#114;&#x61;&#114;&#x74;&#43;&#50;&#51;&#51;&#51;&#64;&#103;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#x6f;&#x6d;" target="_blank" rel="noopener">&#99;&#111;&#x64;&#101;&#x72;&#102;&#x6f;&#114;&#x61;&#114;&#x74;&#43;&#50;&#51;&#51;&#51;&#64;&#103;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#x6f;&#x6d;</a></li>
+<li>给我们发反馈和建议：<a href="mailto:&#x63;&#x6f;&#x64;&#x65;&#114;&#102;&#x6f;&#114;&#97;&#x72;&#x74;&#43;&#x32;&#51;&#x33;&#51;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#111;&#109;" target="_blank" rel="noopener">&#x63;&#x6f;&#x64;&#x65;&#114;&#102;&#x6f;&#114;&#97;&#x72;&#x74;&#43;&#x32;&#51;&#x33;&#51;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#111;&#109;</a></li>
 <li>在 Mac App Store 上评价 （如果是在 MAS 上购买的话）。</li>
 </ol>
 
@@ -764,7 +1269,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 <h2 id="帮助我们改进-MWeb"><a href="#帮助我们改进-MWeb" class="headerlink" title="帮助我们改进 MWeb"></a>帮助我们改进 MWeb</h2><p>如果你喜欢 MWeb，想让它变得更好，你可以：</p>
 <ol>
 <li>推荐 MWeb，让更多的人知道。</li>
-<li>给我们发反馈和建议：<a href="mailto:&#x63;&#x6f;&#x64;&#x65;&#x72;&#x66;&#111;&#x72;&#97;&#x72;&#x74;&#x2b;&#50;&#51;&#51;&#51;&#x40;&#x67;&#x6d;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#109;" target="_blank" rel="noopener">&#x63;&#x6f;&#x64;&#x65;&#x72;&#x66;&#111;&#x72;&#97;&#x72;&#x74;&#x2b;&#50;&#51;&#51;&#51;&#x40;&#x67;&#x6d;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#109;</a></li>
+<li>给我们发反馈和建议：<a href="mailto:&#x63;&#111;&#x64;&#x65;&#x72;&#102;&#x6f;&#114;&#97;&#114;&#x74;&#43;&#50;&#x33;&#51;&#51;&#64;&#103;&#x6d;&#x61;&#x69;&#x6c;&#46;&#99;&#x6f;&#x6d;" target="_blank" rel="noopener">&#x63;&#111;&#x64;&#x65;&#x72;&#102;&#x6f;&#114;&#97;&#114;&#x74;&#43;&#50;&#x33;&#51;&#51;&#64;&#103;&#x6d;&#x61;&#x69;&#x6c;&#46;&#99;&#x6f;&#x6d;</a></li>
 <li>在 Mac App Store 上评价 （如果是在 MAS 上购买的话）。</li>
 </ol>
 
@@ -819,117 +1324,6 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
             
     
         <a href="http://gangtieguo.cn/2018/08/30/docs/15355929916048/#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Spark任务执行流程详解" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/24/Spark任务执行流程详解/">Spark-on-Yarn任务执行流程详解</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/08/24/Spark任务执行流程详解/">
-            <time datetime="2018-08-23T16:22:57.903Z" itemprop="datePublished">2018-08-24</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/大数据/">大数据</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/原理/">原理</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-       
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>[TOC]</p>
-<p>了解spark-on-yarn,首先我们了解一下yarn提交的流程，俗话说，欲练此功，错了，我们还是先看吧</p>
-<h1 id="yarn任务的提交"><a href="#yarn任务的提交" class="headerlink" title="yarn任务的提交"></a>yarn任务的提交</h1><p>YARN 的基本架构和工作流程</p>
-<p><img src="http://pebgsxjpj.bkt.clouddn.com/15358192541466.jpg" alt=""></p>
-<p>YARN 的基本架构如上图所示，由三大功能模块组成，分别是 1) RM (ResourceManager) 2) NM (Node Manager) 3) AM(Application Master)<br></p>
-            <p class="article-more-link">
-                <a href="/2018/08/24/Spark任务执行流程详解/#more">查看更多</a>
-            </p>
-        
-
-        </div>
-
-        <footer class="article-footer">
-
-        
-            <div class="share-container">
-
-
-    <div class="bdsharebuttonbox">
-    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
-    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
-    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
-</div>
-<script>
-window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-<style>
-    .bdshare_popup_box {
-        border-radius: 4px;
-        border: #e1e1e1 solid 1px;
-    }
-    .bdshare-button-style0-16 a,
-    .bdshare-button-style0-16 .bds_more {
-        padding-left: 20px;
-        margin: 6px 10px 6px 0;
-    }
-    .bdshare_dialog_list a,
-    .bdshare_popup_list a,
-    .bdshare_popup_bottom a {
-        font-family: 'Microsoft Yahei';
-    }
-    .bdshare_popup_top {
-        display: none;
-    }
-    .bdshare_popup_bottom {
-        height: auto;
-        padding: 5px;
-    }
-</style>
-
-
-</div>
-
-            
-    
-        <a href="http://gangtieguo.cn/2018/08/24/Spark任务执行流程详解/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -1050,333 +1444,6 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
 
 
-    <article id="post-SparkSQL介绍" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/16/SparkSQL介绍/">SparkSQL介绍</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/08/16/SparkSQL介绍/">
-            <time datetime="2018-08-15T18:04:32.317Z" itemprop="datePublished">2018-08-16</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/大数据/">大数据</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/SparkSQL/">SparkSQL</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-       
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>[TOC]</p>
-<p>Hive，它是将Hive SQL转换成MapReduce然后提交到集群上执行，大大简化了编写MapReduce的程序的复杂性，由于MapReduce这种计算模型执行效率比较慢。所有Spark SQL的应运而生，它是将Spark SQL转换成RDD，然后提交到集群执行，执行效率非常快！</p></p>
-            <p class="article-more-link">
-                <a href="/2018/08/16/SparkSQL介绍/#more">查看更多</a>
-            </p>
-        
-
-        </div>
-
-        <footer class="article-footer">
-
-        
-            <div class="share-container">
-
-
-    <div class="bdsharebuttonbox">
-    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
-    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
-    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
-</div>
-<script>
-window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-<style>
-    .bdshare_popup_box {
-        border-radius: 4px;
-        border: #e1e1e1 solid 1px;
-    }
-    .bdshare-button-style0-16 a,
-    .bdshare-button-style0-16 .bds_more {
-        padding-left: 20px;
-        margin: 6px 10px 6px 0;
-    }
-    .bdshare_dialog_list a,
-    .bdshare_popup_list a,
-    .bdshare_popup_bottom a {
-        font-family: 'Microsoft Yahei';
-    }
-    .bdshare_popup_top {
-        display: none;
-    }
-    .bdshare_popup_bottom {
-        height: auto;
-        padding: 5px;
-    }
-</style>
-
-
-</div>
-
-            
-    
-        <a href="http://gangtieguo.cn/2018/08/16/SparkSQL介绍/#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Spark-On-yarn" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/16/Spark-On-yarn/">Spark-On-Yarn模式</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/08/16/Spark-On-yarn/">
-            <time datetime="2018-08-15T17:58:01.513Z" itemprop="datePublished">2018-08-16</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/大数据/">大数据</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/使用/">使用</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-       
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>[TOC]</p>
-<h1 id="SparkOnYarn"><a href="#SparkOnYarn" class="headerlink" title="SparkOnYarn"></a>SparkOnYarn</h1><h1 id="两种模式区别"><a href="#两种模式区别" class="headerlink" title="两种模式区别"></a>两种模式区别</h1><h2 id="cluster模式："><a href="#cluster模式：" class="headerlink" title="cluster模式："></a>cluster模式：</h2><p>Driver程序在YARN中运行，应用的运行结果不能在客户端显示，所以最好运行那些将结果最终保存在外部存储介质（如HDFS、Redis、Mysql）而非stdout输出的应用程序，客户端的终端显示的仅是作为YARN的job的简单运行状况。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">./bin/spark-submit --class org.apache.spark.examples.SparkPi \</span><br><span class="line">--master yarn \</span><br><span class="line">--deploy-mode cluster \</span><br><span class="line">--driver-memory 1g \</span><br><span class="line">--executor-memory 1g \</span><br><span class="line">--executor-cores 2 \</span><br><span class="line">--queue default \</span><br><span class="line">lib/spark-examples*.jar \</span><br><span class="line">10</span><br><span class="line"></span><br><span class="line">./bin/spark-submit --class cn.itcast.spark.day1.WordCount \</span><br><span class="line">--master yarn \</span><br><span class="line">--deploy-mode cluster \</span><br><span class="line">--driver-memory 1g \</span><br><span class="line">--executor-memory 1g \</span><br><span class="line">--executor-cores 2 \</span><br><span class="line">--queue default \</span><br><span class="line">/home/bigdata/hello-spark-1.0.jar \</span><br><span class="line">hdfs://master:9000/wc hdfs://master:9000/out-yarn-1</span><br></pre></td></tr></table></figure></p>
-            <p class="article-more-link">
-                <a href="/2018/08/16/Spark-On-yarn/#more">查看更多</a>
-            </p>
-        
-
-        </div>
-
-        <footer class="article-footer">
-
-        
-            <div class="share-container">
-
-
-    <div class="bdsharebuttonbox">
-    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
-    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
-    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
-</div>
-<script>
-window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-<style>
-    .bdshare_popup_box {
-        border-radius: 4px;
-        border: #e1e1e1 solid 1px;
-    }
-    .bdshare-button-style0-16 a,
-    .bdshare-button-style0-16 .bds_more {
-        padding-left: 20px;
-        margin: 6px 10px 6px 0;
-    }
-    .bdshare_dialog_list a,
-    .bdshare_popup_list a,
-    .bdshare_popup_bottom a {
-        font-family: 'Microsoft Yahei';
-    }
-    .bdshare_popup_top {
-        display: none;
-    }
-    .bdshare_popup_bottom {
-        height: auto;
-        padding: 5px;
-    }
-</style>
-
-
-</div>
-
-            
-    
-        <a href="http://gangtieguo.cn/2018/08/16/Spark-On-yarn/#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-SparkStreaming介绍" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/16/SparkStreaming介绍/">SparkStreaming介绍</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/08/16/SparkStreaming介绍/">
-            <time datetime="2018-08-15T17:50:47.842Z" itemprop="datePublished">2018-08-16</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/大数据/">大数据</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/SparkStreaming/">SparkStreaming</a>, <a class="tag-link" href="/tags/原理/">原理</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-       
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>[TOC]</p>
-<p>大数据领域，分为离线计算和实时计算 </p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fuaxkz7halj30i6057dfw.jpg" alt=""></p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fuaxl270fuj30kj034jrd.jpg" alt=""></p></p>
-            <p class="article-more-link">
-                <a href="/2018/08/16/SparkStreaming介绍/#more">查看更多</a>
-            </p>
-        
-
-        </div>
-
-        <footer class="article-footer">
-
-        
-            <div class="share-container">
-
-
-    <div class="bdsharebuttonbox">
-    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
-    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
-    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
-</div>
-<script>
-window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-<style>
-    .bdshare_popup_box {
-        border-radius: 4px;
-        border: #e1e1e1 solid 1px;
-    }
-    .bdshare-button-style0-16 a,
-    .bdshare-button-style0-16 .bds_more {
-        padding-left: 20px;
-        margin: 6px 10px 6px 0;
-    }
-    .bdshare_dialog_list a,
-    .bdshare_popup_list a,
-    .bdshare_popup_bottom a {
-        font-family: 'Microsoft Yahei';
-    }
-    .bdshare_popup_top {
-        display: none;
-    }
-    .bdshare_popup_bottom {
-        height: auto;
-        padding: 5px;
-    }
-</style>
-
-
-</div>
-
-            
-    
-        <a href="http://gangtieguo.cn/2018/08/16/SparkStreaming介绍/#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <nav id="page-nav">
         <a class="extend prev" rel="prev" href="/page/5/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/7/">下一页 &raquo;</a>
     </nav>
@@ -1394,45 +1461,45 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></p>
+                            <p class="item-title"><a href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/" class="title">Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分</a></p>
+                            <p class="item-date"><time datetime="2018-09-04T08:16:39.931Z" itemprop="datePublished">2018-09-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></p>
+                            <p class="item-title"><a href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/" class="title">Spark-on-Yarn源码解析(三)client做的事情</a></p>
+                            <p class="item-date"><time datetime="2018-09-04T08:13:34.283Z" itemprop="datePublished">2018-09-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></p>
+                            <p class="item-title"><a href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/" class="title">Spark-on-Yarn源码解析(二)Spark-Submit解析</a></p>
+                            <p class="item-date"><time datetime="2018-09-04T08:03:50.700Z" itemprop="datePublished">2018-09-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></p>
+                            <p class="item-title"><a href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/" class="title">Spark-on-Yarn源码解析(一)Yarn任务解析</a></p>
+                            <p class="item-date"><time datetime="2018-09-04T07:44:58.661Z" itemprop="datePublished">2018-09-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/博客/">博客</a></p>
                             <p class="item-title"><a href="/2018/08/30/docs/15355953289095/" class="title">源文件提交到仓库</a></p>
                             <p class="item-date"><time datetime="2018-08-30T02:15:28.910Z" itemprop="datePublished">2018-08-30</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/碎片知识/">碎片知识</a></p>
-                            <p class="item-title"><a href="/2018/08/30/docs/15355953289057/" class="title">命令积累</a></p>
-                            <p class="item-date"><time datetime="2018-08-30T02:15:28.906Z" itemprop="datePublished">2018-08-30</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/环境配置/">环境配置</a></p>
-                            <p class="item-title"><a href="/2018/08/30/docs/15355953289019/" class="title">Docker安装Hadoop集群【引用】</a></p>
-                            <p class="item-date"><time datetime="2018-08-30T02:15:28.902Z" itemprop="datePublished">2018-08-30</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/安装部署/">安装部署</a></p>
-                            <p class="item-title"><a href="/2018/08/30/docs/15355953288980/" class="title">FLINK容器的搭建</a></p>
-                            <p class="item-date"><time datetime="2018-08-30T02:15:28.898Z" itemprop="datePublished">2018-08-30</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/安装部署/">安装部署</a></p>
-                            <p class="item-title"><a href="/2018/08/30/docs/15355953288944/" class="title">Hadoop&amp;Spark组合容器的搭建</a></p>
-                            <p class="item-date"><time datetime="2018-08-30T02:15:28.895Z" itemprop="datePublished">2018-08-30</time></p>
                         </div>
                     </li>
                 
@@ -1445,7 +1512,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-archive"></i>归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">85</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">12</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">84</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">12</span></li></ul>
         </div>
     </div>
 
@@ -1454,7 +1521,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a><span class="category-list-count">2</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">47</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a><span class="category-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1463,7 +1530,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDH/">CDH</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">28</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/">HBase</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HDFS/">HDFS</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/">Json</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDD/">RDD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">24</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkSQL/">SparkSQL</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkStreaming/">SparkStreaming</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es/">es</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zk/">zk</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/使用/">使用</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/原理/">原理</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安装部署/">安装部署</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/报表/">报表</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作/">操作</a><span class="tag-list-count">2</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDH/">CDH</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">28</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/">HBase</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HDFS/">HDFS</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/">Json</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDD/">RDD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkSQL/">SparkSQL</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkStreaming/">SparkStreaming</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es/">es</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zk/">zk</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/使用/">使用</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/原理/">原理</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安装部署/">安装部署</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/报表/">报表</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作/">操作</a><span class="tag-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1472,7 +1539,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-tags"></i>标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/tags/CDH/" style="font-size: 10px;">CDH</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/ELK/" style="font-size: 11.43px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HBase/" style="font-size: 14.29px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 12.86px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.71px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 12.86px;">Hexo</a> <a href="/tags/Hive/" style="font-size: 14.29px;">Hive</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 11.43px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Kafka/" style="font-size: 14.29px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/RDD/" style="font-size: 10px;">RDD</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 18.57px;">Spark</a> <a href="/tags/SparkSQL/" style="font-size: 11.43px;">SparkSQL</a> <a href="/tags/SparkStreaming/" style="font-size: 11.43px;">SparkStreaming</a> <a href="/tags/es/" style="font-size: 10px;">es</a> <a href="/tags/git/" style="font-size: 11.43px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/zk/" style="font-size: 10px;">zk</a> <a href="/tags/使用/" style="font-size: 11.43px;">使用</a> <a href="/tags/原理/" style="font-size: 17.14px;">原理</a> <a href="/tags/命令/" style="font-size: 11.43px;">命令</a> <a href="/tags/大数据/" style="font-size: 11.43px;">大数据</a> <a href="/tags/安装部署/" style="font-size: 10px;">安装部署</a> <a href="/tags/开发/" style="font-size: 11.43px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/报表/" style="font-size: 10px;">报表</a> <a href="/tags/操作/" style="font-size: 10px;">操作</a>
+            <a href="/tags/Ambari/" style="font-size: 11.25px;">Ambari</a> <a href="/tags/CDH/" style="font-size: 11.25px;">CDH</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 11.25px;">Docker-machine</a> <a href="/tags/ELK/" style="font-size: 12.5px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 11.25px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 11.25px;">Finder</a> <a href="/tags/HBase/" style="font-size: 15px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 13.75px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.25px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 13.75px;">Hexo</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/Hue/" style="font-size: 11.25px;">Hue</a> <a href="/tags/Idea/" style="font-size: 11.25px;">Idea</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 11.25px;">Jenkins</a> <a href="/tags/Json/" style="font-size: 11.25px;">Json</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 11.25px;">Linux</a> <a href="/tags/Mac/" style="font-size: 11.25px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 11.25px;">Mysql</a> <a href="/tags/Other/" style="font-size: 11.25px;">Other</a> <a href="/tags/RDD/" style="font-size: 11.25px;">RDD</a> <a href="/tags/SSH/" style="font-size: 11.25px;">SSH</a> <a href="/tags/Scala/" style="font-size: 12.5px;">Scala</a> <a href="/tags/Shell/" style="font-size: 11.25px;">Shell</a> <a href="/tags/Spark/" style="font-size: 18.75px;">Spark</a> <a href="/tags/SparkSQL/" style="font-size: 12.5px;">SparkSQL</a> <a href="/tags/SparkStreaming/" style="font-size: 12.5px;">SparkStreaming</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/es/" style="font-size: 11.25px;">es</a> <a href="/tags/git/" style="font-size: 12.5px;">git</a> <a href="/tags/linux/" style="font-size: 11.25px;">linux</a> <a href="/tags/zk/" style="font-size: 11.25px;">zk</a> <a href="/tags/使用/" style="font-size: 12.5px;">使用</a> <a href="/tags/原理/" style="font-size: 17.5px;">原理</a> <a href="/tags/命令/" style="font-size: 12.5px;">命令</a> <a href="/tags/大数据/" style="font-size: 12.5px;">大数据</a> <a href="/tags/安装部署/" style="font-size: 11.25px;">安装部署</a> <a href="/tags/开发/" style="font-size: 12.5px;">开发</a> <a href="/tags/快捷键/" style="font-size: 11.25px;">快捷键</a> <a href="/tags/技术/" style="font-size: 11.25px;">技术</a> <a href="/tags/报表/" style="font-size: 11.25px;">报表</a> <a href="/tags/操作/" style="font-size: 11.25px;">操作</a>
         </div>
     </div>
 
