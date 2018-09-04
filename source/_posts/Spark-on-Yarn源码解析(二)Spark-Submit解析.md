@@ -26,7 +26,7 @@ toc: true
     --conf spark.yarn.executor.memoryOverhead=2g \ //每个executor可使用的非堆内存，这些内存用于如 VM，字符串常量池以及其他额外本地开销等
 
 这是通常我们提交spark程序的submit命令，以此为切入点，对spark程序的运行流程做一个跟踪和分析。
-
+<!--more-->
 查看spark-submit脚本
 ![](http://pebgsxjpj.bkt.clouddn.com/15359432887877.jpg)
 

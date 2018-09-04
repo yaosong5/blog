@@ -17,7 +17,7 @@
 <meta property="og:description" content="[TOC] 上文我们了解到了yarn的架构和执行任务的流程，接下来我们看看 spark-submit命令$SPARK_HOME/bin/spark-submit \ --master yarn \ //提交模式 yarn --deploy-mode cluster \ //运行的模式，还有一种client模式，但大多用于调试，此处使用cluster模式 --class me.yao.spark.m">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15359432887877.jpg">
-<meta property="og:updated_time" content="2018-09-04T08:12:20.525Z">
+<meta property="og:updated_time" content="2018-09-04T08:20:03.707Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark-on-Yarn源码解析(二)Spark-Submit解析">
 <meta name="twitter:description" content="[TOC] 上文我们了解到了yarn的架构和执行任务的流程，接下来我们看看 spark-submit命令$SPARK_HOME/bin/spark-submit \ --master yarn \ //提交模式 yarn --deploy-mode cluster \ //运行的模式，还有一种client模式，但大多用于调试，此处使用cluster模式 --class me.yao.spark.m">
@@ -347,8 +347,7 @@ var _hmt = _hmt || [];
 --executor-cores 4 \ //为每一个executor申请的core
 --conf spark.yarn.driver.memoryOverhead=1g \ //driver可使用的非堆内存，这些内存用于如VM，字符 串常量池以及其他额外本地开销等
 --conf spark.yarn.executor.memoryOverhead=2g \ //每个executor可使用的非堆内存，这些内存用于如 VM，字符串常量池以及其他额外本地开销等
-</code></pre><p>这是通常我们提交spark程序的submit命令，以此为切入点，对spark程序的运行流程做一个跟踪和分析。</p>
-<p>查看spark-submit脚本<br><img src="http://pebgsxjpj.bkt.clouddn.com/15359432887877.jpg" alt=""></p>
+</code></pre><p>这是通常我们提交spark程序的submit命令，以此为切入点，对spark程序的运行流程做一个跟踪和分析。<br><a id="more"></a><br>查看spark-submit脚本<br><img src="http://pebgsxjpj.bkt.clouddn.com/15359432887877.jpg" alt=""></p>
 <p>查看spark-submit脚本的信息，初步可以看到submit启动的类为org.apache.spark.deploy.SparkSubmit，更多细节其实不重要（开个开玩，极客可以求甚解）如果觉得要深究一下为什么是submit的main方法的可以参考一下spark on yarn 作业提交源码分析</p>
 <p>接下来查看该类内部的处理逻辑</p>
 <p>SparkSumbmit的类（为了简洁和文章篇幅，只保留了关键流程的信息）</p>

@@ -24,7 +24,7 @@ YARN 的基本架构如上图所示，由三大功能模块组成，分别是 1)
 4. NodeManager 启动相应的 Container，并运行用户 Task
 
 
-
+<!--more-->
 
 # Spark-On-Yarn的流程提交
 
@@ -58,3 +58,5 @@ Spark Driver首先作为一个ApplicationMaster在YARN集群中启动，客户�
 所以 Driver 和 AppMaster 是两个完全不同的东西，Driver 是控制 Spark 计算和任务资源的，而 AppMaster 是控制 yarn app 运行和任务资源的，只不过在 Spark on Yarn 上，这两者就出现了交叉，而在 standalone 模式下，资源则由 Driver 管理。在 Spark on Yarn 上，Driver 会和 AppMaster 通信，资源的申请由 AppMaster 来完成，而任务的调度和执行则由 Driver 完成，Driver 会通过与 AppMaster 通信来让 Executor 的执行具体的任务。
 
 > [Spark on Yarn](https://www.cnblogs.com/hseagle/p/3728713.html)
+
+

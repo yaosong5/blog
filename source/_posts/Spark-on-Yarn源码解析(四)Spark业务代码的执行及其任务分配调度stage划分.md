@@ -111,7 +111,7 @@ new SparkEnv(
         ....
         }
 ```
-
+<!--more-->
 可知
 TaskScheduler 的实现类`org.apache.spark.scheduler.cluster.YarnScheduler`
 TaskSchedulerBacked 的实现类为`org.apache.spark.scheduler.cluster.YarnClientSchedulerBackend`
