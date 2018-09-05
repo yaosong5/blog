@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta name="baidu-site-verification"content="WHXmBFaAkY"/>
+    <meta name="google-site-verification" content="vDyi3jVPymP4jOpfzY4F1zG4-FXD1T-A5unnDJuNxhs" />
+    <meta charset="utf-8">
+    
+
+    <title>Hive建表及sql相关 | 钢铁锅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="[TOC]  hive主要是做离线日志分析的，不是为了做单行的事务控制的数据新版hive也支持单行数据的读取，但是效率非常低，所以也没有什么updata语句">
+<meta name="keywords" content="Hive,使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hive建表及sql相关">
+<meta property="og:url" content="http://gangtieguo.cn/2018/08/11/Hive sql相关/index.html">
+<meta property="og:site_name" content="钢铁锅">
+<meta property="og:description" content="[TOC]  hive主要是做离线日志分析的，不是为了做单行的事务控制的数据新版hive也支持单行数据的读取，但是效率非常低，所以也没有什么updata语句">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/0069RVTdgy1fu5k3varq8j31880g8js9.jpg">
+<meta property="og:updated_time" content="2018-08-30T04:00:08.449Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hive建表及sql相关">
+<meta name="twitter:description" content="[TOC]  hive主要是做离线日志分析的，不是为了做单行的事务控制的数据新版hive也支持单行数据的读取，但是效率非常低，所以也没有什么updata语句">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/0069RVTdgy1fu5k3varq8j31880g8js9.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/Basketball-icon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+     <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">钢铁锅</span>
+            </a>
+            <nav id="main-nav">
+            <a class="main-nav-link" href="/."><i class="fa fa-home"></i>主页</a>
+            <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i>归档</a>
+            <a class="main-nav-link" href="/categories"><i class="fa fa-folder"></i>分类</a>
+            <a class="main-nav-link" href="/tags"><i class="fa fa-tags"></i>标签</a>
+            <a class="main-nav-link" href="/about"><i class="fa fa-user"></i>关于</a>
+
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/.">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     主页  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/archives">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     归档  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/categories">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     分类  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/tags">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     标签  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/about">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     关于  -->
+               <!--     </a>  -->
+               <!--   -->
+
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/venum.gif" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+         <!-- <button type="submit" class="search-form-submit"></button> -->
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+             
+
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/venum.gif" />
+            <h2 id="name">GTG</h2>
+            <h3 id="title">Nothing</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>四海为家</span>
+           
+        </div>
+      <div class="article-info profile-block">
+            <div class="article-info-block">
+                59
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                44
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/yaosong5" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/gangtieguo/" target="_blank" title="weibo" class=tooltip>
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+
+        
+        
+    </div>
+
+
+</aside>
+
+
+            
+
+            <section id="main"><article id="post-Hive sql相关" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Hive建表及sql相关
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/11/Hive sql相关/">
+            <time datetime="2018-08-11T02:31:24.062Z" itemprop="datePublished">2018-08-11</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Hive/">Hive</a>, <a class="tag-link" href="/tags/使用/">使用</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article "  class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#本地模式"><span class="toc-number">1.</span> <span class="toc-text">本地模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建表-默认是内部表"><span class="toc-number">2.</span> <span class="toc-text">建表(默认是内部表)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#建分区表"><span class="toc-number">2.1.</span> <span class="toc-text">建分区表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建外部表"><span class="toc-number">2.2.</span> <span class="toc-text">建外部表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复制表"><span class="toc-number">3.</span> <span class="toc-text">复制表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导入数据到表中"><span class="toc-number">4.</span> <span class="toc-text">导入数据到表中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导出hive表中数据"><span class="toc-number">5.</span> <span class="toc-text">导出hive表中数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#外部表和内部表的区别"><span class="toc-number">6.</span> <span class="toc-text">外部表和内部表的区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#保存select查询结果的几种方式："><span class="toc-number"></span> <span class="toc-text">保存select查询结果的几种方式：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分区表"><span class="toc-number">1.</span> <span class="toc-text">分区表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">2.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#小操作"><span class="toc-number">2.1.</span> <span class="toc-text">小操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#students-txt"><span class="toc-number">2.2.</span> <span class="toc-text">students.txt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sc-txt"><span class="toc-number">2.3.</span> <span class="toc-text">sc.txt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#course-txt"><span class="toc-number">2.4.</span> <span class="toc-text">course.txt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建表"><span class="toc-number">2.5.</span> <span class="toc-text">建表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql需求"><span class="toc-number">2.6.</span> <span class="toc-text">sql需求</span></a></li></ol></li></ol>
+            </div>
+
+
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <p>[TOC]</p>
+<p><img src="https://ws1.sinaimg.cn/large/0069RVTdgy1fu5k3varq8j31880g8js9.jpg" alt=""></p>
+<p>hive主要是做离线日志分析的，不是为了做单行的事务控制的数据<br>新版hive也支持单行数据的读取，但是效率非常低，所以也没有什么updata语句</p>
+<a id="more"></a>
+<p>hdfs的数据是放在hdfs里面的，表的描述的结构元数据信息是放在mysql里面<br>hdfs中数据的信息在以下类似目录<br><strong>/user/hive/warehouse/thishive.db/book/country=japan</strong></p>
+<p>可以在hive的客户端直接敲用hdfs的命令查看到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -ls /hive目录</span><br></pre></td></tr></table></figure></p>
+<h2 id="本地模式"><a href="#本地模式" class="headerlink" title="本地模式"></a>本地模式</h2><p>set hive.exec.mode.local.auto=true;</p>
+<h2 id="建表-默认是内部表"><a href="#建表-默认是内部表" class="headerlink" title="建表(默认是内部表)"></a>建表(默认是内部表)</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> inner_table(<span class="keyword">id</span> <span class="built_in">bigint</span>, <span class="keyword">account</span> <span class="keyword">string</span>, income <span class="keyword">double</span>, expenses <span class="keyword">double</span>, <span class="keyword">time</span> <span class="keyword">string</span>) <span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">'\t'</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="建分区表"><a href="#建分区表" class="headerlink" title="建分区表"></a>建分区表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> outter_table(<span class="keyword">id</span> <span class="built_in">bigint</span>, <span class="keyword">account</span> <span class="keyword">string</span>, income <span class="keyword">double</span>, expenses <span class="keyword">double</span>, <span class="keyword">time</span> <span class="keyword">string</span>) partitioned <span class="keyword">by</span> (logdate <span class="keyword">string</span>) <span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">'\t'</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="建外部表"><a href="#建外部表" class="headerlink" title="建外部表"></a>建外部表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">external</span> <span class="keyword">table</span> td_ext(<span class="keyword">id</span> <span class="built_in">bigint</span>, <span class="keyword">account</span> <span class="keyword">string</span>, income <span class="keyword">double</span>, expenses <span class="keyword">double</span>, <span class="keyword">time</span> <span class="keyword">string</span>) <span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">'\t'</span> location <span class="string">'/td_ext'</span>;</span><br></pre></td></tr></table></figure>
+<p>localtion是表示存放的位置</p>
+<h2 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create  table 表1 like 表2 ;</span><br></pre></td></tr></table></figure>
+<p>将表2的结构复制到表1<br>将文件的数据导入到表中</p>
+<h2 id="导入数据到表中"><a href="#导入数据到表中" class="headerlink" title="导入数据到表中"></a>导入数据到表中</h2><p>   给表导入数据（若是分区表，则导入的时候需要加partition(#####)）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data <span class="built_in">local</span> inpath <span class="string">'/home/hadoop/mylog.log'</span> into table 表名 partition(datestr=<span class="string">'2013-09-18'</span>) ;</span><br></pre></td></tr></table></figure>
+<p>如果是导入本地文件，需要加参数local，如果是hdfs上的话，则不加</p>
+<h2 id="导出hive表中数据"><a href="#导出hive表中数据" class="headerlink" title="导出hive表中数据"></a>导出hive表中数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert overwrite local directory &apos;/home/hadoop/student.txt&apos;  select * from 表名;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>不加local表示导出到hdfs</p>
+</blockquote>
+<h2 id="外部表和内部表的区别"><a href="#外部表和内部表的区别" class="headerlink" title="外部表和内部表的区别"></a>外部表和内部表的区别</h2><p>drop table 外部表； 只会将外部表的结构 元数据信息删除，而不会删除外表的数据<br>drop table 内部表；会将内部表的结构元数据信息及其数据信息全部删除</p>
+<h1 id="保存select查询结果的几种方式："><a href="#保存select查询结果的几种方式：" class="headerlink" title="保存select查询结果的几种方式："></a>保存select查询结果的几种方式：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">1、将查询结果保存到一张新的hive表中</span><br><span class="line"></span><br><span class="line">create table t_tmp</span><br><span class="line">as</span><br><span class="line">select * from t_p;</span><br><span class="line"></span><br><span class="line">2、将查询结果保存到一张已经存在的hive表中</span><br><span class="line"></span><br><span class="line">insert into  table t_tmp </span><br><span class="line">select * from t_p;</span><br><span class="line"></span><br><span class="line">3、将查询结果保存到指定的文件目录（可以是本地，也可以是hdfs）</span><br><span class="line"></span><br><span class="line">本地</span><br><span class="line">insert overwrite local directory &apos;/home/hadoop/student.txt&apos;</span><br><span class="line"></span><br><span class="line">select * from student;</span><br><span class="line"></span><br><span class="line">导入到mysql</span><br><span class="line">insert overwrite directory &apos;/aaa/test&apos;</span><br><span class="line">select * from t_p;</span><br></pre></td></tr></table></figure>
+<h2 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h2><p>普通表和分区表区别：有大量数据增加的需要建分区表<br>分区的字段会自动加在表结构上</p>
+<p>这个是将导入到fruit的分区里面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data <span class="built_in">local</span> inpath <span class="string">'/home/bigdata/food.txt'</span> overwrite into table book partition (<span class="built_in">type</span>=<span class="string">'fruit'</span>)；</span><br></pre></td></tr></table></figure>
+<p>在hdfs里面，分区表会存在多个不同的目录，但是在查询的时候，还是将多个分区表的信息融入到一个表中</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>如果是使用overwrite命令，必须加stored as textfile；</p>
+<h3 id="小操作"><a href="#小操作" class="headerlink" title="小操作"></a>小操作</h3><p>以下资源来自网络（若有不合适，请联系我）</p>
+<h3 id="students-txt"><a href="#students-txt" class="headerlink" title="students.txt"></a>students.txt</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">95001,李勇,男,20,CS</span><br><span class="line">95002,刘晨,女,19,IS</span><br><span class="line">95003,王敏,女,22,MA</span><br><span class="line">95004,张立,男,19,IS</span><br><span class="line">95005,刘刚,男,18,MA</span><br><span class="line">95006,孙庆,男,23,CS</span><br><span class="line">95007,易思玲,女,19,MA</span><br><span class="line">95008,李娜,女,18,CS</span><br><span class="line">95009,梦圆圆,女,18,MA</span><br><span class="line">95010,孔小涛,男,19,CS</span><br><span class="line">95011,包小柏,男,18,MA</span><br><span class="line">95012,孙花,女,20,CS</span><br><span class="line">95013,冯伟,男,21,CS</span><br><span class="line">95014,王小丽,女,19,CS</span><br><span class="line">95015,王君,男,18,MA</span><br><span class="line">95016,钱国,男,21,MA</span><br><span class="line">95017,王风娟,女,18,IS</span><br><span class="line">95018,王一,女,19,IS</span><br><span class="line">95019,邢小丽,女,19,IS</span><br><span class="line">95020,赵钱,男,21,IS</span><br><span class="line">95021,周二,男,17,MA</span><br><span class="line">95022,郑明,男,20,MA</span><br></pre></td></tr></table></figure>
+<h3 id="sc-txt"><a href="#sc-txt" class="headerlink" title="sc.txt"></a>sc.txt</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">95001,1,81</span><br><span class="line">95001,2,85</span><br><span class="line">95001,3,88</span><br><span class="line">95001,4,70</span><br><span class="line">95002,2,90</span><br><span class="line">95002,3,80</span><br><span class="line">95002,4,71</span><br><span class="line">95002,5,60</span><br><span class="line">95003,1,82</span><br><span class="line">95003,3,90</span><br><span class="line">95003,5,100</span><br><span class="line">95004,1,80</span><br><span class="line">95004,2,92</span><br><span class="line">95004,4,91</span><br><span class="line">95004,5,70</span><br><span class="line">95005,1,70</span><br><span class="line">95005,2,92</span><br><span class="line">95005,3,99</span><br><span class="line">95005,6,87</span><br><span class="line">95006,1,72</span><br><span class="line">95006,2,62</span><br><span class="line">95006,3,100</span><br><span class="line">95006,4,59</span><br><span class="line">95006,5,60</span><br><span class="line">95006,6,98</span><br><span class="line">95007,3,68</span><br><span class="line">95007,4,91</span><br><span class="line">95007,5,94</span><br><span class="line">95007,6,78</span><br><span class="line">95008,1,98</span><br><span class="line">95008,3,89</span><br><span class="line">95008,6,91</span><br><span class="line">95009,2,81</span><br><span class="line">95009,4,89</span><br><span class="line">95009,6,100</span><br><span class="line">95010,2,98</span><br><span class="line">95010,5,90</span><br><span class="line">95010,6,80</span><br><span class="line">95011,1,81</span><br><span class="line">95011,2,91</span><br><span class="line">95011,3,81</span><br><span class="line">95011,4,86</span><br><span class="line">95012,1,81</span><br><span class="line">95012,3,78</span><br><span class="line">95012,4,85</span><br><span class="line">95012,6,98</span><br><span class="line">95013,1,98</span><br><span class="line">95013,2,58</span><br><span class="line">95013,4,88</span><br><span class="line">95013,5,93</span><br><span class="line">95014,1,91</span><br><span class="line">95014,2,100</span><br><span class="line">95014,4,98</span><br><span class="line">95015,1,91</span><br><span class="line">95015,3,59</span><br><span class="line">95015,4,100</span><br><span class="line">95015,6,95</span><br><span class="line">95016,1,92</span><br><span class="line">95016,2,99</span><br><span class="line">95016,4,82</span><br><span class="line">95017,4,82</span><br><span class="line">95017,5,100</span><br><span class="line">95017,6,58</span><br><span class="line">95018,1,95</span><br><span class="line">95018,2,100</span><br><span class="line">95018,3,67</span><br><span class="line">95018,4,78</span><br><span class="line">95019,1,77</span><br><span class="line">95019,2,90</span><br><span class="line">95019,3,91</span><br><span class="line">95019,4,67</span><br><span class="line">95019,5,87</span><br><span class="line">95020,1,66</span><br><span class="line">95020,2,99</span><br><span class="line">95020,5,93</span><br><span class="line">95021,2,93</span><br><span class="line">95021,5,91</span><br><span class="line">95021,6,99</span><br><span class="line">95022,3,69</span><br><span class="line">95022,4,93</span><br><span class="line">95022,5,82</span><br><span class="line">95022,6,100</span><br></pre></td></tr></table></figure>
+<h3 id="course-txt"><a href="#course-txt" class="headerlink" title="course.txt"></a>course.txt</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1,数据库</span><br><span class="line">2,数学</span><br><span class="line">3,信息系统</span><br><span class="line">4,操作系统</span><br><span class="line">5,数据结构</span><br><span class="line">6,数据处理</span><br></pre></td></tr></table></figure>
+<h3 id="建表"><a href="#建表" class="headerlink" title="建表"></a>建表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> student(Sno <span class="built_in">int</span>,Sname <span class="keyword">string</span>,Sex <span class="keyword">string</span>,Sage <span class="built_in">int</span>,Sdept <span class="keyword">string</span>)<span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span><span class="keyword">stored</span> <span class="keyword">as</span> textfile;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> course(Cno <span class="built_in">int</span>,Cname <span class="keyword">string</span>) <span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span> <span class="keyword">stored</span> <span class="keyword">as</span> textfile;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> sc(Sno <span class="built_in">int</span>,Cno <span class="built_in">int</span>,Grade <span class="built_in">int</span>)<span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span> <span class="keyword">stored</span> <span class="keyword">as</span> textfile;</span><br><span class="line"></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">'/home/bigdata/apps/hive/hivedata/students.txt'</span> overwrite <span class="keyword">into</span> <span class="keyword">table</span> student;</span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">'/home/bigdata/apps/hive/hivedata/sc.txt'</span> overwrite <span class="keyword">into</span> <span class="keyword">table</span> sc;</span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">'/home/bigdata/apps/hive/hivedata/course.txt'</span> overwrite <span class="keyword">into</span> <span class="keyword">table</span> course;</span><br></pre></td></tr></table></figure>
+<h3 id="sql需求"><a href="#sql需求" class="headerlink" title="sql需求"></a>sql需求</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">查询全体学生的学号与姓名</span><br><span class="line">　　hive&gt; select Sno,Sname from student;</span><br><span class="line"></span><br><span class="line">查询选修了课程的学生姓名</span><br><span class="line">　　hive&gt; select distinct Sname from student inner join sc on student.Sno=Sc.Sno;</span><br><span class="line"></span><br><span class="line"><span class="comment">----hive的group by 和集合函数</span></span><br><span class="line"></span><br><span class="line">查询学生的总人数</span><br><span class="line">　　hive&gt; select count(distinct Sno)count from student;</span><br><span class="line"></span><br><span class="line">计算1号课程的学生平均成绩</span><br><span class="line">　　hive&gt; select avg(distinct Grade) from sc where Cno=1;</span><br><span class="line">查询各科成绩平均分</span><br><span class="line">		hive&gt; select Cno,avg(Grade) from sc group by Cno;  </span><br><span class="line">查询选修1号课程的学生最高分数</span><br><span class="line">　　<span class="keyword">select</span> Grade <span class="keyword">from</span> sc <span class="keyword">where</span> Cno=<span class="number">1</span> <span class="keyword">sort</span> <span class="keyword">by</span> Grade <span class="keyword">desc</span> <span class="keyword">limit</span> <span class="number">1</span>; </span><br><span class="line">(注意比较:<span class="keyword">select</span> * <span class="keyword">from</span> sc <span class="keyword">where</span> Cno=<span class="number">1</span> <span class="keyword">sort</span> <span class="keyword">by</span> Grade</span><br><span class="line">		  <span class="keyword">select</span> Grade <span class="keyword">from</span> sc <span class="keyword">where</span> Cno=<span class="number">1</span> <span class="keyword">order</span> <span class="keyword">by</span> Grade)     </span><br><span class="line">　　   </span><br><span class="line">　　</span><br><span class="line">求各个课程号及相应的选课人数 </span><br><span class="line">　　hive&gt; <span class="keyword">select</span> Cno,<span class="keyword">count</span>(<span class="number">1</span>) <span class="keyword">from</span> sc <span class="keyword">group</span> <span class="keyword">by</span> Cno;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">查询选修了3门以上的课程的学生学号</span><br><span class="line">　　hive&gt; select Sno from (select Sno,count(Cno) CountCno from sc group by Sno)a where a.CountCno&gt;3;</span><br><span class="line">或　hive&gt; select Sno from sc group by Sno having count(Cno)&gt;3; </span><br><span class="line"></span><br><span class="line"><span class="comment">----hive的Order By/Sort By/Distribute By</span></span><br><span class="line">　　Order By ，在strict 模式下（hive.mapred.mode=strict),order by 语句必须跟着limit语句，但是在nonstrict下就不是必须的，这样做的理由是必须有一个reduce对最终的结果进行排序，如果最后输出的行数过多，一个reduce需要花费很长的时间。</span><br><span class="line"></span><br><span class="line">查询学生信息，结果按学号全局有序</span><br><span class="line">　　hive&gt; set hive.mapred.mode=strict;   &lt;默认nonstrict&gt;</span><br><span class="line">hive&gt; select Sno from student order by Sno;</span><br><span class="line">FAILED: Error in semantic analysis: 1:33 In strict mode, if ORDER BY is specified, LIMIT must also be specified. Error encountered near token 'Sno'</span><br><span class="line">　　Sort By，它通常发生在每一个redcue里，“order by” 和“sort by”的区别在于，前者能给保证输出都是有顺序的，而后者如果有多个reduce的时候只是保证了输出的部分有序。<span class="keyword">set</span> mapred.reduce.tasks=&lt;<span class="built_in">number</span>&gt;在<span class="keyword">sort</span> <span class="keyword">by</span>可以指定，在用<span class="keyword">sort</span> <span class="keyword">by</span>的时候，如果没有指定列，它会随机的分配到不同的reduce里去。<span class="keyword">distribute</span> <span class="keyword">by</span> 按照指定的字段对数据进行划分到不同的输出reduce中 </span><br><span class="line">　　此方法会根据性别划分到不同的reduce中 ，然后按年龄排序并输出到不同的文件中。</span><br><span class="line"></span><br><span class="line">查询学生信息，按性别分区，在分区内按年龄有序</span><br><span class="line">　　hive&gt; <span class="keyword">set</span> mapred.reduce.tasks=<span class="number">2</span>;</span><br><span class="line">　　hive&gt; insert overwrite local directory '/home/hadoop/out' </span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student <span class="keyword">distribute</span> <span class="keyword">by</span> Sex <span class="keyword">sort</span> <span class="keyword">by</span> Sage;</span><br><span class="line"></span><br><span class="line"><span class="comment">----Join查询,join只支持等值连接 </span></span><br><span class="line">查询每个学生及其选修课程的情况</span><br><span class="line">　　hive&gt; select student.*,sc.* from student join sc on (student.Sno =sc.Sno);</span><br><span class="line">查询学生的得分情况。</span><br><span class="line">　　hive&gt;select student.Sname,course.Cname,sc.Grade from student join sc on student.Sno=sc.Sno join course on sc.cno=course.cno;</span><br><span class="line"></span><br><span class="line">查询选修2号课程且成绩在90分以上的所有学生。</span><br><span class="line">　　hive&gt; select student.Sname,sc.Grade from student join sc on student.Sno=sc.Sno </span><br><span class="line">where  sc.Cno=2 and sc.Grade&gt;90;</span><br><span class="line">　　</span><br><span class="line"><span class="comment">----LEFT，RIGHT 和 FULL OUTER JOIN ,inner join, left semi join</span></span><br><span class="line">查询所有学生的信息，如果在成绩表中有成绩，则输出成绩表中的课程号</span><br><span class="line">　　hive&gt; select student.Sname,sc.Cno from student left outer join sc on student.Sno=sc.Sno;</span><br><span class="line">　　如果student的sno值对应的sc在中没有值，则会输出student.Sname null.如果用right out join会保留右边的值，左边的为null。</span><br><span class="line">　　Join 发生在WHERE 子句之前。如果你想限制 join 的输出，应该在 WHERE 子句中写过滤条件——或是在join 子句中写。</span><br><span class="line">　　</span><br><span class="line"><span class="comment">----LEFT SEMI JOIN  Hive 当前没有实现 IN/EXISTS 子查询，可以用 LEFT SEMI JOIN 重写子查询语句</span></span><br><span class="line"></span><br><span class="line">重写以下子查询为LEFT SEMI JOIN</span><br><span class="line">  <span class="keyword">SELECT</span> a.key, a.value</span><br><span class="line">  <span class="keyword">FROM</span> a</span><br><span class="line">  <span class="keyword">WHERE</span> a.key exist <span class="keyword">in</span></span><br><span class="line">   (<span class="keyword">SELECT</span> b.key</span><br><span class="line">    <span class="keyword">FROM</span> B);</span><br><span class="line">可以被重写为：</span><br><span class="line">   <span class="keyword">SELECT</span> a.key, a.val</span><br><span class="line">   <span class="keyword">FROM</span> a <span class="keyword">LEFT</span> SEMI <span class="keyword">JOIN</span> b <span class="keyword">on</span> (a.key = b.key)</span><br><span class="line"></span><br><span class="line">查询与“刘晨”在同一个系学习的学生</span><br><span class="line">　　hive&gt; <span class="keyword">select</span> s1.Sname <span class="keyword">from</span> student s1 <span class="keyword">left</span> semi <span class="keyword">join</span> student s2 <span class="keyword">on</span> s1.Sdept=s2.Sdept <span class="keyword">and</span> s2.Sname=<span class="string">'刘晨'</span>;</span><br><span class="line"></span><br><span class="line">注意比较：</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student s1 <span class="keyword">left</span> <span class="keyword">join</span> student s2 <span class="keyword">on</span> s1.Sdept=s2.Sdept <span class="keyword">and</span> s2.Sname=<span class="string">'刘晨'</span>;</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student s1 <span class="keyword">right</span> <span class="keyword">join</span> student s2 <span class="keyword">on</span> s1.Sdept=s2.Sdept <span class="keyword">and</span> s2.Sname=<span class="string">'刘晨'</span>;</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student s1 <span class="keyword">inner</span> <span class="keyword">join</span> student s2 <span class="keyword">on</span> s1.Sdept=s2.Sdept <span class="keyword">and</span> s2.Sname=<span class="string">'刘晨'</span>;</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student s1 <span class="keyword">left</span> semi <span class="keyword">join</span> student s2 <span class="keyword">on</span> s1.Sdept=s2.Sdept <span class="keyword">and</span> s2.Sname=<span class="string">'刘晨'</span>;</span><br><span class="line"><span class="keyword">select</span> s1.Sname <span class="keyword">from</span> student s1 <span class="keyword">right</span> semi <span class="keyword">join</span> student s2 <span class="keyword">on</span> s1.Sdept=s2.Sdept <span class="keyword">and</span> s2.Sname=<span class="string">'刘晨'</span>;</span><br></pre></td></tr></table></figure>
+
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+        <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           如果您觉得文章不错，就请我看场ufc直播🤓🤓🤓🤓🤓！
+        </span>
+        <br>
+      </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 支付宝打赏图案 -->
+        <img src="/css/images/alipay.jpg" alt="支付宝打赏" > 
+        <!-- 微信打赏图案 -->
+        <img src="/css/images/wechatpay.jpg" alt="微信打赏" >  
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            if($('#donate_guide').hasClass('hidden')){
+                $('#donate_guide').removeClass('hidden');
+            }else{
+                $('#donate_guide').addClass('hidden');
+            }
+        }
+    </script>
+</div>
+<! -- 添加捐赠图标 -->
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/11/Hive sql相关/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/08/11/Hive自定义函数流程/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Hive自定义函数UDF相关
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/08/11/Json与Scala类型的一些互相转换处理/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Json与Scala类型的相互转换处理</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="lv-container" data-id="city" data-uid=MTAyMC8zNjM2MS8xMjg5Ng==></div>
+</section>
+    
+
+</section>
+            
+            
+        </div>
+        <footer id="footer">
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol ==='https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 GTG<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+    </div>
+</footer>
+        
+    
+    
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+
+         if (typeof LivereTower === 'function') { return; }
+
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+    </script>
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+  <!-- City版安装代码已完成 -->
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

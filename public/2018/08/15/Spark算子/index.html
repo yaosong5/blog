@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta name="baidu-site-verification"content="WHXmBFaAkY"/>
+    <meta name="google-site-verification" content="vDyi3jVPymP4jOpfzY4F1zG4-FXD1T-A5unnDJuNxhs" />
+    <meta charset="utf-8">
+    
+
+    <title>Spark算子案例 | 钢铁锅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="[TOC] HelloWord？WorldCount1sc.textfile(&quot;hdfs://master:9000/wc&quot;).flatMap(_.split(&quot;分隔符&quot;)).map((_,1)).reduceByKey(_+_).saveAsTextFile(&quot;hdfs://master:9000/wcResult&quot;) 数据最开始在Driver，计算的时候数据会流入worker当rdd形成过程中">
+<meta name="keywords" content="Spark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark算子案例">
+<meta property="og:url" content="http://gangtieguo.cn/2018/08/15/Spark算子/index.html">
+<meta property="og:site_name" content="钢铁锅">
+<meta property="og:description" content="[TOC] HelloWord？WorldCount1sc.textfile(&quot;hdfs://master:9000/wc&quot;).flatMap(_.split(&quot;分隔符&quot;)).map((_,1)).reduceByKey(_+_).saveAsTextFile(&quot;hdfs://master:9000/wcResult&quot;) 数据最开始在Driver，计算的时候数据会流入worker当rdd形成过程中">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fucjpo4afaj31ik056whp.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fuck6fl2chj30kg02ut96.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fuck87fxhij30ju02gt92.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fuck95wu88j30qo02o74x.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fucouprhcjj30s402yjs5.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fucpd6axxej30os034wf7.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fucpvxoentj31gw03276d.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fucpwdi27nj31g8032abq.jpg">
+<meta property="og:updated_time" content="2018-08-20T01:44:42.481Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spark算子案例">
+<meta name="twitter:description" content="[TOC] HelloWord？WorldCount1sc.textfile(&quot;hdfs://master:9000/wc&quot;).flatMap(_.split(&quot;分隔符&quot;)).map((_,1)).reduceByKey(_+_).saveAsTextFile(&quot;hdfs://master:9000/wcResult&quot;) 数据最开始在Driver，计算的时候数据会流入worker当rdd形成过程中">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fucjpo4afaj31ik056whp.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/Basketball-icon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+     <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">钢铁锅</span>
+            </a>
+            <nav id="main-nav">
+            <a class="main-nav-link" href="/."><i class="fa fa-home"></i>主页</a>
+            <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i>归档</a>
+            <a class="main-nav-link" href="/categories"><i class="fa fa-folder"></i>分类</a>
+            <a class="main-nav-link" href="/tags"><i class="fa fa-tags"></i>标签</a>
+            <a class="main-nav-link" href="/about"><i class="fa fa-user"></i>关于</a>
+
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/.">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     主页  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/archives">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     归档  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/categories">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     分类  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/tags">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     标签  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/about">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     关于  -->
+               <!--     </a>  -->
+               <!--   -->
+
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/venum.gif" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+         <!-- <button type="submit" class="search-form-submit"></button> -->
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+             
+
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/venum.gif" />
+            <h2 id="name">GTG</h2>
+            <h3 id="title">Nothing</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>四海为家</span>
+           
+        </div>
+      <div class="article-info profile-block">
+            <div class="article-info-block">
+                59
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                44
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/yaosong5" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/gangtieguo/" target="_blank" title="weibo" class=tooltip>
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+
+        
+        
+    </div>
+
+
+</aside>
+
+
+            
+
+            <section id="main"><article id="post-Spark算子" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Spark算子案例
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/15/Spark算子/">
+            <time datetime="2018-08-15T15:52:40.133Z" itemprop="datePublished">2018-08-15</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article "  class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HelloWord？WorldCount"><span class="toc-number">1.</span> <span class="toc-text">HelloWord？WorldCount</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#mapPartitions"><span class="toc-number">1.1.</span> <span class="toc-text">mapPartitions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mapPartitionsWithIndex"><span class="toc-number">1.2.</span> <span class="toc-text">mapPartitionsWithIndex</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#aggregate-action"><span class="toc-number">1.3.</span> <span class="toc-text">aggregate (action)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#aggregateByKey"><span class="toc-number">1.4.</span> <span class="toc-text">aggregateByKey</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#combineByKey"><span class="toc-number">1.5.</span> <span class="toc-text">combineByKey</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reduceByKey"><span class="toc-number">1.6.</span> <span class="toc-text">reduceByKey</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#groupByKey"><span class="toc-number">1.7.</span> <span class="toc-text">groupByKey</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#checkpoint"><span class="toc-number">1.8.</span> <span class="toc-text">checkpoint</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#coalesce-repartition"><span class="toc-number">1.9.</span> <span class="toc-text">coalesce, repartition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#collectAsMap"><span class="toc-number">1.10.</span> <span class="toc-text">collectAsMap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#countByKey"><span class="toc-number">1.11.</span> <span class="toc-text">countByKey</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#countByValue"><span class="toc-number">1.12.</span> <span class="toc-text">countByValue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#filterByRange"><span class="toc-number">1.13.</span> <span class="toc-text">filterByRange</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flatMapValues"><span class="toc-number">1.14.</span> <span class="toc-text">flatMapValues</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#foldByKey"><span class="toc-number">1.15.</span> <span class="toc-text">foldByKey</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#foreach"><span class="toc-number">1.16.</span> <span class="toc-text">foreach</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#foreachPartition"><span class="toc-number">1.17.</span> <span class="toc-text">foreachPartition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#keyBy"><span class="toc-number">1.18.</span> <span class="toc-text">keyBy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#keys-values"><span class="toc-number">1.19.</span> <span class="toc-text">keys values</span></a></li></ol></li></ol>
+            </div>
+
+
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <p>[TOC]</p>
+<h1 id="HelloWord？WorldCount"><a href="#HelloWord？WorldCount" class="headerlink" title="HelloWord？WorldCount"></a>HelloWord？WorldCount</h1><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sc.textfile(<span class="string">"hdfs://master:9000/wc"</span>).flatMap(_.split(<span class="string">"分隔符"</span>)).map((_,<span class="number">1</span>)).reduceByKey(_+_).saveAsTextFile(<span class="string">"hdfs://master:9000/wcResult"</span>)</span><br></pre></td></tr></table></figure>
+<p>数据最开始在Driver，计算的时候数据会流入worker<br>当rdd形成过程中，worker的分区中只是预留了存放数据的位置，只有当action触发的时候，worker的分区中才会存在数据</p>
+<p>Spark的运算都是通过算子进行RDD的转换及运算，那我们对算子进行简单熟悉<a href="http://homepage.cs.latrobe.edu.au/zhe/ZhenHeSparkRDDAPIExamples.html" target="_blank" rel="noopener">参考RDD算子实例</a></p>
+<a id="more"></a>
+<p>reduceByKey先进行一下combineer 移动计算</p>
+<p>groupByKey不好</p>
+<p>reduceByKey会在局部先进行一下求和</p>
+<p>groupByKey是会将所有的数据放在一个大集合里面，然后再求和 ，会消耗更多的网络带宽，不符合计算本地化</p>
+<p>一下一些RDD是给予rdd1来操作的</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd1 = sc.parallelize(<span class="type">List</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>), <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="mapPartitions"><a href="#mapPartitions" class="headerlink" title="mapPartitions"></a>mapPartitions</h2><p>map 是对 rdd 中的每一个元素进行操作，而 mapPartitions(foreachPartition) 则是对 rdd 中的每个分区的迭代器进行操作。如果在 map 过程中需要频繁创建额外的对象 (例如将 rdd 中的数据通过 jdbc 写入数据库, map 需要为每个元素创建一个链接而 mapPartition 为每个 partition 创建一个链接), 则 mapPartitions 效率比 map 高的多。</p>
+<p>SparkSql 或 DataFrame 默认会对程序进行 mapPartition 的优化。</p>
+<h2 id="mapPartitionsWithIndex"><a href="#mapPartitionsWithIndex" class="headerlink" title="mapPartitionsWithIndex"></a>mapPartitionsWithIndex</h2><p>mapPartitionWithIndex与mapPartition类似，只是会带上分区的序号</p>
+<p>把每个partition中的<strong>分区号和对应的值</strong>拿出来, 源码中方法的形式：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> func(index,<span class="type">Int</span>,iter:<span class="type">Interator</span>[(<span class="type">Int</span>)]):<span class="type">Interator</span>[<span class="type">String</span>] = &#123;</span><br><span class="line">iter.toList.map(x =&gt; <span class="string">"[partID:"</span> +  index + <span class="string">", val: "</span> + x + <span class="string">"]"</span>).iterator</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>会转换成函数<br>函数的形式</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> func = (index: <span class="type">Int</span>, iter: <span class="type">Iterator</span>[(<span class="type">Int</span>)]) =&gt; &#123;</span><br><span class="line">  iter.toList.map(x =&gt; <span class="string">"[partID:"</span> +  index + <span class="string">", val: "</span> + x + <span class="string">"]"</span>).iterator</span><br><span class="line">&#125;</span><br><span class="line">rdd1.mapPartitionsWithIndex(func).collect</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fucjpo4afaj31ik056whp.jpg" alt=""></p>
+<h2 id="aggregate-action"><a href="#aggregate-action" class="headerlink" title="aggregate (action)"></a>aggregate (action)</h2><p>aggregate是一个action操作</p>
+<p>源码定义</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">aggregate</span></span>[<span class="type">U</span>](zeroValue: <span class="type">U</span>)(seqOp: (<span class="type">U</span>, <span class="type">T</span>) ⇒ <span class="type">U</span>, combOp: (<span class="type">U</span>, <span class="type">U</span>) ⇒ <span class="type">U</span>)(<span class="keyword">implicit</span> arg0: <span class="type">ClassTag</span>[<span class="type">U</span>]): <span class="type">U</span></span><br></pre></td></tr></table></figure>
+<p>eqOp 操作会聚合各分区中的元素，然后 combOp 操作把所有分区的聚合结果再次聚合，两个操作的初始值都是 zeroValue.   seqOp 的操作是遍历分区中的所有元素 (T)，第一个 T 跟 zeroValue 做操作，结果再作为与第二个 T 做操作的 zeroValue，直到遍历完整个分区。combOp 操作是把各分区聚合的结果，再聚合。aggregate 函数返回一个跟 RDD 不同类型的值。因此，需要一个操作 seqOp 来把分区中的元素 T 合并成一个 U，另外一个操作 combOp 把所有 U 聚合。</p>
+<p>参考<a href="https://blog.csdn.net/qingyang0320/article/details/51603243" target="_blank" rel="noopener">理解 Spark RDD 中的 aggregate 函数</a></p>
+<p>第一个参数：初始值（在进行操作的时候，会默认带入该值进行）<br>第二个参数:   是两个函数[每个函数都是2个参数(第一个函数:先对各个分区进行合并, 第二个函数:对各个分区合并后的结果再进行合并)] </p>
+<p>最后得到返回值</p>
+<blockquote>
+<p>rdd1为上面的rdd1分区函数的结果</p>
+</blockquote>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdd1.aggregate(<span class="number">0</span>)(_+_, _+_)</span><br></pre></td></tr></table></figure>
+<p><strong>0 + (0+1+2+3+4 + 0+5+6+7+8+9)</strong></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fuck6fl2chj30kg02ut96.jpg" alt=""></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdd1.aggregate(<span class="number">7</span>)(_+_, _+_)</span><br></pre></td></tr></table></figure>
+<p><strong>7 + (7+1+2+3+4 + 7+5+6+7+8+9)</strong></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fuck87fxhij30ju02gt92.jpg" alt=""></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdd1.aggregate(<span class="number">0</span>)(math.max(_, _), _ + _)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fuck95wu88j30qo02o74x.jpg" alt=""></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdd1.aggregate(<span class="number">5</span>)(math.max(_, _), _ + _)</span><br></pre></td></tr></table></figure>
+<p><strong>5和1比, 得5再和234比得5 –&gt; 5和6789比,得9 –&gt; 5 + (5+9)</strong></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fucouprhcjj30s402yjs5.jpg" alt=""></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd2 = sc.parallelize(<span class="type">List</span>(<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>,<span class="string">"r"</span>,<span class="string">"t"</span>,<span class="string">"y"</span>,<span class="string">"u"</span>,<span class="string">"i"</span>,<span class="string">"o"</span>,<span class="string">"p"</span>),<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>可以用更加直接的方式验证操作</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span></span>(index: <span class="type">Int</span>, iter: <span class="type">Iterator</span>[(<span class="type">String</span>)]) : <span class="type">Iterator</span>[<span class="type">String</span>] = &#123;</span><br><span class="line">  iter.toList.map(x =&gt; <span class="string">"[partID:"</span> +  index + <span class="string">", val: "</span> + x + <span class="string">"]"</span>).iterator</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rdd2.aggregate(<span class="string">""</span>)(_ + _, _ + _)</span><br><span class="line">rdd2.aggregate(<span class="string">"="</span>)(_ + _, _ + _)</span><br><span class="line">rdd2.aggregate(<span class="string">"|"</span>)(_ + _, _ + _)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fucpd6axxej30os034wf7.jpg" alt=""></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd3 = sc.parallelize(<span class="type">List</span>(<span class="string">"qazqqw7"</span>,<span class="string">"jishhrwe9"</span>,<span class="string">"sdfwezsddf12"</span>,<span class="string">"12esdww8"</span>),<span class="number">2</span>)</span><br><span class="line">rdd3.aggregate(<span class="string">""</span>)((x,y) =&gt; math.max(x.length, y.length).toString, (x,y) =&gt; x + y)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fucpvxoentj31gw03276d.jpg" alt=""></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd4 = sc.parallelize(<span class="type">List</span>(<span class="string">"qazqqw7"</span>,<span class="string">"jishhrwe9"</span>,<span class="string">"sdfwezsddf12"</span>,<span class="string">""</span>),<span class="number">2</span>)</span><br><span class="line">rdd4.aggregate(<span class="string">""</span>)((x,y) =&gt; math.min(x.length, y.length).toString, (x,y) =&gt; x + y)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fucpwdi27nj31g8032abq.jpg" alt=""></p>
+<h2 id="aggregateByKey"><a href="#aggregateByKey" class="headerlink" title="aggregateByKey"></a>aggregateByKey</h2><p>对每个分区进行计算</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> pairRDD = sc.parallelize(<span class="type">List</span>( (<span class="string">"a"</span>,<span class="number">1</span>), (<span class="string">"a"</span>, <span class="number">12</span>), (<span class="string">"b"</span>, <span class="number">4</span>),(<span class="string">"c"</span>, <span class="number">17</span>), (<span class="string">"c"</span>, <span class="number">12</span>), (<span class="string">"b"</span>, <span class="number">2</span>)), <span class="number">2</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span></span>(index: <span class="type">Int</span>, iter: <span class="type">Iterator</span>[(<span class="type">String</span>, <span class="type">Int</span>)]) : <span class="type">Iterator</span>[<span class="type">String</span>] = &#123;</span><br><span class="line">  iter.toList.map(x =&gt; <span class="string">"[partID:"</span> +  index + <span class="string">", val: "</span> + x + <span class="string">"]"</span>).iterator</span><br><span class="line">&#125;</span><br><span class="line">pairRDD.mapPartitionsWithIndex(func2).collect</span><br></pre></td></tr></table></figure>
+<h2 id="combineByKey"><a href="#combineByKey" class="headerlink" title="combineByKey"></a>combineByKey</h2><p>reduceByKey aggregateByKey底层都是依赖的combineByKey，combineByKey比较底层的算子<br>和reduceByKey是相同的效果</p>
+<p><strong>combineByKey有三个参数</strong></p>
+<p>第一个参数x: <strong>原封不动取出来</strong>  第二个参数:<strong>是函数, 局部运算</strong>, 第三个:是函数, <strong>对局部运算后的结果再做运算</strong></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd4 = sc.parallelize(<span class="type">List</span>(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>,<span class="string">"g"</span>,<span class="string">"h"</span>,<span class="string">"i"</span>),<span class="number">2</span>)</span><br><span class="line"><span class="keyword">val</span> rdd5 = sc.parallelize(<span class="type">List</span>(<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>),<span class="number">2</span>)</span><br><span class="line"><span class="keyword">val</span> rdd6 = rdd5.zip(rdd4)</span><br><span class="line"><span class="keyword">val</span> rdd7 = rdd6.combineByKey(<span class="type">List</span>(_),(x:<span class="type">List</span>[<span class="type">String</span>],y:<span class="type">String</span>)=&gt;x:+y,(m:<span class="type">List</span>[<span class="type">String</span>],n:<span class="type">List</span>[<span class="type">String</span>])=&gt;m ++ n)</span><br><span class="line">rdd7.collect</span><br></pre></td></tr></table></figure>
+<h2 id="reduceByKey"><a href="#reduceByKey" class="headerlink" title="reduceByKey"></a>reduceByKey</h2><p>reduceByKey 用于对每个 key 对应的多个 value 进行 merge 操作，最重要的是它能够在本地先进行 merge 操作，并且 merge 操作可以通过函数自定义。</p>
+<h2 id="groupByKey"><a href="#groupByKey" class="headerlink" title="groupByKey"></a>groupByKey</h2><p>groupByKey 也是对每个 key 进行操作，但只生成一个 sequence。不会再进行</p>
+<p>需要特别注意 “Note” 中的话，它告诉我们：如果需要对 sequence 进行 aggregation 操作（注意，groupByKey 本身不能自定义操作函数），那么，选择 reduceByKey/aggregateByKey 更好。这是因为 groupByKey 不能自定义函数，我们需要先用 groupByKey 生成 RDD，然后才能对此 RDD 通过 map 进行自定义函数操作。</p>
+<h2 id="checkpoint"><a href="#checkpoint" class="headerlink" title="checkpoint"></a>checkpoint</h2><p>将rdd内容持久化</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sc.setCheckpointDir(<span class="string">"hdfs://master:9000/ck"</span>)</span><br><span class="line"><span class="keyword">val</span> rdd = sc.textFile(<span class="string">"hdfs://master:9000/wc"</span>).flatMap(_.split(<span class="string">" "</span>)).map((_, <span class="number">1</span>)).reduceByKey(_+_)</span><br><span class="line">rdd.checkpoint</span><br><span class="line">rdd.isCheckpointed</span><br><span class="line">rdd.count</span><br><span class="line">rdd.isCheckpointed</span><br><span class="line">rdd.getCheckpointFile</span><br></pre></td></tr></table></figure>
+<h2 id="coalesce-repartition"><a href="#coalesce-repartition" class="headerlink" title="coalesce, repartition"></a>coalesce, repartition</h2><p>有时候需要重新设置 Rdd 的分区数量，比如 Rdd 的分区中，Rdd 分区比较多，但是每个 Rdd 的数据量比较小，需要设置一个比较合理的分区。或者需要把 Rdd 的分区数量调大。还有就是通过设置一个 Rdd 的分区来达到设置生成的文件的数量。</p>
+<p>如果分区的数量发生激烈的变化，如设置 numPartitions = 1，这可能会造成运行计算的节点比你想象的要少，为了避免这个情况，可以设置 shuffle=true，</p>
+<p>那么这会增加 shuffle 操作。</p>
+<p>关于这个分区的激烈的变化情况，比如分区数量从父 Rdd 的几千个分区设置成几个，有可能会遇到这么一个错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.io.IOException: Unable to acquire 16777216 bytes of memory</span><br></pre></td></tr></table></figure>
+<p>这个错误只要把 shuffle 设置成 true 即可解决。</p>
+<p>当把父 Rdd 的分区数量增大时，比如 Rdd 的分区是 100，设置成 1000，如果 shuffle 为 false，并不会起作用。</p>
+<p>这时候就需要设置 shuffle 为 true 了，那么 Rdd 将在 shuffle 之后返回一个 1000 个分区的 Rdd，数据分区方式默认是采用 hash partitioner。</p>
+<p>最后来看看 repartition() 方法的源码：</p>
+<p>coalesce() 方法的作用是返回指定一个新的指定分区的 Rdd。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd1 = sc.parallelize(<span class="number">1</span> to <span class="number">10</span>, <span class="number">10</span>)</span><br><span class="line"><span class="keyword">val</span> rdd2 = rdd1.coalesce(<span class="number">2</span>, <span class="literal">false</span>)</span><br><span class="line">rdd2.partitions.length</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.cnblogs.com/fillPv/p/5392186.html" target="_blank" rel="noopener"></a></p>
+<h2 id="collectAsMap"><a href="#collectAsMap" class="headerlink" title="collectAsMap"></a>collectAsMap</h2><p>将其他集合保存为map结构</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd = sc.parallelize(<span class="type">List</span>((<span class="string">"a"</span>, <span class="number">1</span>), (<span class="string">"b"</span>, <span class="number">2</span>)))</span><br><span class="line">rdd.collectAsMap</span><br><span class="line">得到结果</span><br><span class="line"><span class="type">Map</span>(b -&gt; <span class="number">2</span>, a -&gt; <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="countByKey"><a href="#countByKey" class="headerlink" title="countByKey"></a>countByKey</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd1 = sc.parallelize(<span class="type">List</span>((<span class="string">"a"</span>, <span class="number">1</span>), (<span class="string">"b"</span>, <span class="number">2</span>), (<span class="string">"b"</span>, <span class="number">2</span>), (<span class="string">"c"</span>, <span class="number">2</span>), (<span class="string">"c"</span>, <span class="number">1</span>)))</span><br><span class="line">rdd1.countByKey </span><br><span class="line">统计<span class="type">Key</span>出现的次数</span><br><span class="line">结果 <span class="type">Map</span>(b -&gt; <span class="number">2</span>, a -&gt; <span class="number">1</span>, c -&gt; <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="countByValue"><a href="#countByValue" class="headerlink" title="countByValue"></a>countByValue</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd1 = sc.parallelize(<span class="type">List</span>((<span class="string">"a"</span>, <span class="number">1</span>), (<span class="string">"b"</span>, <span class="number">2</span>), (<span class="string">"b"</span>, <span class="number">2</span>), (<span class="string">"c"</span>, <span class="number">2</span>), (<span class="string">"c"</span>, <span class="number">1</span>)))</span><br><span class="line">rdd1.countByValue</span><br><span class="line">结果 (将整个元组作为key)</span><br><span class="line"><span class="type">Map</span>((b,<span class="number">2</span>) -&gt; <span class="number">2</span>, (c,<span class="number">2</span>) -&gt; <span class="number">1</span>, (a,<span class="number">1</span>) -&gt; <span class="number">1</span>, (c,<span class="number">1</span>) -&gt; <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="filterByRange"><a href="#filterByRange" class="headerlink" title="filterByRange"></a>filterByRange</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd1 = sc.parallelize(<span class="type">List</span>((<span class="string">"a"</span>, <span class="number">5</span>), (<span class="string">"b"</span>, <span class="number">3</span>), (<span class="string">"c"</span>, <span class="number">4</span>), (<span class="string">"d"</span>, <span class="number">2</span>), (<span class="string">"e"</span>, <span class="number">1</span>)))</span><br><span class="line"><span class="keyword">val</span> rdd2 = rdd1.filterByRange(<span class="string">"b"</span>, <span class="string">"d"</span>)</span><br><span class="line">rdd2.collect</span><br><span class="line"></span><br><span class="line"><span class="type">Array</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = <span class="type">Array</span>((b,<span class="number">3</span>), (c,<span class="number">4</span>), (d,<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="flatMapValues"><a href="#flatMapValues" class="headerlink" title="flatMapValues"></a>flatMapValues</h2><p>压平</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd3 = sc.parallelize(<span class="type">List</span>((<span class="string">"a"</span>, <span class="string">"1 2"</span>), (<span class="string">"b"</span>, <span class="string">"3 4"</span>)))</span><br><span class="line"><span class="keyword">val</span> rdd4 = rdd3.flatMapValues(_.split(<span class="string">" "</span>))</span><br><span class="line">rdd4.collect</span><br><span class="line"></span><br><span class="line"><span class="type">Array</span>[(<span class="type">String</span>, <span class="type">String</span>)] = <span class="type">Array</span>((a,<span class="number">1</span>), (a,<span class="number">2</span>), (b,<span class="number">3</span>), (b,<span class="number">4</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="foldByKey"><a href="#foldByKey" class="headerlink" title="foldByKey"></a>foldByKey</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd1 = sc.parallelize(<span class="type">List</span>(<span class="string">"a22"</span>, <span class="string">"b232"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>), <span class="number">2</span>)</span><br><span class="line"><span class="keyword">val</span> rdd2 = rdd1.map(x =&gt; (x.length, x))</span><br><span class="line">rdd2.collect</span><br><span class="line">结果： <span class="type">Array</span>[(<span class="type">Int</span>, <span class="type">String</span>)] = <span class="type">Array</span>((<span class="number">3</span>,a22), (<span class="number">4</span>,b232), (<span class="number">1</span>,c), (<span class="number">1</span>,d))</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> rdd3 = rdd2.foldByKey(<span class="string">""</span>)(_+_)</span><br><span class="line">rdd3.collect</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">结果：将相同key的元组合并在一起，</span><br><span class="line"><span class="type">Array</span>[(<span class="type">Int</span>, <span class="type">String</span>)] = <span class="type">Array</span>((<span class="number">4</span>,b232), (<span class="number">1</span>,cd), (<span class="number">3</span>,a22))</span><br></pre></td></tr></table></figure>
+<h2 id="foreach"><a href="#foreach" class="headerlink" title="foreach"></a>foreach</h2><p>foreach是针对于每一个元素，<br>foreachPartition是针对每一个分区，<br>foreachPartition是写入数据库时，可以将在foreachPartition时获得一个数据库连接，通过map方法来将每个分区的全部元素写入到数据库</p>
+<h2 id="foreachPartition"><a href="#foreachPartition" class="headerlink" title="foreachPartition"></a>foreachPartition</h2><p>3个分区</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd1 = sc.parallelize(<span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>), <span class="number">3</span>)</span><br><span class="line">rdd1.foreachPartition(x =&gt; println(x.reduce(_ + _)))</span><br></pre></td></tr></table></figure>
+<h2 id="keyBy"><a href="#keyBy" class="headerlink" title="keyBy"></a>keyBy</h2><p>以传入的参数做key</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd1 = sc.parallelize(<span class="type">List</span>(<span class="string">"dog"</span>, <span class="string">"salmon"</span>, <span class="string">"salmon"</span>, <span class="string">"rat"</span>, <span class="string">"elephant"</span>), <span class="number">3</span>)</span><br><span class="line"><span class="keyword">val</span> rdd2 = rdd1.keyBy(_.length)</span><br><span class="line">rdd2.collect</span><br><span class="line">结果 <span class="type">Array</span>((<span class="number">3</span>,dog), (<span class="number">6</span>,salmon), (<span class="number">6</span>,salmon), (<span class="number">3</span>,rat), (<span class="number">8</span>,elephant))</span><br></pre></td></tr></table></figure>
+<h2 id="keys-values"><a href="#keys-values" class="headerlink" title="keys values"></a>keys values</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd1 = sc.parallelize(<span class="type">List</span>(<span class="string">"dog"</span>, <span class="string">"tiger"</span>, <span class="string">"lion"</span>, <span class="string">"cat"</span>, <span class="string">"panther"</span>, <span class="string">"eagle"</span>), <span class="number">2</span>)</span><br><span class="line"><span class="keyword">val</span> rdd2 = rdd1.map(x =&gt; (x.length, x))</span><br><span class="line">rdd2.keys.collect</span><br><span class="line">rdd2.values.collect</span><br></pre></td></tr></table></figure>
+
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+        <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           如果您觉得文章不错，就请我看场ufc直播🤓🤓🤓🤓🤓！
+        </span>
+        <br>
+      </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 支付宝打赏图案 -->
+        <img src="/css/images/alipay.jpg" alt="支付宝打赏" > 
+        <!-- 微信打赏图案 -->
+        <img src="/css/images/wechatpay.jpg" alt="微信打赏" >  
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            if($('#donate_guide').hasClass('hidden')){
+                $('#donate_guide').removeClass('hidden');
+            }else{
+                $('#donate_guide').addClass('hidden');
+            }
+        }
+    </script>
+</div>
+<! -- 添加捐赠图标 -->
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/15/Spark算子/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/08/15/SparkStreaming消费Kafka数据/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    SparkStreaming消费Kafka数据
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/08/15/Scala基本使用/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Scala基本使用-杂记</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="lv-container" data-id="city" data-uid=MTAyMC8zNjM2MS8xMjg5Ng==></div>
+</section>
+    
+
+</section>
+            
+            
+        </div>
+        <footer id="footer">
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol ==='https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 GTG<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+    </div>
+</footer>
+        
+    
+    
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+
+         if (typeof LivereTower === 'function') { return; }
+
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+    </script>
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+  <!-- City版安装代码已完成 -->
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
