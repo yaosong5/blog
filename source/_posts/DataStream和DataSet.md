@@ -8,18 +8,6 @@ toc: true
 
 # 什么是DataStream
 Discretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：
-![](http://pebgsxjpj.bkt.clouddn.com/15360627803806.jpg)
-
-对数据的操作也是按照RDD为单位来进行的
-![](http://pebgsxjpj.bkt.clouddn.com/15360627860827.jpg)
-
-
-计算过程由Spark engine来完成
-![](http://pebgsxjpj.bkt.clouddn.com/15360627909583.jpg)
-
-
-Datasets 与DataFrames 与RDDs的关系
-![](http://pebgsxjpj.bkt.clouddn.com/15360698161149.jpg)
 
 
 Spark引入DataFrame，它可以提供high-level functions让Spark更好的处理结构数据的计算。这让Catalyst optimizer 和Tungsten（钨丝） execution engine自动加速大数据分析。
