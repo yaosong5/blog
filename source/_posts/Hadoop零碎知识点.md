@@ -17,3 +17,12 @@ bin/hdfs oiv -i fsimage_0000000000000000087 -p XML -o fsimage.xml
 ```
 <!-- more -->
 
+查看目录树
+
+```bash
+hdfs会在配置文件中配置一个datanode的工作目录元数据 
+查看目录结构 tree hddata/ 
+```
+
+
+
