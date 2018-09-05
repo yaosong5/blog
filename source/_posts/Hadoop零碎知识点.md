@@ -15,8 +15,5 @@ toc: true
 bin/hdfs oev -i edits -o edits.xml
 bin/hdfs oiv -i fsimage_0000000000000000087 -p XML -o fsimage.xml
 ```
-
-
-
 <!-- more -->
 

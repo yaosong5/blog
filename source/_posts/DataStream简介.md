@@ -80,7 +80,7 @@ Output Operations可以将DStream的数据输出到外部的数据库或文件�
 | saveAsTextFiles(prefix, [suffix])   | Save this DStream's contents as text  files. The file name at each batch interval is generated based on prefix and  suffix: "prefix-TIME_IN_MS[.suffix]". |
 | saveAsObjectFiles(prefix, [suffix]) | Save this DStream's contents as  SequenceFiles of serialized Java objects. The file name at each batch  interval is generated based on prefix and suffix:  "prefix-TIME_IN_MS[.suffix]". |
 | saveAsHadoopFiles(prefix, [suffix]) | Save this DStream's contents as Hadoop  files. The file name at each batch interval is generated based on prefix and  suffix: "prefix-TIME_IN_MS[.suffix]". |
-| foreachRDD(func)                    | The most generic output operator that  applies a function, func, to each RDD generated from the stream. This  function should push the data in each RDD to an external system, such as  saving the RDD to files, or writing it over the network to a database. Note  that the function func is executed in the driver process running the  streaming application, and will usually have RDD actions in it that will  force the computation of the streaming RDDs. 
+| foreachRDD(func)                    | The most generic output operator that  applies a function, func, to each RDD generated from the stream. This  function should push the data in each RDD to an external system, such as  saving the RDD to files, or writing it over the network to a database. Note  that the function func is executed in the driver process running the  streaming application, and will usually have RDD actions in it that will  force the computation of the streaming RDDs. |
 
 ##  用Spark Streaming实现实时WordCount
 
@@ -136,27 +136,27 @@ object NetworkWordCount {
   import org.apache.spark.{HashPartitioner, SparkConf}
   import org.apache.spark.streaming.{StreamingContext, Seconds}
 
-  object NetworkUpdateStateWordCount { 
+  object NetworkUpdateStateWordCount {
   val updateFunc = (iter: Iterator[(String, Seq[Int], Option[Int])]) => {
-         ​    //iter.flatMap(it=>Some(it._2.sum + it._3.getOrElse(0)).map(x=>(it._1,x)))
-         ​    iter.flatMap{
-         ​    case(x,y,z)=>Some(y.sum + z.getOrElse(0)).map(m=>(x, m))}
+          //iter.flatMap(it=>Some(it._2.sum + it._3.getOrElse(0)).map(x=>(it._1,x)))
+            iter.flatMap{
+             case(x,y,z)=>Some(y.sum + z.getOrElse(0)).map(m=>(x, m))}
            }
 
   def main(args: Array[String]) {
-​    LoggerLevel.setStreamingLogLevels*()
-​    val conf = new SparkConf().setMaster("local[2]").setAppName("NetworkUpdateStateWordCount")
-​    val ssc = new StreamingContext(conf, Seconds(5))
-​    //做checkpoint 写入共享存储中
-​    ssc.checkpoint("c://aaa")
-​    **val **lines = ssc.socketTextStream("192.168.10.100", 9999)
-​    //reduceByKey **结果不累加
-​    //val result = lines.flatMap(_.split(" ")).map((_, 1)).reduceByKey(_+_)
-​    //updateStateByKey结果可以累加但是需要传入一个自定义的累加函数：updateFunc
-​   val results = lines.flatMap(_.split(" ")).map((_,1)).updateStateByKey(updateFunc, new HashPartitioner(ssc.sparkContext.defaultParallelism), true)
-​    results.print()
-​    ssc.start()
-​    ssc.awaitTermination()
+    LoggerLevel.setStreamingLogLevels*()
+    val conf = new SparkConf().setMaster("local[2]").setAppName("NetworkUpdateStateWordCount")
+    val ssc = new StreamingContext(conf, Seconds(5))
+    //做checkpoint 写入共享存储中
+    ssc.checkpoint("c://aaa")
+    **val **lines = ssc.socketTextStream("192.168.10.100", 9999)
+    //reduceByKey **结果不累加
+    //val result = lines.flatMap(_.split(" ")).map((_, 1)).reduceByKey(_+_)
+    //updateStateByKey结果可以累加但是需要传入一个自定义的累加函数：updateFunc
+   val results = lines.flatMap(_.split(" ")).map((_,1)).updateStateByKey(updateFunc, new HashPartitioner(ssc.sparkContext.defaultParallelism), true)
+    results.print()
+    ssc.start()
+    ssc.awaitTermination()
   }
 }
 ```
@@ -183,6 +183,9 @@ ds.flatmap(_.split(" ")).groupBy($""value).count.show 或者collect
 
 ！在import里面打开idea查看类里面有哪些方法。 
 在spark1.6里面sqlContext.read....读取的就是dataFrame，和dataSet还未统一，需要将dataFrame用as转为dataSet
+
+
+
 
 
 
