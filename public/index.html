@@ -383,6 +383,49 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+<h3 id="特殊的Transformations"><a href="#特殊的Transformations" class="headerlink" title="特殊的Transformations"></a>特殊的Transformations</h3><ol>
+<li>UpdateStateByKeyOperation</li>
+</ol>
+<p>UpdateStateByKey原语用于记录历史记录，上文中Word Count示例中就用到了该特性。若不用UpdateStateByKey来更新状态，那么每次数据进来后分析完成后，结果输出后将不在保存</p>
+<ol>
+<li>TransformOperation</li>
+</ol>
+<p>Transform原语允许DStream上执行任意的RDD-to-RDD函数。通过该函数可以方便的扩展Spark API。此外，MLlib（机器学习）以及Graphx也是通过本函数来进行结合的。</p>
+<ol>
+<li>WindowOperations</li>
+</ol>
+<p>Window Operations有点类似于Storm中的State，可以设置窗口的大小和滑动窗口的间隔来动态的获取当前Steaming的允许状态<br><img src="http://pebgsxjpj.bkt.clouddn.com/15360679610176.jpg" alt=""></p>
+<h2 id="Output-Operations-on-DStreams"><a href="#Output-Operations-on-DStreams" class="headerlink" title="Output Operations on DStreams"></a>Output Operations on DStreams</h2><p>Output Operations可以将DStream的数据输出到外部的数据库或文件系统，当某个Output Operations原语被调用时（与RDD的Action相同），streaming程序才会开始真正的计算过程。</p>
+<table>
+<thead>
+<tr>
+<th>Output Operation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>print()</td>
+<td>Prints the first ten elements of every  batch of data in a DStream on the driver node running the streaming  application. This is useful for development and debugging.</td>
+</tr>
+<tr>
+<td>saveAsTextFiles(prefix, [suffix])</td>
+<td>Save this DStream’s contents as text  files. The file name at each batch interval is generated based on prefix and  suffix: “prefix-TIME_IN_MS[.suffix]”.</td>
+</tr>
+<tr>
+<td>saveAsObjectFiles(prefix, [suffix])</td>
+<td>Save this DStream’s contents as  SequenceFiles of serialized Java objects. The file name at each batch  interval is generated based on prefix and suffix:  “prefix-TIME_IN_MS[.suffix]”.</td>
+</tr>
+<tr>
+<td>saveAsHadoopFiles(prefix, [suffix])</td>
+<td>Save this DStream’s contents as Hadoop  files. The file name at each batch interval is generated based on prefix and  suffix: “prefix-TIME_IN_MS[.suffix]”.</td>
+</tr>
+<tr>
+<td>foreachRDD(func)</td>
+<td>The most generic output operator that  applies a function, func, to each RDD generated from the stream. This  function should push the data in each RDD to an external system, such as  saving the RDD to files, or writing it over the network to a database. Note  that the function func is executed in the driver process running the  streaming application, and will usually have RDD actions in it that will  force the computation of the streaming RDDs.</td>
+</tr>
+</tbody>
+</table>
 
             
 

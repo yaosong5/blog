@@ -55,3 +55,35 @@ DStream上的原语与RDD的类似，分为Transformations（转换）和OutputO
 | updateStateByKey(func)           | Return a new "state" DStream  where the state for each key is updated by applying the given function on the  previous state of the key and the new values for the key. This can be used to  maintain arbitrary state data for each key. |
 
  
+
+### 特殊的Transformations
+
+1. UpdateStateByKeyOperation
+
+UpdateStateByKey原语用于记录历史记录，上文中Word Count示例中就用到了该特性。若不用UpdateStateByKey来更新状态，那么每次数据进来后分析完成后，结果输出后将不在保存
+
+1. TransformOperation
+
+Transform原语允许DStream上执行任意的RDD-to-RDD函数。通过该函数可以方便的扩展Spark API。此外，MLlib（机器学习）以及Graphx也是通过本函数来进行结合的。
+
+
+
+1. WindowOperations
+
+Window Operations有点类似于Storm中的State，可以设置窗口的大小和滑动窗口的间隔来动态的获取当前Steaming的允许状态
+![](http://pebgsxjpj.bkt.clouddn.com/15360679610176.jpg)
+
+## Output Operations on DStreams
+
+Output Operations可以将DStream的数据输出到外部的数据库或文件系统，当某个Output Operations原语被调用时（与RDD的Action相同），streaming程序才会开始真正的计算过程。
+
+| Output Operation                    | Meaning                                  |
+| ----------------------------------- | ---------------------------------------- |
+| print()                             | Prints the first ten elements of every  batch of data in a DStream on the driver node running the streaming  application. This is useful for development and debugging. |
+| saveAsTextFiles(prefix, [suffix])   | Save this DStream's contents as text  files. The file name at each batch interval is generated based on prefix and  suffix: "prefix-TIME_IN_MS[.suffix]". |
+| saveAsObjectFiles(prefix, [suffix]) | Save this DStream's contents as  SequenceFiles of serialized Java objects. The file name at each batch  interval is generated based on prefix and suffix:  "prefix-TIME_IN_MS[.suffix]". |
+| saveAsHadoopFiles(prefix, [suffix]) | Save this DStream's contents as Hadoop  files. The file name at each batch interval is generated based on prefix and  suffix: "prefix-TIME_IN_MS[.suffix]". |
+| foreachRDD(func)                    | The most generic output operator that  applies a function, func, to each RDD generated from the stream. This  function should push the data in each RDD to an external system, such as  saving the RDD to files, or writing it over the network to a database. Note  that the function func is executed in the driver process running the  streaming application, and will usually have RDD actions in it that will  force the computation of the streaming RDDs. |
+
+
+
