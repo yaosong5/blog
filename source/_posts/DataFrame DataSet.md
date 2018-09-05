@@ -133,3 +133,62 @@ object NetworkWordCount {
 
 问题：结果每次在Linux端输入的单词次数都被正确的统计出来，但是结果不能累加！如果需要累加需要使用updateStateByKey(func)来更新状态，下面给出一个例子：
 
+
+
+```scala
+  package me.yao.spark.streaming
+
+  import org.apache.spark.{HashPartitioner, SparkConf}
+  import org.apache.spark.streaming.{StreamingContext, Seconds}
+
+  object NetworkUpdateStateWordCount {
+  val updateFunc = (iter: Iterator[(String, Seq[Int], Option[Int])]) => {
+          //iter.flatMap(it=>Some(it._2.sum + it._3.getOrElse(0)).map(x=>(it._1,x)))
+            iter.flatMap{
+             case(x,y,z)=>Some(y.sum + z.getOrElse(0)).map(m=>(x, m))}
+           }
+
+  def main(args: Array[String]) {
+    LoggerLevel.setStreamingLogLevels*()
+    val conf = new SparkConf().setMaster("local[2]").setAppName("NetworkUpdateStateWordCount")
+    val ssc = new StreamingContext(conf, Seconds(5))
+    //做checkpoint 写入共享存储中
+    ssc.checkpoint("c://aaa")
+    **val **lines = ssc.socketTextStream("192.168.10.100", 9999)
+    //reduceByKey **结果不累加
+    //val result = lines.flatMap(_.split(" ")).map((_, 1)).reduceByKey(_+_)
+    //updateStateByKey结果可以累加但是需要传入一个自定义的累加函数：updateFunc
+   val results = lines.flatMap(_.split(" ")).map((_,1)).updateStateByKey(updateFunc, new HashPartitioner(ssc.sparkContext.defaultParallelism), true)
+    results.print()
+    ssc.start()
+    ssc.awaitTermination()
+  }
+}
+```
+
+# Dataset
+
+比RDD执行速度快很多倍，占用的内存更小，是从dataFrame发展而来，包含dataFrame 
+dataFrame是处理结构化数据，有表头，有类型，
+
+dataSet从1.6.0开始出现，2.0做了重大改进，对dataFrame进行了整合 
+dataFrame在1.4系列出现的，现在很多公司都是用的RDD
+
+在spark的命令行里面： 
+将dataFrame转成dataSet 
+val ds = df.as[person] 
+调用dataSet的方法 
+
+```scala
+ds.map 
+ds.show 
+val ds = sqlContext.read.text("hdfs://bigdata1:9000/wc/).as[String] 
+val res5 = ds.flatmap(.split(" ")).map((,1)) 
+```
+
+flatmap将文本里面的每一行进行切分， 
+rest.reduceByKey();会发现dataSet里面没有这个方法，在dataSet里面应该调用更高级的做法 
+ds.flatmap(_.split(" ")).groupBy($""value).count.show 或者collect
+
+在import里面打开idea查看类里面有哪些方法。 
+在spark1.6里面sqlContext.read....读取的就是dataFrame，和dataSet还未统一，需要将dataFrame用as转为dataSet
