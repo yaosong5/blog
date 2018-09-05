@@ -173,15 +173,18 @@ dataFrame在1.4系列出现的，现在很多公司都是用的RDD
 将dataFrame转成dataSet 
 val ds = df.as[person] 
 调用dataSet的方法 
+
+```scala
 ds.map 
 ds.show 
 val ds = sqlContext.read.text("hdfs://bigdata1:9000/wc/).as[String] 
 val res5 = ds.flatmap(.split(" ")).map((,1)) 
+```
 flatmap将文本里面的每一行进行切分， 
 rest.reduceByKey();会发现dataSet里面没有这个方法，在dataSet里面应该调用更高级的做法 
 ds.flatmap(_.split(" ")).groupBy($""value).count.show 或者collect
 
-！在import里面打开idea查看类里面有哪些方法。 
+在import里面打开idea查看类里面有哪些方法。 
 在spark1.6里面sqlContext.read....读取的就是dataFrame，和dataSet还未统一，需要将dataFrame用as转为dataSet
 
 
