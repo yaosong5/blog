@@ -1,4 +1,339 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="纵浪大化中，不喜亦不悲"><title>spring集成权限校验 | 钢铁锅</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">spring集成权限校验</h1><a id="logo" href="/.">钢铁锅</a><p class="description">应尽便须尽，无复独多虑</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">spring集成权限校验</h1><div class="post-meta">May 8, 2018<span> | </span><span class="category"><a href="/categories/Spring/">Spring</a></span></div><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#shiro简介"><span class="toc-number">1.</span> <span class="toc-text">shiro简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#权限控制的方式"><span class="toc-number">1.0.1.</span> <span class="toc-text">权限控制的方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shiro的使用"><span class="toc-number">2.</span> <span class="toc-text">shiro的使用</span></a></li></ol></div></div><div class="post-content"><h1 id="shiro简介"><a href="#shiro简介" class="headerlink" title="shiro简介"></a>shiro简介</h1><p>shiro是权限控制的一个框架<br>是一个强大易用的Java安全框架，提供了认证、授权、加密和会话管理功能，可为任何应用提供安全保障 - 从命令行应用、移动应用到大型网络及企业应用。<br><a id="more"></a></p>
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta name="baidu-site-verification"content="WHXmBFaAkY"/>
+    <meta name="google-site-verification" content="vDyi3jVPymP4jOpfzY4F1zG4-FXD1T-A5unnDJuNxhs" />
+    <meta charset="utf-8">
+    
+
+    <title>spring集成权限校验 | 钢铁锅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="shiro简介shiro是权限控制的一个框架是一个强大易用的Java安全框架，提供了认证、授权、加密和会话管理功能，可为任何应用提供安全保障 - 从命令行应用、移动应用到大型网络及企业应用。">
+<meta name="keywords" content="开发,Java,技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring集成权限校验">
+<meta property="og:url" content="http://gangtieguo.cn/2018/05/08/spring集成权限校验/index.html">
+<meta property="og:site_name" content="钢铁锅">
+<meta property="og:description" content="shiro简介shiro是权限控制的一个框架是一个强大易用的Java安全框架，提供了认证、授权、加密和会话管理功能，可为任何应用提供安全保障 - 从命令行应用、移动应用到大型网络及企业应用。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://img.blog.csdn.net/20170109205450918?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzQ1MTM0Nw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-05-17T12:21:22.941Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring集成权限校验">
+<meta name="twitter:description" content="shiro简介shiro是权限控制的一个框架是一个强大易用的Java安全框架，提供了认证、授权、加密和会话管理功能，可为任何应用提供安全保障 - 从命令行应用、移动应用到大型网络及企业应用。">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170109205450918?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzQ1MTM0Nw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/Basketball-icon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+     <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">钢铁锅</span>
+            </a>
+            <nav id="main-nav">
+            <a class="main-nav-link" href="/."><i class="fa fa-home"></i>主页</a>
+            <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i>归档</a>
+            <a class="main-nav-link" href="/categories"><i class="fa fa-folder"></i>分类</a>
+            <a class="main-nav-link" href="/tags"><i class="fa fa-tags"></i>标签</a>
+            <a class="main-nav-link" href="/about"><i class="fa fa-user"></i>关于</a>
+
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/.">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     主页  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/archives">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     归档  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/categories">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     分类  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/tags">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     标签  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/about">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     关于  -->
+               <!--     </a>  -->
+               <!--   -->
+
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/venum.gif" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+         <!-- <button type="submit" class="search-form-submit"></button> -->
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+             
+
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/venum.gif" />
+            <h2 id="name">GTG</h2>
+            <h3 id="title">Nothing</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>四海为家</span>
+           
+        </div>
+      <div class="article-info profile-block">
+            <div class="article-info-block">
+                59
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                44
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/yaosong5" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/gangtieguo/" target="_blank" title="weibo" class=tooltip>
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+
+        
+        
+    </div>
+
+
+</aside>
+
+
+            
+
+            <section id="main"><article id="post-spring集成权限校验" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            spring集成权限校验
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/05/08/spring集成权限校验/">
+            <time datetime="2018-05-08T10:34:55.000Z" itemprop="datePublished">2018-05-08</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spring/">Spring</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Java/">Java</a>, <a class="tag-link" href="/tags/开发/">开发</a>, <a class="tag-link" href="/tags/技术/">技术</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article "  class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#shiro简介"><span class="toc-number">1.</span> <span class="toc-text">shiro简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#权限控制的方式"><span class="toc-number">1.0.1.</span> <span class="toc-text">权限控制的方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shiro的使用"><span class="toc-number">2.</span> <span class="toc-text">shiro的使用</span></a></li></ol>
+            </div>
+
+
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <h1 id="shiro简介"><a href="#shiro简介" class="headerlink" title="shiro简介"></a>shiro简介</h1><p>shiro是权限控制的一个框架<br>是一个强大易用的Java安全框架，提供了认证、授权、加密和会话管理功能，可为任何应用提供安全保障 - 从命令行应用、移动应用到大型网络及企业应用。<br><a id="more"></a></p>
 <h3 id="权限控制的方式"><a href="#权限控制的方式" class="headerlink" title="权限控制的方式"></a><strong>权限控制的方式</strong></h3><p>权限有四种实现方式<br>注解(基于代理),url拦截(基于过滤器),shiro标签库(基于标签),编写代码(及其不推荐)<br><strong>不论哪种方式:都需要引入spring用于整合shiro的过滤器  </strong><br>web.xml中:DelegatingFilterProxy=&gt;spring整合shiro<br>配置spring提供的用于整合shiro框架的过滤器<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>shiroFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.DelegatingFilterProxy</span><br><span class="line">   <span class="tag">&lt;/<span class="name">fileter</span>&gt;</span></span><br><span class="line">```  </span><br><span class="line">filet-name需要和**spring配置文件**中的一个BEAN对象的id保持一致**非常重要**  </span><br><span class="line"></span><br><span class="line">###  配置   </span><br><span class="line">I. 注解方式,注解是利用生成的代理对象来完成权限校验:   </span><br><span class="line">spring框架会为当前action对象(加注解的action)创建一个代理对象,如果有权限,就执行这个方法,不然就会报**异常**</span><br><span class="line">(将spring,Strust配置文件丰富:添加权限的注解,struts添加捕获异常,跳转页面)  </span><br><span class="line"> 1. 需要在spring配置文件中进行配置开启注解**DefaultAdvisorAutoProxyCreator**,</span><br><span class="line">  并配置成cjlib方式的注解   </span><br><span class="line">```xml</span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"proxyTargetClass"</span> <span class="attr">value</span>=<span class="string">"true"</span>&gt;</span>\<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>注解实现权限当为jdk模式的时候<br>方法注解实现权限过滤<br>抛异常的原因:因为如果是jdk方式的话,实现的接口modelDriven只有一个getModel方法<br>所以不能进行对除该方法外其他方法进行注解</p>
 <ol start="2">
@@ -23,4 +358,198 @@
 <p>4.2实现授权 重写doGetAuthorizationInfo方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> AuthorizationInfo <span class="title">doGetAuthorizationInfo</span><span class="params">(PrincipalCollection principals)</span> </span>&#123;</span><br><span class="line"><span class="comment">/*获的简单授权对象,用于授权的*/</span></span><br><span class="line">  SimpleAuthorizationInfo info = <span class="keyword">new</span> SimpleAuthorizationInfo();</span><br><span class="line">    <span class="comment">/*授权staff权限*/</span></span><br><span class="line">    <span class="comment">//info.addStringPermission("staff");</span></span><br><span class="line">    <span class="comment">//步骤获得授权对象,获得当前用户,获得当前用户的权限(若为admin即授予所有权限),当前用户授权</span></span><br><span class="line">    <span class="comment">//获得对象</span></span><br><span class="line">    User user = (User)principals.getPrimaryPrincipal();</span><br><span class="line">    List&lt;Function&gt; fList = <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">//获得权限</span></span><br><span class="line">    <span class="keyword">if</span>(user.getUsername().equals(<span class="string">"admin"</span>))&#123;</span><br><span class="line">        fList = functionDao.findAll();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        fList = functionDao.findFunctionByUserId(user.getId());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//授予权限</span></span><br><span class="line">    <span class="keyword">for</span>(Function f : fList)&#123;</span><br><span class="line">        info.addStringPermission(f.getCode());</span><br><span class="line">&#125;</span><br><span class="line">```			</span><br><span class="line"></span><br><span class="line">## 关于Shiro中使用 **encache**     </span><br><span class="line"><span class="number">1</span>.引入包   </span><br><span class="line">`在spring配置文件中配置以下`  </span><br><span class="line"><span class="number">2</span>.配置文件ehcache.xml   </span><br><span class="line">```xml</span><br><span class="line">&lt;ehcache xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> xsi:noNamespaceSchemaLocation=<span class="string">"../config/ehcache.xsd"</span>&gt;</span><br><span class="line">    &lt;defaultCache</span><br><span class="line">            maxElementsInMemory=<span class="string">"10000"</span></span><br><span class="line">            eternal=<span class="string">"false"</span></span><br><span class="line">            timeToIdleSeconds=<span class="string">"120"</span></span><br><span class="line">            timeToLiveSeconds=<span class="string">"120"</span></span><br><span class="line">            overflowToDisk=<span class="string">"true"</span></span><br><span class="line">            maxElementsOnDisk=<span class="string">"10000000"</span></span><br><span class="line">            diskPersistent=<span class="string">"false"</span></span><br><span class="line">            diskExpiryThreadIntervalSeconds=<span class="string">"120"</span></span><br><span class="line">            memoryStoreEvictionPolicy=<span class="string">"LRU"</span></span><br><span class="line">            /&gt;</span><br><span class="line">&lt;/ehcache&gt;</span><br><span class="line"> &lt;!--eternal是否永久有效--&gt;</span><br></pre></td></tr></table></figure>
 <p>3.引入缓存管理器<strong>EhCacheManager</strong>(shiro包中的),并设置配置文件;<br>4.将缓存管理器注入安全管理器<strong>DefaultWebSecurityManager</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--注册安全管理器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"securityManager"</span> <span class="attr">class</span>=<span class="string">"org.apache.shiro.web.mgt.DefaultWebSecurityManager"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"realm"</span> <span class="attr">ref</span>=<span class="string">"bosRealm"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"cacheManager"</span> <span class="attr">ref</span>=<span class="string">"ehCacheManager"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"bosRealm"</span> <span class="attr">class</span>=<span class="string">"org.yao.bos.web.action.realm.BOSRealm"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--注入缓存管理器--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"ehCacheManager"</span> <span class="attr">class</span>=<span class="string">"org.apache.shiro.cache.ehcache.EhCacheManager"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"cacheManagerConfigFile"</span> <span class="attr">value</span>=<span class="string">"classpath:ehcache.xml"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-</div><div class="tags"><a href="/tags/开发/">开发</a><a href="/tags/Java/">Java</a><a href="/tags/技术/">技术</a></div><div class="post-nav"><a class="pre" href="/2018/05/10/Linux命令积累/">linux命令</a><a class="next" href="/2018/05/08/博客修改备份/">博客备份.md</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://gangtieguo.cn"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/Jenkins/" style="font-size: 15px;">Jenkins</a> <a href="/tags/Docker-machine/" style="font-size: 15px;">Docker-machine</a> <a href="/tags/安装部署/" style="font-size: 15px;">安装部署</a> <a href="/tags/CDH/" style="font-size: 15px;">CDH</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/HBase/" style="font-size: 15px;">HBase</a> <a href="/tags/操作/" style="font-size: 15px;">操作</a> <a href="/tags/原理/" style="font-size: 15px;">原理</a> <a href="/tags/HDFS/" style="font-size: 15px;">HDFS</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/使用/" style="font-size: 15px;">使用</a> <a href="/tags/Shell/" style="font-size: 15px;">Shell</a> <a href="/tags/报表/" style="font-size: 15px;">报表</a> <a href="/tags/Json/" style="font-size: 15px;">Json</a> <a href="/tags/Scala/" style="font-size: 15px;">Scala</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mysql/" style="font-size: 15px;">Mysql</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/开发/" style="font-size: 15px;">开发</a> <a href="/tags/Ambari/" style="font-size: 15px;">Ambari</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/SSH/" style="font-size: 15px;">SSH</a> <a href="/tags/Spark/" style="font-size: 15px;">Spark</a> <a href="/tags/Yarn/" style="font-size: 15px;">Yarn</a> <a href="/tags/SparkStreaming/" style="font-size: 15px;">SparkStreaming</a> <a href="/tags/SparkSQL/" style="font-size: 15px;">SparkSQL</a> <a href="/tags/RDD/" style="font-size: 15px;">RDD</a> <a href="/tags/ELK/" style="font-size: 15px;">ELK</a> <a href="/tags/es/" style="font-size: 15px;">es</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/FLINK/" style="font-size: 15px;">FLINK</a> <a href="/tags/命令/" style="font-size: 15px;">命令</a> <a href="/tags/Hue/" style="font-size: 15px;">Hue</a> <a href="/tags/技术/" style="font-size: 15px;">技术</a> <a href="/tags/zk/" style="font-size: 15px;">zk</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Other/" style="font-size: 15px;">Other</a> <a href="/tags/快捷键/" style="font-size: 15px;">快捷键</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Idea/" style="font-size: 15px;">Idea</a> <a href="/tags/Finder/" style="font-size: 15px;">Finder</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/">Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/">Spark-on-Yarn源码解析(三)client做的事情</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/">Spark-on-Yarn源码解析(二)Spark-Submit解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/">Spark-on-Yarn源码解析(一)Yarn任务解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/20/MapReduce中Shuffle中的机制/">MapReduce中Shuffle中的机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkSQL介绍/">SparkSQL介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/Spark-On-yarn/">Spark-On-Yarn模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkStreaming介绍/">SparkStreaming介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkRDD介绍/">SparkRDD介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/Hadoop零碎知识点/">Hadoop零碎知识点</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">钢铁锅.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+        <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           如果您觉得文章不错，就请我看场ufc直播🤓🤓🤓🤓🤓！
+        </span>
+        <br>
+      </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 支付宝打赏图案 -->
+        <img src="/css/images/alipay.jpg" alt="支付宝打赏" > 
+        <!-- 微信打赏图案 -->
+        <img src="/css/images/wechatpay.jpg" alt="微信打赏" >  
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            if($('#donate_guide').hasClass('hidden')){
+                $('#donate_guide').removeClass('hidden');
+            }else{
+                $('#donate_guide').addClass('hidden');
+            }
+        }
+    </script>
+</div>
+<! -- 添加捐赠图标 -->
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/05/08/spring集成权限校验/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/05/10/Linux命令积累/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    linux命令
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/05/08/博客修改备份/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">博客备份.md</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="lv-container" data-id="city" data-uid=MTAyMC8zNjM2MS8xMjg5Ng==></div>
+</section>
+    
+
+</section>
+            
+            
+        </div>
+        <footer id="footer">
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol ==='https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 GTG<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+    </div>
+</footer>
+        
+    
+    
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+
+         if (typeof LivereTower === 'function') { return; }
+
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+    </script>
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+  <!-- City版安装代码已完成 -->
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

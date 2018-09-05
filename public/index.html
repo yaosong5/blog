@@ -1,5 +1,404 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="纵浪大化中，不喜亦不悲"><title>钢铁锅 | 应尽便须尽，无复独多虑</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">钢铁锅</h1><a id="logo" href="/.">钢铁锅</a><p class="description">应尽便须尽，无复独多虑</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/">Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分</a></h1><div class="post-meta">2018-09-04</div><div class="post-content"><p>spark-on-yarn系列<br><a href="&quot;http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(一">Spark-on-Yarn 源码解析 (一)Yarn 任务解析</a>Yarn任务解析/“)<br><a href="&quot;http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(二">Spark-on-Yarn 源码解析 (二)Spark-Submit 解析</a>Spark-Submit解析/“)<br><a href="&quot;http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(三">Spark-on-Yarn 源码解析 (三)client 做的事情</a>client做的事情/“)<br><a href="&quot;http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(四">Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务分配调度 stage 划分</a>Spark业务代码的执行及其任务分配调度stage划分/“)</p>
-<h1 id="看看自定义的类"><a href="#看看自定义的类" class="headerlink" title="看看自定义的类"></a>看看自定义的类</h1><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">WordCount</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"yaoWordCount"</span>).setMaster(<span class="string">"local[2]"</span>)</span><br><span class="line">    <span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</span><br><span class="line">    <span class="keyword">var</span> hadoopRDD: <span class="type">RDD</span>[<span class="type">String</span>] = sc.textFile(args(<span class="number">0</span>))</span><br><span class="line">    <span class="keyword">var</span> hdfsRDD: <span class="type">RDD</span>[<span class="type">String</span>] = hadoopRDD.flatMap(_.split(<span class="string">""</span>))</span><br><span class="line">    <span class="comment">//单词和出现的次数，构建RDD并且调用了他的Transformation</span></span><br><span class="line">    <span class="comment">//返回的是一个hadoopRDD</span></span><br><span class="line">    <span class="comment">//transFormation都是返回的RDD</span></span><br><span class="line">    <span class="keyword">var</span> wordAndCount: <span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = hdfsRDD.map((_, <span class="number">1</span>))</span><br><span class="line">    <span class="comment">//创建RDD 这里面有两个RDD,一个是hadoopRDD，然后会生成一个paritionRDD</span></span><br><span class="line">    <span class="comment">//savaasTextfile还会产生一个RDD,因为会调用mapPartitons</span></span><br><span class="line">    <span class="comment">//调用RDD的action 开始真正提交任务</span></span><br><span class="line">    <span class="keyword">var</span> reducedRDD: <span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = wordAndCount.reduceByKey(_ + _)</span><br><span class="line">    reducedRDD.saveAsTextFile(args(<span class="number">1</span>))</span><br><span class="line">    <span class="comment">//关闭saprkContext资源</span></span><br><span class="line">    sc.stop()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><p class="readmore"><a href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/">Spark-on-Yarn源码解析(三)client做的事情</a></h1><div class="post-meta">2018-09-04</div><div class="post-content"><p>[TOC]</p>
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta name="baidu-site-verification"content="WHXmBFaAkY"/>
+    <meta name="google-site-verification" content="vDyi3jVPymP4jOpfzY4F1zG4-FXD1T-A5unnDJuNxhs" />
+    <meta charset="utf-8">
+    
+
+    <title>钢铁锅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="纵浪大化中，不喜亦不悲">
+<meta name="keywords" content="Nothing">
+<meta property="og:type" content="website">
+<meta property="og:title" content="钢铁锅">
+<meta property="og:url" content="http://gangtieguo.cn/index.html">
+<meta property="og:site_name" content="钢铁锅">
+<meta property="og:description" content="纵浪大化中，不喜亦不悲">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="钢铁锅">
+<meta name="twitter:description" content="纵浪大化中，不喜亦不悲">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/Basketball-icon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+     <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">钢铁锅</span>
+            </a>
+            <nav id="main-nav">
+            <a class="main-nav-link" href="/."><i class="fa fa-home"></i>主页</a>
+            <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i>归档</a>
+            <a class="main-nav-link" href="/categories"><i class="fa fa-folder"></i>分类</a>
+            <a class="main-nav-link" href="/tags"><i class="fa fa-tags"></i>标签</a>
+            <a class="main-nav-link" href="/about"><i class="fa fa-user"></i>关于</a>
+
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/.">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     主页  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/archives">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     归档  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/categories">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     分类  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/tags">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     标签  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/about">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     关于  -->
+               <!--     </a>  -->
+               <!--   -->
+
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/venum.gif" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+         <!-- <button type="submit" class="search-form-submit"></button> -->
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+             
+
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/venum.gif" />
+            <h2 id="name">GTG</h2>
+            <h3 id="title">Nothing</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>四海为家</span>
+           
+        </div>
+      <div class="article-info profile-block">
+            <div class="article-info-block">
+                59
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                44
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/yaosong5" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/gangtieguo/" target="_blank" title="weibo" class=tooltip>
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+
+        
+        
+    </div>
+
+
+</aside>
+
+
+            
+
+            <section id="main">
+    <article id="post-Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/">Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/">
+            <time datetime="2018-09-04T08:16:39.931Z" itemprop="datePublished">2018-09-04</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>spark-on-yarn系列<br><a href="&quot;http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(一">Spark-on-Yarn 源码解析 (一)Yarn 任务解析</a>Yarn任务解析/“)<br><a href="&quot;http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(二">Spark-on-Yarn 源码解析 (二)Spark-Submit 解析</a>Spark-Submit解析/“)<br><a href="&quot;http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(三">Spark-on-Yarn 源码解析 (三)client 做的事情</a>client做的事情/“)<br><a href="&quot;http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(四">Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务分配调度 stage 划分</a>Spark业务代码的执行及其任务分配调度stage划分/“)</p>
+<h1 id="看看自定义的类"><a href="#看看自定义的类" class="headerlink" title="看看自定义的类"></a>看看自定义的类</h1><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">WordCount</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"yaoWordCount"</span>).setMaster(<span class="string">"local[2]"</span>)</span><br><span class="line">    <span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</span><br><span class="line">    <span class="keyword">var</span> hadoopRDD: <span class="type">RDD</span>[<span class="type">String</span>] = sc.textFile(args(<span class="number">0</span>))</span><br><span class="line">    <span class="keyword">var</span> hdfsRDD: <span class="type">RDD</span>[<span class="type">String</span>] = hadoopRDD.flatMap(_.split(<span class="string">""</span>))</span><br><span class="line">    <span class="comment">//单词和出现的次数，构建RDD并且调用了他的Transformation</span></span><br><span class="line">    <span class="comment">//返回的是一个hadoopRDD</span></span><br><span class="line">    <span class="comment">//transFormation都是返回的RDD</span></span><br><span class="line">    <span class="keyword">var</span> wordAndCount: <span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = hdfsRDD.map((_, <span class="number">1</span>))</span><br><span class="line">    <span class="comment">//创建RDD 这里面有两个RDD,一个是hadoopRDD，然后会生成一个paritionRDD</span></span><br><span class="line">    <span class="comment">//savaasTextfile还会产生一个RDD,因为会调用mapPartitons</span></span><br><span class="line">    <span class="comment">//调用RDD的action 开始真正提交任务</span></span><br><span class="line">    <span class="keyword">var</span> reducedRDD: <span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = wordAndCount.reduceByKey(_ + _)</span><br><span class="line">    reducedRDD.saveAsTextFile(args(<span class="number">1</span>))</span><br><span class="line">    <span class="comment">//关闭saprkContext资源</span></span><br><span class="line">    sc.stop()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Spark-on-Yarn源码解析(三)client做的事情" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/">Spark-on-Yarn源码解析(三)client做的事情</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/">
+            <time datetime="2018-09-04T08:13:34.283Z" itemprop="datePublished">2018-09-04</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]</p>
 <p>spark-on-yarn系列</p>
 <p><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(一" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (一)Yarn 任务解析</a>Yarn任务解析/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(二" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (二)Spark-Submit 解析</a>Spark-Submit解析/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(三" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (三)client 做的事情</a>client做的事情/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(四" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务分配调度 stage 划分</a>Spark业务代码的执行及其任务分配调度stage划分/)</p>
 <p>org.apache.spark.deploy.yarn.Client</p>
@@ -19,7 +418,114 @@
                 -&gt;createApplicationSubmissionContext()
                     -&gt;Records.newRecord(classOf[Resource])启动
                 -&gt;yarnClientImpl.submitApplication(appContext)                
-</code></pre></div><p class="readmore"><a href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/">Spark-on-Yarn源码解析(二)Spark-Submit解析</a></h1><div class="post-meta">2018-09-04</div><div class="post-content"><p>[TOC]</p>
+</code></pre></p>
+            <p class="article-more-link">
+                <a href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Spark-on-Yarn源码解析(二)Spark-Submit解析" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/">Spark-on-Yarn源码解析(二)Spark-Submit解析</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/">
+            <time datetime="2018-09-04T08:03:50.700Z" itemprop="datePublished">2018-09-04</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]</p>
 <p>spark-on-yarn系列</p>
 <p><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(一" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (一)Yarn 任务解析</a>Yarn任务解析/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(二" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (二)Spark-Submit 解析</a>Spark-Submit解析/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(三" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (三)client 做的事情</a>client做的事情/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(四" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务分配调度 stage 划分</a>Spark业务代码的执行及其任务分配调度stage划分/)</p>
 <p>上文我们了解到了yarn的架构和执行任务的流程，接下来我们看看</p>
@@ -35,22 +541,1031 @@
 --executor-cores 4 \ //为每一个executor申请的core
 --conf spark.yarn.driver.memoryOverhead=1g \ //driver可使用的非堆内存，这些内存用于如VM，字符 串常量池以及其他额外本地开销等
 --conf spark.yarn.executor.memoryOverhead=2g \ //每个executor可使用的非堆内存，这些内存用于如 VM，字符串常量池以及其他额外本地开销等
-</code></pre><p>这是通常我们提交spark程序的submit命令，以此为切入点，对spark程序的运行流程做一个跟踪和分析。<br></div><p class="readmore"><a href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/">Spark-on-Yarn源码解析(一)Yarn任务解析</a></h1><div class="post-meta">2018-09-04</div><div class="post-content"><p>[TOC]</p>
+</code></pre><p>这是通常我们提交spark程序的submit命令，以此为切入点，对spark程序的运行流程做一个跟踪和分析。<br></p>
+            <p class="article-more-link">
+                <a href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Spark-on-Yarn源码解析(一)Yarn任务解析" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/">Spark-on-Yarn源码解析(一)Yarn任务解析</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/">
+            <time datetime="2018-09-04T07:44:58.661Z" itemprop="datePublished">2018-09-04</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/Yarn/">Yarn</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]</p>
 <p>spark-on-yarn系列<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(一" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (一)Yarn 任务解析</a>Yarn任务解析/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(二" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (二)Spark-Submit 解析</a>Spark-Submit解析/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(三" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (三)client 做的事情</a>client做的事情/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(四" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务分配调度 stage 划分</a>Spark业务代码的执行及其任务分配调度stage划分/)</p>
 <p>了解spark-on-yarn,首先我们了解一下yarn提交的流程，俗话说，欲练此功，错了，我们还是先看吧</p>
 <h1 id="yarn任务的提交"><a href="#yarn任务的提交" class="headerlink" title="yarn任务的提交"></a>yarn任务的提交</h1><p>YARN 的基本架构和工作流程</p>
 <p><img src="http://pebgsxjpj.bkt.clouddn.com/15358192541466.jpg" alt=""></p>
-<p>YARN 的基本架构如上图所示，由三大功能模块组成，分别是 1) RM (ResourceManager) 2) NM (Node Manager) 3) AM(Application Master)<br></div><p class="readmore"><a href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/20/MapReduce中Shuffle中的机制/">MapReduce中Shuffle中的机制</a></h1><div class="post-meta">2018-08-20</div><div class="post-content"><p>[TOC]</p>
+<p>YARN 的基本架构如上图所示，由三大功能模块组成，分别是 1) RM (ResourceManager) 2) NM (Node Manager) 3) AM(Application Master)<br></p>
+            <p class="article-more-link">
+                <a href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-MapReduce中Shuffle中的机制" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/20/MapReduce中Shuffle中的机制/">MapReduce中Shuffle中的机制</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/20/MapReduce中Shuffle中的机制/">
+            <time datetime="2018-08-20T02:12:26.791Z" itemprop="datePublished">2018-08-20</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]</p>
 <p>官方的shuffle流程</p>
 <p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg" alt=""></p>
 <h1 id="shuffle原理"><a href="#shuffle原理" class="headerlink" title="shuffle原理"></a>shuffle原理</h1><p>提到MapReduce，就不得不提一下shuffle。</p>
-<p>MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map 任务完成后，它会生成一些中间文件，这些中间文件将会作为Reduce 任务的输入数据。Reduce 任务的主要目标就是把前面若干个Map 的输出汇总到一起并输出。</p></div><p class="readmore"><a href="/2018/08/20/MapReduce中Shuffle中的机制/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/16/SparkSQL介绍/">SparkSQL介绍</a></h1><div class="post-meta">2018-08-16</div><div class="post-content"><p>[TOC]</p>
-<p>Hive，它是将Hive SQL转换成MapReduce然后提交到集群上执行，大大简化了编写MapReduce的程序的复杂性，由于MapReduce这种计算模型执行效率比较慢。所有Spark SQL的应运而生，它是将Spark SQL转换成RDD，然后提交到集群执行，执行效率非常快！</p></div><p class="readmore"><a href="/2018/08/16/SparkSQL介绍/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/16/Spark-On-yarn/">Spark-On-Yarn模式</a></h1><div class="post-meta">2018-08-16</div><div class="post-content"><p>[TOC]</p>
+<p>MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map 任务完成后，它会生成一些中间文件，这些中间文件将会作为Reduce 任务的输入数据。Reduce 任务的主要目标就是把前面若干个Map 的输出汇总到一起并输出。</p></p>
+            <p class="article-more-link">
+                <a href="/2018/08/20/MapReduce中Shuffle中的机制/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/20/MapReduce中Shuffle中的机制/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-SparkSQL介绍" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/16/SparkSQL介绍/">SparkSQL介绍</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/16/SparkSQL介绍/">
+            <time datetime="2018-08-15T18:04:32.317Z" itemprop="datePublished">2018-08-16</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/SparkSQL/">SparkSQL</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]</p>
+<p>Hive，它是将Hive SQL转换成MapReduce然后提交到集群上执行，大大简化了编写MapReduce的程序的复杂性，由于MapReduce这种计算模型执行效率比较慢。所有Spark SQL的应运而生，它是将Spark SQL转换成RDD，然后提交到集群执行，执行效率非常快！</p></p>
+            <p class="article-more-link">
+                <a href="/2018/08/16/SparkSQL介绍/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/16/SparkSQL介绍/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Spark-On-yarn" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/16/Spark-On-yarn/">Spark-On-Yarn模式</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/16/Spark-On-yarn/">
+            <time datetime="2018-08-15T17:58:01.513Z" itemprop="datePublished">2018-08-16</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/使用/">使用</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]</p>
 <h1 id="SparkOnYarn"><a href="#SparkOnYarn" class="headerlink" title="SparkOnYarn"></a>SparkOnYarn</h1><h1 id="两种模式区别"><a href="#两种模式区别" class="headerlink" title="两种模式区别"></a>两种模式区别</h1><h2 id="cluster模式："><a href="#cluster模式：" class="headerlink" title="cluster模式："></a>cluster模式：</h2><p>Driver程序在YARN中运行，应用的运行结果不能在客户端显示，所以最好运行那些将结果最终保存在外部存储介质（如HDFS、Redis、Mysql）而非stdout输出的应用程序，客户端的终端显示的仅是作为YARN的job的简单运行状况。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">./bin/spark-submit --class org.apache.spark.examples.SparkPi \</span><br><span class="line">--master yarn \</span><br><span class="line">--deploy-mode cluster \</span><br><span class="line">--driver-memory 1g \</span><br><span class="line">--executor-memory 1g \</span><br><span class="line">--executor-cores 2 \</span><br><span class="line">--queue default \</span><br><span class="line">lib/spark-examples*.jar \</span><br><span class="line">10</span><br><span class="line"></span><br><span class="line">./bin/spark-submit --class cn.itcast.spark.day1.WordCount \</span><br><span class="line">--master yarn \</span><br><span class="line">--deploy-mode cluster \</span><br><span class="line">--driver-memory 1g \</span><br><span class="line">--executor-memory 1g \</span><br><span class="line">--executor-cores 2 \</span><br><span class="line">--queue default \</span><br><span class="line">/home/bigdata/hello-spark-1.0.jar \</span><br><span class="line">hdfs://master:9000/wc hdfs://master:9000/out-yarn-1</span><br></pre></td></tr></table></figure></div><p class="readmore"><a href="/2018/08/16/Spark-On-yarn/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/16/SparkStreaming介绍/">SparkStreaming介绍</a></h1><div class="post-meta">2018-08-16</div><div class="post-content"><p>[TOC]</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">./bin/spark-submit --class org.apache.spark.examples.SparkPi \</span><br><span class="line">--master yarn \</span><br><span class="line">--deploy-mode cluster \</span><br><span class="line">--driver-memory 1g \</span><br><span class="line">--executor-memory 1g \</span><br><span class="line">--executor-cores 2 \</span><br><span class="line">--queue default \</span><br><span class="line">lib/spark-examples*.jar \</span><br><span class="line">10</span><br><span class="line"></span><br><span class="line">./bin/spark-submit --class cn.itcast.spark.day1.WordCount \</span><br><span class="line">--master yarn \</span><br><span class="line">--deploy-mode cluster \</span><br><span class="line">--driver-memory 1g \</span><br><span class="line">--executor-memory 1g \</span><br><span class="line">--executor-cores 2 \</span><br><span class="line">--queue default \</span><br><span class="line">/home/bigdata/hello-spark-1.0.jar \</span><br><span class="line">hdfs://master:9000/wc hdfs://master:9000/out-yarn-1</span><br></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2018/08/16/Spark-On-yarn/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/16/Spark-On-yarn/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-SparkStreaming介绍" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/16/SparkStreaming介绍/">SparkStreaming介绍</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/16/SparkStreaming介绍/">
+            <time datetime="2018-08-15T17:50:47.842Z" itemprop="datePublished">2018-08-16</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/SparkStreaming/">SparkStreaming</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]</p>
 <p>大数据领域，分为离线计算和实时计算 </p>
 <p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fuaxkz7halj30i6057dfw.jpg" alt=""></p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fuaxl270fuj30kj034jrd.jpg" alt=""></p></div><p class="readmore"><a href="/2018/08/16/SparkStreaming介绍/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/16/SparkRDD介绍/">SparkRDD介绍</a></h1><div class="post-meta">2018-08-16</div><div class="post-content"><p>[TOC]</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sc.textfile(<span class="string">"hdfs://master:9000/wc"</span>).flatMap(_.split(<span class="string">"分隔符"</span>)).map((_,<span class="number">1</span>)).reduceByKey(_+_).saveAsTextFile(<span class="string">"hdfs://master:9000/wcResult"</span>)</span><br></pre></td></tr></table></figure></div><p class="readmore"><a href="/2018/08/16/SparkRDD介绍/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/08/16/Hadoop零碎知识点/">Hadoop零碎知识点</a></h1><div class="post-meta">2018-08-16</div><div class="post-content"><p>[TOC]</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fuaxl270fuj30kj034jrd.jpg" alt=""></p></p>
+            <p class="article-more-link">
+                <a href="/2018/08/16/SparkStreaming介绍/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/16/SparkStreaming介绍/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-SparkRDD介绍" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/16/SparkRDD介绍/">SparkRDD介绍</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/16/SparkRDD介绍/">
+            <time datetime="2018-08-15T16:49:49.734Z" itemprop="datePublished">2018-08-16</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/RDD/">RDD</a>, <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sc.textfile(<span class="string">"hdfs://master:9000/wc"</span>).flatMap(_.split(<span class="string">"分隔符"</span>)).map((_,<span class="number">1</span>)).reduceByKey(_+_).saveAsTextFile(<span class="string">"hdfs://master:9000/wcResult"</span>)</span><br></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2018/08/16/SparkRDD介绍/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/16/SparkRDD介绍/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Hadoop零碎知识点" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/16/Hadoop零碎知识点/">Hadoop零碎知识点</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/16/Hadoop零碎知识点/">
+            <time datetime="2018-08-15T16:34:55.243Z" itemprop="datePublished">2018-08-16</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/HDFS/">HDFS</a>, <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>[TOC]</p>
 <h2 id="查看元数据信息"><a href="#查看元数据信息" class="headerlink" title="查看元数据信息"></a>查看元数据信息</h2><p>可以通过hdfs的一个工具来查看edits中的信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs oev -i edits -o edits.xml</span><br><span class="line">bin/hdfs oiv -i fsimage_0000000000000000087 -p XML -o fsimage.xml</span><br></pre></td></tr></table></figure></div><p class="readmore"><a href="/2018/08/16/Hadoop零碎知识点/">阅读全文</a></p></div><nav class="page-navigator"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">下一页</a></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://gangtieguo.cn"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/Jenkins/" style="font-size: 15px;">Jenkins</a> <a href="/tags/Docker-machine/" style="font-size: 15px;">Docker-machine</a> <a href="/tags/安装部署/" style="font-size: 15px;">安装部署</a> <a href="/tags/CDH/" style="font-size: 15px;">CDH</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/HBase/" style="font-size: 15px;">HBase</a> <a href="/tags/操作/" style="font-size: 15px;">操作</a> <a href="/tags/原理/" style="font-size: 15px;">原理</a> <a href="/tags/HDFS/" style="font-size: 15px;">HDFS</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/使用/" style="font-size: 15px;">使用</a> <a href="/tags/Shell/" style="font-size: 15px;">Shell</a> <a href="/tags/报表/" style="font-size: 15px;">报表</a> <a href="/tags/Json/" style="font-size: 15px;">Json</a> <a href="/tags/Scala/" style="font-size: 15px;">Scala</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mysql/" style="font-size: 15px;">Mysql</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/开发/" style="font-size: 15px;">开发</a> <a href="/tags/Ambari/" style="font-size: 15px;">Ambari</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/SSH/" style="font-size: 15px;">SSH</a> <a href="/tags/Spark/" style="font-size: 15px;">Spark</a> <a href="/tags/Yarn/" style="font-size: 15px;">Yarn</a> <a href="/tags/SparkStreaming/" style="font-size: 15px;">SparkStreaming</a> <a href="/tags/SparkSQL/" style="font-size: 15px;">SparkSQL</a> <a href="/tags/RDD/" style="font-size: 15px;">RDD</a> <a href="/tags/ELK/" style="font-size: 15px;">ELK</a> <a href="/tags/es/" style="font-size: 15px;">es</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/FLINK/" style="font-size: 15px;">FLINK</a> <a href="/tags/命令/" style="font-size: 15px;">命令</a> <a href="/tags/Hue/" style="font-size: 15px;">Hue</a> <a href="/tags/技术/" style="font-size: 15px;">技术</a> <a href="/tags/zk/" style="font-size: 15px;">zk</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Other/" style="font-size: 15px;">Other</a> <a href="/tags/快捷键/" style="font-size: 15px;">快捷键</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Idea/" style="font-size: 15px;">Idea</a> <a href="/tags/Finder/" style="font-size: 15px;">Finder</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/">Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/">Spark-on-Yarn源码解析(三)client做的事情</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/">Spark-on-Yarn源码解析(二)Spark-Submit解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/">Spark-on-Yarn源码解析(一)Yarn任务解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/20/MapReduce中Shuffle中的机制/">MapReduce中Shuffle中的机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkSQL介绍/">SparkSQL介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/Spark-On-yarn/">Spark-On-Yarn模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkStreaming介绍/">SparkStreaming介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/SparkRDD介绍/">SparkRDD介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/Hadoop零碎知识点/">Hadoop零碎知识点</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">钢铁锅.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs oev -i edits -o edits.xml</span><br><span class="line">bin/hdfs oiv -i fsimage_0000000000000000087 -p XML -o fsimage.xml</span><br></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2018/08/16/Hadoop零碎知识点/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/16/Hadoop零碎知识点/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <nav id="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+    </nav>
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-book"></i>最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></p>
+                            <p class="item-title"><a href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/" class="title">Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分</a></p>
+                            <p class="item-date"><time datetime="2018-09-04T08:16:39.931Z" itemprop="datePublished">2018-09-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></p>
+                            <p class="item-title"><a href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/" class="title">Spark-on-Yarn源码解析(三)client做的事情</a></p>
+                            <p class="item-date"><time datetime="2018-09-04T08:13:34.283Z" itemprop="datePublished">2018-09-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></p>
+                            <p class="item-title"><a href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/" class="title">Spark-on-Yarn源码解析(二)Spark-Submit解析</a></p>
+                            <p class="item-date"><time datetime="2018-09-04T08:03:50.700Z" itemprop="datePublished">2018-09-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a></p>
+                            <p class="item-title"><a href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/" class="title">Spark-on-Yarn源码解析(一)Yarn任务解析</a></p>
+                            <p class="item-date"><time datetime="2018-09-04T07:44:58.661Z" itemprop="datePublished">2018-09-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
+                            <p class="item-title"><a href="/2018/08/20/MapReduce中Shuffle中的机制/" class="title">MapReduce中Shuffle中的机制</a></p>
+                            <p class="item-date"><time datetime="2018-08-20T02:12:26.791Z" itemprop="datePublished">2018-08-20</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-archive"></i>归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-folder"></i>分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">23</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-folder"></i>标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDH/">CDH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/">HBase</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HDFS/">HDFS</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/">Json</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDD/">RDD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkSQL/">SparkSQL</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkStreaming/">SparkStreaming</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es/">es</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zk/">zk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/使用/">使用</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/原理/">原理</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安装部署/">安装部署</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/报表/">报表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作/">操作</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><i class="fa fa-tags"></i>标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/tags/CDH/" style="font-size: 10px;">CDH</a> <a href="/tags/Docker/" style="font-size: 18.33px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/ELK/" style="font-size: 11.67px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HBase/" style="font-size: 15px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 13.33px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.67px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 13.33px;">Hexo</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 11.67px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/RDD/" style="font-size: 10px;">RDD</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Scala/" style="font-size: 11.67px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/SparkSQL/" style="font-size: 11.67px;">SparkSQL</a> <a href="/tags/SparkStreaming/" style="font-size: 11.67px;">SparkStreaming</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/es/" style="font-size: 10px;">es</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/zk/" style="font-size: 10px;">zk</a> <a href="/tags/使用/" style="font-size: 11.67px;">使用</a> <a href="/tags/原理/" style="font-size: 18.33px;">原理</a> <a href="/tags/命令/" style="font-size: 11.67px;">命令</a> <a href="/tags/大数据/" style="font-size: 11.67px;">大数据</a> <a href="/tags/安装部署/" style="font-size: 10px;">安装部署</a> <a href="/tags/开发/" style="font-size: 11.67px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/报表/" style="font-size: 10px;">报表</a> <a href="/tags/操作/" style="font-size: 10px;">操作</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title"><i class="fa fa-link"></i>链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://gangtieguo.cn"  target="_blank">GTG</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+            
+        </div>
+        <footer id="footer">
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol ==='https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 GTG<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+    </div>
+</footer>
+        
+    
+    
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+
+         if (typeof LivereTower === 'function') { return; }
+
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+    </script>
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+  <!-- City版安装代码已完成 -->
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
