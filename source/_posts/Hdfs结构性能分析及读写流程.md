@@ -8,13 +8,15 @@ toc: true
 
 [TOC]
 
-
-
 # hdfs的设计思想
 分而治之：将大文件、大批量文件，分布式存放在大量服务器上，以便于采取分而治之的方式对海量数据进行运算分析
 首先，它是一个文件系统，用于存储文件，通过统一的命名空间——目录树来定位文件
-# hdfs功能和特点
 其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有各自的角色；
+
+<!-- more -->
+
+# hdfs功能和特点
+
 
 hdfs的重要特性如下：
 
@@ -23,7 +25,7 @@ hdfs的重要特性如下：
 * HDFS文件系统会给客户端提供一个统一的抽象目录树，客户端通过路径来访问文件，形如：hdfs://namenode:port/dir-a/dir-b/dir-c/file.data
 
 * 目录结构及文件分块信息(元数据)的管理由namenode节点承担
-——namenode是HDFS集群主节点，负责维护整个hdfs文件系统的目录树，以及每一个路径（文件）所对应的block块信息（block的id，及所在的datanode服务器）
+  ——namenode是HDFS集群主节点，负责维护整个hdfs文件系统的目录树，以及每一个路径（文件）所对应的block块信息（block的id，及所在的datanode服务器）
 
 
 * 文件的各个block的存储管理由datanode节点承担---- datanode是HDFS集群从节点，每一个block都可以在多个datanode上存储多个副本（副本数量也可以通过参数设置dfs.replication）
@@ -109,74 +111,55 @@ HDFS是设计成适应一次写入，多次读出的场景，且不支持文件�
 
 # hdfs元数据管理
 namenode对数据的管理采用了三种存储形式：
+
 * 内存元数据(NameSystem)
 * 磁盘元数据镜像文件fsimage
 * 数据操作日志文件edits（可通过日志运算出元数据）
+  ![](http://pebgsxjpj.bkt.clouddn.com/15361544670231.jpg)
+
+磁盘文件我们可以通过查看namenode的目录结构看到：
+![](http://pebgsxjpj.bkt.clouddn.com/15361574063204.jpg)
+
+A、内存中有一份完整的元数据(内存meta data)
+B、磁盘有一个“准完整”的元数据镜像（fsimage）文件(在namenode的工作目录中)
+C、用于衔接内存metadata和持久化元数据镜像fsimage之间的操作日志（edits文件
+注：当客户端对hdfs中的文件进行新增或者修改操作，操作记录首先被记入edits日志文件中，当客户端操作成功后，相应的元数据会更新到内存meta.data中
 
 
 
-# namenode和secondaryNameNode最好不要放在一台机器上
+# namenode管理元数据解析
 
-宕机可能导致数据不能恢复 
-测试环境或者学习环境可以弄在一台机器上
-
-<!-- more -->
-
-# hdfs中namenode和datanode的初始化
-
-hdfs会在配置文件中配置一个datanode的工作目录元数据 
-查看目录结构 tree hddata/ 
-![](http://pebgsxjpj.bkt.clouddn.com/15361184837100.jpg)
-
-datanode的工作目录是在datanode启动后初始化的 
-而hadoop namenode format 只会初始name的工作目录，和datanode没有关系
-
-# 把一个hdfs的一个节点加入到另一个集群
-
-必须要将hdfs datanode的工作目录删除，不然持有上一个集群的datanode的工作目录，会认为是一个误操作，为了防止丢失数据，不会让其连接上
-
-# 如果集群够大，上百台机器
-
-那么在hdfs上面，是需要配置机架感知
-
-# namenode管理元数据
-
-namenode会将元数据放在内存里面，这样方便快速对数据的请求 
-但是放在内存中是不安全的，所有就序列化到fsimage里面 
-![](http://pebgsxjpj.bkt.clouddn.com/15361185020433.jpg)
-
-就像jvm中dump，将内存中所有数据dump出去 
-假如 
-![](http://pebgsxjpj.bkt.clouddn.com/15361185156029.jpg)
-
-所以存大文件划算，因为元数据消耗的内存都是一样的 
-![](http://pebgsxjpj.bkt.clouddn.com/15361185255463.jpg)
-
-但是内存中的数据量太大，不可能经常序列化，所以需要定时序列化
+namenode会将元数据放在内存里面，这样方便快速对数据的请求，由于放在内存中是不安全的，所以就序列化到fsimage里面，就像jvm中dump，将内存中所有数据dump出去,由于一条元数据大小为150byte，hdfs不利于存储小块文件，所以存大文件划算，因为元数据消耗的内存都是一样的，但是内存中的数据量太大，不可能经常序列化，所以需要定时序列化
 
 ## 所以引入了secondaryNameNode
 
 更新元数据的时候，不可能去直接跟更改元数据fsimage文件，因为文件是线性结构，假如遇到更改中间内容会很不方便，所有就将操作信息记录在edits日志文件中，只是记录操作信息
 
-### edits文件定期转为元数据
+## edits文件定期转为元数据
 
 为了防止edits过多，导致在启动hdfs集群datanode的时候会很慢，因为需要将edits通过转化形成为元数据fsimage文件，所以应该定期将edits文件转换为fsimage元数据，然后将fsimage替换掉
 
-### secondaryNameNode的出现
+## secondaryNameNode的出现
 
 如果nameNode来做上面的edits转换为元数据的话，由于消耗的资源太大，就不能为其他比如从hdfs中读取数据服务提供资源，或者提供服务的效果不好 
 所以这个时候就把合并操作交给secondNameNode来做 
 这个过程叫做checkpoint 
-![](http://pebgsxjpj.bkt.clouddn.com/15361185357534.jpg)
+
+**namenode和secondaryNameNode最好不要放在一台机器上**
+
+宕机可能导致数据不能恢复 
+测试环境或者学习环境可以弄在一台机器上
 
 
-## 为了防止namenode宕机导致了数据丢失
+
+
+## 为了防止namenode宕机导致了数据丢失所作配置
 
 可以在hdfs-site.xml文件中在多个机器上的目录来保存name的edits，fsimage文件
 
 
 ```xml
- <property>
+<property>
         <name>dfs.name.dir</name>
         <value>/home/bigdata/names1,/home/bigdata/names2</value>
 </property>
@@ -185,12 +168,42 @@ namenode会将元数据放在内存里面，这样方便快速对数据的请求
 配置的多个的话，会同时往这两个目录中写
 
 如果不配置这个默认的目录是core-site.xml文件中配置的hadoop的临时文件 
- 
 
 ```xml
- <property> 
-​       <name>hadoop.tmp.dir</name> 
-​       <value>/home/bigdata/apps/hadoop-2.6.4/tmp</value> 
-   </property> 
+<property> 
+   <name>hadoop.tmp.dir</name> 
+    <value>/home/bigdata/apps/hadoop-2.6.4/tmp</value> 
+</property> 
 ```
+
+
+
+
+## 小贴士
+
+
+
+
+
+
+![](https://ws1.sinaimg.cn/large/006tNbRwly1fubqgn0culj31eo0nm401.jpg)
+
+**hdfs中datanode的初始化**
+
+hdfs会在配置文件中配置一个namenode的工作目录元数据 
+
+查看目录结构 tree $DATANODE/ 
+![](http://pebgsxjpj.bkt.clouddn.com/15361570887042.jpg)
+
+
+
+datanode的工作目录是在datanode启动后初始化的 
+而hadoop namenode format 只会初始name的工作目录，和datanode没有关系
+
+**如何把一个hdfs的一个节点加入到另一个集群**
+因为在原来的目录中会有原来集群的信息如：ClusterID
+![](http://pebgsxjpj.bkt.clouddn.com/15361571791381.jpg)
+
+必须要将hdfs datanode的工作目录删除，不然持有上一个集群的datanode的工作目录，会认为是一个误操作，为了防止丢失数据，不会让其连接上
+
 

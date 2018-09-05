@@ -50,6 +50,16 @@ sshfs  root@master:/usr/hadoop  /usr/hive/hadoop
 也可验证对应端口程序是否启动
 `netstat -nl|grep 10000`
 
+# tree
+
+```shell
+yum install -y tree
+```
+
+tree 可以查看目录结构
+
+
+
 
 
 # 虚拟机共享文件夹
