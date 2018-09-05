@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15360627860827.jpg">
 <meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15360627909583.jpg">
 <meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15360698161149.jpg">
-<meta property="og:updated_time" content="2018-09-05T17:25:10.943Z">
+<meta property="og:updated_time" content="2018-09-05T17:25:37.485Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DataStream DataSet介绍">
 <meta name="twitter:description" content="[TOC] 什么是DataStreamDiscretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图： 与RDD类似，DataFrame也是一个分布式数据容器。然而DataFrame更像传统数据库的二维表格，除了数据以外，">
@@ -309,7 +309,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是DataStream"><span class="toc-number">1.</span> <span class="toc-text">什么是DataStream</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是DataStream"><span class="toc-number">1.</span> <span class="toc-text">什么是DataStream</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DataStream相关操作"><span class="toc-number">2.</span> <span class="toc-text">DataStream相关操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Transformations-on-DStreams"><span class="toc-number">2.1.</span> <span class="toc-text">Transformations on DStreams</span></a></li></ol></li></ol>
             </div>
 
 
@@ -343,6 +343,69 @@ var _hmt = _hmt || [];
 <p>计算过程由Spark engine来完成<br><img src="http://pebgsxjpj.bkt.clouddn.com/15360627909583.jpg" alt=""></p>
 <p>Datasets 与DataFrames 与RDDs的关系<br><img src="http://pebgsxjpj.bkt.clouddn.com/15360698161149.jpg" alt=""></p>
 <p>Spark引入DataFrame，它可以提供high-level functions让Spark更好的处理结构数据的计算。这让Catalyst optimizer 和Tungsten（钨丝） execution engine自动加速大数据分析。<br>发布DataFrame之后开发者收到了很多反馈，其中一个主要的是大家反映缺乏编译时类型安全。为了解决这个问题，Spark采用新的Dataset API (DataFrame API的类型扩展)。<br>Dataset API扩展DataFrame API支持静态类型和运行已经存在的Scala或Java语言的用户自定义函数。对比传统的RDD API，Dataset API提供更好的内存管理，特别是在长任务中有更好的性能提升</p>
+<h1 id="DataStream相关操作"><a href="#DataStream相关操作" class="headerlink" title="DataStream相关操作"></a>DataStream相关操作</h1><p>DStream上的原语与RDD的类似，分为Transformations（转换）和OutputOperations（输出）两种，此外转换操作中还有一些比较特殊的原语，如：updateStateByKey()、transform()以及各种Window相关的原语。</p>
+<h2 id="Transformations-on-DStreams"><a href="#Transformations-on-DStreams" class="headerlink" title="Transformations on DStreams"></a>Transformations on DStreams</h2><table>
+<thead>
+<tr>
+<th>Transformation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>map(func)</td>
+<td>Return a new DStream by passing each  element of the source DStream through a function func.</td>
+</tr>
+<tr>
+<td>flatMap(func)</td>
+<td>Similar to map, but each input item can  be mapped to 0 or more output items.</td>
+</tr>
+<tr>
+<td>filter(func)</td>
+<td>Return a new DStream by selecting only  the records of the source DStream on which func returns true.</td>
+</tr>
+<tr>
+<td>repartition(numPartitions)</td>
+<td>Changes the level of parallelism in this  DStream by creating more or fewer partitions.</td>
+</tr>
+<tr>
+<td>union(otherStream)</td>
+<td>Return a new DStream that contains the  union of the elements in the source DStream and otherDStream.</td>
+</tr>
+<tr>
+<td>count()</td>
+<td>Return a new DStream of single-element  RDDs by counting the number of elements in each RDD of the source DStream.</td>
+</tr>
+<tr>
+<td>reduce(func)</td>
+<td>Return a new DStream of single-element  RDDs by aggregating the elements in each RDD of the source DStream using a  function func (which takes two arguments and returns one). The function  should be associative so that it can be computed in parallel.</td>
+</tr>
+<tr>
+<td>countByValue()</td>
+<td>When called on a DStream of elements of  type K, return a new DStream of (K, Long) pairs where the value of each key  is its frequency in each RDD of the source DStream.</td>
+</tr>
+<tr>
+<td>reduceByKey(func, [numTasks])</td>
+<td>When called on a DStream of (K, V) pairs,  return a new DStream of (K, V) pairs where the values for each key are  aggregated using the given reduce function. Note: By default, this uses Spark’s  default number of parallel tasks (2 for local mode, and in cluster mode the  number is determined by the config property spark.default.parallelism) to do  the grouping. You can pass an optional numTasks argument to set a different  number of tasks.</td>
+</tr>
+<tr>
+<td>join(otherStream, [numTasks])</td>
+<td>When called on two DStreams of (K, V) and  (K, W) pairs, return a new DStream of (K, (V, W)) pairs with all pairs of  elements for each key.</td>
+</tr>
+<tr>
+<td>cogroup(otherStream, [numTasks])</td>
+<td>When called on a DStream of (K, V) and  (K, W) pairs, return a new DStream of (K, Seq[V], Seq[W]) tuples.</td>
+</tr>
+<tr>
+<td>transform(func)</td>
+<td>Return a new DStream by applying a  RDD-to-RDD function to every RDD of the source DStream. This can be used to  do arbitrary RDD operations on the DStream.</td>
+</tr>
+<tr>
+<td>updateStateByKey(func)</td>
+<td>Return a new “state” DStream  where the state for each key is updated by applying the given function on the  previous state of the key and the new values for the key. This can be used to  maintain arbitrary state data for each key.</td>
+</tr>
+</tbody>
+</table>
 
             
 
