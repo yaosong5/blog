@@ -52,7 +52,6 @@ DStream上的原语与RDD的类似，分为Transformations（转换）和OutputO
 
 ### 特殊的Transformations
 
-** **
 
 1. UpdateStateByKeyOperation
 
@@ -186,5 +185,9 @@ ds.flatmap(_.split(" ")).groupBy($""value).count.show 或者collect
 
 在import里面打开idea查看类里面有哪些方法。 
 在spark1.6里面sqlContext.read....读取的就是dataFrame，和dataSet还未统一，需要将dataFrame用as转为dataSet
+
+
+
+
 
 
