@@ -87,3 +87,49 @@ Output Operations可以将DStream的数据输出到外部的数据库或文件�
 
 
 
+
+
+## 用Spark Streaming实现实时WordCount
+
+架构图：
+
+![](http://pebgsxjpj.bkt.clouddn.com/15360681467801.jpg)
+
+1.安装并启动生成者
+
+首先在一台Linux（ip：192.168.10.101）上用YUM安装nc工具
+
+yum install -y nc
+
+ 
+
+启动一个服务端并监听9999端口
+
+nc -lk 9999
+
+ 
+
+2.编写Spark Streaming程序
+
+```scala
+package me.yao.spark.streaming
+import org.apache.spark.SparkConf
+import org.apache.spark.streaming.{Seconds, StreamingContext}
+object NetworkWordCount {
+    def main(args: Array[String]) {       //设置日志级别
+        LoggerLevel.setStreamingLogLevels()    //创建SparkConf并设置为本地模式运行   //注意local[2]代表开两个线程
+    val conf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount")    //设置DStream批次时间间隔为2秒
+    val ssc = new StreamingContext(conf, Seconds(2))    //通过网络读取数据
+    val lines = ssc.socketTextStream("192.168.10.101", 9999)   //将读到的数据用空格切成单词
+    val words = lines.flatMap(_.split(" "))    //将单词和1组成一个pair
+    val pairs = words.map(word => (word, 1))    //按单词进行分组求相同单词出现的次数
+    val wordCounts = pairs.reduceByKey(_ + _)    //打印结果到控制台
+    wordCounts.print()    //开始计算
+    ssc.start()    //等待停止
+    ssc.awaitTermination()
+        }
+    }
+```
+
+问题：结果每次在Linux端输入的单词次数都被正确的统计出来，但是结果不能累加！如果需要累加需要使用updateStateByKey(func)来更新状态，下面给出一个例子：
+
