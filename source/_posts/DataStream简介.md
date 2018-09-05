@@ -7,7 +7,7 @@ toc: true
 ---
 
 # 什么是DataStream
-Discretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。在内部实现上，DStraem是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：
+Discretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：
 ![](http://pebgsxjpj.bkt.clouddn.com/15360627803806.jpg)
 
 对数据的操作也是按照RDD为单位来进行的
@@ -21,31 +21,32 @@ Discretized Stream是Spark Streaming的基础抽象，代表持续性的数据�
 Datasets 与DataFrames 与RDDs的关系
 ![](http://pebgsxjpj.bkt.clouddn.com/15360698161149.jpg)
 
+
 Spark引入DataFrame，它可以提供high-level functions让Spark更好的处理结构数据的计算。这让Catalyst optimizer 和Tungsten（钨丝） execution engine自动加速大数据分析。
 发布DataFrame之后开发者收到了很多反馈，其中一个主要的是大家反映缺乏编译时类型安全。为了解决这个问题，Spark采用新的Dataset API (DataFrame API的类型扩展)。
 Dataset API扩展DataFrame API支持静态类型和运行已经存在的Scala或Java语言的用户自定义函数。对比传统的RDD API，Dataset API提供更好的内存管理，特别是在长任务中有更好的性能提升
 
-# DataStraem相关操作
+# DataStream相关操作
 
-DStraem上的原语与RDD的类似，分为Transformations（转换）和OutputOperations（输出）两种，此外转换操作中还有一些比较特殊的原语，如：updateStateByKey()、transform()以及各种Window相关的原语。
+DStream上的原语与RDD的类似，分为Transformations（转换）和OutputOperations（输出）两种，此外转换操作中还有一些比较特殊的原语，如：updateStateByKey()、transform()以及各种Window相关的原语。
 
-## Transformations on DStraems
+## Transformations on DStreams
 
-| Transformation               | Meaning                              |
+| Transformation                   | Meaning                                  |
 | -------------------------------- | ---------------------------------------- |
-| map(func)                        | Return a new DStraem by passing each  element of the source DStraem through a function func. |
+| map(func)                        | Return a new DStream by passing each  element of the source DStream through a function func. |
 | flatMap(func)                    | Similar to map, but each input item can  be mapped to 0 or more output items. |
-| filter(func)                     | Return a new DStraem by selecting only  the records of the source DStraem on which func returns true. |
-| repartition(numPartitions)       | Changes the level of parallelism in this  DStraem by creating more or fewer partitions. |
-| union(otherStream)               | Return a new DStraem that contains the  union of the elements in the source DStraem and otherDStraem. |
-| count()                          | Return a new DStraem of single-element  RDDs by counting the number of elements in each RDD of the source DStraem. |
-| reduce(func)                     | Return a new DStraem of single-element  RDDs by aggregating the elements in each RDD of the source DStraem using a  function func (which takes two arguments and returns one). The function  should be associative so that it can be computed in parallel. |
-| countByValue()                   | When called on a DStraem of elements of  type K, return a new DStraem of (K, Long) pairs where the value of each key  is its frequency in each RDD of the source DStraem. |
-| reduceByKey(func, [numTasks])    | When called on a DStraem of (K, V) pairs,  return a new DStraem of (K, V) pairs where the values for each key are  aggregated using the given reduce function. Note: By default, this uses Spark's  default number of parallel tasks (2 for local mode, and in cluster mode the  number is determined by the config property spark.default.parallelism) to do  the grouping. You can pass an optional numTasks argument to set a different  number of tasks. |
-| join(otherStream, [numTasks])    | When called on two DStraems of (K, V) and  (K, W) pairs, return a new DStraem of (K, (V, W)) pairs with all pairs of  elements for each key. |
-| cogroup(otherStream, [numTasks]) | When called on a DStraem of (K, V) and  (K, W) pairs, return a new DStraem of (K, Seq[V], Seq[W]) tuples. |
-| transform(func)                  | Return a new DStraem by applying a  RDD-to-RDD function to every RDD of the source DStraem. This can be used to  do arbitrary RDD operations on the DStraem. |
-| updateStateByKey(func)           | Return a new "state" DStraem  where the state for each key is updated by applying the given function on the  previous state of the key and the new values for the key. This can be used to  maintain arbitrary state data for each key. |
+| filter(func)                     | Return a new DStream by selecting only  the records of the source DStream on which func returns true. |
+| repartition(numPartitions)       | Changes the level of parallelism in this  DStream by creating more or fewer partitions. |
+| union(otherStream)               | Return a new DStream that contains the  union of the elements in the source DStream and otherDStream. |
+| count()                          | Return a new DStream of single-element  RDDs by counting the number of elements in each RDD of the source DStream. |
+| reduce(func)                     | Return a new DStream of single-element  RDDs by aggregating the elements in each RDD of the source DStream using a  function func (which takes two arguments and returns one). The function  should be associative so that it can be computed in parallel. |
+| countByValue()                   | When called on a DStream of elements of  type K, return a new DStream of (K, Long) pairs where the value of each key  is its frequency in each RDD of the source DStream. |
+| reduceByKey(func, [numTasks])    | When called on a DStream of (K, V) pairs,  return a new DStream of (K, V) pairs where the values for each key are  aggregated using the given reduce function. Note: By default, this uses Spark's  default number of parallel tasks (2 for local mode, and in cluster mode the  number is determined by the config property spark.default.parallelism) to do  the grouping. You can pass an optional numTasks argument to set a different  number of tasks. |
+| join(otherStream, [numTasks])    | When called on two DStreams of (K, V) and  (K, W) pairs, return a new DStream of (K, (V, W)) pairs with all pairs of  elements for each key. |
+| cogroup(otherStream, [numTasks]) | When called on a DStream of (K, V) and  (K, W) pairs, return a new DStream of (K, Seq[V], Seq[W]) tuples. |
+| transform(func)                  | Return a new DStream by applying a  RDD-to-RDD function to every RDD of the source DStream. This can be used to  do arbitrary RDD operations on the DStream. |
+| updateStateByKey(func)           | Return a new "state" DStream  where the state for each key is updated by applying the given function on the  previous state of the key and the new values for the key. This can be used to  maintain arbitrary state data for each key. |
 
  
 
@@ -58,7 +59,7 @@ UpdateStateByKey原语用于记录历史记录，上文中Word Count示例中就
 
 2. TransformOperation
 
-Transform原语允许DStraem上执行任意的RDD-to-RDD函数。通过该函数可以方便的扩展Spark API。此外，MLlib（机器学习）以及Graphx也是通过本函数来进行结合的。
+Transform原语允许DStream上执行任意的RDD-to-RDD函数。通过该函数可以方便的扩展Spark API。此外，MLlib（机器学习）以及Graphx也是通过本函数来进行结合的。
 
 
 
@@ -68,17 +69,21 @@ Window Operations有点类似于Storm中的State，可以设置窗口的大小�
 ![](http://pebgsxjpj.bkt.clouddn.com/15360679610176.jpg)
 
 
-## Output Operations on DStraems
+## Output Operations on DStreams
 
-Output Operations可以将DStraem的数据输出到外部的数据库或文件系统，当某个Output Operations原语被调用时（与RDD的Action相同），streaming程序才会开始真正的计算过程。
+Output Operations可以将DStream的数据输出到外部的数据库或文件系统，当某个Output Operations原语被调用时（与RDD的Action相同），streaming程序才会开始真正的计算过程。
 
 | Output Operation                    | Meaning                                  |
 | ----------------------------------- | ---------------------------------------- |
-| print()                             | Prints the first ten elements of every  batch of data in a DStraem on the driver node running the streaming  application. This is useful for development and debugging. |
-| saveAsTextFiles(prefix, [suffix])   | Save this DStraem's contents as text  files. The file name at each batch interval is generated based on prefix and  suffix: "prefix-TIME_IN_MS[.suffix]". |
-| saveAsObjectFiles(prefix, [suffix]) | Save this DStraem's contents as  SequenceFiles of serialized Java objects. The file name at each batch  interval is generated based on prefix and suffix:  "prefix-TIME_IN_MS[.suffix]". |
-| saveAsHadoopFiles(prefix, [suffix]) | Save this DStraem's contents as Hadoop  files. The file name at each batch interval is generated based on prefix and  suffix: "prefix-TIME_IN_MS[.suffix]". |
+| print()                             | Prints the first ten elements of every  batch of data in a DStream on the driver node running the streaming  application. This is useful for development and debugging. |
+| saveAsTextFiles(prefix, [suffix])   | Save this DStream's contents as text  files. The file name at each batch interval is generated based on prefix and  suffix: "prefix-TIME_IN_MS[.suffix]". |
+| saveAsObjectFiles(prefix, [suffix]) | Save this DStream's contents as  SequenceFiles of serialized Java objects. The file name at each batch  interval is generated based on prefix and suffix:  "prefix-TIME_IN_MS[.suffix]". |
+| saveAsHadoopFiles(prefix, [suffix]) | Save this DStream's contents as Hadoop  files. The file name at each batch interval is generated based on prefix and  suffix: "prefix-TIME_IN_MS[.suffix]". |
 | foreachRDD(func)                    | The most generic output operator that  applies a function, func, to each RDD generated from the stream. This  function should push the data in each RDD to an external system, such as  saving the RDD to files, or writing it over the network to a database. Note  that the function func is executed in the driver process running the  streaming application, and will usually have RDD actions in it that will  force the computation of the streaming RDDs. |
+
+
+
+
 
 ##  用Spark Streaming实现实时WordCount
 
@@ -111,7 +116,7 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
 object NetworkWordCount {
     def main(args: Array[String]) {         //设置日志级别
         LoggerLevel.setStreamingLogLevels()     //创建SparkConf并设置为本地模式运行     //注意local[2]代表开两个线程
-    val conf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount")     //设置DStraem批次时间间隔为2秒
+    val conf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount")     //设置DStream批次时间间隔为2秒
     val ssc = new StreamingContext(conf, Seconds(2))     //通过网络读取数据
     val lines = ssc.socketTextStream("192.168.10.101", 9999)     //将读到的数据用空格切成单词
     val words = lines.flatMap(_.split(" "))     //将单词和1组成一个pair
@@ -124,7 +129,7 @@ object NetworkWordCount {
     }
 ```
 
-问题：结[果每次在]()Linux段输入的单词次数都被正确的统计出来，但是结果不能累加！如果需要累加需要使用updateStateByKey(func)来更新状态，下面给出一个例子：
+问题：结果每次在Linux端输入的单词次数都被正确的统计出来，但是结果不能累加！如果需要累加需要使用updateStateByKey(func)来更新状态，下面给出一个例子：
 
 
 
