@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta name="baidu-site-verification"content="WHXmBFaAkY"/>
+    <meta name="google-site-verification" content="vDyi3jVPymP4jOpfzY4F1zG4-FXD1T-A5unnDJuNxhs" />
+    <meta charset="utf-8">
+    
+
+    <title>Spark启动流程及一些小总结 | 钢铁锅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="[TOC] spark的架构模型 角色功能Driver：以spark-submit提交程序为例，执行该命令的主机为driver（在任意一台安装了spark（spark submit）的机器上启动一个任务的客户端也就是Driver 。客户端与集群需要建立链接，建立的这个链接对象叫做sparkContext，只有这个对象创建成功才标志这这个客户端与spark集群链接成功。SparkContext是dr">
+<meta name="keywords" content="Spark,原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark启动流程及一些小总结">
+<meta property="og:url" content="http://gangtieguo.cn/2018/08/15/Spark启动流程及一些小总结/index.html">
+<meta property="og:site_name" content="钢铁锅">
+<meta property="og:description" content="[TOC] spark的架构模型 角色功能Driver：以spark-submit提交程序为例，执行该命令的主机为driver（在任意一台安装了spark（spark submit）的机器上启动一个任务的客户端也就是Driver 。客户端与集群需要建立链接，建立的这个链接对象叫做sparkContext，只有这个对象创建成功才标志这这个客户端与spark集群链接成功。SparkContext是dr">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwly1fuhtcjutpej30e007hmxg.jpg">
+<meta property="og:updated_time" content="2018-08-23T16:50:45.753Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spark启动流程及一些小总结">
+<meta name="twitter:description" content="[TOC] spark的架构模型 角色功能Driver：以spark-submit提交程序为例，执行该命令的主机为driver（在任意一台安装了spark（spark submit）的机器上启动一个任务的客户端也就是Driver 。客户端与集群需要建立链接，建立的这个链接对象叫做sparkContext，只有这个对象创建成功才标志这这个客户端与spark集群链接成功。SparkContext是dr">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/Basketball-icon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+     <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">钢铁锅</span>
+            </a>
+            <nav id="main-nav">
+            <a class="main-nav-link" href="/."><i class="fa fa-home"></i>主页</a>
+            <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i>归档</a>
+            <a class="main-nav-link" href="/categories"><i class="fa fa-folder"></i>分类</a>
+            <a class="main-nav-link" href="/tags"><i class="fa fa-tags"></i>标签</a>
+            <a class="main-nav-link" href="/about"><i class="fa fa-user"></i>关于</a>
+
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/.">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     主页  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/archives">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     归档  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/categories">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     分类  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/tags">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     标签  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/about">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     关于  -->
+               <!--     </a>  -->
+               <!--   -->
+
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/venum.gif" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+         <!-- <button type="submit" class="search-form-submit"></button> -->
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+             
+
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/venum.gif" />
+            <h2 id="name">GTG</h2>
+            <h3 id="title">Nothing</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>四海为家</span>
+           
+        </div>
+      <div class="article-info profile-block">
+            <div class="article-info-block">
+                61
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                44
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/yaosong5" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/gangtieguo/" target="_blank" title="weibo" class=tooltip>
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+
+        
+        
+    </div>
+
+
+</aside>
+
+
+            
+
+            <section id="main"><article id="post-Spark启动流程及一些小总结" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Spark启动流程及一些小总结
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/15/Spark启动流程及一些小总结/">
+            <time datetime="2018-08-15T15:54:20.258Z" itemprop="datePublished">2018-08-15</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article "  class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#spark的架构模型"><span class="toc-number">1.</span> <span class="toc-text">spark的架构模型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#角色功能"><span class="toc-number">2.</span> <span class="toc-text">角色功能</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Driver端"><span class="toc-number">2.1.</span> <span class="toc-text">Driver端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#master与worker交互"><span class="toc-number">2.2.</span> <span class="toc-text">master与worker交互</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#资源分配策略"><span class="toc-number">2.3.</span> <span class="toc-text">资源分配策略</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RDD整个运行流程"><span class="toc-number">3.</span> <span class="toc-text">RDD整个运行流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Driver与executor交互"><span class="toc-number">3.1.</span> <span class="toc-text">Driver与executor交互</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RDD的构建详细阶段"><span class="toc-number">4.</span> <span class="toc-text">RDD的构建详细阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一阶段-rdd创建"><span class="toc-number">4.1.</span> <span class="toc-text">第一阶段 rdd创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二阶段-DAGScheduler"><span class="toc-number">4.2.</span> <span class="toc-text">第二阶段 DAGScheduler</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三阶段-TaskScheduler"><span class="toc-number">4.3.</span> <span class="toc-text">第三阶段 TaskScheduler</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第四阶段-任务执行"><span class="toc-number">4.4.</span> <span class="toc-text">第四阶段 任务执行</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#task与读取hdfs数据的关系"><span class="toc-number">5.</span> <span class="toc-text">task与读取hdfs数据的关系</span></a></li></ol>
+            </div>
+
+
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <p>[TOC]</p>
+<h1 id="spark的架构模型"><a href="#spark的架构模型" class="headerlink" title="spark的架构模型"></a>spark的架构模型</h1><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg" alt=""></p>
+<h1 id="角色功能"><a href="#角色功能" class="headerlink" title="角色功能"></a>角色功能</h1><p>Driver：以spark-submit提交程序为例，执行该命令的主机为driver（在任意一台安装了spark（spark submit）的机器上启动一个任务的客户端也就是Driver 。客户端与集群需要建立链接，建立的这个链接对象叫做sparkContext，只有这个对象创建成功才标志这这个客户端与spark集群链接成功。SparkContext是driver进程中的一个对象，提交任务的时候，指定了每台机器需要多少个核cores，需要的内存 ）</p>
+<p>Master: 给任务提供资源，分配资源，master跟worker通信，报活和更新资源 </p>
+<p>Worker:  以子进程的方式启动executor</p>
+<p>Executor：Driver提交程序到executor(CoarseGrainedExecutorBankend)，执行任务的进程，exector是task运行的容器</p>
+<a id="more"></a>
+<h2 id="Driver端"><a href="#Driver端" class="headerlink" title="Driver端"></a>Driver端</h2><p>driver创建sparkContext于spark集群建立连接，然后向master申请资源，master来调度决定向worker的哪台机器上执行 ，在合适的worker（资源分配策略）上以子进程的方式启动excutor来执行 （Class.forName()会只在自己的进程里面执行，反射是在同一进程 ，启动java子进程的方法 是另一个进程，debug跳不到子进程中去，进程之间进行方法调用只有rpc才可以 ）此过程只是启动executor，最终任务的执行需要等到action触发，提交程序最终也是提交到executor上，在整个过程中，</p>
+<blockquote>
+<p>driver提交一个application时就会在driver主机生成一个sparkSubmit进程来监控任务的执行情况。action触发程序运行后，executor只会通过driverClinet与driver交互，applicationMaster 不负责具体某个任务的进度 ,只负责资源的调度和监控。driver在action的时候才会把任务提交给executor。</p>
+</blockquote>
+<h2 id="master与worker交互"><a href="#master与worker交互" class="headerlink" title="master与worker交互"></a>master与worker交互</h2><p>worker和master以进程方式启动后 ，worker会向master进行注册,worker在启动的时候，会在spark env中指定worker的资源，如果没指定的话，会默认使用机器的所有核数，所有内存-1G的内存，预留1G给操作系统，然后worker会告知master自己拥有的资源，如核数cores，内存等。在之后的过程中，worker会实时向master发送心跳报活。</p>
+<h2 id="资源分配策略"><a href="#资源分配策略" class="headerlink" title="资源分配策略"></a>资源分配策略</h2><p>spark任务资源分配有两种策略：尽量打散 和尽量集中</p>
+<p>以task1需要2core为例：</p>
+<p>尽量打散是尽可能的将任务分散到不同的worker来启动exector，机器1分配1core，机器2分配1core</p>
+<p>尽量集中是尽可能在更少的机器上来启动worker并启动exector，在分配的机器上尽可能多的分配资源，达到集中在更少的机器上的目的。如在机器1上分配2core（前提是机器1 剩余core数&gt;=2）</p>
+<h1 id="RDD整个运行流程"><a href="#RDD整个运行流程" class="headerlink" title="RDD整个运行流程"></a>RDD整个运行流程</h1><p>首先rdd产生过后，经过一系列的处理，构成相互依赖，在有宽依赖的情况下会划分stage，构成一个有向无环图也就是DAG，整个rdd的构建，完成在action触发之前，action触发就会将task提交到executor容器中运行</p>
+<h2 id="Driver与executor交互"><a href="#Driver与executor交互" class="headerlink" title="Driver与executor交互"></a>Driver与executor交互</h2><p>在任务提交的时候，会将driver信息封装，先告诉给master，master再告诉给worker，然后worker启动executor进程的时候，会将信息告诉给executor，故而最终exector能获取到driver的信息</p>
+<p>在executor创建成功后，就会和driver建立连接，而不再与Master通信，这样是为了减少Master压力，也不让Master成为性能瓶颈。</p>
+<p>由于executor有可能在很多台机器上启动，driver无法知晓在哪台机器上启动有exector，所以需要executor和driver进行rpc通信（netty或者akka）主动建立连接。建立通信后exector向driver汇报状态及其执行进度，driver向executor提交计算任务，然后在executor中执行，只有当RDD触发action的时候，driver才将taskset以stage的形式提交任务给executor，任务的最细粒度是task</p>
+<p>然后executor就跟driver进行通信，Rdd执行逻辑的时候就不再通过Master，这是为了减少Master压力，也不让Master成为性能瓶颈。</p>
+<h1 id="RDD的构建详细阶段"><a href="#RDD的构建详细阶段" class="headerlink" title="RDD的构建详细阶段"></a>RDD的构建详细阶段</h1><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fuhtcjutpej30e007hmxg.jpg" alt=""></p>
+<h2 id="第一阶段-rdd创建"><a href="#第一阶段-rdd创建" class="headerlink" title="第一阶段 rdd创建"></a>第一阶段 rdd创建</h2><p>rdd创建都是在driver中执行，只有运行时有数据流向rdd才会提交到executor。如hdfs中读取数据，会产生很多的RDD….，RDD之间存在着依赖关系， RDD之间的<strong>转换</strong>都是由transformation产生的（故transformation返回对象为RDD），<strong>在action触发后</strong>，DAG就确定了RDD就形成了数据的流向hdfs-&gt;RDD1-&gt;RDD2-&gt;RDD3….-&gt;RDDn</p>
+<h2 id="第二阶段-DAGScheduler"><a href="#第二阶段-DAGScheduler" class="headerlink" title="第二阶段 DAGScheduler"></a>第二阶段 DAGScheduler</h2><p>stage的划分，也就是DAGScheduler的执行</p>
+<p>stage切分依据：有宽依赖（后面对宽窄依赖有说明）就会切分，更明确的说就是有shuffle的时候切分</p>
+<p>宽依赖：遇到shuffle就是宽依赖<br>窄依赖：没有shuffle就是窄依赖 </p>
+<p>把DAG切分成stage，然后以taskSet(流水线task的集合，所有的task业务逻辑都是一样的，只是计算的数据块不同，因为每一个task只计算一个分区，且taskSet集合中的任务会并行操作）</p>
+<p>task由master决定在哪个executor上运行，之后由driver提交task到executor来执行</p>
+<blockquote>
+<p>前面的stage先提交，因为stage的划分意味着有shuffle，那么后面stage会依赖前面stage的数据，故此前面stage先提交。</p>
+</blockquote>
+<p>Action触发的时候，DAG就可以确定了，transformation的调用都是在driver中完成的，一旦调用了action，会提交这个任务。</p>
+<h2 id="第三阶段-TaskScheduler"><a href="#第三阶段-TaskScheduler" class="headerlink" title="第三阶段 TaskScheduler"></a>第三阶段 TaskScheduler</h2><p><strong>TaskScheduler</strong></p>
+<p><strong>cluster Manager</strong> ：就是Master，启动work上的executor<br><strong>stragling tasks</strong>：例子：当100个任务，99都完成了，剩下了一个任务1，会再启动和剩下的一模一样的任务2，任务1和任务2谁先完成，就用谁的结果</p>
+<h2 id="第四阶段-任务执行"><a href="#第四阶段-任务执行" class="headerlink" title="第四阶段 任务执行"></a>第四阶段 任务执行</h2><p>Block Manager管理数据</p>
+<p>也就是action触发，数据开始流通，driver提交task到worker上的executor，执行真正的业务逻辑</p>
+<p>计算完成之后，若将这些结果数据collect聚合，则会将所有executor的部分结果聚合在一起，比如count、sum的，多个worker中每一个worker只会保存一部分数据，driver保存了所有数据，、都是在driver里面</p>
+<h1 id="task与读取hdfs数据的关系"><a href="#task与读取hdfs数据的关系" class="headerlink" title="task与读取hdfs数据的关系"></a>task与读取hdfs数据的关系</h1><p>task提交之后，如果向hdfs中拉取数据，driver已经将要获取数据的元数据都已经获取到了，task会和分区数挂钩，在executor上一个task读取一个分区。<strong>task读取数据不是一下将所有数据加载到内存里面，是先构建一个迭代器，拿到一条处理一条</strong>。处理完成之后会将数据保存在executor的内存中，如果内存放不下，就将数据持久化到磁盘上</p>
+
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+        <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           如果您觉得文章不错，就请我看场ufc直播🤓🤓🤓🤓🤓！
+        </span>
+        <br>
+      </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 支付宝打赏图案 -->
+        <img src="/css/images/alipay.jpg" alt="支付宝打赏" > 
+        <!-- 微信打赏图案 -->
+        <img src="/css/images/wechatpay.jpg" alt="微信打赏" >  
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            if($('#donate_guide').hasClass('hidden')){
+                $('#donate_guide').removeClass('hidden');
+            }else{
+                $('#donate_guide').addClass('hidden');
+            }
+        }
+    </script>
+</div>
+<! -- 添加捐赠图标 -->
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/15/Spark启动流程及一些小总结/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/08/15/Hdfs结构性能分析及读写流程/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Hdfs结构性能分析及读写流程
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/08/15/SparkStreaming消费Kafka数据/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">SparkStreaming消费Kafka数据</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="lv-container" data-id="city" data-uid=MTAyMC8zNjM2MS8xMjg5Ng==></div>
+</section>
+    
+
+</section>
+            
+            
+        </div>
+        <footer id="footer">
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol ==='https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 GTG<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+    </div>
+</footer>
+        
+    
+    
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+
+         if (typeof LivereTower === 'function') { return; }
+
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+    </script>
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+  <!-- City版安装代码已完成 -->
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

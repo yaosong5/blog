@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta name="baidu-site-verification"content="WHXmBFaAkY"/>
+    <meta name="google-site-verification" content="vDyi3jVPymP4jOpfzY4F1zG4-FXD1T-A5unnDJuNxhs" />
+    <meta charset="utf-8">
+    
+
+    <title>钢铁锅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="[TOC]  HBase介绍HBase表很大：一个表可以有数十亿行，上百万列； HBase的表将会分成很多个分区，每个分区部分会存在不同的机器上分区是为了便于查询，放在不同机器上，io也增大，假如一个机器的io的是100m，两个就为200m，读取速度就变快了==&amp;gt;多台机器的io能得到充分利用">
+<meta name="keywords" content="HBase,原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="钢铁锅">
+<meta property="og:url" content="http://gangtieguo.cn/2018/08/15/HBase性能分析/index.html">
+<meta property="og:site_name" content="钢铁锅">
+<meta property="og:description" content="[TOC]  HBase介绍HBase表很大：一个表可以有数十亿行，上百万列； HBase的表将会分成很多个分区，每个分区部分会存在不同的机器上分区是为了便于查询，放在不同机器上，io也增大，假如一个机器的io的是100m，两个就为200m，读取速度就变快了==&amp;gt;多台机器的io能得到充分利用">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/0069RVTdgy1fuap8gxtquj31ca0ncdij.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fuag5ugi8yj30y60ds0tw.jpg">
+<meta property="og:updated_time" content="2018-08-15T14:46:17.237Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="钢铁锅">
+<meta name="twitter:description" content="[TOC]  HBase介绍HBase表很大：一个表可以有数十亿行，上百万列； HBase的表将会分成很多个分区，每个分区部分会存在不同的机器上分区是为了便于查询，放在不同机器上，io也增大，假如一个机器的io的是100m，两个就为200m，读取速度就变快了==&amp;gt;多台机器的io能得到充分利用">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/0069RVTdgy1fuap8gxtquj31ca0ncdij.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/Basketball-icon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+     <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">钢铁锅</span>
+            </a>
+            <nav id="main-nav">
+            <a class="main-nav-link" href="/."><i class="fa fa-home"></i>主页</a>
+            <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i>归档</a>
+            <a class="main-nav-link" href="/categories"><i class="fa fa-folder"></i>分类</a>
+            <a class="main-nav-link" href="/tags"><i class="fa fa-tags"></i>标签</a>
+            <a class="main-nav-link" href="/about"><i class="fa fa-user"></i>关于</a>
+
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/.">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     主页  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/archives">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     归档  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/categories">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     分类  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/tags">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     标签  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/about">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     关于  -->
+               <!--     </a>  -->
+               <!--   -->
+
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/venum.gif" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+         <!-- <button type="submit" class="search-form-submit"></button> -->
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+             
+
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/venum.gif" />
+            <h2 id="name">GTG</h2>
+            <h3 id="title">Nothing</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>四海为家</span>
+           
+        </div>
+      <div class="article-info profile-block">
+            <div class="article-info-block">
+                61
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                44
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/yaosong5" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/gangtieguo/" target="_blank" title="weibo" class=tooltip>
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+
+        
+        
+    </div>
+
+
+</aside>
+
+
+            
+
+            <section id="main"><article id="post-HBase性能分析" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article "  class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HBase介绍"><span class="toc-number">1.</span> <span class="toc-text">HBase介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HBase结构"><span class="toc-number">2.</span> <span class="toc-text">HBase结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HRegionserver"><span class="toc-number">2.1.</span> <span class="toc-text">HRegionserver</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase"><span class="toc-number">2.2.</span> <span class="toc-text">HBase</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HRegion构成"><span class="toc-number">2.3.</span> <span class="toc-text">HRegion构成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Store"><span class="toc-number">2.3.1.</span> <span class="toc-text">Store</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HLog"><span class="toc-number">2.3.2.</span> <span class="toc-text">HLog</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Region的划分"><span class="toc-number">2.4.</span> <span class="toc-text">Region的划分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HRegion的存储"><span class="toc-number">2.5.</span> <span class="toc-text">HRegion的存储</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ROOT表和META表"><span class="toc-number">2.5.1.</span> <span class="toc-text">ROOT表和META表</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HBase写数据流程"><span class="toc-number">3.</span> <span class="toc-text">HBase写数据流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据flush"><span class="toc-number">3.1.</span> <span class="toc-text">数据flush</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#flush的说明"><span class="toc-number">3.1.1.</span> <span class="toc-text">flush的说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据合并"><span class="toc-number">3.2.</span> <span class="toc-text">数据合并</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#合并的好处"><span class="toc-number">3.2.1.</span> <span class="toc-text">合并的好处</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HBase的读流程"><span class="toc-number">4.</span> <span class="toc-text">HBase的读流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Client"><span class="toc-number">5.</span> <span class="toc-text">Client</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#读取数据与写入数据流程的不同"><span class="toc-number">6.</span> <span class="toc-text">读取数据与写入数据流程的不同</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HBase的出现"><span class="toc-number">7.</span> <span class="toc-text">HBase的出现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HBase细节"><span class="toc-number">8.</span> <span class="toc-text">HBase细节</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HBase-主从之间的关系"><span class="toc-number">9.</span> <span class="toc-text">HBase 主从之间的关系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#note："><span class="toc-number">10.</span> <span class="toc-text">note：</span></a></li></ol>
+            </div>
+
+
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <p>[TOC]</p>
+<p><img src="https://ws3.sinaimg.cn/large/0069RVTdgy1fuap8gxtquj31ca0ncdij.jpg" alt=""></p>
+<h1 id="HBase介绍"><a href="#HBase介绍" class="headerlink" title="HBase介绍"></a>HBase介绍</h1><p>HBase表很大：一个表可以有数十亿行，上百万列；</p>
+<p>HBase的表将会分成很多个分区，每个分区部分会存在不同的机器上<br>分区是为了便于查询，放在不同机器上，io也增大，假如一个机器的io的是100m，两个就为200m，读取速度就变快了==&gt;<strong>多台机器的io能得到充分利用</strong></p>
+<a id="more"></a>
+<p>HBase表无模式：每行都有一个可排序的主键好任意多的列，列可以根据需要动态的增加，同一张表中不同的行可以有不同的列；</p>
+<p>面向列：列独立检索；</p>
+<p>稀疏：空列并不占用存储空间，表可以设计的非常稀疏；</p>
+<p>数据类型单一：HBase中的数据都是字符串，没有类型</p>
+<p>HBase采用类LSM的架构体系，数据写入并没有直接写入数据文件，而是会先写入缓存（Memstore），在满足一定条件下缓存数据再会异步刷新到硬盘。为了防止数据写入缓存之后不会因为RegionServer进程发生异常导致数据丢失，在写入缓存之前会首先将数据顺序写入HLog中。如果不幸一旦发生RegionServer宕机或者其他异常，这种设计可以从HLog中进行日志回放进行数据补救，保证数据不丢失。HBase故障恢复的最大看点就在于如何通过HLog回放补救丢失数据。</p>
+<h1 id="HBase结构"><a href="#HBase结构" class="headerlink" title="HBase结构"></a>HBase结构</h1><p>HBase进行存储的服务器</p>
+<p>HRegion是HBase当中的一个类，<strong>一个表分区的类，按照行分区</strong><br>一个HRegion只会在一个HBase上，一个HBase上可以有多个HRegion<br>HBase表每个分区（按照行来分区）的数据被封装到一个类HRegion内<br>如：HBase存在user表，role表，共4个regionServer，HRegion1存储管理user表的一部分，HRegion2存储管理user表的一部分，HRegion3存储管理role表的一部分，HRegion4存储管理role表的一部分</p>
+<h2 id="HRegionserver"><a href="#HRegionserver" class="headerlink" title="HRegionserver"></a>HRegionserver</h2><p>管理用户对Table的增、删、改、查操作；<br>记录region在哪台Hregion server上<br>在Region Split后，负责新Region的分配；<br>新机器加入时，管理HRegion Server的负载均衡，调整Region分布<br>在HRegion Server宕机后，负责失效HRegion Server 上的Regions迁移。</p>
+<h2 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h2><p>HRegion Server主要负责响应用户I/O请求，向HDFS文件系统中读写数据，是HBase中最核心的模块。</p>
+<p>HRegion Server管理了很多table的分区，也就是region。</p>
+<h2 id="HRegion构成"><a href="#HRegion构成" class="headerlink" title="HRegion构成"></a>HRegion构成</h2><p>HRegion类中有<strong>HLog，store</strong>成员，分别代表硬盘和内存 </p>
+<h3 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h3><p>每个Region包含着多个Store对象，一个列簇对应一个store 。每个Store包含一个MemStore和若干StoreFile，StoreFile包含一个或多个HFile，StoreFile是对HFile的一种封装。MemStore存放在内存中，StoreFile存储在HDFS上。</p>
+<h3 id="HLog"><a href="#HLog" class="headerlink" title="HLog"></a>HLog</h3><p>HLog最终是放在hdfs上。</p>
+<p>当我们客户端上传一个表名，一个列簇，一个值，这条命令的值会原封不动的将其写入到HLog里面， 这个是一个appendLog,只可以从底部追加，不允许修改，写到HLog之后，再将数据写入到内存（memstore）当中，HLog里面是存储的操作信息的数据 写在HLog中是因为，防止在写入到内存中的时候，宕机</p>
+<h2 id="Region的划分"><a href="#Region的划分" class="headerlink" title="Region的划分"></a>Region的划分</h2><p>Region按大小分割的，随着数据增多，Region不断增大，当增大到一个阀值（默认256m）的时候，Region就会分成两个新的Region</p>
+<h2 id="HRegion的存储"><a href="#HRegion的存储" class="headerlink" title="HRegion的存储"></a>HRegion的存储</h2><h3 id="ROOT表和META表"><a href="#ROOT表和META表" class="headerlink" title="ROOT表和META表"></a>ROOT表和META表</h3><p>HBase的所有Region元数据被存储在.META.表中，随着Region的增多，.META.表中的数据也会增大，并分裂成多个新的Region。为了定位.META.表中各个Region的位置，把.META.表中所有Region的元数据保存在-ROOT-表中，最后由Zookeeper记录-ROOT-表的位置信息。所有客户端访问用户数据前，需要首先访问Zookeeper获得-ROOT-的位置，然后访问-ROOT-表获得.META.表的位置，最后根据.META.表中的信息确定用户数据存放的位置，如下图所示。<br><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fuag5ugi8yj30y60ds0tw.jpg" alt=""></p>
+<p>-ROOT-表永远不会被分割，它只有一个Region，这样可以保证最多只需要三次跳转就可以定位任意一个Region。为了加快访问速度，.META.表的所有Region全部保存在内存中。客户端会将查询过的位置信息缓存起来，且缓存不会主动失效。如果客户端根据缓存信息还访问不到数据，则询问相关.META.表的Region服务器，试图获取数据的位置，如果还是失败，则询问-ROOT-表相关的.META.表在哪里。最后，如果前面的信息全部失效，则通过ZooKeeper重新定位Region的信息。所以如果客户端上的缓存全部是失效，则需要进行6次网络来回，才能定位到正确的Region。</p>
+<p>root表,mate表都不会很大<br>因为root表，只是记录位置，本身就不会太大，<br><strong>meta表，和root表在过程中都会被加载到内存中</strong><br>经过3次来回，总共六次，会得到数据表的位置<br>1，client向zookeeper获取root表的位置 2，zookeeper返回root表地址信息<br>3，client读取root表，获得table1的meta表的地址，4 root表所在机器返回meta表地址<br>5，client向mete表读取table地址，6 client向table插入数据<br>读取和写入都会经历上面的过程</p>
+<h1 id="HBase写数据流程"><a href="#HBase写数据流程" class="headerlink" title="HBase写数据流程"></a>HBase写数据流程</h1><p>client向HRegionserver发送写请求。<br>HRegionserver将<strong>操作信息</strong>数据写到hlog（write ahead log）。为了数据的持久化和恢复。 HLog记录的是操作数据 </p>
+<p>HRegionserver将<strong>实际数据</strong>写到内存（memstore）<br>反馈client写成功。</p>
+<h2 id="数据flush"><a href="#数据flush" class="headerlink" title="数据flush"></a>数据flush</h2><p>当memstore数据达到阈值64（新版本默认是128M），将内存集合中的数据刷到硬盘，将内存中的数据删除，同时删除Hlog中的历史数据。<br>并将数据存储到hdfs中。以<strong>数据块</strong>的形式存储。<br>在hlog中做标记点。</p>
+<h3 id="flush的说明"><a href="#flush的说明" class="headerlink" title="flush的说明"></a>flush的说明</h3><p>当内存文件memstore文件达到64m的时候，会将数据合并刷新写入到StroeFile文件里面，再将数据写入到HFile里面，HFile文件是一个hdfs文件，序列化到hdfs里面，再通过hdfs的api写入到hdfs集群里面<br>提交到hdfs集群后，HLog，memstore的数据将会被清除</p>
+<h2 id="数据合并"><a href="#数据合并" class="headerlink" title="数据合并"></a>数据合并</h2><p>1、当（hdfs中）数据块达到4块，hmaster将数据块<strong>加载到本地</strong>(HRegionserver)，进行合并<br>注：这个数据块单块没有大小限制<br>2、当合并的数据超过256M，进行拆分，将拆分后的region分配给不同的hregionserver管理<br>注：如果不大于256M，将数据原封不动写回hdfs<br>3、当hregionsever<strong>宕机</strong>后，将该hregionserver上的hlog拆分（按表拆分)，然后分配给不同的hregionserver加载，修改.META.<br>注：由Hmaster来更改.META.文件，不会对HRegionserver的性能造成影响<br>4、注意：hlog会同步到hdfs<br>注：合并的数据是对相同rowkey的分组合并，如user表中，对id=’1’的操作内容合并，对id=’2’的合并</p>
+<h3 id="合并的好处"><a href="#合并的好处" class="headerlink" title="合并的好处"></a>合并的好处</h3><p><strong>合并操作是由hmaster来工作</strong><br>合并操作是针对一个表来说，user表合并user表，role表合并role表<br>1、清理了垃圾数据<br>2、将大的数据块拆分后，给多个机器管理，优化读取操作等速率</p>
+<h1 id="HBase的读流程"><a href="#HBase的读流程" class="headerlink" title="HBase的读流程"></a>HBase的读流程</h1><p>通过zookeeper和-ROOT- .META.表定位HBase。<br>数据从内存和硬盘合并后返回给client<br>数据块会缓存</p>
+<h1 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h1><p>HBase Client使用HBase的RPC机制与HRegionserver和RegionServer进行通信<br>管理类操作：Client与HRegionserver进行RPC；<br>数据读写类操作：Client与HBase进行RPC。</p>
+<h1 id="读取数据与写入数据流程的不同"><a href="#读取数据与写入数据流程的不同" class="headerlink" title="读取数据与写入数据流程的不同"></a>读取数据与写入数据流程的不同</h1><p>除了在表中读取数据，还要在内存磁盘上去搜寻还未存到hdfs里面的数据。<br>所以数据块太大的应该拆分，可以加快查询速度<br>经常查询的数据块还应该放在内存中（HRegionserver的内存中）</p>
+<h1 id="HBase的出现"><a href="#HBase的出现" class="headerlink" title="HBase的出现"></a>HBase的出现</h1><p>hdfs是分布式文件系统，只能保存整个文件，如果一行一行的保存数据，namenode的压力会很大<br>假如有一个文件下有100w小个文件，每个文件都是1k，在datanode中不会占用128m的分块大，但是每个文件元数据所占的大小是一样的，这样的话，namenode空间占满时，datanode中的数据实际上很少。<br>HBase就会很好的解决这个问题，一个文件一个文件写的时候，是先写入到HBase中，先写入到HBase集群中（HBase也分为主从，主为HMaster，从为HRegionserver）<br>，HRegionserver的内存中，当数据量达到128m的时候，将数据写入到hdfs中，这样128m数据的元数据只有一条</p>
+<h1 id="HBase细节"><a href="#HBase细节" class="headerlink" title="HBase细节"></a>HBase细节</h1><p>HBase实际上是一个缓存层，存储的数据量很少，存的一部分缓存的数据，HBase需要zookeeper来定位HBase查找数据的偏移量</p>
+<h1 id="HBase-主从之间的关系"><a href="#HBase-主从之间的关系" class="headerlink" title="HBase 主从之间的关系"></a>HBase 主从之间的关系</h1><p>hmaster只是一个管理者，而且只管理，当HBase集群挂掉之后，数据偏移信息和表的信息，而不管理数据信息，所以有一种极端情况，当HBase集群启动之后，表创建完成，正常运行之后，将hmaster关闭也不会影响整个集群的运行。不像namenode挂了之后不能响应了</p>
+<h1 id="note："><a href="#note：" class="headerlink" title="note："></a>note：</h1><p>HBase写快读慢，读慢是相对于写来说的，但是跟mysql相比，也不是一个量级的 </p>
+
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+        <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           如果您觉得文章不错，就请我看场ufc直播🤓🤓🤓🤓🤓！
+        </span>
+        <br>
+      </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 支付宝打赏图案 -->
+        <img src="/css/images/alipay.jpg" alt="支付宝打赏" > 
+        <!-- 微信打赏图案 -->
+        <img src="/css/images/wechatpay.jpg" alt="微信打赏" >  
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            if($('#donate_guide').hasClass('hidden')){
+                $('#donate_guide').removeClass('hidden');
+            }else{
+                $('#donate_guide').addClass('hidden');
+            }
+        }
+    </script>
+</div>
+<! -- 添加捐赠图标 -->
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/15/HBase性能分析/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/08/15/Hadoop-构成及HA-/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Hadoop-HA-Federation机制
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/08/14/Kafka读取数据性能/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Kafka读写数据</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="lv-container" data-id="city" data-uid=MTAyMC8zNjM2MS8xMjg5Ng==></div>
+</section>
+    
+
+</section>
+            
+            
+        </div>
+        <footer id="footer">
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol ==='https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 GTG<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+    </div>
+</footer>
+        
+    
+    
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+
+         if (typeof LivereTower === 'function') { return; }
+
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+    </script>
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+  <!-- City版安装代码已完成 -->
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
