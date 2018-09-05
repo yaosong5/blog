@@ -8,18 +8,21 @@
 
     <title>HDFS元数据备份流程 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="[TOC]">
-<meta name="keywords" content="Hadoop,HDFS,原理">
+    <meta name="description" content="[TOC] hdfs元数据管理namenode对数据的管理采用了三种存储形式：  内存元数据(NameSystem)  磁盘元数据镜像文件fsimage  数据操作日志文件edits（可通过日志运算出元数据）">
+<meta name="keywords" content="Hadoop,原理,HDFS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HDFS元数据备份流程">
 <meta property="og:url" content="http://gangtieguo.cn/2018/08/15/HDFS元数据备份流程/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC]">
+<meta property="og:description" content="[TOC] hdfs元数据管理namenode对数据的管理采用了三种存储形式：  内存元数据(NameSystem)  磁盘元数据镜像文件fsimage  数据操作日志文件edits（可通过日志运算出元数据）">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-15T15:56:42.934Z">
+<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15361544670231.jpg">
+<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15361574063204.jpg">
+<meta property="og:updated_time" content="2018-09-05T16:38:26.603Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDFS元数据备份流程">
-<meta name="twitter:description" content="[TOC]">
+<meta name="twitter:description" content="[TOC] hdfs元数据管理namenode对数据的管理采用了三种存储形式：  内存元数据(NameSystem)  磁盘元数据镜像文件fsimage  数据操作日志文件edits（可通过日志运算出元数据）">
+<meta name="twitter:image" content="http://pebgsxjpj.bkt.clouddn.com/15361544670231.jpg">
     
 
     
@@ -304,7 +307,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#hdfs元数据管理"><span class="toc-number">1.</span> <span class="toc-text">hdfs元数据管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#namenode管理元数据解析"><span class="toc-number">2.</span> <span class="toc-text">namenode管理元数据解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#所以引入了secondaryNameNode"><span class="toc-number">2.1.</span> <span class="toc-text">所以引入了secondaryNameNode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#edits文件定期转为元数据"><span class="toc-number">2.2.</span> <span class="toc-text">edits文件定期转为元数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#secondaryNameNode的出现"><span class="toc-number">2.3.</span> <span class="toc-text">secondaryNameNode的出现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为了防止namenode宕机导致了数据丢失所作配置"><span class="toc-number">2.4.</span> <span class="toc-text">为了防止namenode宕机导致了数据丢失所作配置</span></a></li></ol></li></ol>
             </div>
 
 
@@ -332,7 +335,31 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
-<a id="more"></a>
+<h1 id="hdfs元数据管理"><a href="#hdfs元数据管理" class="headerlink" title="hdfs元数据管理"></a>hdfs元数据管理</h1><p>namenode对数据的管理采用了三种存储形式：</p>
+<ul>
+<li><p>内存元数据(NameSystem)</p>
+</li>
+<li><p>磁盘元数据镜像文件fsimage</p>
+</li>
+<li><p>数据操作日志文件edits（可通过日志运算出元数据）</p>
+<p><a id="more"></a><img src="http://pebgsxjpj.bkt.clouddn.com/15361544670231.jpg" alt=""></p>
+</li>
+</ul>
+<p>磁盘文件我们可以通过查看namenode的目录结构看到：<br><img src="http://pebgsxjpj.bkt.clouddn.com/15361574063204.jpg" alt=""></p>
+<p>A、内存中有一份完整的元数据(内存meta data)<br>B、磁盘有一个“准完整”的元数据镜像（fsimage）文件(在namenode的工作目录中)<br>C、用于衔接内存metadata和持久化元数据镜像fsimage之间的操作日志（edits文件<br>注：当客户端对hdfs中的文件进行新增或者修改操作，操作记录首先被记入edits日志文件中，当客户端操作成功后，相应的元数据会更新到内存meta.data中</p>
+<h1 id="namenode管理元数据解析"><a href="#namenode管理元数据解析" class="headerlink" title="namenode管理元数据解析"></a>namenode管理元数据解析</h1><p>namenode会将元数据放在内存里面，这样方便快速对数据的请求，由于放在内存中是不安全的，所以就序列化到fsimage里面，就像jvm中dump，将内存中所有数据dump出去,由于一条元数据大小为150byte，hdfs不利于存储小块文件，所以存大文件划算，因为元数据消耗的内存都是一样的，但是内存中的数据量太大，不可能经常序列化，所以需要定时序列化</p>
+<h2 id="所以引入了secondaryNameNode"><a href="#所以引入了secondaryNameNode" class="headerlink" title="所以引入了secondaryNameNode"></a>所以引入了secondaryNameNode</h2><p>更新元数据的时候，不可能去直接跟更改元数据fsimage文件，因为文件是线性结构，假如遇到更改中间内容会很不方便，所有就将操作信息记录在edits日志文件中，只是记录操作信息</p>
+<h2 id="edits文件定期转为元数据"><a href="#edits文件定期转为元数据" class="headerlink" title="edits文件定期转为元数据"></a>edits文件定期转为元数据</h2><p>为了防止edits过多，导致在启动hdfs集群datanode的时候会很慢，因为需要将edits通过转化形成为元数据fsimage文件，所以应该定期将edits文件转换为fsimage元数据，然后将fsimage替换掉</p>
+<h2 id="secondaryNameNode的出现"><a href="#secondaryNameNode的出现" class="headerlink" title="secondaryNameNode的出现"></a>secondaryNameNode的出现</h2><p>如果nameNode来做上面的edits转换为元数据的话，由于消耗的资源太大，就不能为其他比如从hdfs中读取数据服务提供资源，或者提供服务的效果不好<br>所以这个时候就把合并操作交给secondNameNode来做<br>这个过程叫做checkpoint </p>
+<p><strong>namenode和secondaryNameNode最好不要放在一台机器上</strong></p>
+<p>宕机可能导致数据不能恢复<br>测试环境或者学习环境可以弄在一台机器上</p>
+<h2 id="为了防止namenode宕机导致了数据丢失所作配置"><a href="#为了防止namenode宕机导致了数据丢失所作配置" class="headerlink" title="为了防止namenode宕机导致了数据丢失所作配置"></a>为了防止namenode宕机导致了数据丢失所作配置</h2><p>可以在hdfs-site.xml文件中在多个机器上的目录来保存name的edits，fsimage文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/home/bigdata/names1,/home/bigdata/names2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>配置的多个的话，会同时往这两个目录中写</p>
+<p>如果不配置这个默认的目录是core-site.xml文件中配置的hadoop的临时文件 </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span> </span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/home/bigdata/apps/hadoop-2.6.4/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>## </p>
+
             
 
         </div>

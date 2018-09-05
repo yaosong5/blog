@@ -32,7 +32,5 @@ select user,host,password from mysql.user;  　　查看密码是否设置成功
 设置所有ip可以通过root访问
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON *.* TO 'hive'@'%' IDENTIFIED BY 'hive' WITH GRANT OPTION;
-
-
 ```
 
