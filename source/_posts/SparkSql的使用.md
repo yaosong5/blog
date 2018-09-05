@@ -11,6 +11,7 @@ toc: true
 //1.读取数据，将每一行的数据使用列分隔符分割
 
 val lineRDD = sc.textFile("hdfs://bigdata1:9000/person.txt", 1).map(_.split(" "))
+<!-- more -->
 
 //2.定义case class（相当于表的schema）
 
@@ -57,3 +58,4 @@ result.save("hdfs://bigdata1:9000/sql/res2", "json" , Overwrite)
 sqlContext.load("hdfs://bigdata1:9000/sql/res1")
 
 sqlContext.load("hdfs://bigdata1:9000/sql/res2", "json")
+

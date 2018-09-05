@@ -8,18 +8,18 @@
 
     <title>SparkSQL使用 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="[TOC] //1.读取数据，将每一行的数据使用列分隔符分割 val lineRDD = sc.textFile(“hdfs://bigdata1:9000/person.txt”, 1).map(_.split(“ “)) //2.定义case class（相当于表的schema） case class Person(id:Int, name:String, age:Int) //3.导入隐式转">
+    <meta name="description" content="[TOC] //1.读取数据，将每一行的数据使用列分隔符分割 val lineRDD = sc.textFile(“hdfs://bigdata1:9000/person.txt”, 1).map(_.split(“ “))">
 <meta name="keywords" content="Spark,SparkSQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SparkSQL使用">
 <meta property="og:url" content="http://gangtieguo.cn/2018/09/06/SparkSql的使用/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] //1.读取数据，将每一行的数据使用列分隔符分割 val lineRDD = sc.textFile(“hdfs://bigdata1:9000/person.txt”, 1).map(_.split(“ “)) //2.定义case class（相当于表的schema） case class Person(id:Int, name:String, age:Int) //3.导入隐式转">
+<meta property="og:description" content="[TOC] //1.读取数据，将每一行的数据使用列分隔符分割 val lineRDD = sc.textFile(“hdfs://bigdata1:9000/person.txt”, 1).map(_.split(“ “))">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-09-05T17:17:20.916Z">
+<meta property="og:updated_time" content="2018-09-05T17:28:42.768Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SparkSQL使用">
-<meta name="twitter:description" content="[TOC] //1.读取数据，将每一行的数据使用列分隔符分割 val lineRDD = sc.textFile(“hdfs://bigdata1:9000/person.txt”, 1).map(_.split(“ “)) //2.定义case class（相当于表的schema） case class Person(id:Int, name:String, age:Int) //3.导入隐式转">
+<meta name="twitter:description" content="[TOC] //1.读取数据，将每一行的数据使用列分隔符分割 val lineRDD = sc.textFile(“hdfs://bigdata1:9000/person.txt”, 1).map(_.split(“ “))">
     
 
     
@@ -333,7 +333,7 @@ var _hmt = _hmt || [];
 
                 <p>[TOC]</p>
 <p>//1.读取数据，将每一行的数据使用列分隔符分割</p>
-<p>val lineRDD = sc.textFile(“hdfs://bigdata1:9000/person.txt”, 1).map(_.split(“ “))</p>
+<p>val lineRDD = sc.textFile(“hdfs://bigdata1:9000/person.txt”, 1).map(_.split(“ “))<br><a id="more"></a></p>
 <p>//2.定义case class（相当于表的schema）</p>
 <p>case class Person(id:Int, name:String, age:Int)</p>
 <p>//3.导入隐式转换,在当前版本中可以不用导入</p>
