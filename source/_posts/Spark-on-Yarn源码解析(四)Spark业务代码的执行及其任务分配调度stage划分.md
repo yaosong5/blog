@@ -441,8 +441,7 @@ taskScheduler.submitTasks(new TaskSet(
                     ->⑦ executorData.executorActor ! LaunchTask(new SerializableBuffer(serializedTask))向executor发送序列化好的task，发送一个Task
 ```
 
-步骤一、二中主要将这组
-任务的 TaskSet 加入到一个 TaskSetManager 中。TaskSetManager 会根据数据就近原则为 task 分配计算资源，监控 task 的执行状态等，比如失败重试，推测执行等。 
+步骤一、二中主要将这组任务的 TaskSet 加入到一个 TaskSetManager 中。TaskSetManager 会根据数据就近原则为 task 分配计算资源，监控 task 的执行状态等，比如失败重试，推测执行等。 
 步骤三、四逻辑较为简单。 
 步骤五为每个 task 具体分配资源，它的输入是一个 Executor 的列表，输出是 TaskDescription 的二维数组。TaskDescription 包含了 TaskID, Executor ID 和 task 执行的依赖信息等。 
 步骤六、七就是将任务真正的发送到 executor 中执行了，并等待 executor 的状态返回。
