@@ -8,6 +8,15 @@ toc: true
 
 [TOC]
 
+## 查看元数据信息
+可以通过hdfs的一个工具来查看edits中的信息
+
+```bash
+bin/hdfs oev -i edits -o edits.xml
+bin/hdfs oiv -i fsimage_0000000000000000087 -p XML -o fsimage.xml
+```
+
 
 
 <!-- more -->
+
