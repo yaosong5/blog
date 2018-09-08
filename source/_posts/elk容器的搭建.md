@@ -46,7 +46,54 @@ export NODE_PATH=$NODE_HOME/lib/node_modules
 ```
 `source ~/.bashrc`
 
-## 安装插件header
+## es配置加启动
+
+### 不能通过root启动
+
+#### 创建用户elk
+
+	useradd elk
+	groupadd elk
+	usermod -a -G elk elk
+	echo elk | passwd --stdin elk
+
+#### 将elk添加到sudoers
+
+	echo "elk ALL = (root) NOPASSWD:ALL" | tee /etc/sudoers.d/elk
+	chmod 0440 /etc/sudoers.d/elk
+
+解决sudo: sorry, you must have a tty to run sudo问题，在/etc/sudoer注释掉 Default requiretty 一行
+	sudo sed -i 's/Defaults requiretty/Defaults:elk !requiretty/' /etc/sudoers
+
+#### 修改文件所有者为elk用户
+`chown -R elk:elk /usr/es/`
+
+### **设置资源参数**
+
+由于es启动会有资源要求
+
+```
+sudo vim  /etc/security/limits.d/90-nproc.conf
+添加
+elk     soft    nproc     4096
+```
+
+再在docker-machine设置参数
+
+```
+docker-machine ssh
+sysctl -w vm.max_map_count=655360
+```
+
+### es启动脚本
+
+    本机 
+    su elk -c "$ES_HOME/bin/elasticsearch -d"
+    ssh远程启动其他主机
+    ssh elk@elk1 " $ES_HOME/bin/elasticsearch -d"
+    ssh root@elk1 " su elk -c  $ES_HOME/bin/elasticsearch "
+
+## 安装es插件header
 
 ### 安装nodejs
 
@@ -66,14 +113,13 @@ wget https://npm.taobao.org/mirrors/node/latest-v4.x/node-v4.4.7-llinux-x64.tar.
 tar -zxvf node-v4.4.7-linux-x64.tar.gz
 mv node-v8.9.1-linux-x64 node
 ```
+
 直接将node目录配置到home即可
 
 ```
 export NODE_HOME=/usr/node
 export PATH=$NODE_HOME/bin:$PATH 
 ```
-
-
 
 ### 下载 header，安装grunt
 
@@ -105,8 +151,6 @@ npm install -g grunt-cli
 npm install
 ```
 
-
-
 ## header启动
 
 在 elasticsearch-head-master 目录下
@@ -115,54 +159,16 @@ npm install
 grunt server  或者 npm run start
 ```
 
-
-
-## els不能通过root启动，创建用户
-
-	useradd elk
-	groupadd elk
-	usermod -a -G elk elk
-	
-	echo elk | passwd --stdin elk
-
-将elk添加到sudoers
-
-	echo "elk ALL = (root) NOPASSWD:ALL" | tee /etc/sudoers.d/elk
-	chmod 0440 /etc/sudoers.d/elk
-
-解决sudo: sorry, you must have a tty to run sudo问题，在/etc/sudoer注释掉 Default requiretty 一行
-	sudo sed -i 's/Defaults requiretty/Defaults:elk !requiretty/' /etc/sudoers
+header的默认端口为9100
 
 
 
-### 修改文件所有者
-`chown -R elk:elk /usr/es/`
+## elk集群
 
-**设置资源参数**
+由于logstash和kibana都不需要其他设置，直接用预设的配置
 
-```
-  sudo vim  /etc/security/limits.d/90-nproc.conf
-```
+### elasticSearch脚本启动
 
-
-**添加**
-	 elk        soft    nproc     4096
-   <!-- 更改docker-machine的资源 -->
-```
-docker-machine ssh
-sysctl -w vm.max_map_count=655360
-```
-
-### es启动脚本
-
-    单机 su elk -c "$ES_HOME/bin/elasticsearch -d"
-    ssh elk@elk1 " $ES_HOME/bin/elasticsearch -d"
-    ssh root@elk1 " su elk -c  $ES_HOME/bin/elasticsearch "
-
-
-
-### 集群
-#### elasticSearch
 脚本 `vim  es-start.sh`
 
 ```bash
@@ -175,8 +181,8 @@ ssh root@elk2 ' su - elk -c  "$ES_HOME/bin/elasticsearch -d" '
 ssh root@elk3 "sed -i '6c node.name: es3 ' $ES_HOME/config/elasticsearch.yml"
 ssh root@elk3 ' su - elk -c  "$ES_HOME/bin/elasticsearch -d" '
 ```
-#### kibana
-启动单机（只需要启动单机） `bin/kibana`
+### kibana脚本启动
+启动单机（只需要启动单机） `$KIBANA_HOME/bin/kibana`
 ```bash
 #!/bin/bash
 sed -i '3c http://elk1:9200 '
@@ -187,7 +193,7 @@ ssh root@elk2 "nohup $KIBANA_HOME/bin/kibana & "
 ssh root@elk3 "sed -i '3c   http://elk3:9200 ' $KIBANA_HOME/config/kibana.yml"
 ssh root@elk3 "nohup $KIBANA_HOME/bin/kibana & "
 ```
-#### logstash
+### logstash脚本启动
 单机启动   `$LOGSTASH_HOME/bin/logstash -f logstash.conf`
  `$LOGSTASH_HOME/bin/logstash -f 配置文件的目录`
 
@@ -208,6 +214,8 @@ ssh root@elk3 "nohup $LOGSTASH_HOME/bin/logstash -f  $LOGSTASH_HOME/conf/$1 & "
 docker commit -m "elk镜像"  --author="yaosong"  os  yaosong5/elk:1.0
 ```
 
+os是你配置的容器名
+
 
 
 ## 生成elk 容器
@@ -215,7 +223,7 @@ docker commit -m "elk镜像"  --author="yaosong"  os  yaosong5/elk:1.0
 ```shell
 docker run -itd --net=br --name elk1 --hostname elk1 yaosong5/elk:1.0 &> /dev/null
 docker run -itd --net=br --name elk2 --hostname elk2 yaosong5/elk:1.0 &> /dev/null
-docker run -itd --net=br --name elk3 --hostname elk3 yaosong5/elk:1.0 &> /dev/null
+docker run -itd --net=br --name elk3 --hostname elk3 yaosong5/elk:1.0 &> /dev/nulls
 ```
 
 

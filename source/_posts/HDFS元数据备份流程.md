@@ -6,7 +6,7 @@ categories: 大数据
 toc: true
 ---
 
-[TOC]
+
 
 # hdfs元数据管理
 
@@ -15,10 +15,19 @@ namenode对数据的管理采用了三种存储形式：
 - 内存元数据(NameSystem)
 
 - 磁盘元数据镜像文件fsimage
+  fsimage保存着文件的名字、id、分块信息、大小等，但是不保存datanode名称对应的ip
 
 - 数据操作日志文件edits（可通过日志运算出元数据）
 
-  <!-- more -->![](http://pebgsxjpj.bkt.clouddn.com/15361544670231.jpg)
+  <!-- more -->
+
+  ## datanode和namenode交互
+
+  在hdfs启动的时候，处于安全模式，datanode向namenode汇报自己的ip和持有的block块信息，这样，安全模式结束后，文件块和datanode的ip关联上，存放数据的位置也就可以找到
+
+  # 元数据管理流程
+
+  ![](http://pebgsxjpj.bkt.clouddn.com/15361544670231.jpg)
 
 磁盘文件我们可以通过查看namenode的目录结构看到：
 ![](http://pebgsxjpj.bkt.clouddn.com/15361574063204.jpg)
@@ -78,5 +87,3 @@ namenode会将元数据放在内存里面，这样方便快速对数据的请求
 ```
 
 
-
-## 

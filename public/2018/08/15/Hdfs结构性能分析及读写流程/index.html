@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15361460237204.jpg">
 <meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15361570887042.jpg">
 <meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15361571791381.jpg">
-<meta property="og:updated_time" content="2018-09-05T16:39:44.560Z">
+<meta property="og:updated_time" content="2018-09-06T16:41:25.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hdfs结构性能分析及读写流程">
 <meta name="twitter:description" content="[TOC] hdfs的设计思想分而治之：将大文件、大批量文件，分布式存放在大量服务器上，以便于采取分而治之的方式对海量数据进行运算分析首先，它是一个文件系统，用于存储文件，通过统一的命名空间——目录树来定位文件其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有各自的角色；">
@@ -212,7 +212,7 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                61
+                62
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -352,7 +352,7 @@ var _hmt = _hmt || [];
 <li>文件的各个block的存储管理由datanode节点承担—- datanode是HDFS集群从节点，每一个block都可以在多个datanode上存储多个副本（副本数量也可以通过参数设置dfs.replication）</li>
 </ul>
 <p>HDFS是设计成适应一次写入，多次读出的场景，且不支持文件的修改</p>
-<h1 id="Hdfs的结构"><a href="#Hdfs的结构" class="headerlink" title="Hdfs的结构"></a>Hdfs的结构</h1><p>1.HDFS集群分为两大角色：NameNode、DataNode （secondary NameNode）<br>2.NameNode负责管理整个文件系统的元数据<br>记录文件在哪里<br>3.DataNode 负责管理用户的文件数据块<br>不负责切块，负责保管<br>4.文件会按照固定的大小（blocksize）切成若干块后分布式存储在若干台datanode上<br>5.每一个文件块可以有多个副本，并存放在不同的datanode上<br>副本不会放在同一个机器上，因为副本就是防止宕机，<br>6.Datanode会定期向Namenode汇报自身所保存的文件block信息，而namenode则会负责保持文件的副本数量<br>因为datanode如果宕机的话，name该机器上的对应的副本数据将会消失，这样需要将其在其他机器上进行恢复，恢复的话，就需要上面就需要数据和未宕机时的数据尽量保持一致，所以需要依赖于datanode定期汇报，不然差距的数据会很大<br>7.HDFS的内部工作机制对客户端保持透明，客户端请求访问HDFS都是通过向namenode申请来进行</p>
+<h1 id="Hdfs的结构"><a href="#Hdfs的结构" class="headerlink" title="Hdfs的结构"></a>Hdfs的结构</h1><p>1.HDFS集群分为两大角色：NameNode、DataNode （secondary NameNode）<br>2.NameNode负责管理整个文件系统的元数据：记录文件在哪里<br>3.DataNode 负责管理用户的文件数据块：不负责切块，负责保管<br>4.文件会按照固定的大小（blocksize）切成若干块后分布式存储在若干台datanode上<br>5.每一个文件块可以有多个副本，并存放在不同的datanode上<br>副本不会放在同一个机器上，因为副本就是防止宕机，<br>6.Datanode会定期向Namenode汇报自身所保存的文件block信息，而namenode则会负责保持文件的副本数量<br>因为datanode如果宕机的话，name该机器上的对应的副本数据将会消失，这样需要将其在其他机器上进行恢复，恢复的话，就需要上面就需要数据和未宕机时的数据尽量保持一致，所以需要依赖于datanode定期汇报，不然差距的数据会很大<br>7.HDFS的内部工作机制对客户端保持透明，客户端请求访问HDFS都是通过向namenode申请来进行</p>
 <h1 id="Hdfs写操作"><a href="#Hdfs写操作" class="headerlink" title="Hdfs写操作"></a>Hdfs写操作</h1><p><img src="http://pebgsxjpj.bkt.clouddn.com/15361391927714.jpg" alt=""></p>
 <p> 详细步骤解析</p>
 <p>1、根namenode通信请求上传文件，namenode检查目标文件是否已存在，父目录是否存在</p>

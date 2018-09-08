@@ -8,20 +8,20 @@
 
     <title>HDFS元数据备份流程 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="[TOC] hdfs元数据管理namenode对数据的管理采用了三种存储形式：  内存元数据(NameSystem)  磁盘元数据镜像文件fsimage  数据操作日志文件edits（可通过日志运算出元数据）">
+    <meta name="description" content="hdfs元数据管理namenode对数据的管理采用了三种存储形式：  内存元数据(NameSystem)  磁盘元数据镜像文件fsimagefsimage保存着文件的名字、id、分块信息、大小等，但是不保存datanode名称对应的ip  数据操作日志文件edits（可通过日志运算出元数据）">
 <meta name="keywords" content="Hadoop,原理,HDFS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HDFS元数据备份流程">
 <meta property="og:url" content="http://gangtieguo.cn/2018/08/15/HDFS元数据备份流程/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] hdfs元数据管理namenode对数据的管理采用了三种存储形式：  内存元数据(NameSystem)  磁盘元数据镜像文件fsimage  数据操作日志文件edits（可通过日志运算出元数据）">
+<meta property="og:description" content="hdfs元数据管理namenode对数据的管理采用了三种存储形式：  内存元数据(NameSystem)  磁盘元数据镜像文件fsimagefsimage保存着文件的名字、id、分块信息、大小等，但是不保存datanode名称对应的ip  数据操作日志文件edits（可通过日志运算出元数据）">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15361544670231.jpg">
 <meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15361574063204.jpg">
-<meta property="og:updated_time" content="2018-09-05T16:38:26.603Z">
+<meta property="og:updated_time" content="2018-09-06T16:47:36.633Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDFS元数据备份流程">
-<meta name="twitter:description" content="[TOC] hdfs元数据管理namenode对数据的管理采用了三种存储形式：  内存元数据(NameSystem)  磁盘元数据镜像文件fsimage  数据操作日志文件edits（可通过日志运算出元数据）">
+<meta name="twitter:description" content="hdfs元数据管理namenode对数据的管理采用了三种存储形式：  内存元数据(NameSystem)  磁盘元数据镜像文件fsimagefsimage保存着文件的名字、id、分块信息、大小等，但是不保存datanode名称对应的ip  数据操作日志文件edits（可通过日志运算出元数据）">
 <meta name="twitter:image" content="http://pebgsxjpj.bkt.clouddn.com/15361544670231.jpg">
     
 
@@ -210,7 +210,7 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                61
+                62
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -307,7 +307,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#hdfs元数据管理"><span class="toc-number">1.</span> <span class="toc-text">hdfs元数据管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#namenode管理元数据解析"><span class="toc-number">2.</span> <span class="toc-text">namenode管理元数据解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#所以引入了secondaryNameNode"><span class="toc-number">2.1.</span> <span class="toc-text">所以引入了secondaryNameNode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#edits文件定期转为元数据"><span class="toc-number">2.2.</span> <span class="toc-text">edits文件定期转为元数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#secondaryNameNode的出现"><span class="toc-number">2.3.</span> <span class="toc-text">secondaryNameNode的出现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为了防止namenode宕机导致了数据丢失所作配置"><span class="toc-number">2.4.</span> <span class="toc-text">为了防止namenode宕机导致了数据丢失所作配置</span></a></li></ol></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#hdfs元数据管理"><span class="toc-number">1.</span> <span class="toc-text">hdfs元数据管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#datanode和namenode交互"><span class="toc-number">1.1.</span> <span class="toc-text">datanode和namenode交互</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#元数据管理流程"><span class="toc-number">2.</span> <span class="toc-text">元数据管理流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#namenode管理元数据解析"><span class="toc-number">3.</span> <span class="toc-text">namenode管理元数据解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#所以引入了secondaryNameNode"><span class="toc-number">3.1.</span> <span class="toc-text">所以引入了secondaryNameNode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#edits文件定期转为元数据"><span class="toc-number">3.2.</span> <span class="toc-text">edits文件定期转为元数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#secondaryNameNode的出现"><span class="toc-number">3.3.</span> <span class="toc-text">secondaryNameNode的出现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为了防止namenode宕机导致了数据丢失所作配置"><span class="toc-number">3.4.</span> <span class="toc-text">为了防止namenode宕机导致了数据丢失所作配置</span></a></li></ol></li></ol>
             </div>
 
 
@@ -334,15 +334,16 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p>[TOC]</p>
-<h1 id="hdfs元数据管理"><a href="#hdfs元数据管理" class="headerlink" title="hdfs元数据管理"></a>hdfs元数据管理</h1><p>namenode对数据的管理采用了三种存储形式：</p>
+                <h1 id="hdfs元数据管理"><a href="#hdfs元数据管理" class="headerlink" title="hdfs元数据管理"></a>hdfs元数据管理</h1><p>namenode对数据的管理采用了三种存储形式：</p>
 <ul>
 <li><p>内存元数据(NameSystem)</p>
 </li>
-<li><p>磁盘元数据镜像文件fsimage</p>
+<li><p>磁盘元数据镜像文件fsimage<br>fsimage保存着文件的名字、id、分块信息、大小等，但是不保存datanode名称对应的ip</p>
 </li>
 <li><p>数据操作日志文件edits（可通过日志运算出元数据）</p>
-<p><a id="more"></a><img src="http://pebgsxjpj.bkt.clouddn.com/15361544670231.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="datanode和namenode交互"><a href="#datanode和namenode交互" class="headerlink" title="datanode和namenode交互"></a>datanode和namenode交互</h2><p>在hdfs启动的时候，处于安全模式，datanode向namenode汇报自己的ip和持有的block块信息，这样，安全模式结束后，文件块和datanode的ip关联上，存放数据的位置也就可以找到</p>
+<h1 id="元数据管理流程"><a href="#元数据管理流程" class="headerlink" title="元数据管理流程"></a>元数据管理流程</h1><p><img src="http://pebgsxjpj.bkt.clouddn.com/15361544670231.jpg" alt=""></p>
 </li>
 </ul>
 <p>磁盘文件我们可以通过查看namenode的目录结构看到：<br><img src="http://pebgsxjpj.bkt.clouddn.com/15361574063204.jpg" alt=""></p>
@@ -358,7 +359,6 @@ var _hmt = _hmt || [];
 <p>配置的多个的话，会同时往这两个目录中写</p>
 <p>如果不配置这个默认的目录是core-site.xml文件中配置的hadoop的临时文件 </p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span> </span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/home/bigdata/apps/hadoop-2.6.4/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>## </p>
 
             
 
