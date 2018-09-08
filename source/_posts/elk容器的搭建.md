@@ -151,6 +151,21 @@ npm install -g grunt-cli
 npm install
 ```
 
+### 配置header
+
+修改服务器监听地址: Gruntfile.js 
+**vi $HEADER_HOME/Gruntfile.js** 在第 93 行添加：
+
+```
+hostname:'*',
+```
+
+g) 修改连接地址：vim $HEADER_HOME/_site/app.js
+
+```
+this.base_uri = this.config.base_uri || this.prefs.get("app-base_uri") || "http://192.168.33.16:9200"
+```
+
 ## header启动
 
 在 elasticsearch-head-master 目录下
@@ -160,6 +175,12 @@ grunt server  或者 npm run start
 ```
 
 header的默认端口为9100
+
+
+
+### header的停止命令
+
+
 
 
 
