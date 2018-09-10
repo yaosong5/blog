@@ -48,6 +48,69 @@ export NODE_PATH=$NODE_HOME/lib/node_modules
 
 ## es配置加启动
 
+es的配置如下
+
+```yaml
+
+# 这里指定的是集群名称，需要修改为对应的，开启了自发现功能后，ES 会按照此集群名称进行集群发现 
+#集群名称，通过组播的方式通信，通过名称判断属于哪个集群
+cluster.name: elk
+#节点名称，要唯一(每个节点不一样)
+node.name: elk1
+
+
+#如果是master节点设置成true 
+node.master: true
+
+
+# 数据目录
+path.data: /usr/es/data
+
+# log 目录 
+path.logs: /usr/es/logs
+
+# 修改一下 ES 的监听地址，这样别的机器也可以访问 
+network.host: 0.0.0.0
+
+# 默认的端口号 
+http.port: 9200 
+
+# 设置节点间交互的tcp端口,默认是9300 
+#transport.tcp.port: 9300
+
+#Elasticsearch将绑定到可用的环回地址，并将扫描端口9300到9305以尝试连接到运行在同一台服务器上的其他节点。
+#这提供了自动集群体验，而无需进行任何配置。数组设置或逗号分隔的设置。每个值的形式应该是host:port或host
+#（如果没有设置，port默认设置会transport.profiles.default.port 回落到transport.tcp.port）。
+#请注意，IPv6主机必须放在括号内。默认为127.0.0.1, [::1]
+discovery.zen.ping.unicast.hosts: ["elk1","elk2","elk3"] 
+
+
+#如果没有这种设置,遭受网络故障的集群就有可能将集群分成两个独立的集群 - 分裂的大脑 - 这将导致数据丢失
+# discovery.zen.minimum_master_nodes: 3 
+
+
+# enable cors，保证_site 类的插件可以访问 es #避免出现跨域问题 要设置之后   header插件才可以用
+http.cors.enabled: true 
+http.cors.allow-origin: "*"
+
+
+# Centos6 不支持 SecComp，而 ES5.2.0 默认 bootstrap.system_call_filter 为 true 进行检测，所以导致检测失败，失败后直接导致 ES 不能启动。 
+bootstrap.memory_lock: false 
+bootstrap.system_call_filter: false
+
+#在chorem中 当elasticsearch安装x-pack后还可以访问
+#http.cors.allow-headers: Authorization
+
+#启用审核以跟踪与您的Elasticsearch群集进行的尝试和成功的交互
+#xpack.security.audit.enabled: true
+
+#设置为true来锁住内存。因为内存交换到磁盘对服务器性能来说是致命的，当jvm开始swapping时es的效率会降低，所以要保证它不swap
+#bootstrap.memory_lock: true
+
+```
+
+
+
 ### 不能通过root启动
 
 #### 创建用户elk
@@ -160,7 +223,7 @@ npm install
 hostname:'*',
 ```
 
-g) 修改连接地址：vim $HEADER_HOME/_site/app.js
+g) 修改连接地址：vim $HEADER_HOME/_site/app.js  1285行
 
 ```
 this.base_uri = this.config.base_uri || this.prefs.get("app-base_uri") || "http://192.168.33.16:9200"
@@ -184,7 +247,7 @@ header的默认端口为9100
 
 
 
-## elk集群
+## elk集群启动
 
 由于logstash和kibana都不需要其他设置，直接用预设的配置
 
@@ -203,6 +266,9 @@ ssh root@elk3 "sed -i '6c node.name: es3 ' $ES_HOME/config/elasticsearch.yml"
 ssh root@elk3 ' su - elk -c  "$ES_HOME/bin/elasticsearch -d" '
 ```
 ### kibana脚本启动
+
+（端口为5601）
+
 启动单机（只需要启动单机） `$KIBANA_HOME/bin/kibana`
 ```bash
 #!/bin/bash
