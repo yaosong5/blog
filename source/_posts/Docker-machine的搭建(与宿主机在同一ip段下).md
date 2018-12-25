@@ -137,8 +137,12 @@ TYPE=Ethernet
 
 ```bash
  eval $(docker-machine env default) 
+ 如果要取消变量 
+  eval $(docker-machine env -u)
+ 
 ```
 
 
 
 参考：[docker-install-mac-vm-centos](https://github.com/SixQuant/engineering-excellence/blob/master/docker/docker-install-mac-vm-centos.md)
+

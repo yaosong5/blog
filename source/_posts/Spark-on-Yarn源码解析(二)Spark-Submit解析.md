@@ -42,7 +42,7 @@ spark-on-yarn系列
 这是通常我们提交spark程序的submit命令，以此为切入点，对spark程序的运行流程做一个跟踪和分析。
 <!--more-->
 查看spark-submit脚本
-![](http://pebgsxjpj.bkt.clouddn.com/15359432887877.jpg)
+![](http://img.gangtieguo.cn/15359432887877.jpg)
 
 查看spark-submit脚本的信息，初步可以看到submit启动的类为org.apache.spark.deploy.SparkSubmit，更多细节其实不重要（开个开玩，极客可以求甚解）如果觉得要深究一下为什么是submit的main方法的可以参考一下spark on yarn 作业提交源码分析
 

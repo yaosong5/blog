@@ -9,22 +9,22 @@
     <title>Hdfs结构性能分析及读写流程 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="[TOC] hdfs的设计思想分而治之：将大文件、大批量文件，分布式存放在大量服务器上，以便于采取分而治之的方式对海量数据进行运算分析首先，它是一个文件系统，用于存储文件，通过统一的命名空间——目录树来定位文件其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有各自的角色；">
-<meta name="keywords" content="Hadoop,原理,HDFS">
+<meta name="keywords" content="Hadoop,HDFS,原理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hdfs结构性能分析及读写流程">
 <meta property="og:url" content="http://gangtieguo.cn/2018/08/15/Hdfs结构性能分析及读写流程/index.html">
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC] hdfs的设计思想分而治之：将大文件、大批量文件，分布式存放在大量服务器上，以便于采取分而治之的方式对海量数据进行运算分析首先，它是一个文件系统，用于存储文件，通过统一的命名空间——目录树来定位文件其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有各自的角色；">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15361391927714.jpg">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15361460237204.jpg">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15361570887042.jpg">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15361571791381.jpg">
-<meta property="og:updated_time" content="2018-09-06T16:41:25.367Z">
+<meta property="og:image" content="http://img.gangtieguo.cn/15361391927714.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15361460237204.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15361570887042.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15361571791381.jpg">
+<meta property="og:updated_time" content="2018-12-25T03:53:56.755Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hdfs结构性能分析及读写流程">
 <meta name="twitter:description" content="[TOC] hdfs的设计思想分而治之：将大文件、大批量文件，分布式存放在大量服务器上，以便于采取分而治之的方式对海量数据进行运算分析首先，它是一个文件系统，用于存储文件，通过统一的命名空间——目录树来定位文件其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有各自的角色；">
-<meta name="twitter:image" content="http://pebgsxjpj.bkt.clouddn.com/15361391927714.jpg">
+<meta name="twitter:image" content="http://img.gangtieguo.cn/15361391927714.jpg">
     
 
     
@@ -353,7 +353,7 @@ var _hmt = _hmt || [];
 </ul>
 <p>HDFS是设计成适应一次写入，多次读出的场景，且不支持文件的修改</p>
 <h1 id="Hdfs的结构"><a href="#Hdfs的结构" class="headerlink" title="Hdfs的结构"></a>Hdfs的结构</h1><p>1.HDFS集群分为两大角色：NameNode、DataNode （secondary NameNode）<br>2.NameNode负责管理整个文件系统的元数据：记录文件在哪里<br>3.DataNode 负责管理用户的文件数据块：不负责切块，负责保管<br>4.文件会按照固定的大小（blocksize）切成若干块后分布式存储在若干台datanode上<br>5.每一个文件块可以有多个副本，并存放在不同的datanode上<br>副本不会放在同一个机器上，因为副本就是防止宕机，<br>6.Datanode会定期向Namenode汇报自身所保存的文件block信息，而namenode则会负责保持文件的副本数量<br>因为datanode如果宕机的话，name该机器上的对应的副本数据将会消失，这样需要将其在其他机器上进行恢复，恢复的话，就需要上面就需要数据和未宕机时的数据尽量保持一致，所以需要依赖于datanode定期汇报，不然差距的数据会很大<br>7.HDFS的内部工作机制对客户端保持透明，客户端请求访问HDFS都是通过向namenode申请来进行</p>
-<h1 id="Hdfs写操作"><a href="#Hdfs写操作" class="headerlink" title="Hdfs写操作"></a>Hdfs写操作</h1><p><img src="http://pebgsxjpj.bkt.clouddn.com/15361391927714.jpg" alt=""></p>
+<h1 id="Hdfs写操作"><a href="#Hdfs写操作" class="headerlink" title="Hdfs写操作"></a>Hdfs写操作</h1><p><img src="http://img.gangtieguo.cn/15361391927714.jpg" alt=""></p>
 <p> 详细步骤解析</p>
 <p>1、根namenode通信请求上传文件，namenode检查目标文件是否已存在，父目录是否存在</p>
 <p>不存在则会返回path not exist异常</p>
@@ -373,7 +373,7 @@ var _hmt = _hmt || [];
 <p>7、当一个block传输完成之后，client再次请求<strong>namenode</strong>上传第二个block的服务器。</p>
 <p>注：写的过程中，namenode记录下来了文件路径，文件有几个block也记录下来了，每个block分配到哪些机器上也记录下到了，及其每个block的副本信息，副本在那几个机器上。</p>
 <p>校验的时候不是一个packet（一批chunk，共64k）校验，而是以一个chunk来校验，一个chunk是512byte（字节）</p>
-<h1 id="Hdfs读操作"><a href="#Hdfs读操作" class="headerlink" title="Hdfs读操作"></a>Hdfs读操作</h1><p><img src="http://pebgsxjpj.bkt.clouddn.com/15361460237204.jpg" alt=""></p>
+<h1 id="Hdfs读操作"><a href="#Hdfs读操作" class="headerlink" title="Hdfs读操作"></a>Hdfs读操作</h1><p><img src="http://img.gangtieguo.cn/15361460237204.jpg" alt=""></p>
 <p>客户端将要读取的文件路径发送给namenode，namenode获取文件的元信息（主要是block的存放位置信息）返回给客户端，客户端根据返回的信息找到相应datanode逐个获取文件的block并在客户端本地进行数据追加合并从而获得整个文件</p>
 <p>1、跟namenode通信查询元数据，找到文件块所在的datanode服务器</p>
 <p>2、挑选一台datanode（就近原则，然后随机）服务器，请求建立socket流</p>
@@ -382,9 +382,9 @@ var _hmt = _hmt || [];
 <p>对此，我们了解了hdfs的读写流程，那么我们再来看看hdfs元数据的管理</p>
 <h2 id="小贴士"><a href="#小贴士" class="headerlink" title="小贴士"></a>小贴士</h2><p><strong>hdfs中datanode的初始化</strong></p>
 <p>hdfs会在配置文件中配置一个namenode的工作目录元数据 </p>
-<p>查看目录结构 tree $DATANODE/<br><img src="http://pebgsxjpj.bkt.clouddn.com/15361570887042.jpg" alt=""></p>
+<p>查看目录结构 tree $DATANODE/<br><img src="http://img.gangtieguo.cn/15361570887042.jpg" alt=""></p>
 <p>datanode的工作目录是在datanode启动后初始化的<br>而hadoop namenode format 只会初始name的工作目录，和datanode没有关系</p>
-<p><strong>如何把一个hdfs的一个节点加入到另一个集群</strong><br>因为在原来的目录中会有原来集群的信息如：ClusterID<br><img src="http://pebgsxjpj.bkt.clouddn.com/15361571791381.jpg" alt=""></p>
+<p><strong>如何把一个hdfs的一个节点加入到另一个集群</strong><br>因为在原来的目录中会有原来集群的信息如：ClusterID<br><img src="http://img.gangtieguo.cn/15361571791381.jpg" alt=""></p>
 <p>必须要将hdfs datanode的工作目录删除，不然持有上一个集群的datanode的工作目录，会认为是一个误操作，为了防止丢失数据，不会让其连接上</p>
 
             

@@ -16,18 +16,18 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC] 什么是DataStreamDiscretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15360627803806.jpg">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15361685465899.jpg">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15360627860827.jpg">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15360627909583.jpg">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15360698161149.jpg">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15360679610176.jpg">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15360681467801.jpg">
-<meta property="og:updated_time" content="2018-09-05T17:34:41.387Z">
+<meta property="og:image" content="http://img.gangtieguo.cn/15360627803806.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15361685465899.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15360627860827.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15360627909583.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15360698161149.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15360679610176.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15360681467801.jpg">
+<meta property="og:updated_time" content="2018-12-25T03:51:31.046Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DataStream DataSet介绍">
 <meta name="twitter:description" content="[TOC] 什么是DataStreamDiscretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：">
-<meta name="twitter:image" content="http://pebgsxjpj.bkt.clouddn.com/15360627803806.jpg">
+<meta name="twitter:image" content="http://img.gangtieguo.cn/15360627803806.jpg">
     
 
     
@@ -340,11 +340,11 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
-<h1 id="什么是DataStream"><a href="#什么是DataStream" class="headerlink" title="什么是DataStream"></a>什么是DataStream</h1><p>Discretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：<br><img src="http://pebgsxjpj.bkt.clouddn.com/15360627803806.jpg" alt=""><br><a id="more"></a></p>
-<p>与RDD类似，DataFrame也是一个分布式数据容器。然而DataFrame更像传统数据库的二维表格，除了数据以外，还记录数据的结构信息，即schema。同时，与Hive类似，DataFrame也支持嵌套数据类型（struct、array和map）。从API易用性的角度上 看，DataFrame API提供的是一套高层的关系操作，比函数式的RDD API要更加友好，门槛更低。由于与R和Pandas的DataFrame类似，Spark DataFrame很好地继承了传统单机数据分析的开发体验。<br><img src="http://pebgsxjpj.bkt.clouddn.com/15361685465899.jpg" alt=""></p>
-<p>对数据的操作也是按照RDD为单位来进行的<br><img src="http://pebgsxjpj.bkt.clouddn.com/15360627860827.jpg" alt=""></p>
-<p>计算过程由Spark engine来完成<br><img src="http://pebgsxjpj.bkt.clouddn.com/15360627909583.jpg" alt=""></p>
-<p>Datasets 与DataFrames 与RDDs的关系<br><img src="http://pebgsxjpj.bkt.clouddn.com/15360698161149.jpg" alt=""></p>
+<h1 id="什么是DataStream"><a href="#什么是DataStream" class="headerlink" title="什么是DataStream"></a>什么是DataStream</h1><p>Discretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：<br><img src="http://img.gangtieguo.cn/15360627803806.jpg" alt=""><br><a id="more"></a></p>
+<p>与RDD类似，DataFrame也是一个分布式数据容器。然而DataFrame更像传统数据库的二维表格，除了数据以外，还记录数据的结构信息，即schema。同时，与Hive类似，DataFrame也支持嵌套数据类型（struct、array和map）。从API易用性的角度上 看，DataFrame API提供的是一套高层的关系操作，比函数式的RDD API要更加友好，门槛更低。由于与R和Pandas的DataFrame类似，Spark DataFrame很好地继承了传统单机数据分析的开发体验。<br><img src="http://img.gangtieguo.cn/15361685465899.jpg" alt=""></p>
+<p>对数据的操作也是按照RDD为单位来进行的<br><img src="http://img.gangtieguo.cn/15360627860827.jpg" alt=""></p>
+<p>计算过程由Spark engine来完成<br><img src="http://img.gangtieguo.cn/15360627909583.jpg" alt=""></p>
+<p>Datasets 与DataFrames 与RDDs的关系<br><img src="http://img.gangtieguo.cn/15360698161149.jpg" alt=""></p>
 <p>Spark引入DataFrame，它可以提供high-level functions让Spark更好的处理结构数据的计算。这让Catalyst optimizer 和Tungsten（钨丝） execution engine自动加速大数据分析。<br>发布DataFrame之后开发者收到了很多反馈，其中一个主要的是大家反映缺乏编译时类型安全。为了解决这个问题，Spark采用新的Dataset API (DataFrame API的类型扩展)。<br>Dataset API扩展DataFrame API支持静态类型和运行已经存在的Scala或Java语言的用户自定义函数。对比传统的RDD API，Dataset API提供更好的内存管理，特别是在长任务中有更好的性能提升</p>
 <h1 id="DataStream相关操作"><a href="#DataStream相关操作" class="headerlink" title="DataStream相关操作"></a>DataStream相关操作</h1><p>DStream上的原语与RDD的类似，分为Transformations（转换）和OutputOperations（输出）两种，此外转换操作中还有一些比较特殊的原语，如：updateStateByKey()、transform()以及各种Window相关的原语。</p>
 <h2 id="Transformations-on-DStreams"><a href="#Transformations-on-DStreams" class="headerlink" title="Transformations on DStreams"></a>Transformations on DStreams</h2><table>
@@ -420,7 +420,7 @@ var _hmt = _hmt || [];
 <ol>
 <li>WindowOperations</li>
 </ol>
-<p>Window Operations有点类似于Storm中的State，可以设置窗口的大小和滑动窗口的间隔来动态的获取当前Steaming的允许状态<br><img src="http://pebgsxjpj.bkt.clouddn.com/15360679610176.jpg" alt=""></p>
+<p>Window Operations有点类似于Storm中的State，可以设置窗口的大小和滑动窗口的间隔来动态的获取当前Steaming的允许状态<br><img src="http://img.gangtieguo.cn/15360679610176.jpg" alt=""></p>
 <h2 id="Output-Operations-on-DStreams"><a href="#Output-Operations-on-DStreams" class="headerlink" title="Output Operations on DStreams"></a>Output Operations on DStreams</h2><p>Output Operations可以将DStream的数据输出到外部的数据库或文件系统，当某个Output Operations原语被调用时（与RDD的Action相同），streaming程序才会开始真正的计算过程。</p>
 <table>
 <thead>
@@ -453,7 +453,7 @@ var _hmt = _hmt || [];
 </tbody>
 </table>
 <h2 id="用Spark-Streaming实现实时WordCount"><a href="#用Spark-Streaming实现实时WordCount" class="headerlink" title="用Spark Streaming实现实时WordCount"></a>用Spark Streaming实现实时WordCount</h2><p>架构图：</p>
-<p><img src="http://pebgsxjpj.bkt.clouddn.com/15360681467801.jpg" alt=""></p>
+<p><img src="http://img.gangtieguo.cn/15360681467801.jpg" alt=""></p>
 <p>1.安装并启动生成者</p>
 <p>首先在一台Linux（ip：192.168.10.101）上用YUM安装nc工具</p>
 <p>yum install -y nc</p>

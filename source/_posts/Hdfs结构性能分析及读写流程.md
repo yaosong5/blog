@@ -48,7 +48,7 @@ HDFS是设计成适应一次写入，多次读出的场景，且不支持文件�
 
 
 # Hdfs写操作
-![](http://pebgsxjpj.bkt.clouddn.com/15361391927714.jpg)
+![](http://img.gangtieguo.cn/15361391927714.jpg)
 
 
  详细步骤解析
@@ -92,7 +92,7 @@ HDFS是设计成适应一次写入，多次读出的场景，且不支持文件�
 校验的时候不是一个packet（一批chunk，共64k）校验，而是以一个chunk来校验，一个chunk是512byte（字节）
 
 # Hdfs读操作
-![](http://pebgsxjpj.bkt.clouddn.com/15361460237204.jpg)
+![](http://img.gangtieguo.cn/15361460237204.jpg)
 
 客户端将要读取的文件路径发送给namenode，namenode获取文件的元信息（主要是block的存放位置信息）返回给客户端，客户端根据返回的信息找到相应datanode逐个获取文件的block并在客户端本地进行数据追加合并从而获得整个文件
 
@@ -117,7 +117,7 @@ HDFS是设计成适应一次写入，多次读出的场景，且不支持文件�
 hdfs会在配置文件中配置一个namenode的工作目录元数据 
 
 查看目录结构 tree $DATANODE/ 
-![](http://pebgsxjpj.bkt.clouddn.com/15361570887042.jpg)
+![](http://img.gangtieguo.cn/15361570887042.jpg)
 
 
 
@@ -126,7 +126,7 @@ datanode的工作目录是在datanode启动后初始化的
 
 **如何把一个hdfs的一个节点加入到另一个集群**
 因为在原来的目录中会有原来集群的信息如：ClusterID
-![](http://pebgsxjpj.bkt.clouddn.com/15361571791381.jpg)
+![](http://img.gangtieguo.cn/15361571791381.jpg)
 
 必须要将hdfs datanode的工作目录删除，不然持有上一个集群的datanode的工作目录，会认为是一个误操作，为了防止丢失数据，不会让其连接上
 

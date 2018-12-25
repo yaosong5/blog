@@ -29,7 +29,7 @@ toc: true
 
 Hadoop-HA的主要思想是有两个NameNode，一个作为主NameNode，一个作为standby，两个NameNode使用同一个命名空间。通过zookeepr（JournalNode）来进行协调，实现NameNode的主备切换。
 
-![](http://pebgsxjpj.bkt.clouddn.com/15361634728274.jpg)
+![](http://img.gangtieguo.cn/15361634728274.jpg)
 真正的架构和流程如上图所示
 
 
@@ -38,6 +38,6 @@ Hadoop-HA的主要思想是有两个NameNode，一个作为主NameNode，一个�
 
 共同运行多个active的namenode（多套主备的namenode集群），且公用用一套datanode
 
-![](http://pebgsxjpj.bkt.clouddn.com/15361652893141.jpg)
+![](http://img.gangtieguo.cn/15361652893141.jpg)
 
 

@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC] spark-on-yarn系列 Spark-on-Yarn 源码解析 (一)Yarn 任务解析Yarn任务解析/)Spark-on-Yarn 源码解析 (二)Spark-Submit 解析Spark-Submit解析/)Spark-on-Yarn 源码解析 (三)client 做的事情client做的事情/)Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15359432887877.jpg">
-<meta property="og:updated_time" content="2018-09-04T10:13:14.301Z">
+<meta property="og:image" content="http://img.gangtieguo.cn/15359432887877.jpg">
+<meta property="og:updated_time" content="2018-12-25T03:53:50.216Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark-on-Yarn源码解析(二)Spark-Submit解析">
 <meta name="twitter:description" content="[TOC] spark-on-yarn系列 Spark-on-Yarn 源码解析 (一)Yarn 任务解析Yarn任务解析/)Spark-on-Yarn 源码解析 (二)Spark-Submit 解析Spark-Submit解析/)Spark-on-Yarn 源码解析 (三)client 做的事情client做的事情/)Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务">
-<meta name="twitter:image" content="http://pebgsxjpj.bkt.clouddn.com/15359432887877.jpg">
+<meta name="twitter:image" content="http://img.gangtieguo.cn/15359432887877.jpg">
     
 
     
@@ -349,7 +349,7 @@ var _hmt = _hmt || [];
 --executor-cores 4 \ //为每一个executor申请的core
 --conf spark.yarn.driver.memoryOverhead=1g \ //driver可使用的非堆内存，这些内存用于如VM，字符 串常量池以及其他额外本地开销等
 --conf spark.yarn.executor.memoryOverhead=2g \ //每个executor可使用的非堆内存，这些内存用于如 VM，字符串常量池以及其他额外本地开销等
-</code></pre><p>这是通常我们提交spark程序的submit命令，以此为切入点，对spark程序的运行流程做一个跟踪和分析。<br><a id="more"></a><br>查看spark-submit脚本<br><img src="http://pebgsxjpj.bkt.clouddn.com/15359432887877.jpg" alt=""></p>
+</code></pre><p>这是通常我们提交spark程序的submit命令，以此为切入点，对spark程序的运行流程做一个跟踪和分析。<br><a id="more"></a><br>查看spark-submit脚本<br><img src="http://img.gangtieguo.cn/15359432887877.jpg" alt=""></p>
 <p>查看spark-submit脚本的信息，初步可以看到submit启动的类为org.apache.spark.deploy.SparkSubmit，更多细节其实不重要（开个开玩，极客可以求甚解）如果觉得要深究一下为什么是submit的main方法的可以参考一下spark on yarn 作业提交源码分析</p>
 <p>接下来查看该类内部的处理逻辑</p>
 <p>SparkSumbmit的类（为了简洁和文章篇幅，只保留了关键流程的信息）</p>

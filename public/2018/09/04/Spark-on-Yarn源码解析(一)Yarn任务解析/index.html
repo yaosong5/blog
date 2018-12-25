@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC] spark-on-yarn系列Spark-on-Yarn 源码解析 (一)Yarn 任务解析Yarn任务解析/)Spark-on-Yarn 源码解析 (二)Spark-Submit 解析Spark-Submit解析/)Spark-on-Yarn 源码解析 (三)client 做的事情client做的事情/)Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务分">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15358192541466.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15358192541466.jpg">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fuaxd9man3j31020o60w1.jpg">
-<meta property="og:updated_time" content="2018-09-04T10:13:56.834Z">
+<meta property="og:updated_time" content="2018-12-25T03:53:51.568Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark-on-Yarn源码解析(一)Yarn任务解析">
 <meta name="twitter:description" content="[TOC] spark-on-yarn系列Spark-on-Yarn 源码解析 (一)Yarn 任务解析Yarn任务解析/)Spark-on-Yarn 源码解析 (二)Spark-Submit 解析Spark-Submit解析/)Spark-on-Yarn 源码解析 (三)client 做的事情client做的事情/)Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务分">
-<meta name="twitter:image" content="http://pebgsxjpj.bkt.clouddn.com/15358192541466.jpg">
+<meta name="twitter:image" content="http://img.gangtieguo.cn/15358192541466.jpg">
     
 
     
@@ -338,7 +338,7 @@ var _hmt = _hmt || [];
 <p>spark-on-yarn系列<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(一" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (一)Yarn 任务解析</a>Yarn任务解析/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(二" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (二)Spark-Submit 解析</a>Spark-Submit解析/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(三" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (三)client 做的事情</a>client做的事情/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(四" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务分配调度 stage 划分</a>Spark业务代码的执行及其任务分配调度stage划分/)</p>
 <p>了解spark-on-yarn,首先我们了解一下yarn提交的流程，俗话说，欲练此功，错了，我们还是先看吧</p>
 <h1 id="yarn任务的提交"><a href="#yarn任务的提交" class="headerlink" title="yarn任务的提交"></a>yarn任务的提交</h1><p>YARN 的基本架构和工作流程</p>
-<p><img src="http://pebgsxjpj.bkt.clouddn.com/15358192541466.jpg" alt=""></p>
+<p><img src="http://img.gangtieguo.cn/15358192541466.jpg" alt=""></p>
 <p>YARN 的基本架构如上图所示，由三大功能模块组成，分别是 1) RM (ResourceManager) 2) NM (Node Manager) 3) AM(Application Master)<br><a id="more"></a><br>作业提交</p>
 <ol>
 <li>用户通过 Client 向 ResourceManager 提交 Application， ResourceManager 根据用户请求分配合适的 Container, 然后在指定的 NodeManager 上运行 Container 以启动 ApplicationMaster</li>

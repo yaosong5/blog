@@ -27,10 +27,10 @@ namenode对数据的管理采用了三种存储形式：
 
   # 元数据管理流程
 
-  ![](http://pebgsxjpj.bkt.clouddn.com/15361544670231.jpg)
+  ![](http://img.gangtieguo.cn/15361544670231.jpg)
 
 磁盘文件我们可以通过查看namenode的目录结构看到：
-![](http://pebgsxjpj.bkt.clouddn.com/15361574063204.jpg)
+![](http://img.gangtieguo.cn/15361574063204.jpg)
 
 A、内存中有一份完整的元数据(内存meta data)
 B、磁盘有一个“准完整”的元数据镜像（fsimage）文件(在namenode的工作目录中)

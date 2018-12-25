@@ -9,20 +9,20 @@
     <title>HDFS元数据备份流程 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="hdfs元数据管理namenode对数据的管理采用了三种存储形式：  内存元数据(NameSystem)  磁盘元数据镜像文件fsimagefsimage保存着文件的名字、id、分块信息、大小等，但是不保存datanode名称对应的ip  数据操作日志文件edits（可通过日志运算出元数据）">
-<meta name="keywords" content="Hadoop,原理,HDFS">
+<meta name="keywords" content="Hadoop,HDFS,原理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HDFS元数据备份流程">
 <meta property="og:url" content="http://gangtieguo.cn/2018/08/15/HDFS元数据备份流程/index.html">
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="hdfs元数据管理namenode对数据的管理采用了三种存储形式：  内存元数据(NameSystem)  磁盘元数据镜像文件fsimagefsimage保存着文件的名字、id、分块信息、大小等，但是不保存datanode名称对应的ip  数据操作日志文件edits（可通过日志运算出元数据）">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15361544670231.jpg">
-<meta property="og:image" content="http://pebgsxjpj.bkt.clouddn.com/15361574063204.jpg">
-<meta property="og:updated_time" content="2018-09-06T16:47:36.633Z">
+<meta property="og:image" content="http://img.gangtieguo.cn/15361544670231.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15361574063204.jpg">
+<meta property="og:updated_time" content="2018-12-25T03:53:58.236Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDFS元数据备份流程">
 <meta name="twitter:description" content="hdfs元数据管理namenode对数据的管理采用了三种存储形式：  内存元数据(NameSystem)  磁盘元数据镜像文件fsimagefsimage保存着文件的名字、id、分块信息、大小等，但是不保存datanode名称对应的ip  数据操作日志文件edits（可通过日志运算出元数据）">
-<meta name="twitter:image" content="http://pebgsxjpj.bkt.clouddn.com/15361544670231.jpg">
+<meta name="twitter:image" content="http://img.gangtieguo.cn/15361544670231.jpg">
     
 
     
@@ -343,10 +343,10 @@ var _hmt = _hmt || [];
 <li><p>数据操作日志文件edits（可通过日志运算出元数据）</p>
 <a id="more"></a>
 <h2 id="datanode和namenode交互"><a href="#datanode和namenode交互" class="headerlink" title="datanode和namenode交互"></a>datanode和namenode交互</h2><p>在hdfs启动的时候，处于安全模式，datanode向namenode汇报自己的ip和持有的block块信息，这样，安全模式结束后，文件块和datanode的ip关联上，存放数据的位置也就可以找到</p>
-<h1 id="元数据管理流程"><a href="#元数据管理流程" class="headerlink" title="元数据管理流程"></a>元数据管理流程</h1><p><img src="http://pebgsxjpj.bkt.clouddn.com/15361544670231.jpg" alt=""></p>
+<h1 id="元数据管理流程"><a href="#元数据管理流程" class="headerlink" title="元数据管理流程"></a>元数据管理流程</h1><p><img src="http://img.gangtieguo.cn/15361544670231.jpg" alt=""></p>
 </li>
 </ul>
-<p>磁盘文件我们可以通过查看namenode的目录结构看到：<br><img src="http://pebgsxjpj.bkt.clouddn.com/15361574063204.jpg" alt=""></p>
+<p>磁盘文件我们可以通过查看namenode的目录结构看到：<br><img src="http://img.gangtieguo.cn/15361574063204.jpg" alt=""></p>
 <p>A、内存中有一份完整的元数据(内存meta data)<br>B、磁盘有一个“准完整”的元数据镜像（fsimage）文件(在namenode的工作目录中)<br>C、用于衔接内存metadata和持久化元数据镜像fsimage之间的操作日志（edits文件<br>注：当客户端对hdfs中的文件进行新增或者修改操作，操作记录首先被记入edits日志文件中，当客户端操作成功后，相应的元数据会更新到内存meta.data中</p>
 <h1 id="namenode管理元数据解析"><a href="#namenode管理元数据解析" class="headerlink" title="namenode管理元数据解析"></a>namenode管理元数据解析</h1><p>namenode会将元数据放在内存里面，这样方便快速对数据的请求，由于放在内存中是不安全的，所以就序列化到fsimage里面，就像jvm中dump，将内存中所有数据dump出去,由于一条元数据大小为150byte，hdfs不利于存储小块文件，所以存大文件划算，因为元数据消耗的内存都是一样的，但是内存中的数据量太大，不可能经常序列化，所以需要定时序列化</p>
 <h2 id="所以引入了secondaryNameNode"><a href="#所以引入了secondaryNameNode" class="headerlink" title="所以引入了secondaryNameNode"></a>所以引入了secondaryNameNode</h2><p>更新元数据的时候，不可能去直接跟更改元数据fsimage文件，因为文件是线性结构，假如遇到更改中间内容会很不方便，所有就将操作信息记录在edits日志文件中，只是记录操作信息</p>

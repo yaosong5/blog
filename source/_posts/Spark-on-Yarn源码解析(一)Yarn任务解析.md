@@ -19,7 +19,7 @@ spark-on-yarn系列
 # yarn任务的提交
 YARN 的基本架构和工作流程
 
-![](http://pebgsxjpj.bkt.clouddn.com/15358192541466.jpg)
+![](http://img.gangtieguo.cn/15358192541466.jpg)
 
 YARN 的基本架构如上图所示，由三大功能模块组成，分别是 1) RM (ResourceManager) 2) NM (Node Manager) 3) AM(Application Master)
 <!--more-->
