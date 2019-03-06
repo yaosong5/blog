@@ -6,20 +6,20 @@
     <meta charset="utf-8">
     
 
-    <title>Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下 | 钢铁锅</title>
+    <title>Docker-machine、engine、swarm集群等相关 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="此文纯属命令记录，后续更新原理解说 更改virtual0的ip VBoxManage hostonlyif ipconfig vboxnet0 –ip 192.168.33.253 –netmask 255.255.255.0">
-<meta name="keywords" content="Docker,Docker-machine,安装部署">
+    <meta name="description" content="[TOC] 目标：  搞懂docker的工作机制，（网络机制后面来搞懂）  docker的集群，监控机制   如何对镜像更改更小的配置，对外部文件进行修改读取就可以运行docker容器【参考】https://toutiao.io/posts/rgo564/preview，有创建swarm集群的命令，通过ip加入集群的命令 Docker Engine：作为 Docker 镜像构建与容器化启动的工作引">
+<meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下">
-<meta property="og:url" content="http://gangtieguo.cn/2018/07/20/Docker-machine的搭建(与宿主机在同一ip段下)/index.html">
+<meta property="og:title" content="Docker-machine、engine、swarm集群等相关">
+<meta property="og:url" content="http://gangtieguo.cn/2018/07/18/docker-machine等的关系/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="此文纯属命令记录，后续更新原理解说 更改virtual0的ip VBoxManage hostonlyif ipconfig vboxnet0 –ip 192.168.33.253 –netmask 255.255.255.0">
+<meta property="og:description" content="[TOC] 目标：  搞懂docker的工作机制，（网络机制后面来搞懂）  docker的集群，监控机制   如何对镜像更改更小的配置，对外部文件进行修改读取就可以运行docker容器【参考】https://toutiao.io/posts/rgo564/preview，有创建swarm集群的命令，通过ip加入集群的命令 Docker Engine：作为 Docker 镜像构建与容器化启动的工作引">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-09-17T08:14:20.381Z">
+<meta property="og:updated_time" content="2018-07-27T08:34:52.084Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下">
-<meta name="twitter:description" content="此文纯属命令记录，后续更新原理解说 更改virtual0的ip VBoxManage hostonlyif ipconfig vboxnet0 –ip 192.168.33.253 –netmask 255.255.255.0">
+<meta name="twitter:title" content="Docker-machine、engine、swarm集群等相关">
+<meta name="twitter:description" content="[TOC] 目标：  搞懂docker的工作机制，（网络机制后面来搞懂）  docker的集群，监控机制   如何对镜像更改更小的配置，对外部文件进行修改读取就可以运行docker容器【参考】https://toutiao.io/posts/rgo564/preview，有创建swarm集群的命令，通过ip加入集群的命令 Docker Engine：作为 Docker 镜像构建与容器化启动的工作引">
     
 
     
@@ -207,7 +207,7 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                63
+                65
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -247,7 +247,7 @@ var _hmt = _hmt || [];
 
             
 
-            <section id="main"><article id="post-Docker-machine的搭建(与宿主机在同一ip段下)" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-docker-machine等的关系" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -255,7 +255,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下
+            Docker-machine、engine、swarm集群等相关
         </h1>
     
 
@@ -264,8 +264,8 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/07/20/Docker-machine的搭建(与宿主机在同一ip段下)/">
-            <time datetime="2018-07-19T19:02:08.124Z" itemprop="datePublished">2018-07-20</time>
+        <a href="/2018/07/18/docker-machine等的关系/">
+            <time datetime="2018-07-18T06:26:45.439Z" itemprop="datePublished">2018-07-18</time>
         </a>
     </div>
 
@@ -273,13 +273,13 @@ var _hmt = _hmt || [];
                         
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Docker/">Docker</a>
+        <a class="article-category-link" href="/categories/原理理解/">原理理解</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Docker-machine/">Docker-machine</a>, <a class="tag-link" href="/tags/安装部署/">安装部署</a>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>
     </div>
 
                     </div>
@@ -304,7 +304,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#更改virtual0的ip"><span class="toc-number">1.</span> <span class="toc-text">更改virtual0的ip</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ifconfig-查看"><span class="toc-number">2.</span> <span class="toc-text">ifconfig 查看</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vi-Vagrantfile"><span class="toc-number">3.</span> <span class="toc-text">vi Vagrantfile</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#修改网卡配置-eth1"><span class="toc-number">3.1.</span> <span class="toc-text">修改网卡配置 eth1 :</span></a></li></ol></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#目标："><span class="toc-number">1.</span> <span class="toc-text">目标：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#docker挂载"><span class="toc-number">1.1.</span> <span class="toc-text">docker挂载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-engine-："><span class="toc-number">1.2.</span> <span class="toc-text">Docker-engine ：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-machine"><span class="toc-number">1.3.</span> <span class="toc-text">Docker-machine:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-machine-1"><span class="toc-number">1.4.</span> <span class="toc-text">Docker-machine:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#swarm"><span class="toc-number">1.5.</span> <span class="toc-text">swarm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker挂载-1"><span class="toc-number">1.6.</span> <span class="toc-text">docker挂载</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#swarm集群搭建的步骤"><span class="toc-number">2.</span> <span class="toc-text">swarm集群搭建的步骤</span></a></li></ol>
             </div>
 
 
@@ -331,30 +331,40 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p>此文纯属命令记录，后续更新原理解说</p>
-<h1 id="更改virtual0的ip"><a href="#更改virtual0的ip" class="headerlink" title="更改virtual0的ip"></a>更改virtual0的ip</h1><p> VBoxManage hostonlyif ipconfig vboxnet0 –ip 192.168.33.253 –netmask 255.255.255.0</p>
-<a id="more"></a>
-<h1 id="ifconfig-查看"><a href="#ifconfig-查看" class="headerlink" title="ifconfig 查看"></a>ifconfig 查看</h1><p>创建虚拟机配置文件  Vagrantfile</p>
-<p>也可以vagrant init  会生成一个空白的Vagrantfile</p>
-<h1 id="vi-Vagrantfile"><a href="#vi-Vagrantfile" class="headerlink" title="vi Vagrantfile"></a>vi Vagrantfile</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Vagrant.configure(2) do |config|</span><br><span class="line">	 config.vm.box = "dolbager/centos-7-docker"</span><br><span class="line">	 config.vm.hostname = "default"</span><br><span class="line">	  config.vm.network "private_network", ip: "192.168.33.1",netmask: "255.255.255.0"</span><br><span class="line">	 config.vm.provider "virtualbox" do |v|</span><br><span class="line">	   v.name = "default"</span><br><span class="line">	   v.memory = "2048"</span><br><span class="line">	   # Change the network adapter type and promiscuous mode</span><br><span class="line">	   v.customize ['modifyvm', :id, '--nictype1', 'Am79C973']</span><br><span class="line">	   v.customize ['modifyvm', :id, '--nicpromisc1', 'allow-all']</span><br><span class="line">	   v.customize ['modifyvm', :id, '--nictype2', 'Am79C973']</span><br><span class="line">	   v.customize ['modifyvm', :id, '--nicpromisc2', 'allow-all']</span><br><span class="line">	 end</span><br><span class="line"><span class="meta">	 #</span><span class="bash"> Install bridge-utils</span></span><br><span class="line">	 config.vm.provision "shell", inline: &lt;&lt;-SHELL</span><br><span class="line">	    curl -o /etc/yum.repos.d/CentOS-Base.repohttp://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line">	    curl -o /etc/yum.repos.d/epel.repohttp://mirrors.aliyun.com/repo/epel-7.repo</span><br><span class="line">	   yum clean all</span><br><span class="line">	   yum makecache</span><br><span class="line">	   yum update -y</span><br><span class="line">	   yum install bridge-utils net-tools -y</span><br><span class="line">	 SHELL</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<p>vagrant up<br>vagrant ssh</p>
-<p>vagrant ssh-config</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp ~/.vagrant.d/boxes/dolbager-VAGRANTSLASH-centos-7-docker/0.2/virtualbox/vagrant_private_key .vagrant/machines/default/virtualbox/private_key</span><br></pre></td></tr></table></figure>
-<p><code>vagrant exit</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker-machine create \</span><br><span class="line"> --driver <span class="string">"generic"</span> \</span><br><span class="line"> --generic-ip-address 192.168.33.1 \</span><br><span class="line"> --generic-ssh-user vagrant \</span><br><span class="line"> --generic-ssh-key .vagrant/machines/default/virtualbox/private_key \</span><br><span class="line"> --generic-ssh-port 22 \</span><br><span class="line"> default</span><br></pre></td></tr></table></figure>
-<p>创建网桥docker1 和 docker network br<br>通过vagrant 从虚拟机的 eth0 登录到虚拟机</p>
-<p>vagrant ssh<br>ip -4 addr</p>
-<p>创建 docker network br</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo docker network create \</span><br><span class="line">    --driver bridge \</span><br><span class="line">    --subnet=192.168.33.0/24 \</span><br><span class="line">    --gateway=192.168.33.1 \</span><br><span class="line">    --opt <span class="string">"com.docker.network.bridge.enable_icc"</span>=<span class="string">"true"</span> \</span><br><span class="line">    --opt <span class="string">"com.docker.network.bridge.enable_ip_masquerade"</span>=<span class="string">"true"</span> \</span><br><span class="line">    --opt <span class="string">"com.docker.network.bridge.name"</span>=<span class="string">"docker1"</span> \</span><br><span class="line">    --opt <span class="string">"com.docker.network.driver.mtu"</span>=<span class="string">"1500"</span> \</span><br><span class="line">    br</span><br></pre></td></tr></table></figure>
-<p>创建网桥配置文件docker1</p>
-<p><code>vim /etc/sysconfig/network-scripts/ifcfg-docker1</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DEVICE=docker1</span><br><span class="line">TYPE=Bridge</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">ONBOOT=yes</span><br><span class="line">STP=on</span><br><span class="line">IPADDR=</span><br><span class="line">NETMASK=</span><br><span class="line">GATEWAY=</span><br><span class="line">DNS1=</span><br></pre></td></tr></table></figure>
-<h2 id="修改网卡配置-eth1"><a href="#修改网卡配置-eth1" class="headerlink" title="修改网卡配置 eth1 :"></a>修改网卡配置 eth1 :</h2><p><code>sudo vi /etc/sysconfig/network-scripts/ifcfg-eth1</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DEVICE=eth1</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">HWADDR=</span><br><span class="line">ONBOOT=yes</span><br><span class="line">NETMASK=</span><br><span class="line">GATEWAY=</span><br><span class="line">BRIDGE=docker1</span><br><span class="line">TYPE=Ethernet</span><br></pre></td></tr></table></figure>
-<p>初始化docker-machine变量</p>
-<p>提示报错Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running? </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> $(docker-machine env default) </span><br><span class="line">如果要取消变量 </span><br><span class="line"> <span class="built_in">eval</span> $(docker-machine env -u)</span><br></pre></td></tr></table></figure>
-<p>参考：<a href="https://github.com/SixQuant/engineering-excellence/blob/master/docker/docker-install-mac-vm-centos.md" target="_blank" rel="noopener">docker-install-mac-vm-centos</a></p>
+                <p>[TOC]</p>
+<h1 id="目标："><a href="#目标：" class="headerlink" title="目标："></a>目标：</h1><p>  搞懂docker的工作机制，（网络机制后面来搞懂）<br>  docker的集群，监控机制</p>
+<p>  如何对镜像更改更小的配置，对外部文件进行修改读取就可以运行docker容器<br>【参考】<a href="https://toutiao.io/posts/rgo564/preview，有创建swarm集群的命令，通过ip加入集群的命令" target="_blank" rel="noopener">https://toutiao.io/posts/rgo564/preview，有创建swarm集群的命令，通过ip加入集群的命令</a></p>
+<p>Docker Engine：作为 Docker 镜像构建与容器化启动的工作引擎；<br>Docker Machine：安装与管理 Docker Engine 的工具；<br>Docker Swarm：是 Docker 自 1.12 后自带的集群技术，将多个独立的 Docker Engine 利用 Swarm 技术进行集群化管理；<br>简单来讲，Docker 集群的实现是通过 Docker Machine 在多主机或虚拟机上创建多个 Docker Engine，在利用 Docker Swarm 以某个 Engine 作为集群的初始管理节点，其他 Engine 以管理或工作节点的方式加入，形成完成的集群环境。</p>
+<p>swarm 是集群工具，compose 是运行容器的快捷工具 本来就能结合使用，他们之间不冲突，<br>再加 machine 可以创建多个 docker 虚拟环境（如果你没有多台服务器测试的话）三者一起，<br>建立开发测试集群环境简单方便快捷！</p>
+<p><a href="http://dockone.io/question/160" target="_blank" rel="noopener">http://dockone.io/question/160</a><br>Machine：解决的是操作系统异构安装 Docker 困难的问题，没有 Machine 的时候，CentOS 是一种，Ubuntu 又是一种，AWS 又是一种。有了 Machine，所有的系统都是一样的安装方式。</p>
+<p>Swarm：我们有了 Machine 就意味着有了 docker 环境，但是那是单机的，而通常我们的应用都是集群的。这正是 Swarm 要做的事情，给你提供 docker 集群环境和调度策略等。</p>
+<p>Compose：有了环境，我们下一步要做什么？部署应用啊。然后我们需要 docker run image1、docker run image2… 一次一次不厌其烦的重复这些操作，每次都写大量的命令参数。Compose 简化了这个流程，只需要把这些内容固话到 docker-compose.yml 中。</p>
+<p>目前 Machine、Swarm、Compose 已经可以结合使用，创建集群环境，简单的在上面部署应用。但是还不完善，比如对于有 link 的应用，它们只能跑在 Swarm 集群的一个机器上，即使你的集群有很多机器。可以参考我的另一个问题。</p>
+<p>SocketPlane 是 Docker 最近收购的产品，猜想应该是为了强化 Docker 的网络功能，比如提供原生跨主机的网络定制、强化 Swarm 和 Compose 的结合等。</p>
+<h2 id="docker挂载"><a href="#docker挂载" class="headerlink" title="docker挂载"></a>docker挂载</h2><p><a href="https://www.cnblogs.com/ivictor/p/4834864.html" target="_blank" rel="noopener">https://www.cnblogs.com/ivictor/p/4834864.html</a> 宿主机目录和容器目录的关系</p>
+<h2 id="Docker-engine-："><a href="#Docker-engine-：" class="headerlink" title="Docker-engine ："></a>Docker-engine ：</h2><blockquote>
+<p>当人们说 “Docker” 时，他们通常意味着 Docker Engine，即由 Docker 守护程序组成的客户端 - 服务器应用程序，指定用于与守护程序进行交互的接口的 REST API 以及与守护程序（通过 REST API 包装器）通信的命令行界面（CLI）客户端。Docker Engine 从 CLI 接受docker命令，例如docker run <image>，docker ps列出运行的容器，docker images以列出镜像等</image></p>
+</blockquote>
+<h2 id="Docker-machine"><a href="#Docker-machine" class="headerlink" title="Docker-machine:"></a>Docker-machine:</h2><blockquote>
+<p>Mac OS X 默认是没有虚拟机的，所以要使用 Docker Machine，需要事先安装好 VirtualBox，这在 Docker 的官方文档上有相关说明<br>Docker Machine 是一个工具，用来在虚拟主机上安装 Docker Engine<br>并使用 docker-machine 命令来管理这些虚拟主机<br> Docker Machine<br>Docker Machine 是用来配置和管理 Docker Engine 的工具。<br>Docker Machine 主要有两个用途：一是为了能在旧的 Mac 和 Windows 系统上使用 Dokcer。二是为了可以管理远程的 Docker。</p>
+</blockquote>
+<p>要知道，Docker Engine 是只能在 Linux 内核上运行的。<br>为什么 Docker Machine 可以使得在旧的 Mac 和 Windows 系统上也能使用 Docker 呢？因为，安装 Docker Toolbox 会安装 Docker Machine 和 Virtual Box 虚拟机，它会配置一个 Docker Engine 到一个虚拟机里的主机上（Linux 内核，默认名字是 default，又称托管主机），后续 Docker 容器就是运行在这个托管主机里的 Docker Engine 之上。</p>
+<p>将 Machine CLI 指向正在运行的托管主机，就可以直接该运行docker命令到该主机上。这里貌似东西不少：docker-machine env default会显示 default 主机的环境信息以及对应的配置命令指引：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> DOCKER_TLS_VERIFY=<span class="string">"1"</span></span><br><span class="line"><span class="built_in">export</span> DOCKER_HOST=<span class="string">"tcp://192.168.99.100:2376"</span></span><br><span class="line"><span class="built_in">export</span> DOCKER_CERT_PATH=<span class="string">"/Users/Eason/.docker/machine/machines/default"</span></span><br><span class="line"><span class="built_in">export</span> DOCKER_MACHINE_NAME=<span class="string">"default"</span></span><br></pre></td></tr></table></figure>
+<p>Run this command to configure your shell:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval &quot;$(docker-machine env default)&quot;</span><br></pre></td></tr></table></figure></p>
+<p>提示很明白了，在 SHELL 里运行 eval “$(docker-machine env default) 就可以把当前 Machine CLI 指向 default 主机了。好处就是，当我们有多个主机时，这样一行命令就能切换环境指向不同的主机，然后后续运行的docker命名也是运行到对应的 Docker Enigne 上。</p>
+<p>注：Docker for Mac 和 Docker for Windows 以及 (<a href="https://docs.docker.com/toolbox/overview/" target="_blank" rel="noopener">https://docs.docker.com/toolbox/overview/</a>) 都是自带 Docker Machine 工具的。</p>
+<p>这一节的个人理解，也不知道我写得大家看不看得懂。其实主要辨析点就是：Container 容器是 Image 镜像运行在内存中的实例，Container 容器要运行在 Docker Engine 之上，然而 Docker Engine 仅限运行在 Linux 内核之上。Docker Machie 是配置和管理 Docker Engine 的工具，并且可以为旧版的 Mac 和 Windows 系统提供 Docker Engine 的运行环境</p>
+<h2 id="Docker-machine-1"><a href="#Docker-machine-1" class="headerlink" title="Docker-machine:"></a>Docker-machine:</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Docker Machine 是一个工具，用来在虚拟主机上安装 Docker Engine</span><br><span class="line">并使用 docker-machine 命令来管理这些虚拟主机</span><br></pre></td></tr></table></figure>
+<h2 id="swarm"><a href="#swarm" class="headerlink" title="swarm"></a>swarm</h2><p>swarm 是集群工具，compose 是运行容器的快捷工具 本来就能结合使用，他们之间不冲突，<br>再加 machine 可以创建多个 docker 虚拟环境（如果你没有多台服务器测试的话）三者一起，</p>
+<p><a href="http://dockone.io/question/160" target="_blank" rel="noopener">http://dockone.io/question/160</a></p>
+<p>Machine：解决的是操作系统异构安装 Docker 困难的问题，没有 Machine 的时候，CentOS 是一种，Ubuntu 又是一种，AWS 又是一种。有了 Machine，所有的系统都是一样的安装方式。</p>
+<p>Swarm：我们有了 Machine 就意味着有了 docker 环境，但是那是单机的，而通常我们的应用都是集群的。这正是 Swarm 要做的事情，给你提供 docker 集群环境和调度策略等。</p>
+<p>Compose：有了环境，我们下一步要做什么？部署应用啊。然后我们需要 docker run image1、docker run image2… 一次一次不厌其烦的重复这些操作，每次都写大量的命令参数。Compose 简化了这个流程，只需要把这些内容固话到 docker-compose.yml 中。</p>
+<p>目前 Machine、Swarm、Compose 已经可以结合使用，创建集群环境，简单的在上面部署应用。但是还不完善，比如对于有 link 的应用，它们只能跑在 Swarm 集群的一个机器上，即使你的集群有很多机器。可以参考我的另一个问题。</p>
+<p>SocketPlane 是 Docker 最近收购的产品，猜想应该是为了强化 Docker 的网络功能，比如提供原生跨主机的网络定制、强化 Swarm 和 Compose 的结合等。</p>
+<h2 id="docker挂载-1"><a href="#docker挂载-1" class="headerlink" title="docker挂载"></a>docker挂载</h2><p><a href="https://www.cnblogs.com/ivictor/p/4834864.html" target="_blank" rel="noopener">https://www.cnblogs.com/ivictor/p/4834864.html</a> 宿主机目录和容器目录的关系</p>
+<h1 id="swarm集群搭建的步骤"><a href="#swarm集群搭建的步骤" class="headerlink" title="swarm集群搭建的步骤"></a>swarm集群搭建的步骤</h1><p>首先 <code>docker-machine ssh</code><br>在default 使用命令  docker swarm init</p>
 
             
 
@@ -433,7 +443,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/07/20/Docker-machine的搭建(与宿主机在同一ip段下)/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/18/docker-machine等的关系/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -442,19 +452,19 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/07/24/Linux安装mysql/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/07/20/Docker-构建免密登录镜像/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    Linux安装mysql
+                    Docker-构建免密ssh免密镜像
                 
             </div>
         </a>
     
     
-        <a href="/2018/07/20/Hive搭建及启动/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/07/10/CoudearManager搭建/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Hive搭建及启动</div>
+            <div class="article-nav-title">CoudearManager搭建</div>
         </a>
     
 </nav>
@@ -495,7 +505,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2018 GTG<br>
+            &copy; 2019 GTG<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 
 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>

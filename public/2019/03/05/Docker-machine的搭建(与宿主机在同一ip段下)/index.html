@@ -6,20 +6,24 @@
     <meta charset="utf-8">
     
 
-    <title>Ambari镜像搭建 | 钢铁锅</title>
+    <title>Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="[TOC] 创建基础容器1docker run -itd  --net=br  --name ambari-agent --hostname  ambari-agent yaosong5/centosbase:1.0 &amp;amp;&amp;gt; /dev/null 关闭 selinux , 需要重启vim /etc/selinux/config  1SELINUX=disabled">
-<meta name="keywords" content="Docker,Ambari">
+    <meta name="description" content="此文纯属命令记录，后续更新原理解说">
+<meta name="keywords" content="Docker,Docker-machine,安装部署">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ambari镜像搭建">
-<meta property="og:url" content="http://gangtieguo.cn/2018/07/10/Ambari搭建/index.html">
+<meta property="og:title" content="Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下">
+<meta property="og:url" content="http://gangtieguo.cn/2019/03/05/Docker-machine的搭建(与宿主机在同一ip段下)/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] 创建基础容器1docker run -itd  --net=br  --name ambari-agent --hostname  ambari-agent yaosong5/centosbase:1.0 &amp;amp;&amp;gt; /dev/null 关闭 selinux , 需要重启vim /etc/selinux/config  1SELINUX=disabled">
+<meta property="og:description" content="此文纯属命令记录，后续更新原理解说">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-10T18:48:37.181Z">
+<meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/7/20/1532027033015.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1ftom0jyp9vj30kl07l76c.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1ftom2nhzd3j31ey0luqhe.jpg">
+<meta property="og:updated_time" content="2019-03-05T08:14:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ambari镜像搭建">
-<meta name="twitter:description" content="[TOC] 创建基础容器1docker run -itd  --net=br  --name ambari-agent --hostname  ambari-agent yaosong5/centosbase:1.0 &amp;amp;&amp;gt; /dev/null 关闭 selinux , 需要重启vim /etc/selinux/config  1SELINUX=disabled">
+<meta name="twitter:title" content="Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下">
+<meta name="twitter:description" content="此文纯属命令记录，后续更新原理解说">
+<meta name="twitter:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/7/20/1532027033015.jpg">
     
 
     
@@ -207,7 +211,7 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                63
+                65
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -247,7 +251,7 @@ var _hmt = _hmt || [];
 
             
 
-            <section id="main"><article id="post-Ambari搭建" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Docker-machine的搭建(与宿主机在同一ip段下)" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -255,7 +259,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            Ambari镜像搭建
+            Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下
         </h1>
     
 
@@ -264,8 +268,8 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/07/10/Ambari搭建/">
-            <time datetime="2018-07-09T17:08:44.939Z" itemprop="datePublished">2018-07-10</time>
+        <a href="/2019/03/05/Docker-machine的搭建(与宿主机在同一ip段下)/">
+            <time datetime="2019-03-05T08:14:31.000Z" itemprop="datePublished">2019-03-05</time>
         </a>
     </div>
 
@@ -273,13 +277,13 @@ var _hmt = _hmt || [];
                         
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/安装部署/">安装部署</a>
+        <a class="article-category-link" href="/categories/Docker/">Docker</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Ambari/">Ambari</a>, <a class="tag-link" href="/tags/Docker/">Docker</a>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Docker-machine/">Docker-machine</a>, <a class="tag-link" href="/tags/安装部署/">安装部署</a>
     </div>
 
                     </div>
@@ -304,7 +308,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#创建基础容器"><span class="toc-number">1.</span> <span class="toc-text">创建基础容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#server端"><span class="toc-number">2.</span> <span class="toc-text">server端</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#更换yum源"><span class="toc-number">2.1.</span> <span class="toc-text">更换yum源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装依赖及其server"><span class="toc-number">2.2.</span> <span class="toc-text">安装依赖及其server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动初始化"><span class="toc-number">2.3.</span> <span class="toc-text">启动初始化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#agent端"><span class="toc-number">3.</span> <span class="toc-text">agent端</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分别启动server-agent"><span class="toc-number">4.</span> <span class="toc-text">分别启动server agent</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#访问"><span class="toc-number">4.1.</span> <span class="toc-text">访问</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#保存容器为镜像"><span class="toc-number">5.</span> <span class="toc-text">保存容器为镜像</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#根据镜像创建容器"><span class="toc-number">6.</span> <span class="toc-text">根据镜像创建容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#停止and删除容器"><span class="toc-number">7.</span> <span class="toc-text">停止and删除容器</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#更改virtual0的ip"><span class="toc-number">1.</span> <span class="toc-text">更改virtual0的ip</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ifconfig-查看"><span class="toc-number">2.</span> <span class="toc-text">ifconfig 查看</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vi-Vagrantfile"><span class="toc-number">3.</span> <span class="toc-text">vi Vagrantfile</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#修改网卡配置-eth1"><span class="toc-number">3.1.</span> <span class="toc-text">修改网卡配置 eth1 :</span></a></li></ol></li></ol>
             </div>
 
 
@@ -331,27 +335,34 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p>[TOC]</p>
-<h1 id="创建基础容器"><a href="#创建基础容器" class="headerlink" title="创建基础容器"></a>创建基础容器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --net=br  --name ambari-agent --hostname  ambari-agent yaosong5/centosbase:1.0 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
-<p>关闭 selinux , 需要重启<br><code>vim /etc/selinux/config</code> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELINUX=disabled</span><br></pre></td></tr></table></figure>
+                <p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/7/20/1532027033015.jpg" alt="enter description here"></p>
+<p>此文纯属命令记录，后续更新原理解说</p>
 <a id="more"></a>
-<h1 id="server端"><a href="#server端" class="headerlink" title="server端"></a>server端</h1><h2 id="更换yum源"><a href="#更换yum源" class="headerlink" title="更换yum源"></a>更换yum源</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.0.1/ambari.repo</span><br><span class="line">cp ambari.repo /etc/yum.repos.d</span><br></pre></td></tr></table></figure>
-<h2 id="安装依赖及其server"><a href="#安装依赖及其server" class="headerlink" title="安装依赖及其server"></a>安装依赖及其server</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install epel-release </span><br><span class="line">yum repolist</span><br><span class="line">yum install ambari-server</span><br></pre></td></tr></table></figure>
-<h2 id="启动初始化"><a href="#启动初始化" class="headerlink" title="启动初始化"></a>启动初始化</h2><p><code>ambari-server setup</code><br>会有一连串的提示</p>
-<p>会提示安装 jdk，网速好的可以确定，否则可以下载 jdk-6u31-linux-x64.bin，放到 /var/lib/ambari-server/resources/ 下面，可以指定已经安装的jdk<br>接着会提示配置用的数据库，可以选择 Oracle 或 postgresql，选择 n 会按默认配置<br>数据库类型：postgresql<br>数据库：ambari<br>用户名：ambari<br>密码：bigdata<br>如果提示 Oracle JDK license，yes<br>等待安装完成</p>
-<h1 id="agent端"><a href="#agent端" class="headerlink" title="agent端"></a>agent端</h1><p>安装 ambari-agent</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install -y ambari-agent</span><br><span class="line">chkconfig --add ambari-agent</span><br></pre></td></tr></table></figure>
-<p>将 ambari.server 上的 3 个. repo 文件复制到 hadoop 集群的三台服务器上；并完成 yum 源更新的命令。</p>
-<p> 安装 ambari-agent：在集群的 3 台电脑上执行添加，并添加成开机自启动服务：　　</p>
-<p> yum install -y ambari-agent<br> chkconfig –add ambari-agent<br> sudo ambari-agent start</p>
-<h1 id="分别启动server-agent"><a href="#分别启动server-agent" class="headerlink" title="分别启动server agent"></a>分别启动server agent</h1><p>在server和agent上分别执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ambari-agent start</span><br><span class="line">ambari-server start</span><br></pre></td></tr></table></figure>
-<h2 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h2><p><a href="http://192.168.1.133:8080" target="_blank" rel="noopener">http://192.168.1.133:8080</a>  </p>
-<p>用户名密码: admin,admin</p>
-<h1 id="保存容器为镜像"><a href="#保存容器为镜像" class="headerlink" title="保存容器为镜像"></a>保存容器为镜像</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit -m <span class="string">"bigdata:ambari-server"</span>  --author=<span class="string">"yaosong"</span>  ambr  yaosong5/ambari-server:1.0</span><br></pre></td></tr></table></figure>
-<h1 id="根据镜像创建容器"><a href="#根据镜像创建容器" class="headerlink" title="根据镜像创建容器"></a>根据镜像创建容器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --net=br  --name ambari1 --hostname ambari1 yaosong5/ambari-server:1.0 &amp;&gt; /dev/null</span><br><span class="line">docker run -itd  --net=br  --name ambari2 --hostname ambari2 yaosong5/ambari-server:1.0 &amp;&gt; /dev/null</span><br><span class="line">docker run -itd  --net=br  --name ambari3 --hostname ambari3 yaosong5/ambari-server:1.0 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
-<h1 id="停止and删除容器"><a href="#停止and删除容器" class="headerlink" title="停止and删除容器"></a>停止and删除容器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker stop ambari1</span><br><span class="line">docker stop ambari2</span><br><span class="line">docker stop ambari3</span><br><span class="line"></span><br><span class="line">docker rm ambari1</span><br><span class="line">docker rm ambari2</span><br><span class="line">docker rm ambari3</span><br></pre></td></tr></table></figure>
+<h1 id="更改virtual0的ip"><a href="#更改virtual0的ip" class="headerlink" title="更改virtual0的ip"></a>更改virtual0的ip</h1><p> VBoxManage hostonlyif ipconfig vboxnet0 –ip 192.168.33.253 –netmask 255.255.255.0</p>
+<h1 id="ifconfig-查看"><a href="#ifconfig-查看" class="headerlink" title="ifconfig 查看"></a>ifconfig 查看</h1><p>创建虚拟机配置文件  Vagrantfile</p>
+<p>也可以vagrant init  会生成一个空白的Vagrantfile</p>
+<h1 id="vi-Vagrantfile"><a href="#vi-Vagrantfile" class="headerlink" title="vi Vagrantfile"></a>vi Vagrantfile</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Vagrant.configure(2) do |config|</span><br><span class="line">	 config.vm.box = "dolbager/centos-7-docker"</span><br><span class="line">	 config.vm.hostname = "default"</span><br><span class="line">	  config.vm.network "private_network", ip: "192.168.33.1",netmask: "255.255.255.0"</span><br><span class="line">	 config.vm.provider "virtualbox" do |v|</span><br><span class="line">	   v.name = "default"</span><br><span class="line">	   v.memory = "2048"</span><br><span class="line">	   # Change the network adapter type and promiscuous mode</span><br><span class="line">	   v.customize ['modifyvm', :id, '--nictype1', 'Am79C973']</span><br><span class="line">	   v.customize ['modifyvm', :id, '--nicpromisc1', 'allow-all']</span><br><span class="line">	   v.customize ['modifyvm', :id, '--nictype2', 'Am79C973']</span><br><span class="line">	   v.customize ['modifyvm', :id, '--nicpromisc2', 'allow-all']</span><br><span class="line">	 end</span><br><span class="line"><span class="meta">	 #</span><span class="bash"> Install bridge-utils</span></span><br><span class="line">	 config.vm.provision "shell", inline: &lt;&lt;-SHELL</span><br><span class="line">	    curl -o /etc/yum.repos.d/CentOS-Base.repohttp://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line">	    curl -o /etc/yum.repos.d/epel.repohttp://mirrors.aliyun.com/repo/epel-7.repo</span><br><span class="line">	   yum clean all</span><br><span class="line">	   yum makecache</span><br><span class="line">	   yum update -y</span><br><span class="line">	   yum install bridge-utils net-tools -y</span><br><span class="line">	 SHELL</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>vagrant up<br>vagrant ssh</p>
+<p>vagrant ssh-config</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp ~/.vagrant.d/boxes/dolbager-VAGRANTSLASH-centos-7-docker/0.2/virtualbox/vagrant_private_key .vagrant/machines/default/virtualbox/private_key</span><br></pre></td></tr></table></figure>
+<p><code>vagrant exit</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker-machine create \</span><br><span class="line"> --driver <span class="string">"generic"</span> \</span><br><span class="line"> --generic-ip-address 192.168.33.1 \</span><br><span class="line"> --generic-ssh-user vagrant \</span><br><span class="line"> --generic-ssh-key .vagrant/machines/default/virtualbox/private_key \</span><br><span class="line"> --generic-ssh-port 22 \</span><br><span class="line"> default</span><br></pre></td></tr></table></figure>
+<p>创建网桥docker1 和 docker network br<br>通过vagrant 从虚拟机的 eth0 登录到虚拟机</p>
+<p>vagrant ssh<br>ip -4 addr</p>
+<p>创建 docker network br</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo docker network create \</span><br><span class="line">    --driver bridge \</span><br><span class="line">    --subnet=192.168.33.0/24 \</span><br><span class="line">    --gateway=192.168.33.1 \</span><br><span class="line">    --opt <span class="string">"com.docker.network.bridge.enable_icc"</span>=<span class="string">"true"</span> \</span><br><span class="line">    --opt <span class="string">"com.docker.network.bridge.enable_ip_masquerade"</span>=<span class="string">"true"</span> \</span><br><span class="line">    --opt <span class="string">"com.docker.network.bridge.name"</span>=<span class="string">"docker1"</span> \</span><br><span class="line">    --opt <span class="string">"com.docker.network.driver.mtu"</span>=<span class="string">"1500"</span> \</span><br><span class="line">    br</span><br></pre></td></tr></table></figure>
+<p>创建网桥配置文件docker1<br><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1ftom0jyp9vj30kl07l76c.jpg" alt="A82E4EE8-9517-4B66-A6CB-FE3C964B6D99"></p>
+<p><code>vim /etc/sysconfig/network-scripts/ifcfg-docker1</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DEVICE=docker1</span><br><span class="line">TYPE=Bridge</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">ONBOOT=yes</span><br><span class="line">STP=on</span><br><span class="line">IPADDR=</span><br><span class="line">NETMASK=</span><br><span class="line">GATEWAY=</span><br><span class="line">DNS1=</span><br></pre></td></tr></table></figure>
+<h2 id="修改网卡配置-eth1"><a href="#修改网卡配置-eth1" class="headerlink" title="修改网卡配置 eth1 :"></a>修改网卡配置 eth1 :</h2><p><code>sudo vi /etc/sysconfig/network-scripts/ifcfg-eth1</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DEVICE=eth1</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">HWADDR=</span><br><span class="line">ONBOOT=yes</span><br><span class="line">NETMASK=</span><br><span class="line">GATEWAY=</span><br><span class="line">BRIDGE=docker1</span><br><span class="line">TYPE=Ethernet</span><br></pre></td></tr></table></figure>
+<p><code>ip -4 addr</code></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1ftom2nhzd3j31ey0luqhe.jpg" alt="E77B4516-B852-4E7F-A876-FCF01FDB93BC"></p>
+<p>初始化docker-machine变量</p>
+<p>提示报错Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running? </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> $(docker-machine env default) </span><br><span class="line">如果要取消变量 </span><br><span class="line"> <span class="built_in">eval</span> $(docker-machine env -u)</span><br></pre></td></tr></table></figure>
+<p>参考：<a href="https://github.com/SixQuant/engineering-excellence/blob/master/docker/docker-install-mac-vm-centos.md" target="_blank" rel="noopener">docker-install-mac-vm-centos</a></p>
+
             
 
         </div>
@@ -429,7 +440,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/07/10/Ambari搭建/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2019/03/05/Docker-machine的搭建(与宿主机在同一ip段下)/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -438,19 +449,10 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/07/10/CoudearManager搭建/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    CoudearManager搭建
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/07/10/hue搭建/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/09/08/ELK流程小实例/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Hue搭建</div>
+            <div class="article-nav-title">ELK流程小实例</div>
         </a>
     
 </nav>
@@ -491,7 +493,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2018 GTG<br>
+            &copy; 2019 GTG<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 
 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>

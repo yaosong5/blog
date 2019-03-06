@@ -6,25 +6,20 @@
     <meta charset="utf-8">
     
 
-    <title>Docker安装Hadoop集群【引用】 | 钢铁锅</title>
+    <title>钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Docker配置Hadoop集群环境 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。">
-<meta name="keywords" content="Docker,Hadoop">
+    <meta name="description" content="Docker-machine莫名不能访问？ 1Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.29/containers/json: dial unix">
+<meta name="keywords" content="Nothing">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker安装Hadoop集群【引用】">
-<meta property="og:url" content="http://gangtieguo.cn/2018/06/03/Docker安装Hadoop集群【引用】/index.html">
+<meta property="og:title" content="钢铁锅">
+<meta property="og:url" content="http://gangtieguo.cn/2018/08/01/docker-machine异常问题/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="Docker配置Hadoop集群环境 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。">
+<meta property="og:description" content="Docker-machine莫名不能访问？ 1Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.29/containers/json: dial unix">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038081307.jpg">
-<meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038513960.jpg">
-<meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528039457334.jpg">
-<meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528039642562.jpg">
-<meta property="og:updated_time" content="2018-08-06T19:27:34.504Z">
+<meta property="og:updated_time" content="2018-08-01T18:24:04.223Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Docker安装Hadoop集群【引用】">
-<meta name="twitter:description" content="Docker配置Hadoop集群环境 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。">
-<meta name="twitter:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038081307.jpg">
+<meta name="twitter:title" content="钢铁锅">
+<meta name="twitter:description" content="Docker-machine莫名不能访问？ 1Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.29/containers/json: dial unix">
     
 
     
@@ -212,7 +207,7 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                63
+                65
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -252,67 +247,14 @@ var _hmt = _hmt || [];
 
             
 
-            <section id="main"><article id="post-Docker安装Hadoop集群【引用】" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-docker-machine异常问题" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
-        
-            <header class="article-header">
-                
-    
-        <h1 class="article-title" itemprop="name">
-            Docker安装Hadoop集群【引用】
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/06/03/Docker安装Hadoop集群【引用】/">
-            <time datetime="2018-06-03T06:36:21.404Z" itemprop="datePublished">2018-06-03</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/环境配置/">环境配置</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>
-    </div>
-
-                    </div>
-                
-            </header>
         
        
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-
-
-
-
-            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
-                    <i class="fa fa-align-justify" aria-hidden="true"></i>
-                    <span class="btn-text"> 文章目录</span>
-            </p>
-
-
-            <div id="toc toc-article "  class="toc-article">
-                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
-                <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#拉取镜像"><span class="toc-number">1.</span> <span class="toc-text">拉取镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看下载的镜像"><span class="toc-number">1.1.</span> <span class="toc-text">查看下载的镜像</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在github中拉取源代码"><span class="toc-number">2.</span> <span class="toc-text">在github中拉取源代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#运行容器"><span class="toc-number">3.</span> <span class="toc-text">运行容器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看root目录下文件"><span class="toc-number">3.1.</span> <span class="toc-text">查看root目录下文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试容器是否正常运行"><span class="toc-number">3.2.</span> <span class="toc-text">测试容器是否正常运行</span></a></li></ol></li></ol>
-            </div>
-
-
             
             <script type="text/javascript">
                             function showBtn(){
@@ -336,29 +278,9 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p> Docker配置Hadoop集群环境<br> 在网上找到一个网友自制的镜像，拉取配置都是参考的，记录一下。<br><a id="more"></a></p>
-<h1 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h1><blockquote>
-<p>sudo docker pull kiwenlau/hadoop-master:0.1.0<br>sudo docker pull kiwenlau/hadoop-slave:0.1.0<br>sudo docker pull kiwenlau/hadoop-base:0.1.0<br>sudo docker pull kiwenlau/serf-dnsmasq:0.1.0</p>
-</blockquote>
-<h2 id="查看下载的镜像"><a href="#查看下载的镜像" class="headerlink" title="查看下载的镜像"></a>查看下载的镜像</h2><p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038081307.jpg" alt="下载的镜像"></p>
-<blockquote>
-<p>sudo docker images</p>
-</blockquote>
-<h1 id="在github中拉取源代码"><a href="#在github中拉取源代码" class="headerlink" title="在github中拉取源代码"></a>在github中拉取源代码</h1><p>(或者在oschina中拉取)<br>git clone <a href="https://github.com/kiwenlau/hadoop-cluster-docker" target="_blank" rel="noopener">https://github.com/kiwenlau/hadoop-cluster-docker</a><br>开源中国<br>git clone <a href="http://git.oschina.net/kiwenlau/hadoop-cluster-docker" target="_blank" rel="noopener">http://git.oschina.net/kiwenlau/hadoop-cluster-docker</a></p>
-<h1 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h1><p>拉取镜像后，打开源代码文件夹，并且运行脚本</p>
-<blockquote>
-<p>cd hadoop-cluster-docker</p>
-</blockquote>
-<p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528038513960.jpg" alt="源包下文件"></p>
-<p>注意：运行脚本时,需要先启动docker服务</p>
-<blockquote>
-<p>./start-container.sh<br><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528039457334.jpg" alt="enter description here"></p>
-</blockquote>
-<p>一共开启了 3 个容器，1 个 master, 2 个 slave。开启容器后就进入了 master 容器 root 用户的根目录（/root）</p>
-<h2 id="查看root目录下文件"><a href="#查看root目录下文件" class="headerlink" title="查看root目录下文件"></a>查看root目录下文件</h2><p><img src="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/6/3/1528039642562.jpg" alt="enter description here"></p>
-<h2 id="测试容器是否正常运行"><a href="#测试容器是否正常运行" class="headerlink" title="测试容器是否正常运行"></a>测试容器是否正常运行</h2><p><code>serf members</code><br><!-- more --></p>
-<hr>
-<p>参考：<a href="http://dockone.io/article/395" target="_blank" rel="noopener">基于 Docker 快速搭建多节点 Hadoop 集群</a></p>
+                <p>Docker-machine莫名不能访问？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.29/containers/json: dial unix /var/run/docker.sock: connect: permission denied</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Starting &quot;default&quot;...</span><br><span class="line">generic driver does not support start</span><br></pre></td></tr></table></figure>
 
             
 
@@ -437,7 +359,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/06/03/Docker安装Hadoop集群【引用】/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/08/01/docker-machine异常问题/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -446,19 +368,19 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/06/21/Centos7上搭建Jenkins/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/08/07/zookeeper配置/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    Centos7上搭建Jenkins
+                    Zookeeper的配置容器的搭建
                 
             </div>
         </a>
     
     
-        <a href="/2018/05/31/大数据命令积累/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/07/24/Linux安装mysql/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">命令积累</div>
+            <div class="article-nav-title">Linux安装mysql</div>
         </a>
     
 </nav>
@@ -499,7 +421,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2018 GTG<br>
+            &copy; 2019 GTG<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 
 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>

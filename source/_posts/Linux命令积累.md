@@ -58,12 +58,21 @@ yum install -y tree
 
 tree 可以查看目录结构
 
-
-
-
-
 # 虚拟机共享文件夹
 
 在virtualbox中设置共享文件夹的share名称对应mac的目录
 虚拟机中的目录
 sudo mount -t vboxsf vagrant /Users/yaosong
+
+
+
+# 其他
+
+ip -4 addr 查看ip
+
+chkconfig sshd on
+
+rpm -qa|grep ssh。
+
+为了快速实现我们就不自己装 SSH 服务了，hub.docker.com 上的 kinogmt/centos-ssh:6.7 这个镜像就能满足我们的要求
+

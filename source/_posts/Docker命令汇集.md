@@ -16,14 +16,20 @@ toc: true
 # Docker源配置
 
   安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：
-  vi /etc/docker/daemon.json
+  **vi /etc/docker/daemon.json**
+
+```Json
   {"registry-mirrors":["http://c1f0a193.m.daocloud.io"] }
+```
 
-启动容器
+# 常用命令
 
-	docker run -itd  --net=br  --name slave02 --hostname slave02 centos:hadoop-spark &> /dev/null
+启动容器(也是创建)
+
+	docker run -itd  --net=br  --name master --hostname master yaosong5/bigdata:1.0 &> /dev/null
 	如果以 /bin/bash启动的话，sshd服务不会启动(docker未知bug)
-## 创建容器
+	用 &> /dev/null这种方式sshd服务才会启动
+## 创建容器-run
 
 	--name    --hostname (同-h)  --net=    -d表示后台启动
 	此命令不会打印出容器id
@@ -38,15 +44,30 @@ toc: true
     设置docker默认ip段命令
     docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 --name master -h master --add-host slave01:172.17.0.3 --add-host slave02:172.17.0.4 centos:ssh-spark-hadoop
 
+## 创建容器-Dockerfile
+
+在dockerfille文件所在的目录中执行以下命令
+
+```Shell
+docker build -f Dockerfile -t hadoop:v1 .
+#也可以指定Dockerfile如下：
+docker build -t centos:tt - < Dockerfile
+```
+
+
+
 ## 容器挂载目录
 
-compose文件：
+分两种类型
+
+- compose文件：
+
 ```Bash
 volumes:
 	- /Users/yaosong/Yao/dev/hadoop/dfs/name:/root/hadoop/dfs/name
 ```
 
-shell命令：
+- shell命令：
 
 ```bash
 -v : 
@@ -57,9 +78,13 @@ docker run -it -v /test:/soft centos /bin/bash
 
 
 
-> 在virtualbox中设置共享文件夹的share名称对应mac的目录
+> 引用  [基于 docker 的大数据架构](https://www.kancloud.cn/huangzhenyou/shuoming/545497)
+>
+> 如果是mac或者win机器，需要在virtualbox虚拟机中设置共享文件夹的share名称对应mac的目录
 > 虚拟机中的目录
-> sudo mount -t vboxsf share  /Users/yaosong/Yao/share/
+>
+> ![](https://ws4.sinaimg.cn/large/006tKfTcgy1g0ryyzp0vrj30zi0bm0t9.jpg)
+>
 > sudo mount -t vboxsf vagrant /Users/yaosong
 
 ## 删除所有未用的 Data volumes
@@ -67,8 +92,6 @@ docker run -it -v /test:/soft centos /bin/bash
 ```
 docker volume prune
 ```
-
-
 
 ## run 命令解释
 
@@ -95,13 +118,11 @@ docker logs -f -t --tail 100  kanbigdata_namenode_1
 
 
 
-
-
 ## 查看容器信息
 
 ```shell
 docker inspect hm
-执行命令 docker exec -it 容器名 ip addr 可以拿到 a0 容器的 ip
+执行命令 docker exec -it a0 ip addr 可以拿到 a0 容器的 ip
 ```
 
 
@@ -229,11 +250,21 @@ docker-machine restart default
 docker-machine rm default
 ```
 
-## 设置环境变量docker-machine
+# 设置环境变量docker-machine
 
 ```bash
 eval $(docker-machine env default) # Setup the environment
 ```
 
 
+
+# 其他参考
+
+ip -4 addr
+
+chkconfig sshd on
+
+rpm -qa|grep ssh。
+
+为了快速实现我们就不自己装 SSH 服务了，hub.docker.com 上的 kinogmt/centos-ssh:6.7 这个镜像就能满足我们的要求
 

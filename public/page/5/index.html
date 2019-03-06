@@ -206,7 +206,7 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                63
+                65
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -247,7 +247,7 @@ var _hmt = _hmt || [];
             
 
             <section id="main">
-    <article id="post-Docker构建免密登录" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Hive搭建及启动" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -255,7 +255,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/07/20/Docker构建免密登录/">Docker构建免密ssh免密镜像</a>
+            <a class="article-title" href="/2018/07/20/Hive搭建及启动/">Hive搭建及启动</a>
         </h1>
     
 
@@ -264,8 +264,8 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/07/20/Docker构建免密登录/">
-            <time datetime="2018-07-19T18:49:08.996Z" itemprop="datePublished">2018-07-20</time>
+        <a href="/2018/07/20/Hive搭建及启动/">
+            <time datetime="2018-07-19T18:51:21.978Z" itemprop="datePublished">2018-07-20</time>
         </a>
     </div>
 
@@ -273,13 +273,13 @@ var _hmt = _hmt || [];
                         
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Docker/">Docker</a>
+        <a class="article-category-link" href="/categories/安装部署/">安装部署</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Hive/">Hive</a>
     </div>
 
                     </div>
@@ -290,9 +290,15 @@ var _hmt = _hmt || [];
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><h2 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h2><p>参考的是<a href="http://www.shushilvshe.com/data/docker-ssh.html" target="_blank" rel="noopener">http://www.shushilvshe.com/data/docker-ssh.html</a><br>文中涉及命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install openssh-server openssh-clients</span><br><span class="line">ssh-keygen -t rsa</span><br><span class="line">cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys</span><br><span class="line">chmod 700 ~/.ssh</span><br><span class="line">chmod 600 ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></p></p>
+            <p><p>[TOC]</p>
+<h1 id="配置HOME"><a href="#配置HOME" class="headerlink" title="配置HOME"></a>配置HOME</h1><p>下载hive包，并解压</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://archive.apache.org/dist/</span><br></pre></td></tr></table></figure>
+<p><code>ln -s hive-2.1.1  /usr/hive</code></p>
+<p><strong>vi ~/.bashrc</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br><span class="line"><span class="variable">$HIVE_HOME</span>/bin/hive</span><br><span class="line"><span class="built_in">export</span> HIVE_HOME=/usr/hive</span><br><span class="line">PATH=<span class="variable">$HIVE_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="comment">#hive依赖于hadoop(可以不运行在同一主机，但是需要hadoop的配置)</span></span><br><span class="line"><span class="variable">$HADOOP_HOME</span>=/usr/hadoop</span><br></pre></td></tr></table></figure>
+<p><strong>source ~/.bashrc</strong></p></p>
             <p class="article-more-link">
-                <a href="/2018/07/20/Docker构建免密登录/#more">查看更多</a>
+                <a href="/2018/07/20/Hive搭建及启动/#more">查看更多</a>
             </p>
         
 
@@ -344,7 +350,275 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/07/20/Docker构建免密登录/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/20/Hive搭建及启动/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Docker-构建免密登录镜像" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/07/20/Docker-构建免密登录镜像/">Docker-构建免密ssh免密镜像</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/07/20/Docker-构建免密登录镜像/">
+            <time datetime="2018-07-19T18:49:08.996Z" itemprop="datePublished">2018-07-20</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Docker/">Docker</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h2 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h2><p>参考的是<a href="http://www.shushilvshe.com/data/docker-ssh.html" target="_blank" rel="noopener">http://www.shushilvshe.com/data/docker-ssh.html</a><br>文中涉及命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install openssh-server openssh-clients</span><br><span class="line">ssh-keygen -t rsa</span><br><span class="line">cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys</span><br><span class="line">chmod 700 ~/.ssh</span><br><span class="line">chmod 600 ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></p></p>
+            <p class="article-more-link">
+                <a href="/2018/07/20/Docker-构建免密登录镜像/#more">查看更多</a>
+            </p>
+        
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/07/20/Docker-构建免密登录镜像/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-docker-machine等的关系" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/07/18/docker-machine等的关系/">Docker-machine、engine、swarm集群等相关</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/07/18/docker-machine等的关系/">
+            <time datetime="2018-07-18T06:26:45.439Z" itemprop="datePublished">2018-07-18</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/原理理解/">原理理解</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <p>[TOC]</p>
+<h1 id="目标："><a href="#目标：" class="headerlink" title="目标："></a>目标：</h1><p>  搞懂docker的工作机制，（网络机制后面来搞懂）<br>  docker的集群，监控机制</p>
+<p>  如何对镜像更改更小的配置，对外部文件进行修改读取就可以运行docker容器<br>【参考】<a href="https://toutiao.io/posts/rgo564/preview，有创建swarm集群的命令，通过ip加入集群的命令" target="_blank" rel="noopener">https://toutiao.io/posts/rgo564/preview，有创建swarm集群的命令，通过ip加入集群的命令</a></p>
+<p>Docker Engine：作为 Docker 镜像构建与容器化启动的工作引擎；<br>Docker Machine：安装与管理 Docker Engine 的工具；<br>Docker Swarm：是 Docker 自 1.12 后自带的集群技术，将多个独立的 Docker Engine 利用 Swarm 技术进行集群化管理；<br>简单来讲，Docker 集群的实现是通过 Docker Machine 在多主机或虚拟机上创建多个 Docker Engine，在利用 Docker Swarm 以某个 Engine 作为集群的初始管理节点，其他 Engine 以管理或工作节点的方式加入，形成完成的集群环境。</p>
+<p>swarm 是集群工具，compose 是运行容器的快捷工具 本来就能结合使用，他们之间不冲突，<br>再加 machine 可以创建多个 docker 虚拟环境（如果你没有多台服务器测试的话）三者一起，<br>建立开发测试集群环境简单方便快捷！</p>
+<p><a href="http://dockone.io/question/160" target="_blank" rel="noopener">http://dockone.io/question/160</a><br>Machine：解决的是操作系统异构安装 Docker 困难的问题，没有 Machine 的时候，CentOS 是一种，Ubuntu 又是一种，AWS 又是一种。有了 Machine，所有的系统都是一样的安装方式。</p>
+<p>Swarm：我们有了 Machine 就意味着有了 docker 环境，但是那是单机的，而通常我们的应用都是集群的。这正是 Swarm 要做的事情，给你提供 docker 集群环境和调度策略等。</p>
+<p>Compose：有了环境，我们下一步要做什么？部署应用啊。然后我们需要 docker run image1、docker run image2… 一次一次不厌其烦的重复这些操作，每次都写大量的命令参数。Compose 简化了这个流程，只需要把这些内容固话到 docker-compose.yml 中。</p>
+<p>目前 Machine、Swarm、Compose 已经可以结合使用，创建集群环境，简单的在上面部署应用。但是还不完善，比如对于有 link 的应用，它们只能跑在 Swarm 集群的一个机器上，即使你的集群有很多机器。可以参考我的另一个问题。</p>
+<p>SocketPlane 是 Docker 最近收购的产品，猜想应该是为了强化 Docker 的网络功能，比如提供原生跨主机的网络定制、强化 Swarm 和 Compose 的结合等。</p>
+<h2 id="docker挂载"><a href="#docker挂载" class="headerlink" title="docker挂载"></a>docker挂载</h2><p><a href="https://www.cnblogs.com/ivictor/p/4834864.html" target="_blank" rel="noopener">https://www.cnblogs.com/ivictor/p/4834864.html</a> 宿主机目录和容器目录的关系</p>
+<h2 id="Docker-engine-："><a href="#Docker-engine-：" class="headerlink" title="Docker-engine ："></a>Docker-engine ：</h2><blockquote>
+<p>当人们说 “Docker” 时，他们通常意味着 Docker Engine，即由 Docker 守护程序组成的客户端 - 服务器应用程序，指定用于与守护程序进行交互的接口的 REST API 以及与守护程序（通过 REST API 包装器）通信的命令行界面（CLI）客户端。Docker Engine 从 CLI 接受docker命令，例如docker run <image>，docker ps列出运行的容器，docker images以列出镜像等</image></p>
+</blockquote>
+<h2 id="Docker-machine"><a href="#Docker-machine" class="headerlink" title="Docker-machine:"></a>Docker-machine:</h2><blockquote>
+<p>Mac OS X 默认是没有虚拟机的，所以要使用 Docker Machine，需要事先安装好 VirtualBox，这在 Docker 的官方文档上有相关说明<br>Docker Machine 是一个工具，用来在虚拟主机上安装 Docker Engine<br>并使用 docker-machine 命令来管理这些虚拟主机<br> Docker Machine<br>Docker Machine 是用来配置和管理 Docker Engine 的工具。<br>Docker Machine 主要有两个用途：一是为了能在旧的 Mac 和 Windows 系统上使用 Dokcer。二是为了可以管理远程的 Docker。</p>
+</blockquote>
+<p>要知道，Docker Engine 是只能在 Linux 内核上运行的。<br>为什么 Docker Machine 可以使得在旧的 Mac 和 Windows 系统上也能使用 Docker 呢？因为，安装 Docker Toolbox 会安装 Docker Machine 和 Virtual Box 虚拟机，它会配置一个 Docker Engine 到一个虚拟机里的主机上（Linux 内核，默认名字是 default，又称托管主机），后续 Docker 容器就是运行在这个托管主机里的 Docker Engine 之上。</p>
+<p>将 Machine CLI 指向正在运行的托管主机，就可以直接该运行docker命令到该主机上。这里貌似东西不少：docker-machine env default会显示 default 主机的环境信息以及对应的配置命令指引：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> DOCKER_TLS_VERIFY=<span class="string">"1"</span></span><br><span class="line"><span class="built_in">export</span> DOCKER_HOST=<span class="string">"tcp://192.168.99.100:2376"</span></span><br><span class="line"><span class="built_in">export</span> DOCKER_CERT_PATH=<span class="string">"/Users/Eason/.docker/machine/machines/default"</span></span><br><span class="line"><span class="built_in">export</span> DOCKER_MACHINE_NAME=<span class="string">"default"</span></span><br></pre></td></tr></table></figure>
+<p>Run this command to configure your shell:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval &quot;$(docker-machine env default)&quot;</span><br></pre></td></tr></table></figure></p>
+<p>提示很明白了，在 SHELL 里运行 eval “$(docker-machine env default) 就可以把当前 Machine CLI 指向 default 主机了。好处就是，当我们有多个主机时，这样一行命令就能切换环境指向不同的主机，然后后续运行的docker命名也是运行到对应的 Docker Enigne 上。</p>
+<p>注：Docker for Mac 和 Docker for Windows 以及 (<a href="https://docs.docker.com/toolbox/overview/" target="_blank" rel="noopener">https://docs.docker.com/toolbox/overview/</a>) 都是自带 Docker Machine 工具的。</p>
+<p>这一节的个人理解，也不知道我写得大家看不看得懂。其实主要辨析点就是：Container 容器是 Image 镜像运行在内存中的实例，Container 容器要运行在 Docker Engine 之上，然而 Docker Engine 仅限运行在 Linux 内核之上。Docker Machie 是配置和管理 Docker Engine 的工具，并且可以为旧版的 Mac 和 Windows 系统提供 Docker Engine 的运行环境</p>
+<h2 id="Docker-machine-1"><a href="#Docker-machine-1" class="headerlink" title="Docker-machine:"></a>Docker-machine:</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Docker Machine 是一个工具，用来在虚拟主机上安装 Docker Engine</span><br><span class="line">并使用 docker-machine 命令来管理这些虚拟主机</span><br></pre></td></tr></table></figure>
+<h2 id="swarm"><a href="#swarm" class="headerlink" title="swarm"></a>swarm</h2><p>swarm 是集群工具，compose 是运行容器的快捷工具 本来就能结合使用，他们之间不冲突，<br>再加 machine 可以创建多个 docker 虚拟环境（如果你没有多台服务器测试的话）三者一起，</p>
+<p><a href="http://dockone.io/question/160" target="_blank" rel="noopener">http://dockone.io/question/160</a></p>
+<p>Machine：解决的是操作系统异构安装 Docker 困难的问题，没有 Machine 的时候，CentOS 是一种，Ubuntu 又是一种，AWS 又是一种。有了 Machine，所有的系统都是一样的安装方式。</p>
+<p>Swarm：我们有了 Machine 就意味着有了 docker 环境，但是那是单机的，而通常我们的应用都是集群的。这正是 Swarm 要做的事情，给你提供 docker 集群环境和调度策略等。</p>
+<p>Compose：有了环境，我们下一步要做什么？部署应用啊。然后我们需要 docker run image1、docker run image2… 一次一次不厌其烦的重复这些操作，每次都写大量的命令参数。Compose 简化了这个流程，只需要把这些内容固话到 docker-compose.yml 中。</p>
+<p>目前 Machine、Swarm、Compose 已经可以结合使用，创建集群环境，简单的在上面部署应用。但是还不完善，比如对于有 link 的应用，它们只能跑在 Swarm 集群的一个机器上，即使你的集群有很多机器。可以参考我的另一个问题。</p>
+<p>SocketPlane 是 Docker 最近收购的产品，猜想应该是为了强化 Docker 的网络功能，比如提供原生跨主机的网络定制、强化 Swarm 和 Compose 的结合等。</p>
+<h2 id="docker挂载-1"><a href="#docker挂载-1" class="headerlink" title="docker挂载"></a>docker挂载</h2><p><a href="https://www.cnblogs.com/ivictor/p/4834864.html" target="_blank" rel="noopener">https://www.cnblogs.com/ivictor/p/4834864.html</a> 宿主机目录和容器目录的关系</p>
+<h1 id="swarm集群搭建的步骤"><a href="#swarm集群搭建的步骤" class="headerlink" title="swarm集群搭建的步骤"></a>swarm集群搭建的步骤</h1><p>首先 <code>docker-machine ssh</code><br>在default 使用命令  docker swarm init</p>
+
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/07/18/docker-machine等的关系/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -463,7 +737,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
 
 
-    <article id="post-Ambari搭建" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Docker-yaosong5:Ambar镜像i制作" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -471,7 +745,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/07/10/Ambari搭建/">Ambari镜像搭建</a>
+            <a class="article-title" href="/2018/07/10/Docker-yaosong5:Ambar镜像i制作/">Docker-Ambari镜像搭建</a>
         </h1>
     
 
@@ -480,7 +754,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/07/10/Ambari搭建/">
+        <a href="/2018/07/10/Docker-yaosong5:Ambar镜像i制作/">
             <time datetime="2018-07-09T17:08:44.939Z" itemprop="datePublished">2018-07-10</time>
         </a>
     </div>
@@ -511,7 +785,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 <p>关闭 selinux , 需要重启<br><code>vim /etc/selinux/config</code> </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELINUX=disabled</span><br></pre></td></tr></table></figure></p>
             <p class="article-more-link">
-                <a href="/2018/07/10/Ambari搭建/#more">查看更多</a>
+                <a href="/2018/07/10/Docker-yaosong5:Ambar镜像i制作/#more">查看更多</a>
             </p>
         
 
@@ -563,7 +837,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/07/10/Ambari搭建/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/10/Docker-yaosong5:Ambar镜像i制作/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -681,7 +955,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
 
 
-    <article id="post-es测试命令" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ES测试命令" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -689,7 +963,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/07/10/es测试命令/">ES测试命令</a>
+            <a class="article-title" href="/2018/07/10/ES测试命令/">ES测试命令</a>
         </h1>
     
 
@@ -698,7 +972,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/07/10/es测试命令/">
+        <a href="/2018/07/10/ES测试命令/">
             <time datetime="2018-07-09T16:11:03.158Z" itemprop="datePublished">2018-07-10</time>
         </a>
     </div>
@@ -728,7 +1002,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 <p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fu55ayb4i7j31kw0c73yz.jpg" alt=""></p>
 <p>简单命令测试和展示es的功能</p></p>
             <p class="article-more-link">
-                <a href="/2018/07/10/es测试命令/#more">查看更多</a>
+                <a href="/2018/07/10/ES测试命令/#more">查看更多</a>
             </p>
         
 
@@ -780,7 +1054,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/07/10/es测试命令/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/10/ES测试命令/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -790,7 +1064,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
 
 
-    <article id="post-hadoop-spark集群搭建" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Docker-yaosong5:bigdata镜像制作" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -798,7 +1072,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/07/09/hadoop-spark集群搭建/">Hadoop&amp;Spark组合容器的搭建</a>
+            <a class="article-title" href="/2018/07/09/Docker-yaosong5:bigdata镜像制作/">yaosong5/bigdata:2.0-Hadoop&amp;Spark&amp;hive&amp;zk&amp;hue组合容器的搭建</a>
         </h1>
     
 
@@ -807,7 +1081,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/07/09/hadoop-spark集群搭建/">
+        <a href="/2018/07/09/Docker-yaosong5:bigdata镜像制作/">
             <time datetime="2018-07-08T17:06:20.114Z" itemprop="datePublished">2018-07-09</time>
         </a>
     </div>
@@ -841,7 +1115,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 <p>注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小bug</p>
 </blockquote></p>
             <p class="article-more-link">
-                <a href="/2018/07/09/hadoop-spark集群搭建/#more">查看更多</a>
+                <a href="/2018/07/09/Docker-yaosong5:bigdata镜像制作/#more">查看更多</a>
             </p>
         
 
@@ -893,7 +1167,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/07/09/hadoop-spark集群搭建/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/09/Docker-yaosong5:bigdata镜像制作/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -1125,229 +1399,6 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
 
 
-    <article id="post-kafka启动脚本及命令" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/07/08/kafka启动脚本及命令/">kafka的启动及常用命令</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/07/08/kafka启动脚本及命令/">
-            <time datetime="2018-07-08T15:58:00.558Z" itemprop="datePublished">2018-07-08</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/大数据/">大数据</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Kafka/">Kafka</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-       
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><h1 id="kafka的启动脚本"><a href="#kafka的启动脚本" class="headerlink" title="kafka的启动脚本"></a>kafka的启动脚本</h1><p> kafka集群没有脚本能直接启动所有的节点，所以为了繁杂去每台机器启动，所以编写了脚本启动所有</p>
-<p>注意参照替换</p>
-<p><strong>vim  kafka-startall.sh</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">sed -e <span class="string">'1c borker.id=0'</span> <span class="variable">$KAFKA_HOME</span>/config/server.properties</span><br><span class="line"><span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties</span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '1c borker.id=1 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '5c host.name=slave01 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"sed -i '6c advertised.host.name=slave01 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave01 <span class="string">"<span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '1c borker.id=2 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '5c host.name=slave02 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"sed -i '6c advertised.host.name=slave02 ' <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br><span class="line">ssh root@slave02 <span class="string">"<span class="variable">$KAFKA_HOME</span>/bin/kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server.properties"</span></span><br></pre></td></tr></table></figure></p>
-            <p class="article-more-link">
-                <a href="/2018/07/08/kafka启动脚本及命令/#more">查看更多</a>
-            </p>
-        
-
-        </div>
-
-        <footer class="article-footer">
-
-        
-            <div class="share-container">
-
-
-    <div class="bdsharebuttonbox">
-    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
-    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
-    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
-</div>
-<script>
-window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-<style>
-    .bdshare_popup_box {
-        border-radius: 4px;
-        border: #e1e1e1 solid 1px;
-    }
-    .bdshare-button-style0-16 a,
-    .bdshare-button-style0-16 .bds_more {
-        padding-left: 20px;
-        margin: 6px 10px 6px 0;
-    }
-    .bdshare_dialog_list a,
-    .bdshare_popup_list a,
-    .bdshare_popup_bottom a {
-        font-family: 'Microsoft Yahei';
-    }
-    .bdshare_popup_top {
-        display: none;
-    }
-    .bdshare_popup_bottom {
-        height: auto;
-        padding: 5px;
-    }
-</style>
-
-
-</div>
-
-            
-    
-        <a href="http://gangtieguo.cn/2018/07/08/kafka启动脚本及命令/#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-elk容器的搭建" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/07/08/elk容器的搭建/">ELK容器的搭建</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/07/08/elk容器的搭建/">
-            <time datetime="2018-07-08T15:43:05.950Z" itemprop="datePublished">2018-07-08</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/安装部署/">安装部署</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/ELK/">ELK</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-       
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>[TOC]</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fu54yue2cxj31g20q875x.jpg" alt=""></p>
-<h2 id="来源容器-elk"><a href="#来源容器-elk" class="headerlink" title="来源容器  elk"></a>来源容器  elk</h2><p>新建容器，为减少工作量，引用的是有ssh服务的Docker镜像<strong>kinogmt/centos-ssh:6.7</strong>，生成容器os为基准。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --name elk --hostname elk kinogmt/centos-ssh:6.7 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小bug</p>
-</blockquote></p>
-            <p class="article-more-link">
-                <a href="/2018/07/08/elk容器的搭建/#more">查看更多</a>
-            </p>
-        
-
-        </div>
-
-        <footer class="article-footer">
-
-        
-            <div class="share-container">
-
-
-    <div class="bdsharebuttonbox">
-    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
-    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
-    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
-</div>
-<script>
-window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-<style>
-    .bdshare_popup_box {
-        border-radius: 4px;
-        border: #e1e1e1 solid 1px;
-    }
-    .bdshare-button-style0-16 a,
-    .bdshare-button-style0-16 .bds_more {
-        padding-left: 20px;
-        margin: 6px 10px 6px 0;
-    }
-    .bdshare_dialog_list a,
-    .bdshare_popup_list a,
-    .bdshare_popup_bottom a {
-        font-family: 'Microsoft Yahei';
-    }
-    .bdshare_popup_top {
-        display: none;
-    }
-    .bdshare_popup_bottom {
-        height: auto;
-        padding: 5px;
-    }
-</style>
-
-
-</div>
-
-            
-    
-        <a href="http://gangtieguo.cn/2018/07/08/elk容器的搭建/#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <nav id="page-nav">
         <a class="extend prev" rel="prev" href="/page/4/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/">下一页 &raquo;</a>
     </nav>
@@ -1365,18 +1416,18 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/09/08/ELK流程小实例/" class="title">ELK流程小实例</a></p>
-                            <p class="item-date"><time datetime="2018-09-08T14:30:24.772Z" itemprop="datePublished">2018-09-08</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/Docker/">Docker</a></p>
+                            <p class="item-title"><a href="/2019/03/05/Docker-machine的搭建(与宿主机在同一ip段下)/" class="title">Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下</a></p>
+                            <p class="item-date"><time datetime="2019-03-05T08:14:31.000Z" itemprop="datePublished">2019-03-05</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/09/07/helloword/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2018-09-06T16:56:51.780Z" itemprop="datePublished">2018-09-07</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
+                            <p class="item-title"><a href="/2018/09/08/ELK流程小实例/" class="title">ELK流程小实例</a></p>
+                            <p class="item-date"><time datetime="2018-09-08T14:30:24.772Z" itemprop="datePublished">2018-09-08</time></p>
                         </div>
                     </li>
                 
@@ -1416,7 +1467,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-archive"></i>归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">30</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">9</span></li></ul>
         </div>
     </div>
 
@@ -1425,7 +1476,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/原理理解/">原理理解</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/安装部署/">安装部署</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工程框架/">工程框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/快捷键/">快捷键</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境配置/">环境配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片知识/">碎片知识</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/组件/">组件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1434,7 +1485,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-folder"></i>标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDH/">CDH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/">HBase</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HDFS/">HDFS</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/">Json</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDD/">RDD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkSQL/">SparkSQL</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkStreaming/">SparkStreaming</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es/">es</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zk/">zk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/使用/">使用</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/原理/">原理</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安装部署/">安装部署</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/报表/">报表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作/">操作</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ambari/">Ambari</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDH/">CDH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-machine/">Docker-machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLINK/">FLINK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Finder/">Finder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/">HBase</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HDFS/">HDFS</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hue/">Hue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Idea/">Idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/">Json</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDD/">RDD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkSQL/">SparkSQL</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SparkStreaming/">SparkStreaming</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es/">es</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zk/">zk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/使用/">使用</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/原理/">原理</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安装部署/">安装部署</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发/">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/报表/">报表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作/">操作</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1443,7 +1494,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
     <div class="widget-wrap">
         <h3 class="widget-title"><i class="fa fa-tags"></i>标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/tags/CDH/" style="font-size: 10px;">CDH</a> <a href="/tags/Docker/" style="font-size: 18.33px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/ELK/" style="font-size: 13.33px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HBase/" style="font-size: 15px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 13.33px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.67px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 13.33px;">Hexo</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 11.67px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/RDD/" style="font-size: 10px;">RDD</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Scala/" style="font-size: 11.67px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/SparkSQL/" style="font-size: 13.33px;">SparkSQL</a> <a href="/tags/SparkStreaming/" style="font-size: 11.67px;">SparkStreaming</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/es/" style="font-size: 10px;">es</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/zk/" style="font-size: 10px;">zk</a> <a href="/tags/使用/" style="font-size: 11.67px;">使用</a> <a href="/tags/原理/" style="font-size: 18.33px;">原理</a> <a href="/tags/命令/" style="font-size: 11.67px;">命令</a> <a href="/tags/大数据/" style="font-size: 11.67px;">大数据</a> <a href="/tags/安装部署/" style="font-size: 10px;">安装部署</a> <a href="/tags/开发/" style="font-size: 11.67px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/报表/" style="font-size: 10px;">报表</a> <a href="/tags/操作/" style="font-size: 10px;">操作</a>
+            <a href="/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/tags/CDH/" style="font-size: 10px;">CDH</a> <a href="/tags/Docker/" style="font-size: 18.57px;">Docker</a> <a href="/tags/Docker-machine/" style="font-size: 10px;">Docker-machine</a> <a href="/tags/ELK/" style="font-size: 12.86px;">ELK</a> <a href="/tags/FLINK/" style="font-size: 10px;">FLINK</a> <a href="/tags/Finder/" style="font-size: 10px;">Finder</a> <a href="/tags/HBase/" style="font-size: 14.29px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 12.86px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.71px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 12.86px;">Hexo</a> <a href="/tags/Hive/" style="font-size: 14.29px;">Hive</a> <a href="/tags/Hue/" style="font-size: 10px;">Hue</a> <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/Java/" style="font-size: 11.43px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Kafka/" style="font-size: 14.29px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Other/" style="font-size: 10px;">Other</a> <a href="/tags/RDD/" style="font-size: 10px;">RDD</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/SparkSQL/" style="font-size: 12.86px;">SparkSQL</a> <a href="/tags/SparkStreaming/" style="font-size: 11.43px;">SparkStreaming</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/es/" style="font-size: 10px;">es</a> <a href="/tags/git/" style="font-size: 11.43px;">git</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/zk/" style="font-size: 10px;">zk</a> <a href="/tags/使用/" style="font-size: 11.43px;">使用</a> <a href="/tags/原理/" style="font-size: 17.14px;">原理</a> <a href="/tags/命令/" style="font-size: 11.43px;">命令</a> <a href="/tags/大数据/" style="font-size: 11.43px;">大数据</a> <a href="/tags/安装部署/" style="font-size: 10px;">安装部署</a> <a href="/tags/开发/" style="font-size: 11.43px;">开发</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/报表/" style="font-size: 10px;">报表</a> <a href="/tags/操作/" style="font-size: 10px;">操作</a>
         </div>
     </div>
 
@@ -1490,7 +1541,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2018 GTG<br>
+            &copy; 2019 GTG<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 
 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>

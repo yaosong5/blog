@@ -8,19 +8,20 @@
 
     <title>Docker常用命令汇集 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name sla">
+    <meta name="description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json 1&amp;#123;&quot;registry-mirrors&quot;:[&quot;http://c1f0a193.m.daocloud.io&quot;] &amp;#125; 常用命令启动容器(也是创建) docker run -itd  --net">
 <meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker常用命令汇集">
 <meta property="og:url" content="http://gangtieguo.cn/2018/06/26/Docker命令汇集/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name sla">
+<meta property="og:description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json 1&amp;#123;&quot;registry-mirrors&quot;:[&quot;http://c1f0a193.m.daocloud.io&quot;] &amp;#125; 常用命令启动容器(也是创建) docker run -itd  --net">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu55c5h3g1j319i0eu0tg.jpg">
-<meta property="og:updated_time" content="2018-08-24T02:13:02.239Z">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g0ryyzp0vrj30zi0bm0t9.jpg">
+<meta property="og:updated_time" content="2019-03-06T03:58:12.182Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker常用命令汇集">
-<meta name="twitter:description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json  {“registry-mirrors”:[“http://c1f0a193.m.daocloud.io&amp;quot;] } 启动容器 docker run -itd  --net=br  --name sla">
+<meta name="twitter:description" content="[TOC] Docker源配置  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：  vi /etc/docker/daemon.json 1&amp;#123;&quot;registry-mirrors&quot;:[&quot;http://c1f0a193.m.daocloud.io&quot;] &amp;#125; 常用命令启动容器(也是创建) docker run -itd  --net">
 <meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu55c5h3g1j319i0eu0tg.jpg">
     
 
@@ -209,7 +210,7 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                63
+                65
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -306,7 +307,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article "  class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker源配置"><span class="toc-number">1.</span> <span class="toc-text">Docker源配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建容器"><span class="toc-number">1.1.</span> <span class="toc-text">创建容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容器挂载目录"><span class="toc-number">1.2.</span> <span class="toc-text">容器挂载目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除所有未用的-Data-volumes"><span class="toc-number">1.3.</span> <span class="toc-text">删除所有未用的 Data volumes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#run-命令解释"><span class="toc-number">1.4.</span> <span class="toc-text">run 命令解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exec-进入后台容器"><span class="toc-number">1.5.</span> <span class="toc-text">exec 进入后台容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#logs查看容器启动日志"><span class="toc-number">1.6.</span> <span class="toc-text">logs查看容器启动日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看容器信息"><span class="toc-number">1.7.</span> <span class="toc-text">查看容器信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动-关闭-删除容器"><span class="toc-number">1.8.</span> <span class="toc-text">启动 关闭 删除容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cp容器宿主互拷文件"><span class="toc-number">1.9.</span> <span class="toc-text">cp容器宿主互拷文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除镜像"><span class="toc-number">1.10.</span> <span class="toc-text">删除镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存镜像"><span class="toc-number">1.11.</span> <span class="toc-text">保存镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker用DockerFile创建镜像"><span class="toc-number">1.12.</span> <span class="toc-text">Docker用DockerFile创建镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一键启动docker-compose-yml编排的所有服务"><span class="toc-number">1.13.</span> <span class="toc-text">一键启动docker-compose.yml编排的所有服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker改变标签"><span class="toc-number">1.14.</span> <span class="toc-text">Docker改变标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索docker镜像"><span class="toc-number">1.15.</span> <span class="toc-text">搜索docker镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#登录docker账户"><span class="toc-number">1.16.</span> <span class="toc-text">登录docker账户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#上传仓库"><span class="toc-number">1.17.</span> <span class="toc-text">上传仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容器保存为镜像，加载本地镜像-引用"><span class="toc-number">1.18.</span> <span class="toc-text">容器保存为镜像，加载本地镜像 引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存，加载容器命令："><span class="toc-number">1.19.</span> <span class="toc-text">保存，加载容器命令：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker-machine命令"><span class="toc-number">2.</span> <span class="toc-text">Docker-machine命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#列出docker-machine"><span class="toc-number">2.1.</span> <span class="toc-text">列出docker-machine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开启虚拟机"><span class="toc-number">2.2.</span> <span class="toc-text">开启虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关闭虚拟机"><span class="toc-number">2.3.</span> <span class="toc-text">关闭虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重启虚拟机"><span class="toc-number">2.4.</span> <span class="toc-text">重启虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除虚拟机"><span class="toc-number">2.5.</span> <span class="toc-text">删除虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置环境变量docker-machine"><span class="toc-number">2.6.</span> <span class="toc-text">设置环境变量docker-machine</span></a></li></ol></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker源配置"><span class="toc-number">1.</span> <span class="toc-text">Docker源配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常用命令"><span class="toc-number">2.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建容器-run"><span class="toc-number">2.1.</span> <span class="toc-text">创建容器-run</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建容器-Dockerfile"><span class="toc-number">2.2.</span> <span class="toc-text">创建容器-Dockerfile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容器挂载目录"><span class="toc-number">2.3.</span> <span class="toc-text">容器挂载目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除所有未用的-Data-volumes"><span class="toc-number">2.4.</span> <span class="toc-text">删除所有未用的 Data volumes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#run-命令解释"><span class="toc-number">2.5.</span> <span class="toc-text">run 命令解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exec-进入后台容器"><span class="toc-number">2.6.</span> <span class="toc-text">exec 进入后台容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#logs查看容器启动日志"><span class="toc-number">2.7.</span> <span class="toc-text">logs查看容器启动日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看容器信息"><span class="toc-number">2.8.</span> <span class="toc-text">查看容器信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动-关闭-删除容器"><span class="toc-number">2.9.</span> <span class="toc-text">启动 关闭 删除容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cp容器宿主互拷文件"><span class="toc-number">2.10.</span> <span class="toc-text">cp容器宿主互拷文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除镜像"><span class="toc-number">2.11.</span> <span class="toc-text">删除镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存镜像"><span class="toc-number">2.12.</span> <span class="toc-text">保存镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker用DockerFile创建镜像"><span class="toc-number">2.13.</span> <span class="toc-text">Docker用DockerFile创建镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一键启动docker-compose-yml编排的所有服务"><span class="toc-number">2.14.</span> <span class="toc-text">一键启动docker-compose.yml编排的所有服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker改变标签"><span class="toc-number">2.15.</span> <span class="toc-text">Docker改变标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索docker镜像"><span class="toc-number">2.16.</span> <span class="toc-text">搜索docker镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#登录docker账户"><span class="toc-number">2.17.</span> <span class="toc-text">登录docker账户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#上传仓库"><span class="toc-number">2.18.</span> <span class="toc-text">上传仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容器保存为镜像，加载本地镜像-引用"><span class="toc-number">2.19.</span> <span class="toc-text">容器保存为镜像，加载本地镜像 引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存，加载容器命令："><span class="toc-number">2.20.</span> <span class="toc-text">保存，加载容器命令：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker-machine命令"><span class="toc-number">3.</span> <span class="toc-text">Docker-machine命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#列出docker-machine"><span class="toc-number">3.1.</span> <span class="toc-text">列出docker-machine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开启虚拟机"><span class="toc-number">3.2.</span> <span class="toc-text">开启虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关闭虚拟机"><span class="toc-number">3.3.</span> <span class="toc-text">关闭虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重启虚拟机"><span class="toc-number">3.4.</span> <span class="toc-text">重启虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除虚拟机"><span class="toc-number">3.5.</span> <span class="toc-text">删除虚拟机</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设置环境变量docker-machine"><span class="toc-number">4.</span> <span class="toc-text">设置环境变量docker-machine</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他参考"><span class="toc-number">5.</span> <span class="toc-text">其他参考</span></a></li></ol>
             </div>
 
 
@@ -335,11 +336,13 @@ var _hmt = _hmt || [];
 
                 <p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fu55c5h3g1j319i0eu0tg.jpg" alt=""></p>
 <p>[TOC]</p>
-<h1 id="Docker源配置"><a href="#Docker源配置" class="headerlink" title="Docker源配置"></a>Docker源配置</h1><p>  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：<br>  vi /etc/docker/daemon.json<br>  {“registry-mirrors”:[“<a href="http://c1f0a193.m.daocloud.io&quot;]" target="_blank" rel="noopener">http://c1f0a193.m.daocloud.io&quot;]</a> }</p>
-<p>启动容器</p>
-<pre><code>docker run -itd  --net=br  --name slave02 --hostname slave02 centos:hadoop-spark &amp;&gt; /dev/null
+<h1 id="Docker源配置"><a href="#Docker源配置" class="headerlink" title="Docker源配置"></a>Docker源配置</h1><p>  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：<br>  <strong>vi /etc/docker/daemon.json</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"registry-mirrors"</span>:[<span class="string">"http://c1f0a193.m.daocloud.io"</span>] &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><p>启动容器(也是创建)</p>
+<pre><code>docker run -itd  --net=br  --name master --hostname master yaosong5/bigdata:1.0 &amp;&gt; /dev/null
 如果以 /bin/bash启动的话，sshd服务不会启动(docker未知bug)
-</code></pre><h2 id="创建容器"><a href="#创建容器" class="headerlink" title="创建容器"></a>创建容器</h2><pre><code>--name    --hostname (同-h)  --net=    -d表示后台启动
+用 &amp;&gt; /dev/null这种方式sshd服务才会启动
+</code></pre><h2 id="创建容器-run"><a href="#创建容器-run" class="headerlink" title="创建容器-run"></a>创建容器-run</h2><pre><code>--name    --hostname (同-h)  --net=    -d表示后台启动
 此命令不会打印出容器id
 docker run -itd  --net=br  --name hm --hostname hadoop-master kiwenlau/hadoop:1.0 &amp;&gt; /dev/null   （hadoop镜像）
 设置静态固定ip
@@ -351,18 +354,29 @@ docker run -d --net=br --name=c1 nginx
 
 设置docker默认ip段命令
 docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 --name master -h master --add-host slave01:172.17.0.3 --add-host slave02:172.17.0.4 centos:ssh-spark-hadoop
-</code></pre><h2 id="容器挂载目录"><a href="#容器挂载目录" class="headerlink" title="容器挂载目录"></a>容器挂载目录</h2><p>compose文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">volumes:</span><br><span class="line">	- /Users/yaosong/Yao/dev/hadoop/dfs/name:/root/hadoop/dfs/name</span><br></pre></td></tr></table></figure></p>
-<p>shell命令：</p>
+</code></pre><h2 id="创建容器-Dockerfile"><a href="#创建容器-Dockerfile" class="headerlink" title="创建容器-Dockerfile"></a>创建容器-Dockerfile</h2><p>在dockerfille文件所在的目录中执行以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker build -f Dockerfile -t hadoop:v1 .</span><br><span class="line"><span class="meta">#</span><span class="bash">也可以指定Dockerfile如下：</span></span><br><span class="line">docker build -t centos:tt - &lt; Dockerfile</span><br></pre></td></tr></table></figure>
+<h2 id="容器挂载目录"><a href="#容器挂载目录" class="headerlink" title="容器挂载目录"></a>容器挂载目录</h2><p>分两种类型</p>
+<ul>
+<li>compose文件：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">volumes:</span><br><span class="line">	- /Users/yaosong/Yao/dev/hadoop/dfs/name:/root/hadoop/dfs/name</span><br></pre></td></tr></table></figure>
+<ul>
+<li>shell命令：</li>
+</ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-v : </span><br><span class="line">docker run -it -v /<span class="built_in">test</span>:/soft centos /bin/bash</span><br></pre></td></tr></table></figure>
 <p>“:”前目录为宿主机目录，后目录为容器目录</p>
 <blockquote>
-<p>在virtualbox中设置共享文件夹的share名称对应mac的目录<br>虚拟机中的目录<br>sudo mount -t vboxsf share  /Users/yaosong/Yao/share/<br>sudo mount -t vboxsf vagrant /Users/yaosong</p>
+<p>引用  <a href="https://www.kancloud.cn/huangzhenyou/shuoming/545497" target="_blank" rel="noopener">基于 docker 的大数据架构</a></p>
+<p>如果是mac或者win机器，需要在virtualbox虚拟机中设置共享文件夹的share名称对应mac的目录<br>虚拟机中的目录</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1g0ryyzp0vrj30zi0bm0t9.jpg" alt=""></p>
+<p>sudo mount -t vboxsf vagrant /Users/yaosong</p>
 </blockquote>
 <h2 id="删除所有未用的-Data-volumes"><a href="#删除所有未用的-Data-volumes" class="headerlink" title="删除所有未用的 Data volumes"></a>删除所有未用的 Data volumes</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume prune</span><br></pre></td></tr></table></figure>
 <h2 id="run-命令解释"><a href="#run-命令解释" class="headerlink" title="run 命令解释"></a>run 命令解释</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-d 是后台启动</span><br><span class="line">docker run -itd  --net=br  --name spark --hostname spark yaosong5/spark:2.1.0 &amp;&gt; /dev/null</span><br><span class="line">sudo docker <span class="built_in">exec</span> -it spark bash（进入后台启动的容器）</span><br><span class="line">和下面一样（直接进入）</span><br><span class="line">docker run -it --net=br  --name spark --hostname spark yaosong5/spark:2.1.0 bash</span><br></pre></td></tr></table></figure>
 <h2 id="exec-进入后台容器"><a href="#exec-进入后台容器" class="headerlink" title="exec 进入后台容器"></a>exec 进入后台容器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it spark bash</span><br><span class="line">docker <span class="built_in">exec</span> -it 容器名 bash</span><br><span class="line">执行命令 docker <span class="built_in">exec</span> -it 容器名 ip addr 可以拿到 a0 容器的 ip</span><br></pre></td></tr></table></figure>
 <h2 id="logs查看容器启动日志"><a href="#logs查看容器启动日志" class="headerlink" title="logs查看容器启动日志"></a>logs查看容器启动日志</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs -f -t --tail 100  kanbigdata_namenode_1</span><br></pre></td></tr></table></figure>
-<h2 id="查看容器信息"><a href="#查看容器信息" class="headerlink" title="查看容器信息"></a>查看容器信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker inspect hm</span><br><span class="line">执行命令 docker exec -it 容器名 ip addr 可以拿到 a0 容器的 ip</span><br></pre></td></tr></table></figure>
+<h2 id="查看容器信息"><a href="#查看容器信息" class="headerlink" title="查看容器信息"></a>查看容器信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker inspect hm</span><br><span class="line">执行命令 docker exec -it a0 ip addr 可以拿到 a0 容器的 ip</span><br></pre></td></tr></table></figure>
 <h2 id="启动-关闭-删除容器"><a href="#启动-关闭-删除容器" class="headerlink" title="启动 关闭 删除容器"></a>启动 关闭 删除容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker start </span><br><span class="line">docker stop 容器名</span><br><span class="line">docker rm 容器名</span><br></pre></td></tr></table></figure>
 <h2 id="cp容器宿主互拷文件"><a href="#cp容器宿主互拷文件" class="headerlink" title="cp容器宿主互拷文件"></a>cp容器宿主互拷文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker cp /Users/yaosong/Yao/etc.tar  f7e795c0fddd:/</span><br><span class="line">后为容器id:/目录</span><br></pre></td></tr></table></figure>
 <h2 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">（根据镜像id删除）</span><br><span class="line">docker rmi 00de07ebadff</span><br><span class="line">用docker images -a 查看image id，</span><br><span class="line">也可docker rmi 镜像名:版本号</span><br></pre></td></tr></table></figure>
@@ -382,7 +396,11 @@ docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 --name master -h m
 <h2 id="关闭虚拟机"><a href="#关闭虚拟机" class="headerlink" title="关闭虚拟机"></a>关闭虚拟机</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine stop default</span><br></pre></td></tr></table></figure>
 <h2 id="重启虚拟机"><a href="#重启虚拟机" class="headerlink" title="重启虚拟机"></a>重启虚拟机</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine restart default</span><br></pre></td></tr></table></figure>
 <h2 id="删除虚拟机"><a href="#删除虚拟机" class="headerlink" title="删除虚拟机"></a>删除虚拟机</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine rm default</span><br></pre></td></tr></table></figure>
-<h2 id="设置环境变量docker-machine"><a href="#设置环境变量docker-machine" class="headerlink" title="设置环境变量docker-machine"></a>设置环境变量docker-machine</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> $(docker-machine env default) <span class="comment"># Setup the environment</span></span><br></pre></td></tr></table></figure>
+<h1 id="设置环境变量docker-machine"><a href="#设置环境变量docker-machine" class="headerlink" title="设置环境变量docker-machine"></a>设置环境变量docker-machine</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> $(docker-machine env default) <span class="comment"># Setup the environment</span></span><br></pre></td></tr></table></figure>
+<h1 id="其他参考"><a href="#其他参考" class="headerlink" title="其他参考"></a>其他参考</h1><p>ip -4 addr</p>
+<p>chkconfig sshd on</p>
+<p>rpm -qa|grep ssh。</p>
+<p>为了快速实现我们就不自己装 SSH 服务了，hub.docker.com 上的 kinogmt/centos-ssh:6.7 这个镜像就能满足我们的要求</p>
 
             
 
@@ -470,11 +488,11 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/07/08/elk容器的搭建/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/07/08/Docker-yaosong5:elk镜像制作/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    ELK容器的搭建
+                    Docker-yaosong5/elk镜像-ELK容器的搭建
                 
             </div>
         </a>
@@ -523,7 +541,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2018 GTG<br>
+            &copy; 2019 GTG<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 
 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>

@@ -4,6 +4,202 @@
 
     
   <url>
+    <loc>http://gangtieguo.cn/2018/05/10/Linux%E5%91%BD%E4%BB%A4%E7%A7%AF%E7%B4%AF/</loc>
+    <lastmod>2019-03-06T04:01:19.943Z</lastmod>
+    <data>
+        <display>
+        <title>linux命令</title>
+        <pubTime>2018-05-10T07:37:28.983Z</pubTime>
+        
+        <tag>linux</tag>
+         
+        <tag>开发</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="http://gangtieguo.cn/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/06/26/Docker%E5%91%BD%E4%BB%A4%E6%B1%87%E9%9B%86/</loc>
+    <lastmod>2019-03-06T03:58:12.182Z</lastmod>
+    <data>
+        <display>
+        <title>Docker常用命令汇集</title>
+        <pubTime>2018-06-26T02:33:37.714Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+         
+           
+             
+              <breadCrumb title="Docker" url="http://gangtieguo.cn/categories/Docker/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/23/Docker-yaosong5:bigdatabase%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%85%B6%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4/</loc>
+    <lastmod>2019-03-06T03:16:43.991Z</lastmod>
+    <data>
+        <display>
+        <title>Docker-yaosong5/bigdatabase镜像制作搭建及其运行命令</title>
+        <pubTime>2018-07-23T15:40:07.620Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+         
+           
+             
+              <breadCrumb title="Docker" url="http://gangtieguo.cn/categories/Docker/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/20/Docker-%E6%9E%84%E5%BB%BA%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%95%9C%E5%83%8F/</loc>
+    <lastmod>2019-03-06T03:08:51.862Z</lastmod>
+    <data>
+        <display>
+        <title>Docker-构建免密ssh免密镜像</title>
+        <pubTime>2018-07-19T18:49:08.996Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+         
+           
+             
+              <breadCrumb title="Docker" url="http://gangtieguo.cn/categories/Docker/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/10/Docker-yaosong5:Ambar%E9%95%9C%E5%83%8Fi%E5%88%B6%E4%BD%9C/</loc>
+    <lastmod>2019-03-06T03:07:21.049Z</lastmod>
+    <data>
+        <display>
+        <title>Docker-Ambari镜像搭建</title>
+        <pubTime>2018-07-09T17:08:44.939Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>Ambari</tag>
+         
+         
+           
+             
+              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/06/03/Docker-%E5%AE%89%E8%A3%85Hadoop%E9%9B%86%E7%BE%A4%E3%80%90%E5%BC%95%E7%94%A8%E3%80%91/</loc>
+    <lastmod>2019-03-06T03:06:19.369Z</lastmod>
+    <data>
+        <display>
+        <title>Docker-Hadoop集群【引用】</title>
+        <pubTime>2018-06-03T06:36:21.404Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>Hadoop</tag>
+         
+         
+           
+             
+              <breadCrumb title="环境配置" url="http://gangtieguo.cn/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/08/Docker-yaosong5:elk%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/</loc>
+    <lastmod>2019-03-06T03:04:50.521Z</lastmod>
+    <data>
+        <display>
+        <title>Docker-yaosong5/elk镜像-ELK容器的搭建</title>
+        <pubTime>2018-07-08T15:43:05.950Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>ELK</tag>
+         
+         
+           
+             
+              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/09/Docker-yaosong5:bigdata%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/</loc>
+    <lastmod>2019-03-06T03:04:11.197Z</lastmod>
+    <data>
+        <display>
+        <title>yaosong5/bigdata:2.0-Hadoop&Spark&hive&zk&hue组合容器的搭建</title>
+        <pubTime>2018-07-08T17:06:20.114Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>Hadoop</tag>
+         
+        <tag>Spark</tag>
+         
+         
+           
+             
+              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2019/03/05/Docker-machine%E7%9A%84%E6%90%AD%E5%BB%BA(%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%9C%A8%E5%90%8C%E4%B8%80ip%E6%AE%B5%E4%B8%8B)/</loc>
+    <lastmod>2019-03-05T08:14:31.000Z</lastmod>
+    <data>
+        <display>
+        <title>Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下</title>
+        <pubTime>2019-03-05T08:14:31.000Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>Docker-machine</tag>
+         
+        <tag>安装部署</tag>
+         
+         
+           
+             
+              <breadCrumb title="Docker" url="http://gangtieguo.cn/categories/Docker/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://gangtieguo.cn/2018/08/15/Hadoop-%E6%9E%84%E6%88%90%E5%8F%8AHA-/</loc>
     <lastmod>2018-12-25T03:53:59.560Z</lastmod>
     <data>
@@ -79,9 +275,9 @@
         <title>Spark-on-Yarn源码解析(一)Yarn任务解析</title>
         <pubTime>2018-09-04T07:44:58.661Z</pubTime>
         
-        <tag>Spark</tag>
-         
         <tag>原理</tag>
+         
+        <tag>Spark</tag>
          
         <tag>Yarn</tag>
          
@@ -103,9 +299,9 @@
         <title>Spark-on-Yarn源码解析(二)Spark-Submit解析</title>
         <pubTime>2018-09-04T08:03:50.700Z</pubTime>
         
-        <tag>Spark</tag>
-         
         <tag>原理</tag>
+         
+        <tag>Spark</tag>
          
          
            
@@ -138,30 +334,6 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/07/20/Docker-machine%E7%9A%84%E6%90%AD%E5%BB%BA(%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%9C%A8%E5%90%8C%E4%B8%80ip%E6%AE%B5%E4%B8%8B)/</loc>
-    <lastmod>2018-09-17T08:14:20.381Z</lastmod>
-    <data>
-        <display>
-        <title>Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下</title>
-        <pubTime>2018-07-19T19:02:08.124Z</pubTime>
-        
-        <tag>Docker</tag>
-         
-        <tag>Docker-machine</tag>
-         
-        <tag>安装部署</tag>
-         
-         
-           
-             
-              <breadCrumb title="Docker" url="http://gangtieguo.cn/categories/Docker/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://gangtieguo.cn/2018/09/08/ELK%E6%B5%81%E7%A8%8B%E5%B0%8F%E5%AE%9E%E4%BE%8B/</loc>
     <lastmod>2018-09-10T02:01:46.264Z</lastmod>
     <data>
@@ -175,28 +347,6 @@
            
              
               <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/07/08/elk%E5%AE%B9%E5%99%A8%E7%9A%84%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2018-09-09T03:58:21.867Z</lastmod>
-    <data>
-        <display>
-        <title>ELK容器的搭建</title>
-        <pubTime>2018-07-08T15:43:05.950Z</pubTime>
-        
-        <tag>Docker</tag>
-         
-        <tag>ELK</tag>
-         
-         
-           
-             
-              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
           
         </display>
     </data>
@@ -218,21 +368,6 @@
              
               <breadCrumb title="大数据" url="http://gangtieguo.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/09/07/helloword/</loc>
-    <lastmod>2018-09-07T01:23:57.907Z</lastmod>
-    <data>
-        <display>
-        <title></title>
-        <pubTime>2018-09-06T16:56:51.780Z</pubTime>
-        
-         
-           
         </display>
     </data>
     </url>
@@ -292,9 +427,9 @@
         <title>Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分</title>
         <pubTime>2018-09-04T08:16:39.931Z</pubTime>
         
-        <tag>Spark</tag>
-         
         <tag>原理</tag>
+         
+        <tag>Spark</tag>
          
          
            
@@ -336,36 +471,14 @@
         <title>命令积累</title>
         <pubTime>2018-05-31T06:10:40.710Z</pubTime>
         
-        <tag>大数据</tag>
-         
         <tag>命令</tag>
+         
+        <tag>大数据</tag>
          
          
            
              
               <breadCrumb title="碎片知识" url="http://gangtieguo.cn/categories/%E7%A2%8E%E7%89%87%E7%9F%A5%E8%AF%86/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/05/10/Linux%E5%91%BD%E4%BB%A4%E7%A7%AF%E7%B4%AF/</loc>
-    <lastmod>2018-09-05T14:07:10.031Z</lastmod>
-    <data>
-        <display>
-        <title>linux命令</title>
-        <pubTime>2018-05-10T07:37:28.983Z</pubTime>
-        
-        <tag>linux</tag>
-         
-        <tag>开发</tag>
-         
-         
-           
-             
-              <breadCrumb title="Linux" url="http://gangtieguo.cn/categories/Linux/"/>
           
         </display>
     </data>
@@ -380,9 +493,9 @@
         <title>Spark-on-Yarn源码解析(三)client做的事情</title>
         <pubTime>2018-09-04T08:13:34.283Z</pubTime>
         
-        <tag>Spark</tag>
-         
         <tag>原理</tag>
+         
+        <tag>Spark</tag>
          
          
            
@@ -437,26 +550,6 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/06/26/Docker%E5%91%BD%E4%BB%A4%E6%B1%87%E9%9B%86/</loc>
-    <lastmod>2018-08-24T02:13:02.239Z</lastmod>
-    <data>
-        <display>
-        <title>Docker常用命令汇集</title>
-        <pubTime>2018-06-26T02:33:37.714Z</pubTime>
-        
-        <tag>Docker</tag>
-         
-         
-           
-             
-              <breadCrumb title="Docker" url="http://gangtieguo.cn/categories/Docker/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://gangtieguo.cn/2018/08/16/SparkRDD%E4%BB%8B%E7%BB%8D/</loc>
     <lastmod>2018-08-24T01:34:10.728Z</lastmod>
     <data>
@@ -464,9 +557,9 @@
         <title>SparkRDD介绍</title>
         <pubTime>2018-08-15T16:49:49.734Z</pubTime>
         
-        <tag>Spark</tag>
-         
         <tag>原理</tag>
+         
+        <tag>Spark</tag>
          
         <tag>RDD</tag>
          
@@ -488,9 +581,9 @@
         <title>Spark启动流程及一些小总结</title>
         <pubTime>2018-08-15T15:54:20.258Z</pubTime>
         
-        <tag>Spark</tag>
-         
         <tag>原理</tag>
+         
+        <tag>Spark</tag>
          
          
            
@@ -637,9 +730,9 @@
         <title>SparkStreaming介绍</title>
         <pubTime>2018-08-15T17:50:47.842Z</pubTime>
         
-        <tag>Spark</tag>
-         
         <tag>原理</tag>
+         
+        <tag>Spark</tag>
          
         <tag>SparkStreaming</tag>
          
@@ -932,26 +1025,6 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/07/20/Docker%E6%9E%84%E5%BB%BA%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</loc>
-    <lastmod>2018-08-10T19:24:44.124Z</lastmod>
-    <data>
-        <display>
-        <title>Docker构建免密ssh免密镜像</title>
-        <pubTime>2018-07-19T18:49:08.996Z</pubTime>
-        
-        <tag>Docker</tag>
-         
-         
-           
-             
-              <breadCrumb title="Docker" url="http://gangtieguo.cn/categories/Docker/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://gangtieguo.cn/2018/07/10/CoudearManager%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2018-08-10T19:05:49.436Z</lastmod>
     <data>
@@ -962,28 +1035,6 @@
         <tag>Docker</tag>
          
         <tag>CDH</tag>
-         
-         
-           
-             
-              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://gangtieguo.cn/2018/07/10/Ambari%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2018-08-10T18:48:37.181Z</lastmod>
-    <data>
-        <display>
-        <title>Ambari镜像搭建</title>
-        <pubTime>2018-07-09T17:08:44.939Z</pubTime>
-        
-        <tag>Docker</tag>
-         
-        <tag>Ambari</tag>
          
          
            
@@ -1062,7 +1113,7 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/07/10/es%E6%B5%8B%E8%AF%95%E5%91%BD%E4%BB%A4/</loc>
+    <loc>http://gangtieguo.cn/2018/07/10/ES%E6%B5%8B%E8%AF%95%E5%91%BD%E4%BB%A4/</loc>
     <lastmod>2018-08-10T18:02:13.602Z</lastmod>
     <data>
         <display>
@@ -1157,9 +1208,9 @@
         <title>Spark读取HBase</title>
         <pubTime>2018-08-10T16:18:11.706Z</pubTime>
         
-        <tag>Spark</tag>
-         
         <tag>HBase</tag>
+         
+        <tag>Spark</tag>
          
          
            
@@ -1235,30 +1286,6 @@
     </url>
 
     
-  <url>
-    <loc>http://gangtieguo.cn/2018/07/09/hadoop-spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2018-08-10T16:07:47.069Z</lastmod>
-    <data>
-        <display>
-        <title>Hadoop&Spark组合容器的搭建</title>
-        <pubTime>2018-07-08T17:06:20.114Z</pubTime>
-        
-        <tag>Docker</tag>
-         
-        <tag>Hadoop</tag>
-         
-        <tag>Spark</tag>
-         
-         
-           
-             
-              <breadCrumb title="安装部署" url="http://gangtieguo.cn/categories/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
     
     
     
@@ -1285,21 +1312,34 @@
 
     
   <url>
-    <loc>http://gangtieguo.cn/2018/06/03/Docker%E5%AE%89%E8%A3%85Hadoop%E9%9B%86%E7%BE%A4%E3%80%90%E5%BC%95%E7%94%A8%E3%80%91/</loc>
-    <lastmod>2018-08-06T19:27:34.504Z</lastmod>
+    <loc>http://gangtieguo.cn/2018/08/01/docker-machine%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/</loc>
+    <lastmod>2018-08-01T18:24:04.223Z</lastmod>
     <data>
         <display>
-        <title>Docker安装Hadoop集群【引用】</title>
-        <pubTime>2018-06-03T06:36:21.404Z</pubTime>
+        <title></title>
+        <pubTime>2018-08-01T12:20:03.591Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://gangtieguo.cn/2018/07/18/docker-machine%E7%AD%89%E7%9A%84%E5%85%B3%E7%B3%BB/</loc>
+    <lastmod>2018-07-27T08:34:52.084Z</lastmod>
+    <data>
+        <display>
+        <title>Docker-machine、engine、swarm集群等相关</title>
+        <pubTime>2018-07-18T06:26:45.439Z</pubTime>
         
         <tag>Docker</tag>
-         
-        <tag>Hadoop</tag>
          
          
            
              
-              <breadCrumb title="环境配置" url="http://gangtieguo.cn/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
+              <breadCrumb title="原理理解" url="http://gangtieguo.cn/categories/%E5%8E%9F%E7%90%86%E7%90%86%E8%A7%A3/"/>
           
         </display>
     </data>

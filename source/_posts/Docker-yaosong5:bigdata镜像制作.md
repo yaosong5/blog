@@ -1,5 +1,5 @@
 ---
-title:  Hadoop&Spark组合容器的搭建
+title: yaosong5/bigdata:2.0-Hadoop&Spark&hive&zk&hue组合容器的搭建
 date: 2018年08月06日 22时15分52秒
 tags:  [Docker,Spark,Hadoop]
 categories: 安装部署
@@ -87,8 +87,6 @@ docker run -itd  --name bigdata --hostname bigdata kinogmt/centos-ssh:6.7 &> /de
      export HBASE_HOME=/usr/hbase
      export PATH=$HBASE_HOME/bin:$PATH
      export PATH=$ZK_HOME/bin:$PATH
-
-
 
  ```
 
@@ -277,7 +275,6 @@ hdfs 50070端口 hdfs3.0为9870   http://yourip:50070
 ```bash
 slave01
 slave02
-
 ```
 **sparkUI端口8080**
 
@@ -326,7 +323,7 @@ spark-shell --master yarn --deploy-mode client --driver-memory 650m --executor-m
 docker commit -m "bigdata基础组件镜像"  bigdata yaosong5/bigdata:2.0
 ```
 
-
+2.0镜像对比1.0：1.0只有hadoop-待确定
 
 # 创建容器
 

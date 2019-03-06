@@ -1,5 +1,5 @@
 ---
-title:  Ambari镜像搭建
+title:  Docker-Ambari镜像搭建
 date: 2018年08月06日 22时15分52秒
 tags:  [Docker,Ambari]
 categories: 安装部署

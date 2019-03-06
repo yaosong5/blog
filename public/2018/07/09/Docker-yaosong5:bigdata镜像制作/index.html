@@ -6,19 +6,19 @@
     <meta charset="utf-8">
     
 
-    <title>Hadoop&amp;Spark组合容器的搭建 | 钢铁锅</title>
+    <title>yaosong5/bigdata:2.0-Hadoop&amp;Spark&amp;hive&amp;zk&amp;hue组合容器的搭建 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="[TOC] 配置centos集群 hadoop spark组件启动容器各组件版本对应hbase1.2  hive 版本 2.0.0  hbase1.x ZooKeeper 3.4.x is required as of HBase 1.0.0 新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -">
 <meta name="keywords" content="Docker,Hadoop,Spark">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hadoop&amp;Spark组合容器的搭建">
-<meta property="og:url" content="http://gangtieguo.cn/2018/07/09/hadoop-spark集群搭建/index.html">
+<meta property="og:title" content="yaosong5&#x2F;bigdata:2.0-Hadoop&amp;Spark&amp;hive&amp;zk&amp;hue组合容器的搭建">
+<meta property="og:url" content="http://gangtieguo.cn/2018/07/09/Docker-yaosong5:bigdata镜像制作/index.html">
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC] 配置centos集群 hadoop spark组件启动容器各组件版本对应hbase1.2  hive 版本 2.0.0  hbase1.x ZooKeeper 3.4.x is required as of HBase 1.0.0 新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-10T16:07:47.069Z">
+<meta property="og:updated_time" content="2019-03-06T03:04:11.197Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hadoop&amp;Spark组合容器的搭建">
+<meta name="twitter:title" content="yaosong5&#x2F;bigdata:2.0-Hadoop&amp;Spark&amp;hive&amp;zk&amp;hue组合容器的搭建">
 <meta name="twitter:description" content="[TOC] 配置centos集群 hadoop spark组件启动容器各组件版本对应hbase1.2  hive 版本 2.0.0  hbase1.x ZooKeeper 3.4.x is required as of HBase 1.0.0 新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -">
     
 
@@ -207,7 +207,7 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                63
+                65
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -247,7 +247,7 @@ var _hmt = _hmt || [];
 
             
 
-            <section id="main"><article id="post-hadoop-spark集群搭建" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Docker-yaosong5:bigdata镜像制作" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -255,7 +255,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            Hadoop&amp;Spark组合容器的搭建
+            yaosong5/bigdata:2.0-Hadoop&amp;Spark&amp;hive&amp;zk&amp;hue组合容器的搭建
         </h1>
     
 
@@ -264,7 +264,7 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/07/09/hadoop-spark集群搭建/">
+        <a href="/2018/07/09/Docker-yaosong5:bigdata镜像制作/">
             <time datetime="2018-07-08T17:06:20.114Z" itemprop="datePublished">2018-07-09</time>
         </a>
     </div>
@@ -365,6 +365,7 @@ var _hmt = _hmt || [];
 <h2 id="官网命令"><a href="#官网命令" class="headerlink" title="官网命令"></a>官网命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$SPARK_HOME</span>/bin/spark-submit --class org.apache.spark.examples.SparkPi \</span><br><span class="line">--master yarn \</span><br><span class="line">--deploy-mode cluster \</span><br><span class="line">--driver-memory 512m \</span><br><span class="line">--executor-memory 512m \</span><br><span class="line">--executor-cores 1 \</span><br><span class="line"><span class="variable">$SPARK_HOME</span>/examples/jars/spark-examples*.jar \</span><br><span class="line">10</span><br></pre></td></tr></table></figure>
 <h2 id="执行spark-on-yarn命令行模式"><a href="#执行spark-on-yarn命令行模式" class="headerlink" title="执行spark on yarn命令行模式"></a>执行spark on yarn命令行模式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">spark-shell --master yarn --deploy-mode client --driver-memory 1g --executor-memory 1g --executor-cores 1</span><br><span class="line"></span><br><span class="line">spark-shell --master yarn --deploy-mode client --driver-memory 512m --executor-memory 512m --executor-cores 1</span><br><span class="line"></span><br><span class="line">spark-shell --master yarn --deploy-mode client --driver-memory 475m --executor-memory 475m --executor-cores 1</span><br><span class="line"></span><br><span class="line">spark-shell --master yarn --deploy-mode client --driver-memory 350m --executor-memory 350m --executor-cores 1</span><br><span class="line"></span><br><span class="line">spark-shell --master yarn --deploy-mode client --driver-memory 650m --executor-memory 650m --executor-cores 1</span><br></pre></td></tr></table></figure>
 <h1 id="创建镜像"><a href="#创建镜像" class="headerlink" title="创建镜像"></a>创建镜像</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit -m <span class="string">"bigdata基础组件镜像"</span>  bigdata yaosong5/bigdata:2.0</span><br></pre></td></tr></table></figure>
+<p>2.0镜像对比1.0：1.0只有hadoop-待确定</p>
 <h1 id="创建容器"><a href="#创建容器" class="headerlink" title="创建容器"></a>创建容器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --net=br  --name master --hostname master yaosong5/bigdata:2.0 &amp;&gt; /dev/null</span><br><span class="line">docker run -itd  --net=br  --name slave01 --hostname slave01 yaosong5/bigdata:2.0 &amp;&gt; /dev/null</span><br><span class="line">docker run -itd  --net=br  --name slave02 --hostname slave02 yaosong5/bigdata:2.0 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
 <h1 id="停止and-删除容器"><a href="#停止and-删除容器" class="headerlink" title="停止and 删除容器"></a>停止and 删除容器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker stop master</span><br><span class="line">docker stop slave01</span><br><span class="line">docker stop slave02</span><br><span class="line">docker rm master</span><br><span class="line">docker rm slave01</span><br><span class="line">docker rm slave02</span><br></pre></td></tr></table></figure>
 
@@ -445,7 +446,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/07/09/hadoop-spark集群搭建/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/07/09/Docker-yaosong5:bigdata镜像制作/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -454,7 +455,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/07/10/es测试命令/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/07/10/ES测试命令/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
@@ -507,7 +508,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2018 GTG<br>
+            &copy; 2019 GTG<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 
 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>

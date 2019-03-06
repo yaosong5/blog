@@ -8,13 +8,14 @@ toc: true
 
 
 
+![enter description here](https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/7/20/1532027033015.jpg)
 
 此文纯属命令记录，后续更新原理解说
 
+<!-- more -->
+
  # 更改virtual0的ip
  VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.33.253 --netmask 255.255.255.0
-
-<!-- more -->
 
 # ifconfig 查看
 创建虚拟机配置文件  Vagrantfile
@@ -99,6 +100,7 @@ sudo docker network create \
 
 
 创建网桥配置文件docker1
+![A82E4EE8-9517-4B66-A6CB-FE3C964B6D99](https://ws3.sinaimg.cn/large/006tKfTcgy1ftom0jyp9vj30kl07l76c.jpg)
 
 `vim /etc/sysconfig/network-scripts/ifcfg-docker1`
 
@@ -129,6 +131,15 @@ GATEWAY=
 BRIDGE=docker1
 TYPE=Ethernet
 ```
+
+`ip -4 addr`
+
+![E77B4516-B852-4E7F-A876-FCF01FDB93BC](https://ws4.sinaimg.cn/large/006tKfTcgy1ftom2nhzd3j31ey0luqhe.jpg)
+
+
+
+
+
 
 
 初始化docker-machine变量
