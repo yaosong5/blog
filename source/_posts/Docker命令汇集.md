@@ -26,23 +26,29 @@ toc: true
 
 启动容器(也是创建)
 
-	docker run -itd  --net=br  --name master --hostname master yaosong5/bigdata:1.0 &> /dev/null
-	如果以 /bin/bash启动的话，sshd服务不会启动(docker未知bug)
-	用 &> /dev/null这种方式sshd服务才会启动
+```shell
+docker run -itd  --net=br  --name master --hostname master yaosong5/bigdata:1.0 &> /dev/null
+如果以 /bin/bash启动的话，sshd服务不会启动(docker未知bug)
+用 &> /dev/null这种方式sshd服务才会启动
+```
 ## 创建容器-run
 
-	--name    --hostname (同-h)  --net=    -d表示后台启动
-	此命令不会打印出容器id
-	docker run -itd  --net=br  --name hm --hostname hadoop-master kiwenlau/hadoop:1.0 &> /dev/null   （hadoop镜像）
-	设置静态固定ip
-	docker run -d --net=br --name=c6 --ip=192.168.33.6 nginx
+```shell
+--name    --hostname (同-h)  --net=    -d表示后台启动
+此命令不会打印出容器id
+docker run -itd  --net=br  --name hm --hostname hadoop-master kiwenlau/hadoop:1.0 &> /dev/null   （hadoop镜像）
+设置静态固定ip
+docker run -d --net=br --name=c6 --ip=192.168.33.6 nginx
+```
 
 
-    自动分配Ip
-    docker run -d --net=br --name=c1 nginx
-    
-    设置docker默认ip段命令
-    docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 --name master -h master --add-host slave01:172.17.0.3 --add-host slave02:172.17.0.4 centos:ssh-spark-hadoop
+```shell
+自动分配Ip
+docker run -d --net=br --name=c1 nginx
+
+设置docker默认ip段命令
+docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 --name master -h master --add-host slave01:172.17.0.3 --add-host slave02:172.17.0.4 centos:ssh-spark-hadoop
+```
 
 ## 创建容器-Dockerfile
 
@@ -86,6 +92,12 @@ docker run -it -v /test:/soft centos /bin/bash
 > ![](https://ws4.sinaimg.cn/large/006tKfTcgy1g0ryyzp0vrj30zi0bm0t9.jpg)
 >
 > sudo mount -t vboxsf vagrant /Users/yaosong
+>
+> sudo mount -t vboxsf share /Users/yaosong/Yao/share
+>
+> 取消挂载
+>
+> sudo umount vagrant
 
 ## 删除所有未用的 Data volumes
 
@@ -178,7 +190,11 @@ docker-compose -f docker-compose.yml up d
 
 docker tag IMAGEID(镜像id) REPOSITORY:TAG（仓库：标签）
 
-`docker tag  b7a66cb0e8ba yaosong5/bigdata:1.0`
+```shell
+docker tag  b7a66cb0e8ba yaosong5/bigdata:1.0
+```
+
+
 
 ## 搜索docker镜像
 
@@ -190,14 +206,22 @@ docker search yaosong5
 
 ## 登录docker账户
 
-`docker login` 登录docker hub中注册的账户
+```shell
+docker login
+```
+
+登录docker hub中注册的账户
 
 
 
 
 ## 上传仓库
 
-`docker push yaosong5/elk:1.0`
+```shell
+docker push yaosong5/elk:1.0
+```
+
+
 
 ## 容器保存为镜像，加载本地镜像 引用
 

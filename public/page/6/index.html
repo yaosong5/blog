@@ -541,22 +541,10 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 <h1 id="Docker源配置"><a href="#Docker源配置" class="headerlink" title="Docker源配置"></a>Docker源配置</h1><p>  安装过程中需要重国外 docker 仓库下载文件，速度太慢，建议配置 docker 国内镜像仓库：<br>  <strong>vi /etc/docker/daemon.json</strong></p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"registry-mirrors"</span>:[<span class="string">"http://c1f0a193.m.daocloud.io"</span>] &#125;</span><br></pre></td></tr></table></figure>
 <h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><p>启动容器(也是创建)</p>
-<pre><code>docker run -itd  --net=br  --name master --hostname master yaosong5/bigdata:1.0 &amp;&gt; /dev/null
-如果以 /bin/bash启动的话，sshd服务不会启动(docker未知bug)
-用 &amp;&gt; /dev/null这种方式sshd服务才会启动
-</code></pre><h2 id="创建容器-run"><a href="#创建容器-run" class="headerlink" title="创建容器-run"></a>创建容器-run</h2><pre><code>--name    --hostname (同-h)  --net=    -d表示后台启动
-此命令不会打印出容器id
-docker run -itd  --net=br  --name hm --hostname hadoop-master kiwenlau/hadoop:1.0 &amp;&gt; /dev/null   （hadoop镜像）
-设置静态固定ip
-docker run -d --net=br --name=c6 --ip=192.168.33.6 nginx
-
-
-自动分配Ip
-docker run -d --net=br --name=c1 nginx
-
-设置docker默认ip段命令
-docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 --name master -h master --add-host slave01:172.17.0.3 --add-host slave02:172.17.0.4 centos:ssh-spark-hadoop
-</code></pre><h2 id="创建容器-Dockerfile"><a href="#创建容器-Dockerfile" class="headerlink" title="创建容器-Dockerfile"></a>创建容器-Dockerfile</h2><p>在dockerfille文件所在的目录中执行以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --net=br  --name master --hostname master yaosong5/bigdata:1.0 &amp;&gt; /dev/null</span><br><span class="line">如果以 /bin/bash启动的话，sshd服务不会启动(docker未知bug)</span><br><span class="line">用 &amp;&gt; /dev/null这种方式sshd服务才会启动</span><br></pre></td></tr></table></figure>
+<h2 id="创建容器-run"><a href="#创建容器-run" class="headerlink" title="创建容器-run"></a>创建容器-run</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">--name    --hostname (同-h)  --net=    -d表示后台启动</span><br><span class="line">此命令不会打印出容器id</span><br><span class="line">docker run -itd  --net=br  --name hm --hostname hadoop-master kiwenlau/hadoop:1.0 &amp;&gt; /dev/null   （hadoop镜像）</span><br><span class="line">设置静态固定ip</span><br><span class="line">docker run -d --net=br --name=c6 --ip=192.168.33.6 nginx</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">自动分配Ip</span><br><span class="line">docker run -d --net=br --name=c1 nginx</span><br><span class="line"></span><br><span class="line">设置docker默认ip段命令</span><br><span class="line">docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 --name master -h master --add-host slave01:172.17.0.3 --add-host slave02:172.17.0.4 centos:ssh-spark-hadoop</span><br></pre></td></tr></table></figure>
+<h2 id="创建容器-Dockerfile"><a href="#创建容器-Dockerfile" class="headerlink" title="创建容器-Dockerfile"></a>创建容器-Dockerfile</h2><p>在dockerfille文件所在的目录中执行以下命令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker build -f Dockerfile -t hadoop:v1 .</span><br><span class="line"><span class="meta">#</span><span class="bash">也可以指定Dockerfile如下：</span></span><br><span class="line">docker build -t centos:tt - &lt; Dockerfile</span><br></pre></td></tr></table></figure>
 <h2 id="容器挂载目录"><a href="#容器挂载目录" class="headerlink" title="容器挂载目录"></a>容器挂载目录</h2><p>分两种类型</p>
 <ul>
@@ -573,6 +561,9 @@ docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 --name master -h m
 <p>如果是mac或者win机器，需要在virtualbox虚拟机中设置共享文件夹的share名称对应mac的目录<br>虚拟机中的目录</p>
 <p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1g0ryyzp0vrj30zi0bm0t9.jpg" alt></p>
 <p>sudo mount -t vboxsf vagrant /Users/yaosong</p>
+<p>sudo mount -t vboxsf share /Users/yaosong/Yao/share</p>
+<p>取消挂载</p>
+<p>sudo umount vagrant</p>
 </blockquote>
 <h2 id="删除所有未用的-Data-volumes"><a href="#删除所有未用的-Data-volumes" class="headerlink" title="删除所有未用的 Data volumes"></a>删除所有未用的 Data volumes</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume prune</span><br></pre></td></tr></table></figure>
 <h2 id="run-命令解释"><a href="#run-命令解释" class="headerlink" title="run 命令解释"></a>run 命令解释</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-d 是后台启动</span><br><span class="line">docker run -itd  --net=br  --name spark --hostname spark yaosong5/spark:2.1.0 &amp;&gt; /dev/null</span><br><span class="line">sudo docker <span class="built_in">exec</span> -it spark bash（进入后台启动的容器）</span><br><span class="line">和下面一样（直接进入）</span><br><span class="line">docker run -it --net=br  --name spark --hostname spark yaosong5/spark:2.1.0 bash</span><br></pre></td></tr></table></figure>
@@ -586,10 +577,11 @@ docker run -itd   -P -p 50070:50070 -p 8088:8088 -p 8080:8080 --name master -h m
 <h2 id="Docker用DockerFile创建镜像"><a href="#Docker用DockerFile创建镜像" class="headerlink" title="Docker用DockerFile创建镜像"></a>Docker用DockerFile创建镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker build -t hadoop:v1- &lt;Dockerfile</span><br><span class="line">docker build -t="hadoop:v1" .  （.表示是当前文件夹，也就是dockerfile所在文件夹）</span><br><span class="line">docker build -f Dockerfile -t hadoop:v1 . 此命令也可</span><br></pre></td></tr></table></figure>
 <h2 id="一键启动docker-compose-yml编排的所有服务"><a href="#一键启动docker-compose-yml编排的所有服务" class="headerlink" title="一键启动docker-compose.yml编排的所有服务"></a>一键启动docker-compose.yml编排的所有服务</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose -f docker-compose.yml up d</span><br></pre></td></tr></table></figure>
 <h2 id="Docker改变标签"><a href="#Docker改变标签" class="headerlink" title="Docker改变标签"></a>Docker改变标签</h2><p>docker tag IMAGEID(镜像id) REPOSITORY:TAG（仓库：标签）</p>
-<p><code>docker tag  b7a66cb0e8ba yaosong5/bigdata:1.0</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker tag  b7a66cb0e8ba yaosong5/bigdata:1.0</span><br></pre></td></tr></table></figure>
 <h2 id="搜索docker镜像"><a href="#搜索docker镜像" class="headerlink" title="搜索docker镜像"></a>搜索docker镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search yaosong5</span><br></pre></td></tr></table></figure>
-<h2 id="登录docker账户"><a href="#登录docker账户" class="headerlink" title="登录docker账户"></a>登录docker账户</h2><p><code>docker login</code> 登录docker hub中注册的账户</p>
-<h2 id="上传仓库"><a href="#上传仓库" class="headerlink" title="上传仓库"></a>上传仓库</h2><p><code>docker push yaosong5/elk:1.0</code></p>
+<h2 id="登录docker账户"><a href="#登录docker账户" class="headerlink" title="登录docker账户"></a>登录docker账户</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker login</span><br></pre></td></tr></table></figure>
+<p>登录docker hub中注册的账户</p>
+<h2 id="上传仓库"><a href="#上传仓库" class="headerlink" title="上传仓库"></a>上传仓库</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push yaosong5/elk:1.0</span><br></pre></td></tr></table></figure>
 <h2 id="容器保存为镜像，加载本地镜像-引用"><a href="#容器保存为镜像，加载本地镜像-引用" class="headerlink" title="容器保存为镜像，加载本地镜像 引用"></a>容器保存为镜像，加载本地镜像 引用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker save imageID &gt; filename</span><br><span class="line">docker load &lt;filename</span><br><span class="line">如：</span><br><span class="line">docker save 4f9e92e56941&gt;  /Users/yaosong/centosSparkHadoop.tar</span><br><span class="line">docker load &lt;/Users/yaosong/centosSparkHadoop.tar</span><br><span class="line"></span><br><span class="line">通过 image 保存的镜像会保存操作历史，可以回滚到历史版本。</span><br></pre></td></tr></table></figure>
 <h2 id="保存，加载容器命令："><a href="#保存，加载容器命令：" class="headerlink" title="保存，加载容器命令："></a>保存，加载容器命令：</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker export containID &gt; filename</span><br><span class="line">docker import filename [newname]</span><br></pre></td></tr></table></figure>
 <p>通过容器保存的镜像不会保存操作历史，所以文件小一点。<br>如果要运行通过容器加载的镜像， 需要在运行的时候加上相关命令。</p>
