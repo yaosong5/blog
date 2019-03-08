@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta name="baidu-site-verification" content="WHXmBFaAkY">
+    <meta name="google-site-verification" content="vDyi3jVPymP4jOpfzY4F1zG4-FXD1T-A5unnDJuNxhs">
+    <meta charset="utf-8">
+    
+
+    <title>Spark-on-Yarn源码解析(三)client做的事情 | 钢铁锅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="[TOC] spark-on-yarn系列 Spark-on-Yarn 源码解析 (一)Yarn 任务解析Yarn任务解析/)Spark-on-Yarn 源码解析 (二)Spark-Submit 解析Spark-Submit解析/)Spark-on-Yarn 源码解析 (三)client 做的事情client做的事情/)Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务">
+<meta name="keywords" content="原理,Spark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark-on-Yarn源码解析(三)client做的事情">
+<meta property="og:url" content="http://gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/index.html">
+<meta property="og:site_name" content="钢铁锅">
+<meta property="og:description" content="[TOC] spark-on-yarn系列 Spark-on-Yarn 源码解析 (一)Yarn 任务解析Yarn任务解析/)Spark-on-Yarn 源码解析 (二)Spark-Submit 解析Spark-Submit解析/)Spark-on-Yarn 源码解析 (三)client 做的事情client做的事情/)Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-09-04T10:14:03.710Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spark-on-Yarn源码解析(三)client做的事情">
+<meta name="twitter:description" content="[TOC] spark-on-yarn系列 Spark-on-Yarn 源码解析 (一)Yarn 任务解析Yarn任务解析/)Spark-on-Yarn 源码解析 (二)Spark-Submit 解析Spark-Submit解析/)Spark-on-Yarn 源码解析 (三)client 做的事情client做的事情/)Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/Basketball-icon.png">
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+     <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">钢铁锅</span>
+            </a>
+            <nav id="main-nav">
+            <a class="main-nav-link" href="/."><i class="fa fa-home"></i>主页</a>
+            <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i>归档</a>
+            <a class="main-nav-link" href="/categories"><i class="fa fa-folder"></i>分类</a>
+            <a class="main-nav-link" href="/tags"><i class="fa fa-tags"></i>标签</a>
+            <a class="main-nav-link" href="/about"><i class="fa fa-user"></i>关于</a>
+
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/.">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     主页  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/archives">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     归档  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/categories">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     分类  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/tags">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     标签  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/about">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     关于  -->
+               <!--     </a>  -->
+               <!--   -->
+
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/venum.gif">
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+         <!-- <button type="submit" class="search-form-submit"></button> -->
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+             
+
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/venum.gif">
+            <h2 id="name">GTG</h2>
+            <h3 id="title">Nothing</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>四海为家</span>
+           
+        </div>
+      <div class="article-info profile-block">
+            <div class="article-info-block">
+                65
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                44
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/yaosong5" target="_blank" title="github" class="tooltip">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/gangtieguo/" target="_blank" title="weibo" class="tooltip">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+
+        
+        
+    </div>
+
+
+</aside>
+
+
+            
+
+            <section id="main"><article id="post-Spark-on-Yarn源码解析(三)client做的事情" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Spark-on-Yarn源码解析(三)client做的事情
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/">
+            <time datetime="2018-09-04T08:13:34.283Z" itemprop="datePublished">2018-09-04</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article " class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                
+            </div>
+
+
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <p>[TOC]</p>
+<p>spark-on-yarn系列</p>
+<p><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(一" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (一)Yarn 任务解析</a>Yarn任务解析/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(二" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (二)Spark-Submit 解析</a>Spark-Submit解析/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(三" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (三)client 做的事情</a>client做的事情/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(四" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务分配调度 stage 划分</a>Spark业务代码的执行及其任务分配调度stage划分/)</p>
+<p>org.apache.spark.deploy.yarn.Client</p>
+<p>话不多说，先上源码，当然还是简洁版本的</p>
+<p>这儿我先上一下最简洁的调用链。</p>
+<pre><code>Client.main()
+    -&gt;new Client().run()
+         -&gt;monitorApplication(submitApplication())
+            -&gt;submitApplication()
+                -&gt;createContainerLaunchContext()会封装一些启动信息如我们启动的类 --class
+                    -&gt;userClass
+                    -&gt;amArgs
+                    -&gt;commands
+                    -&gt;printableCommands
+                    -&gt;amClass applicationMaster启动的真实类
+
+                -&gt;createApplicationSubmissionContext()
+                    -&gt;Records.newRecord(classOf[Resource])启动
+                -&gt;yarnClientImpl.submitApplication(appContext)                
+</code></pre><a id="more"></a>
+<p>最终是调用的client里面main方法-&gt;run-&gt;</p>
+<p>monitorApplication(submitApplication())</p>
+<pre><code>object Client extends Logging {
+  def main(argStrings: Array[String]) {
+    ... ...
+    val sparkConf = new SparkConf
+    val args = new ClientArguments(argStrings, sparkConf)
+    new Client(args, sparkConf).run()
+    ... ...
+  }
+}
+
+... ...
+def run(): Unit = {
+    val (yarnApplicationState, finalApplicationStatus) = monitorApplication(submitApplication())
+    }
+... ...
+def submitApplication(): ApplicationId = {
+    // TODO: 初始化并且启动client
+    yarnClient.init(yarnConf)
+    yarnClient.start()
+    // TODO: 准备提交请求到resouceManager
+    val newApp = yarnClient.createApplication()
+    val newAppResponse = newApp.getNewApplicationResponse()
+    val appId = newAppResponse.getApplicationId()
+    // TODO: 检查集群的内存是否满足当前的任务要求
+    verifyClusterResources(newAppResponse)
+    // TODO:  设置适当上下文环境来启动applicationMaster
+    val containerContext = createContainerLaunchContext(newAppResponse)
+    val appContext = createApplicationSubmissionContext(newApp, containerContext)
+    // TODO: 提交application
+    yarnClient.submitApplication(appContext)
+    appId
+  }
+   private def createContainerLaunchContext(newAppResponse: GetNewApplicationResponse)
+    : ContainerLaunchContext = {
+    ... ...
+          val userClass =
+      if (isClusterMode) {
+        Seq(&quot;--class&quot;, YarnSparkHadoopUtil.escapeForShell(args.userClass))
+      } else {
+        Nil
+      }
+      ...
+       val amClass =
+      if (isClusterMode) {
+Class.forName(&quot;org.apache.spark.deploy.yarn.ApplicationMaster&quot;).getName
+      } else {
+Class.forName(&quot;org.apache.spark.deploy.yarn.ExecutorLauncher&quot;).getName
+      }
+          val amArgs =
+      Seq(amClass) ++ userClass ++ userJar ++ primaryPyFile ++ pyFiles ++ userArgs ++
+        Seq(
+          &quot;--executor-memory&quot;, args.executorMemory.toString + &quot;m&quot;,
+          &quot;--executor-cores&quot;, args.executorCores.toString,
+          &quot;--num-executors &quot;, args.numExecutors.toString)
+
+    val commands = prefixEnv ++ Seq(YarnSparkHadoopUtil.expandEnvironment(Environment.JAVA_HOME) + &quot;/bin/java&quot;, &quot;-server&quot;
+      ) ++
+      javaOpts ++ amArgs ++
+    ... ...
+     val printableCommands = commands.map(s =&gt; if (s == null) &quot;null&quot; else s).toList
+    amContainer.setCommands(printableCommands)
+    }
+    ... ...
+def createApplicationSubmissionContext(
+      newApp: YarnClientApplication,
+      containerContext: ContainerLaunchContext): ApplicationSubmissionContext = {
+    val appContext = newApp.getApplicationSubmissionContext
+    appContext.setApplicationName(args.appName)
+    appContext.setQueue(args.amQueue)
+    appContext.setAMContainerSpec(containerContext)
+    appContext.setApplicationType(&quot;SPARK&quot;)
+    sparkConf.getOption(&quot;spark.yarn.maxAppAttempts&quot;).map(_.toInt) match {
+      case Some(v) =&gt; appContext.setMaxAppAttempts(v)
+      case None =&gt; logDebug(&quot;spark.yarn.maxAppAttempts is not set. &quot; +
+          &quot;Cluster&apos;s default value will be used.&quot;)
+    }
+
+    val capability = Records.newRecord(classOf[Resource])
+    capability.setMemory(args.amMemory + amMemoryOverhead)
+    capability.setVirtualCores(args.amCores)
+    appContext.setResource(capability)
+    appContext
+  }
+
+//yarnClient.submitApplication(appContext)提交的真实处  
+@Override
+  public ApplicationId
+      submitApplication(ApplicationSubmissionContext appContext)
+          throws YarnException, IOException {
+...
+//此处通过yarn的协议对applicationMaster进行提交和启动 （此处为个人理解有疑惑，如有错误，还望留言分享，会立即作出更正）
+    SubmitApplicationRequest request =
+        Records.newRecord(SubmitApplicationRequest.class);
+    request.setApplicationSubmissionContext(appContext);
+...
+</code></pre><p>此处client的事情都已经做完了，请摄影师将镜头切换到applicationMaster</p>
+<p>小细节用户业务代码信息的封装及流转</p>
+<p>我们提交的class的封装流程</p>
+<pre><code>-&gt;sublimit的prepareSubmitEnvironment中封装到childArgs中--class
+-&gt;传入到client的构造函数里面作为clientArgs，将其封装到userClass属性里面
+
+在submitApplication中createContainerLaunchContext会将其通过重新封到userClass
+    userClass-&gt;amArgs-&gt;commands-&gt;printableCommands
+    -&gt;amContainer.setCommands(printableCommands)
+    在此，createContainerLaunchContext方法接收到amContainer赋名为containerContext传递给createApplicationSubmissionContext(..,containerContext)
+
+那么在createApplicationSubmissionContext中又有哪些惊天变化（其实并没有）
+
+appContext.setAMContainerSpec(containerContext)
+那么appContext作为createApplicationSubmissionContext方法返回值，由appContext接收，看码
+
+appContext = createApplicationSubmissionContext(newApp, containerContext)
+最后，由yarnClientImpl提交
+yarnClient.submitApplication(appContext)
+码又来了，最终执行的是
+SubmitApplicationRequest request =Records.newRecord(SubmitApplicationRequest.class);
+</code></pre><p>启动applicationMaster</p>
+<p>对于client的封装，对于applicationMaster需要启动的信息(如资源信息)及用户提交的业务代码（wordcount的类信息）信息都已经封装到appContext，并且传递到applicationmaster，那么来看看applicationMaster的执行流程。</p>
+<p>程序调用结构</p>
+<pre><code>ApplicationMaster.main()
+    -&gt;run()
+        -&gt;runDriver()
+            -&gt;run()
+                -&gt;startUserApplication()
+                    //启动userClass
+                    -&gt;userClassLoader.loadClass(args.userClass)
+      .getMethod(&quot;main&quot;, classOf[Array[String]])
+                     -&gt;mainMethod.invoke(null, mainArgs)
+                runAMActor()
+                registerAM()
+                    -&gt;yarnRmClient.register()-&gt;return new YarnAllocater(......)
+                    -&gt;yarnAllocator.allocateResources()
+                        -&gt;yarnAllocator.handleAllocatedContainers()
+                        //启动executor
+                        -&gt;yarnAllocator.runAllocatedContainers(containersToUse)
+</code></pre><p>runAllocatedContainers(containersToUse)是去启动 executor，最终真正执行启动Container的是在 ExecutorRunnable.run()中。</p>
+<p>创建了 NMClient 客户端调用提供的 API 最终实现在 NM 上启动 Container，具体如何启动 Container 将在后文中进行介绍。</p>
+<p>launcherPool线程池会将container，driver等相关信息封装成ExecutorRunnable对象，通过ExecutorRunnable启动新的container以运行executor。在此过程中，指定启动executor的类是</p>
+<p>org.apache.spark.executor.CoarseGrainedExecutorBackend。spark yarn cluster 模式下任务提交和计算流程分析</p>
+<p>程序的细节</p>
+<pre><code>def main(args: Array[String]) = {
+    SignalLogger.register(log)
+    val amArgs = new ApplicationMasterArguments(args)
+    SparkHadoopUtil.get.runAsSparkUser { () =&gt;
+      master = new ApplicationMaster(amArgs, new YarnRMClient(amArgs))
+      System.exit(master.run())
+    }
+  }
+
+
+  ......
+  final def run(): Int = {
+  ....
+    if (isClusterMode) {
+        runDriver(securityMgr)
+      } else {
+        runExecutorLauncher(securityMgr)
+      }
+...
+}
+
+  private def runDriver(securityMgr: SecurityManager): Unit = {
+    addAmIpFilter()
+    // TODO:  启动我们自定的类，也就是启动submit里面的--class的东西
+    userClassThread = startUserApplication()
+    val sc = waitForSparkContextInitialized()
+...
+  actorSystem = sc.env.actorSystem
+  runAMActor(
+    sc.getConf.get(&quot;spark.driver.host&quot;),
+    sc.getConf.get(&quot;spark.driver.port&quot;),
+    isClusterMode = true)
+  registerAM(sc.ui.map(_.appUIAddress).getOrElse(&quot;&quot;), securityMgr)
+  userClassThread.join()
+    ...
+  }
+</code></pre><p>在ApplicationMasterArguments设置了要启动的信息</p>
+<pre><code>class ApplicationMasterArguments(val args: Array[String]) {
+  var userJar: String = null
+  var userClass: String = null
+  var primaryPyFile: String = null
+  var pyFiles: String = null
+  var userArgs: Seq[String] = Seq[String]()
+  var executorMemory = 1024
+  var executorCores = 1
+  var numExecutors = DEFAULT_NUMBER_EXECUTORS
+  ......
+  }
+</code></pre><p>startUserApplication 主要执行了调用用户的代码，以及创建了一个 spark driver 的进程。 </p>
+<p>Start the user class, which contains the spark driver, in a separate Thread.</p>
+<pre><code>private def startUserApplication(): Thread = {
+  val classpath = Client.getUserClasspath(sparkConf)
+val urls = classpath.map { entry =&gt;
+  new URL(&quot;file:&quot; + new File(entry.getPath()).getAbsolutePath())
+}
+val userClassLoader =
+...
+// TODO:  userClass就是submit里面的--class 提交的类
+val mainMethod = userClassLoader.loadClass(args.userClass)
+  .getMethod(&quot;main&quot;, classOf[Array[String]])
+userThread.setContextClassLoader(userClassLoader)
+userThread.setName(&quot;Driver&quot;)
+userThread.start()
+userThread
+}
+</code></pre><p>从userThread.setName(“Driver”)也可以看出创建的是名为driver的进程</p>
+<p>registerAM 向 resourceManager 中正式注册 applicationMaster。注册applicationMaster 以后，并且分配资源，这样，用户代码就可以执行了，任务切分、调度、执行。</p>
+<p>然后，用户代码中的 action 会调用 SparkContext 的 runJob，SparkContext 中有很多个 runJob，但最后都是调用 DAGScheduler 的 runJob</p>
+<pre><code>  // registerAM
+   private def registerAM(uiAddress: String, securityMgr: SecurityManager) = {
+   .....
+  allocator = client.register(yarnConf,
+    if (sc != null) sc.getConf else sparkConf,
+    if (sc != null) sc.preferredNodeLocationData else Map(),
+    uiAddress,
+    historyAddress,
+    securityMgr)
+    //为exector分配资源
+  allocator.allocateResources()
+  reporterThread = launchReporterThread()
+  ......
+}
+</code></pre>
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+        <! -- 添加捐赠图标 -->
+<div class="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           如果您觉得文章不错，就请我看场ufc直播🤓🤓🤓🤓🤓！
+        </span>
+        <br>
+      </div>  
+    <div id="donate_guide" class="donate_bar center hidden">
+        <!-- 支付宝打赏图案 -->
+        <img src="/css/images/alipay.jpg" alt="支付宝打赏"> 
+        <!-- 微信打赏图案 -->
+        <img src="/css/images/wechatpay.jpg" alt="微信打赏">  
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            if($('#donate_guide').hasClass('hidden')){
+                $('#donate_guide').removeClass('hidden');
+            }else{
+                $('#donate_guide').addClass('hidden');
+            }
+        }
+    </script>
+</div>
+<! -- 添加捐赠图标 -->
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/09/04/Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Spark-on-Yarn源码解析(二)Spark-Submit解析</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjM2MS8xMjg5Ng=="></div>
+</section>
+    
+
+</section>
+            
+            
+        </div>
+        <footer id="footer">
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol ==='https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 GTG<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+    </div>
+</footer>
+        
+    
+    
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+
+         if (typeof LivereTower === 'function') { return; }
+
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+    </script>
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+  <!-- City版安装代码已完成 -->
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

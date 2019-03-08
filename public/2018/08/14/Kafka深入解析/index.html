@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta name="baidu-site-verification" content="WHXmBFaAkY">
+    <meta name="google-site-verification" content="vDyi3jVPymP4jOpfzY4F1zG4-FXD1T-A5unnDJuNxhs">
+    <meta charset="utf-8">
+    
+
+    <title>Kafka深入解析 | 钢铁锅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="[TOC] Kafka结构 Producer ：消息生产者，就是向kafka broker发消息的客户端。   Consumer ：消息消费者，向kafka broker取消息的客户端  Topic ：可以理解为一个队列">
+<meta name="keywords" content="原理,Kafka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka深入解析">
+<meta property="og:url" content="http://gangtieguo.cn/2018/08/14/Kafka深入解析/index.html">
+<meta property="og:site_name" content="钢铁锅">
+<meta property="og:description" content="[TOC] Kafka结构 Producer ：消息生产者，就是向kafka broker发消息的客户端。   Consumer ：消息消费者，向kafka broker取消息的客户端  Topic ：可以理解为一个队列">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/0069RVTdly1fu9a7zzwdrj31540lvjtv.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/0069RVTdly1fu9abi7beaj312e04agng.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/0069RVTdly1fu9ajs8d4dj30rs0dgwj3.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/0069RVTdly1fu9ajsxr9bj30tt0ektai.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/0069RVTdly1fu9ai5p7amj30nv0f0gre.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/0069RVTdly1fu9ai52pxmj30sx0hetdm.jpg">
+<meta property="og:updated_time" content="2018-08-14T08:30:28.045Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kafka深入解析">
+<meta name="twitter:description" content="[TOC] Kafka结构 Producer ：消息生产者，就是向kafka broker发消息的客户端。   Consumer ：消息消费者，向kafka broker取消息的客户端  Topic ：可以理解为一个队列">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/0069RVTdly1fu9a7zzwdrj31540lvjtv.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/Basketball-icon.png">
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+     <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">钢铁锅</span>
+            </a>
+            <nav id="main-nav">
+            <a class="main-nav-link" href="/."><i class="fa fa-home"></i>主页</a>
+            <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i>归档</a>
+            <a class="main-nav-link" href="/categories"><i class="fa fa-folder"></i>分类</a>
+            <a class="main-nav-link" href="/tags"><i class="fa fa-tags"></i>标签</a>
+            <a class="main-nav-link" href="/about"><i class="fa fa-user"></i>关于</a>
+
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/.">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     主页  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/archives">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     归档  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/categories">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     分类  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/tags">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     标签  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/about">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     关于  -->
+               <!--     </a>  -->
+               <!--   -->
+
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/venum.gif">
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+         <!-- <button type="submit" class="search-form-submit"></button> -->
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+             
+
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/venum.gif">
+            <h2 id="name">GTG</h2>
+            <h3 id="title">Nothing</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>四海为家</span>
+           
+        </div>
+      <div class="article-info profile-block">
+            <div class="article-info-block">
+                65
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                44
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/yaosong5" target="_blank" title="github" class="tooltip">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/gangtieguo/" target="_blank" title="weibo" class="tooltip">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+
+        
+        
+    </div>
+
+
+</aside>
+
+
+            
+
+            <section id="main"><article id="post-Kafka深入解析" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Kafka深入解析
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/14/Kafka深入解析/">
+            <time datetime="2018-08-14T07:43:27.968Z" itemprop="datePublished">2018-08-14</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/组件/">组件</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Kafka/">Kafka</a>, <a class="tag-link" href="/tags/原理/">原理</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article " class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Kafka结构"><span class="toc-number">1.</span> <span class="toc-text">Kafka结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Consumer与topic关系"><span class="toc-number">2.</span> <span class="toc-text">Consumer与topic关系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Kafka消息的分发"><span class="toc-number">3.</span> <span class="toc-text">Kafka消息的分发</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Consumer的负载均衡"><span class="toc-number">4.</span> <span class="toc-text">Consumer的负载均衡</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Kafka文件存储机制"><span class="toc-number">5.</span> <span class="toc-text">Kafka文件存储机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kafka文件存储基本结构"><span class="toc-number">5.0.1.</span> <span class="toc-text">Kafka文件存储基本结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kafka-Partition-Segment"><span class="toc-number">5.0.2.</span> <span class="toc-text">Kafka Partition Segment</span></a></li></ol></li></ol>
+            </div>
+
+
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <p>[TOC]</p>
+<h1 id="Kafka结构"><a href="#Kafka结构" class="headerlink" title="Kafka结构"></a>Kafka结构</h1><ul>
+<li><strong>Producer</strong> ：消息生产者，就是向kafka broker发消息的客户端。</li>
+</ul>
+<ul>
+<li><p><strong>Consumer</strong> ：消息消费者，向kafka broker取消息的客户端</p>
+</li>
+<li><p><strong>Topic</strong> ：可以理解为一个队列</p>
+<a id="more"></a>
+</li>
+<li><p><strong>Consumer Group （CG</strong>）： （消费组）这是kafka用来实现一个topic消息的广播（发给所有的consumer）和单播（发给任意一个consumer）的手段。</p>
+<p>一个topic可以有多个CG。topic的消息会复制（不是真的复制，是概念上的）到所有的CG，<em><u>但每个partion只会把消息发给该CG中的一个consumer</u></em>。如果需要实现广播，<u>只要每个consumer有一个独立的CG就可以了</u>（即是需要消费消息的消费者，属于不同的消费组）。要实现单播只要所有的consumer在同一个CG（即是需要消费消息的消费者，属于同一个消费组）。用CG还可以将consumer进行自由的分组而不需要多次发送消息到不同的topic。</p>
+</li>
+<li><p><strong>Broker</strong> ：一台kafka服务器就是一个broker。一个集群由多个broker组成。一个broker可以容纳多个topic。</p>
+<p>broker的作用就是帮你把消息从发送端传送到接收端</p>
+</li>
+<li><p><strong>Partition</strong>：为了实现扩展性，一个非常大的topic可以分布到多个broker（即服务器）上，一个topic可以分为多个partition，每个partition是一个有序的队列。partition中的每条消息都会被分配一个有序的id（offset）。kafka只保证按一个partition中的顺序将消息发给consumer，不保证一个topic的整体（多个partition间）的顺序。</p>
+</li>
+<li><p><strong>Offset</strong>：kafka的存储文件都是按照offset.kafka来命名，用offset做名字的好处是方便查找。例如你想找位于2049的位置，只要找到2048.kafka的文件即可。当然the first offset就是00000000000.kafka</p>
+</li>
+</ul>
+<h1 id="Consumer与topic关系"><a href="#Consumer与topic关系" class="headerlink" title="Consumer与topic关系"></a>Consumer与topic关系</h1><p>本质上kafka只支持Topic；</p>
+<ul>
+<li><p>每个group中可以有多个consumer，每个consumer属于一个consumer group；</p>
+<p>通常情况下，一个group中会包含多个consumer，这样不仅可以提高topic中消息的并发消费能力，而且还能提高”故障容错”性，如果group中的某个consumer失效那么其消费的partitions将会有其他consumer自动接管。</p>
+</li>
+<li><p>对于Topic中的一条特定的消息，只会被订阅此Topic的每个group中的其中一个consumer消费，此消息不会发送给一个group的多个consumer；</p>
+</li>
+<li><p>那么一个group中所有的consumer将会交错的消费整个Topic，每个group中consumer消息消费互相独立，我们可以认为一个group是一个”订阅”者。</p>
+</li>
+<li><p>在kafka中,一个partition中的消息只会被group中的一个consumer消费(同一时刻)；</p>
+<p>一个Topic中的每个partions，只会被一个”订阅者”中的一个consumer消费，不过一个consumer可以同时消费多个partitions中的消息。</p>
+</li>
+<li><p>kafka的设计原理决定,对于一个topic，同一个group中不能有多于partitions个数的consumer同时消费，否则将意味着某些consumer将无法得到消息。</p>
+</li>
+<li><p>kafka只能保证一个partition中的消息被某个consumer消费时是顺序的；事实上，从Topic角度来说,当有多个partitions时,消息仍不是全局有序的。</p>
+</li>
+</ul>
+<h1 id="Kafka消息的分发"><a href="#Kafka消息的分发" class="headerlink" title="Kafka消息的分发"></a>Kafka消息的分发</h1><p>Producer客户端负责消息的分发</p>
+<ul>
+<li>kafka集群中的任何一个broker都可以向producer提供metadata信息,这些metadata中包含”集群中存活的servers列表”/“partitions leader列表”等信息；</li>
+<li>当producer获取到metadata信息之后, producer将会和Topic下所有partition leader保持socket连接；</li>
+<li>消息由producer直接通过socket发送到broker，中间不会经过任何”路由层”，事实上，消息被路由到哪个partition上由producer客户端决定；</li>
+</ul>
+<p>比如可以采用”random””key-hash””轮询”等,如果一个topic中有多个partitions,那么在producer端实现”消息均衡分发”是必要的。</p>
+<p>在producer端的配置文件中,开发者可以指定partition路由的方式。</p>
+<p><strong>Producer消息发送的应答机制</strong><br>设置发送数据是否需要服务端的反馈,有三个值0,1,-1<br>  0: producer不会等待broker发送ack<br>  1: 当leader接收到消息之后发送ack<br>  -1: 当所有的follower都同步消息成功后发送ack</p>
+<p><strong>request.required.acks=0</strong></p>
+<h1 id="Consumer的负载均衡"><a href="#Consumer的负载均衡" class="headerlink" title="Consumer的负载均衡"></a>Consumer的负载均衡</h1><p>当一个group中,有consumer加入或者离开时,会触发partitions均衡.均衡的最终目的,是提升topic的并发消费能力，步骤如下：</p>
+<ol>
+<li>假如topic1,具有如下partitions: P0,P1,P2,P3</li>
+<li>加入group中,有如下consumer: C1,C2</li>
+<li>首先根据partition索引号对partitions排序: P0,P1,P2,P3</li>
+<li>根据consumer.id排序: C0,C1</li>
+<li>计算倍数: M = [P0,P1,P2,P3].size / [C0,C1].size,本例值M=2(向上取整)</li>
+<li>然后依次分配partitions: C0 = [P0,P1],C1=[P2,P3],即Ci = [P(i <em> M),P((i + 1) </em> M -1)]</li>
+</ol>
+<p><img src="https://ws3.sinaimg.cn/large/0069RVTdly1fu9a7zzwdrj31540lvjtv.jpg" alt></p>
+<h1 id="Kafka文件存储机制"><a href="#Kafka文件存储机制" class="headerlink" title="Kafka文件存储机制"></a>Kafka文件存储机制</h1><h3 id="Kafka文件存储基本结构"><a href="#Kafka文件存储基本结构" class="headerlink" title="Kafka文件存储基本结构"></a>Kafka文件存储基本结构</h3><p>在Kafka文件存储中，同一个topic下有多个不同partition，每个partition为一个目录，partiton命名规则为topic名称+有序序号，第一个partiton序号从0开始，序号最大值为partitions数量减1。</p>
+<p><img src="https://ws4.sinaimg.cn/large/0069RVTdly1fu9abi7beaj312e04agng.jpg" alt></p>
+<p>每个partion(目录)相当于一个巨型文件被平均分配到多个大小相等segment(段)数据文件中。<strong>但每个段**</strong>segmentfile<strong>**消息数量不一定相等</strong>，这种特性方便oldsegment file快速被删除。默认保留7天的数据。</p>
+<p><img src="https://ws2.sinaimg.cn/large/0069RVTdly1fu9ajs8d4dj30rs0dgwj3.jpg" alt></p>
+<p>每个partiton只需要支持顺序读写就行了，segment文件生命周期由服务端配置参数决定。（什么时候创建，什么时候删除）</p>
+<p><img src="https://ws1.sinaimg.cn/large/0069RVTdly1fu9ajsxr9bj30tt0ektai.jpg" alt></p>
+<h3 id="Kafka-Partition-Segment"><a href="#Kafka-Partition-Segment" class="headerlink" title="Kafka Partition Segment"></a>Kafka Partition Segment</h3><p>Segment file组成：由2大部分组成，分别为index file和data file，此2个文件一一对应，成对出现，后缀”.index”和“.log”分别表示为segment索引文件、数据文件。</p>
+<p><img src="https://ws4.sinaimg.cn/large/0069RVTdly1fu9ai5p7amj30nv0f0gre.jpg" alt></p>
+<p>l Segment文件命名规则：partion全局的第一个segment从0开始，后续每个segment文件名为上一个segment文件最后一条消息的offset值。数值最大为64位long大小，19位数字字符长度，没有数字用0填充。</p>
+<p>l 索引文件存储大量元数据，数据文件存储大量消息，索引文件中元数据指向对应数据文件中message的物理偏移地址。</p>
+<p><img src="https://ws2.sinaimg.cn/large/0069RVTdly1fu9ai52pxmj30sx0hetdm.jpg" alt></p>
+<p>3，497：当前log文件中的第几条信息，存放在磁盘上的那个地方</p>
+<p>上述图中索引文件存储大量元数据，数据文件存储大量消息，索引文件中元数据指向对应数据文件中message的物理偏移地址。</p>
+<p>其中以索引文件中元数据3,497为例，依次在数据文件中表示第3个message(在全局partiton表示第368772个message)、以及该消息的物理偏移地址为497。</p>
+<p>l segment data file由许多message组成， qq物理结构如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>关键字<em>**</em></strong></th>
+<th><strong>解释说明<em>**</em></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8  byte offset</td>
+<td>在parition(分区)内的每条消息都有一个有序的id号，这个id号被称为偏移(offset),它可以唯一确定每条消息在parition(分区)内的位置。即offset表示partiion的第多少message</td>
+</tr>
+<tr>
+<td>4 byte message size</td>
+<td>message大小</td>
+</tr>
+<tr>
+<td>4 byte CRC32</td>
+<td>用crc32校验message</td>
+</tr>
+<tr>
+<td>1 byte “magic”</td>
+<td>表示本次发布Kafka服务程序协议版本号</td>
+</tr>
+<tr>
+<td>1 byte “attributes”</td>
+<td>表示为独立版本、或标识压缩类型、或编码类型。</td>
+</tr>
+<tr>
+<td>4 byte key length</td>
+<td>表示key的长度,当key为-1时，K byte key字段不填</td>
+</tr>
+<tr>
+<td>K byte key</td>
+<td>可选</td>
+</tr>
+<tr>
+<td>value bytes payload</td>
+<td>表示实际消息数据。</td>
+</tr>
+</tbody>
+</table>
+<p> kafka查找message，先查找segment file </p>
+<p>00000000000000000000.index表示最开始的文件，起始偏移量(offset)为0</p>
+<p>00000000000000368769.index的消息量起始偏移量为368770= 368769 + 1</p>
+<p>00000000000000737337.index的起始偏移量为737338=737337+ 1</p>
+<p>其他后续文件依次类推。</p>
+<p>以起始偏移量命名并排序这些文件，只要根据offset<strong>二分查找</strong>文件列表，就可以快速定位到具体文件。当offset=368776时定位到00000000000000368769.index和对应log文件。</p>
+<p>再通过segment file查找message      </p>
+<p>当offset=368776时，依次定位到00000000000000368769.index的元数据物理位置和00000000000000368769.log的物理偏移地址</p>
+<p>然后再通过00000000000000368769.log顺序查找直到offset=368776为止。</p>
+
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+        <! -- 添加捐赠图标 -->
+<div class="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           如果您觉得文章不错，就请我看场ufc直播🤓🤓🤓🤓🤓！
+        </span>
+        <br>
+      </div>  
+    <div id="donate_guide" class="donate_bar center hidden">
+        <!-- 支付宝打赏图案 -->
+        <img src="/css/images/alipay.jpg" alt="支付宝打赏"> 
+        <!-- 微信打赏图案 -->
+        <img src="/css/images/wechatpay.jpg" alt="微信打赏">  
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            if($('#donate_guide').hasClass('hidden')){
+                $('#donate_guide').removeClass('hidden');
+            }else{
+                $('#donate_guide').addClass('hidden');
+            }
+        }
+    </script>
+</div>
+<! -- 添加捐赠图标 -->
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/08/14/Kafka深入解析/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/08/14/Kafka读取数据性能/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Kafka读写数据
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/08/13/Kafka集群配置及配置文件/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Kafka集群配置及配置文件</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjM2MS8xMjg5Ng=="></div>
+</section>
+    
+
+</section>
+            
+            
+        </div>
+        <footer id="footer">
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol ==='https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 GTG<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+    </div>
+</footer>
+        
+    
+    
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+
+         if (typeof LivereTower === 'function') { return; }
+
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+    </script>
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+  <!-- City版安装代码已完成 -->
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta name="baidu-site-verification" content="WHXmBFaAkY">
+    <meta name="google-site-verification" content="vDyi3jVPymP4jOpfzY4F1zG4-FXD1T-A5unnDJuNxhs">
+    <meta charset="utf-8">
+    
+
+    <title>DataStream DataSet介绍 | 钢铁锅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="[TOC] 什么是DataStreamDiscretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：">
+<meta name="keywords" content="Spark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DataStream DataSet介绍">
+<meta property="og:url" content="http://gangtieguo.cn/2018/09/06/DataFrame DataSet/index.html">
+<meta property="og:site_name" content="钢铁锅">
+<meta property="og:description" content="[TOC] 什么是DataStreamDiscretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://img.gangtieguo.cn/15360627803806.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15361685465899.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15360627860827.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15360627909583.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15360698161149.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15360679610176.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/15360681467801.jpg">
+<meta property="og:updated_time" content="2018-12-25T03:51:31.046Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DataStream DataSet介绍">
+<meta name="twitter:description" content="[TOC] 什么是DataStreamDiscretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：">
+<meta name="twitter:image" content="http://img.gangtieguo.cn/15360627803806.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/Basketball-icon.png">
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+     <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">钢铁锅</span>
+            </a>
+            <nav id="main-nav">
+            <a class="main-nav-link" href="/."><i class="fa fa-home"></i>主页</a>
+            <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i>归档</a>
+            <a class="main-nav-link" href="/categories"><i class="fa fa-folder"></i>分类</a>
+            <a class="main-nav-link" href="/tags"><i class="fa fa-tags"></i>标签</a>
+            <a class="main-nav-link" href="/about"><i class="fa fa-user"></i>关于</a>
+
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/.">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     主页  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/archives">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     归档  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/categories">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     分类  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/tags">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     标签  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/about">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     关于  -->
+               <!--     </a>  -->
+               <!--   -->
+
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/venum.gif">
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+         <!-- <button type="submit" class="search-form-submit"></button> -->
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+             
+
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/venum.gif">
+            <h2 id="name">GTG</h2>
+            <h3 id="title">Nothing</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>四海为家</span>
+           
+        </div>
+      <div class="article-info profile-block">
+            <div class="article-info-block">
+                65
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                44
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/yaosong5" target="_blank" title="github" class="tooltip">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/gangtieguo/" target="_blank" title="weibo" class="tooltip">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+
+        
+        
+    </div>
+
+
+</aside>
+
+
+            
+
+            <section id="main"><article id="post-DataFrame DataSet" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            DataStream DataSet介绍
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/09/06/DataFrame DataSet/">
+            <time datetime="2018-09-05T17:20:33.287Z" itemprop="datePublished">2018-09-06</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/大数据/">大数据</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article " class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是DataStream"><span class="toc-number">1.</span> <span class="toc-text">什么是DataStream</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DataStream相关操作"><span class="toc-number">2.</span> <span class="toc-text">DataStream相关操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Transformations-on-DStreams"><span class="toc-number">2.1.</span> <span class="toc-text">Transformations on DStreams</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#特殊的Transformations"><span class="toc-number">2.1.1.</span> <span class="toc-text">特殊的Transformations</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Output-Operations-on-DStreams"><span class="toc-number">2.2.</span> <span class="toc-text">Output Operations on DStreams</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用Spark-Streaming实现实时WordCount"><span class="toc-number">2.3.</span> <span class="toc-text">用Spark Streaming实现实时WordCount</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dataset"><span class="toc-number">3.</span> <span class="toc-text">Dataset</span></a></li></ol>
+            </div>
+
+
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <p>[TOC]</p>
+<h1 id="什么是DataStream"><a href="#什么是DataStream" class="headerlink" title="什么是DataStream"></a>什么是DataStream</h1><p>Discretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：<br><img src="http://img.gangtieguo.cn/15360627803806.jpg" alt><br><a id="more"></a></p>
+<p>与RDD类似，DataFrame也是一个分布式数据容器。然而DataFrame更像传统数据库的二维表格，除了数据以外，还记录数据的结构信息，即schema。同时，与Hive类似，DataFrame也支持嵌套数据类型（struct、array和map）。从API易用性的角度上 看，DataFrame API提供的是一套高层的关系操作，比函数式的RDD API要更加友好，门槛更低。由于与R和Pandas的DataFrame类似，Spark DataFrame很好地继承了传统单机数据分析的开发体验。<br><img src="http://img.gangtieguo.cn/15361685465899.jpg" alt></p>
+<p>对数据的操作也是按照RDD为单位来进行的<br><img src="http://img.gangtieguo.cn/15360627860827.jpg" alt></p>
+<p>计算过程由Spark engine来完成<br><img src="http://img.gangtieguo.cn/15360627909583.jpg" alt></p>
+<p>Datasets 与DataFrames 与RDDs的关系<br><img src="http://img.gangtieguo.cn/15360698161149.jpg" alt></p>
+<p>Spark引入DataFrame，它可以提供high-level functions让Spark更好的处理结构数据的计算。这让Catalyst optimizer 和Tungsten（钨丝） execution engine自动加速大数据分析。<br>发布DataFrame之后开发者收到了很多反馈，其中一个主要的是大家反映缺乏编译时类型安全。为了解决这个问题，Spark采用新的Dataset API (DataFrame API的类型扩展)。<br>Dataset API扩展DataFrame API支持静态类型和运行已经存在的Scala或Java语言的用户自定义函数。对比传统的RDD API，Dataset API提供更好的内存管理，特别是在长任务中有更好的性能提升</p>
+<h1 id="DataStream相关操作"><a href="#DataStream相关操作" class="headerlink" title="DataStream相关操作"></a>DataStream相关操作</h1><p>DStream上的原语与RDD的类似，分为Transformations（转换）和OutputOperations（输出）两种，此外转换操作中还有一些比较特殊的原语，如：updateStateByKey()、transform()以及各种Window相关的原语。</p>
+<h2 id="Transformations-on-DStreams"><a href="#Transformations-on-DStreams" class="headerlink" title="Transformations on DStreams"></a>Transformations on DStreams</h2><table>
+<thead>
+<tr>
+<th>Transformation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>map(func)</td>
+<td>Return a new DStream by passing each  element of the source DStream through a function func.</td>
+</tr>
+<tr>
+<td>flatMap(func)</td>
+<td>Similar to map, but each input item can  be mapped to 0 or more output items.</td>
+</tr>
+<tr>
+<td>filter(func)</td>
+<td>Return a new DStream by selecting only  the records of the source DStream on which func returns true.</td>
+</tr>
+<tr>
+<td>repartition(numPartitions)</td>
+<td>Changes the level of parallelism in this  DStream by creating more or fewer partitions.</td>
+</tr>
+<tr>
+<td>union(otherStream)</td>
+<td>Return a new DStream that contains the  union of the elements in the source DStream and otherDStream.</td>
+</tr>
+<tr>
+<td>count()</td>
+<td>Return a new DStream of single-element  RDDs by counting the number of elements in each RDD of the source DStream.</td>
+</tr>
+<tr>
+<td>reduce(func)</td>
+<td>Return a new DStream of single-element  RDDs by aggregating the elements in each RDD of the source DStream using a  function func (which takes two arguments and returns one). The function  should be associative so that it can be computed in parallel.</td>
+</tr>
+<tr>
+<td>countByValue()</td>
+<td>When called on a DStream of elements of  type K, return a new DStream of (K, Long) pairs where the value of each key  is its frequency in each RDD of the source DStream.</td>
+</tr>
+<tr>
+<td>reduceByKey(func, [numTasks])</td>
+<td>When called on a DStream of (K, V) pairs,  return a new DStream of (K, V) pairs where the values for each key are  aggregated using the given reduce function. Note: By default, this uses Spark’s  default number of parallel tasks (2 for local mode, and in cluster mode the  number is determined by the config property spark.default.parallelism) to do  the grouping. You can pass an optional numTasks argument to set a different  number of tasks.</td>
+</tr>
+<tr>
+<td>join(otherStream, [numTasks])</td>
+<td>When called on two DStreams of (K, V) and  (K, W) pairs, return a new DStream of (K, (V, W)) pairs with all pairs of  elements for each key.</td>
+</tr>
+<tr>
+<td>cogroup(otherStream, [numTasks])</td>
+<td>When called on a DStream of (K, V) and  (K, W) pairs, return a new DStream of (K, Seq[V], Seq[W]) tuples.</td>
+</tr>
+<tr>
+<td>transform(func)</td>
+<td>Return a new DStream by applying a  RDD-to-RDD function to every RDD of the source DStream. This can be used to  do arbitrary RDD operations on the DStream.</td>
+</tr>
+<tr>
+<td>updateStateByKey(func)</td>
+<td>Return a new “state” DStream  where the state for each key is updated by applying the given function on the  previous state of the key and the new values for the key. This can be used to  maintain arbitrary state data for each key.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="特殊的Transformations"><a href="#特殊的Transformations" class="headerlink" title="特殊的Transformations"></a>特殊的Transformations</h3><ol>
+<li>UpdateStateByKeyOperation</li>
+</ol>
+<p>UpdateStateByKey原语用于记录历史记录，上文中Word Count示例中就用到了该特性。若不用UpdateStateByKey来更新状态，那么每次数据进来后分析完成后，结果输出后将不在保存</p>
+<ol>
+<li>TransformOperation</li>
+</ol>
+<p>Transform原语允许DStream上执行任意的RDD-to-RDD函数。通过该函数可以方便的扩展Spark API。此外，MLlib（机器学习）以及Graphx也是通过本函数来进行结合的。</p>
+<ol>
+<li>WindowOperations</li>
+</ol>
+<p>Window Operations有点类似于Storm中的State，可以设置窗口的大小和滑动窗口的间隔来动态的获取当前Steaming的允许状态<br><img src="http://img.gangtieguo.cn/15360679610176.jpg" alt></p>
+<h2 id="Output-Operations-on-DStreams"><a href="#Output-Operations-on-DStreams" class="headerlink" title="Output Operations on DStreams"></a>Output Operations on DStreams</h2><p>Output Operations可以将DStream的数据输出到外部的数据库或文件系统，当某个Output Operations原语被调用时（与RDD的Action相同），streaming程序才会开始真正的计算过程。</p>
+<table>
+<thead>
+<tr>
+<th>Output Operation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>print()</td>
+<td>Prints the first ten elements of every  batch of data in a DStream on the driver node running the streaming  application. This is useful for development and debugging.</td>
+</tr>
+<tr>
+<td>saveAsTextFiles(prefix, [suffix])</td>
+<td>Save this DStream’s contents as text  files. The file name at each batch interval is generated based on prefix and  suffix: “prefix-TIME_IN_MS[.suffix]”.</td>
+</tr>
+<tr>
+<td>saveAsObjectFiles(prefix, [suffix])</td>
+<td>Save this DStream’s contents as  SequenceFiles of serialized Java objects. The file name at each batch  interval is generated based on prefix and suffix:  “prefix-TIME_IN_MS[.suffix]”.</td>
+</tr>
+<tr>
+<td>saveAsHadoopFiles(prefix, [suffix])</td>
+<td>Save this DStream’s contents as Hadoop  files. The file name at each batch interval is generated based on prefix and  suffix: “prefix-TIME_IN_MS[.suffix]”.</td>
+</tr>
+<tr>
+<td>foreachRDD(func)</td>
+<td>The most generic output operator that  applies a function, func, to each RDD generated from the stream. This  function should push the data in each RDD to an external system, such as  saving the RDD to files, or writing it over the network to a database. Note  that the function func is executed in the driver process running the  streaming application, and will usually have RDD actions in it that will  force the computation of the streaming RDDs.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="用Spark-Streaming实现实时WordCount"><a href="#用Spark-Streaming实现实时WordCount" class="headerlink" title="用Spark Streaming实现实时WordCount"></a>用Spark Streaming实现实时WordCount</h2><p>架构图：</p>
+<p><img src="http://img.gangtieguo.cn/15360681467801.jpg" alt></p>
+<p>1.安装并启动生成者</p>
+<p>首先在一台Linux（ip：192.168.10.101）上用YUM安装nc工具</p>
+<p>yum install -y nc</p>
+<p>启动一个服务端并监听9999端口</p>
+<p>nc -lk 9999</p>
+<p>2.编写Spark Streaming程序</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> me.yao.spark.streaming</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.<span class="type">SparkConf</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.streaming.&#123;<span class="type">Seconds</span>, <span class="type">StreamingContext</span>&#125;</span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">NetworkWordCount</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;       <span class="comment">//设置日志级别</span></span><br><span class="line">        <span class="type">LoggerLevel</span>.setStreamingLogLevels()    <span class="comment">//创建SparkConf并设置为本地模式运行   //注意local[2]代表开两个线程</span></span><br><span class="line">    <span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setMaster(<span class="string">"local[2]"</span>).setAppName(<span class="string">"NetworkWordCount"</span>)    <span class="comment">//设置DStream批次时间间隔为2秒</span></span><br><span class="line">    <span class="keyword">val</span> ssc = <span class="keyword">new</span> <span class="type">StreamingContext</span>(conf, <span class="type">Seconds</span>(<span class="number">2</span>))    <span class="comment">//通过网络读取数据</span></span><br><span class="line">    <span class="keyword">val</span> lines = ssc.socketTextStream(<span class="string">"192.168.10.101"</span>, <span class="number">9999</span>)   <span class="comment">//将读到的数据用空格切成单词</span></span><br><span class="line">    <span class="keyword">val</span> words = lines.flatMap(_.split(<span class="string">" "</span>))    <span class="comment">//将单词和1组成一个pair</span></span><br><span class="line">    <span class="keyword">val</span> pairs = words.map(word =&gt; (word, <span class="number">1</span>))    <span class="comment">//按单词进行分组求相同单词出现的次数</span></span><br><span class="line">    <span class="keyword">val</span> wordCounts = pairs.reduceByKey(_ + _)    <span class="comment">//打印结果到控制台</span></span><br><span class="line">    wordCounts.print()    <span class="comment">//开始计算</span></span><br><span class="line">    ssc.start()    <span class="comment">//等待停止</span></span><br><span class="line">    ssc.awaitTermination()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>问题：结果每次在Linux端输入的单词次数都被正确的统计出来，但是结果不能累加！如果需要累加需要使用updateStateByKey(func)来更新状态，下面给出一个例子：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">package</span> me.yao.spark.streaming</span><br><span class="line"></span><br><span class="line">  <span class="keyword">import</span> org.apache.spark.&#123;<span class="type">HashPartitioner</span>, <span class="type">SparkConf</span>&#125;</span><br><span class="line">  <span class="keyword">import</span> org.apache.spark.streaming.&#123;<span class="type">StreamingContext</span>, <span class="type">Seconds</span>&#125;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">object</span> <span class="title">NetworkUpdateStateWordCount</span> </span>&#123;</span><br><span class="line">  <span class="keyword">val</span> updateFunc = (iter: <span class="type">Iterator</span>[(<span class="type">String</span>, <span class="type">Seq</span>[<span class="type">Int</span>], <span class="type">Option</span>[<span class="type">Int</span>])]) =&gt; &#123;</span><br><span class="line">          <span class="comment">//iter.flatMap(it=&gt;Some(it._2.sum + it._3.getOrElse(0)).map(x=&gt;(it._1,x)))</span></span><br><span class="line">            iter.flatMap&#123;</span><br><span class="line">             <span class="keyword">case</span>(x,y,z)=&gt;<span class="type">Some</span>(y.sum + z.getOrElse(<span class="number">0</span>)).map(m=&gt;(x, m))&#125;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span><br><span class="line">    <span class="type">LoggerLevel</span>.setStreamingLogLevels*()</span><br><span class="line">    <span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setMaster(<span class="string">"local[2]"</span>).setAppName(<span class="string">"NetworkUpdateStateWordCount"</span>)</span><br><span class="line">    <span class="keyword">val</span> ssc = <span class="keyword">new</span> <span class="type">StreamingContext</span>(conf, <span class="type">Seconds</span>(<span class="number">5</span>))</span><br><span class="line">    <span class="comment">//做checkpoint 写入共享存储中</span></span><br><span class="line">    ssc.checkpoint(<span class="string">"c://aaa"</span>)</span><br><span class="line">    **<span class="keyword">val</span> **lines = ssc.socketTextStream(<span class="string">"192.168.10.100"</span>, <span class="number">9999</span>)</span><br><span class="line">    <span class="comment">//reduceByKey **结果不累加</span></span><br><span class="line">    <span class="comment">//val result = lines.flatMap(_.split(" ")).map((_, 1)).reduceByKey(_+_)</span></span><br><span class="line">    <span class="comment">//updateStateByKey结果可以累加但是需要传入一个自定义的累加函数：updateFunc</span></span><br><span class="line">   <span class="keyword">val</span> results = lines.flatMap(_.split(<span class="string">" "</span>)).map((_,<span class="number">1</span>)).updateStateByKey(updateFunc, <span class="keyword">new</span> <span class="type">HashPartitioner</span>(ssc.sparkContext.defaultParallelism), <span class="literal">true</span>)</span><br><span class="line">    results.print()</span><br><span class="line">    ssc.start()</span><br><span class="line">    ssc.awaitTermination()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h1><p>比RDD执行速度快很多倍，占用的内存更小，是从dataFrame发展而来，包含dataFrame<br>dataFrame是处理结构化数据，有表头，有类型，</p>
+<p>dataSet从1.6.0开始出现，2.0做了重大改进，对dataFrame进行了整合<br>dataFrame在1.4系列出现的，现在很多公司都是用的RDD</p>
+<p>在spark的命令行里面：<br>将dataFrame转成dataSet<br>val ds = df.as[person]<br>调用dataSet的方法 </p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ds.map </span><br><span class="line">ds.show </span><br><span class="line"><span class="keyword">val</span> ds = sqlContext.read.text(<span class="string">"hdfs://bigdata1:9000/wc/).as[String] </span></span><br><span class="line"><span class="string">val res5 = ds.flatmap(.split("</span> <span class="string">")).map((,1))</span></span><br></pre></td></tr></table></figure>
+<p>flatmap将文本里面的每一行进行切分，<br>rest.reduceByKey();会发现dataSet里面没有这个方法，在dataSet里面应该调用更高级的做法<br>ds.flatmap(_.split(“ “)).groupBy($””value).count.show 或者collect</p>
+<p>在import里面打开idea查看类里面有哪些方法。<br>在spark1.6里面sqlContext.read….读取的就是dataFrame，和dataSet还未统一，需要将dataFrame用as转为dataSet</p>
+<p>Spark引入DataFrame，它可以提供high-level functions让Spark更好的处理结构数据的计算。这让Catalyst optimizer 和Tungsten（钨丝） execution engine自动加速大数据分析。<br>发布DataFrame之后开发者收到了很多反馈，其中一个主要的是大家反映缺乏编译时类型安全。为了解决这个问题，Spark采用新的Dataset API (DataFrame API的类型扩展)。<br>Dataset API扩展DataFrame API支持静态类型和运行已经存在的Scala或Java语言的用户自定义函数。对比传统的RDD API，Dataset API提供更好的内存管理，特别是在长任务中有更好的性能提升</p>
+<p>#创建DataSet<br>case class Data(a: Int, b: String)<br>val ds = Seq(Data(1, “one”), Data(2, “two”)).toDS()<br>ds.collect()<br>ds.show()</p>
+<p>#创建DataSet</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span>(<span class="params">name: <span class="type">String</span>, zip: <span class="type">Long</span></span>)</span></span><br><span class="line"><span class="class"><span class="title">val</span> <span class="title">df</span> </span>= sqlContext.read.json(sc.parallelize(<span class="string">""</span><span class="string">"&#123;"</span><span class="string">zip": 94709, "</span><span class="string">name": "</span><span class="type">Michael</span><span class="string">"&#125;"</span><span class="string">""</span> :: <span class="type">Nil</span>))</span><br><span class="line">df.as[<span class="type">Person</span>].collect()</span><br><span class="line">df.as[<span class="type">Person</span>].show()</span><br></pre></td></tr></table></figure>
+<p>#DataSet的WordCount</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.spark.sql.functions._</span><br><span class="line"><span class="keyword">val</span> ds = sqlContext.read.text(<span class="string">"hdfs://node-1.itcast.cn:9000/wc"</span>).as[<span class="type">String</span>]</span><br><span class="line"><span class="keyword">val</span> result = ds.flatMap(_.split(<span class="string">" "</span>)).filter(_ != <span class="string">""</span>).toDF().groupBy($<span class="string">"value"</span>).agg(count(<span class="string">"*"</span>) as <span class="string">"numOccurances"</span>).orderBy($<span class="string">"numOccurances"</span> desc)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> wordCount = ds.flatMap(_.split(<span class="string">" "</span>)).filter(_ != <span class="string">""</span>).groupBy(_.toLowerCase()).count()</span><br></pre></td></tr></table></figure>
+<p>#创建DataSet</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> lines = sqlContext.read.text(<span class="string">"hdfs://node-1.itcast.cn:9000/wc"</span>).as[<span class="type">String</span>]</span><br></pre></td></tr></table></figure>
+<p>#对DataSet进行操作</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> words = lines.flatMap(_.split(<span class="string">" "</span>)).filter(_ != <span class="string">""</span>)</span><br></pre></td></tr></table></figure>
+<p>#查看DataSet中的内容</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">words.collect</span><br><span class="line">words.show</span><br></pre></td></tr></table></figure>
+<p>#分组求和</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> counts = words.groupBy(_.toLowerCase).count()</span><br><span class="line"></span><br><span class="line">--------------------------------------------------------------------------------------------------------------</span><br><span class="line">&#123;<span class="string">"name"</span>: <span class="string">"UC Berkeley"</span>, <span class="string">"yearFounded"</span>: <span class="number">1868</span>, <span class="string">"numStudents"</span>: <span class="number">37581</span>&#125;</span><br><span class="line">&#123;<span class="string">"name"</span>: <span class="string">"MIT"</span>, <span class="string">"yearFounded"</span>: <span class="number">1860</span>, <span class="string">"numStudents"</span>: <span class="number">11318</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>#向hdfs中上传数据</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/hadoop<span class="number">-2.6</span><span class="number">.4</span>/bin/hdfs dfs -put schools.json /</span><br></pre></td></tr></table></figure>
+<p>#定义case class</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">University</span>(<span class="params">name: <span class="type">String</span>, numStudents: <span class="type">Long</span>, yearFounded: <span class="type">Long</span></span>)</span></span><br></pre></td></tr></table></figure>
+<p>#创建DataSet</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> schools = sqlContext.read.json(<span class="string">"hdfs://node-1.itcast.cn:9000/schools.json"</span>).as[<span class="type">University</span>]</span><br></pre></td></tr></table></figure>
+<p>#操作DataSet</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schools.map(sc =&gt; <span class="string">s"<span class="subst">$&#123;sc.name&#125;</span> is <span class="subst">$&#123;2015 - sc.yearFounded&#125;</span> years old"</span>).show</span><br></pre></td></tr></table></figure>
+<p>#JSON -&gt; DataFrame</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> df = sqlContext.read.json(<span class="string">"hdfs://node-1.itcast.cn:9000/person.json"</span>)</span><br><span class="line"></span><br><span class="line">df.where($<span class="string">"age"</span> &gt;= <span class="number">20</span>).show</span><br><span class="line">df.where(col(<span class="string">"age"</span>) &gt;= <span class="number">20</span>).show</span><br><span class="line">df.printSchema</span><br></pre></td></tr></table></figure>
+<p>#DataFrame -&gt; Dataset</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span>(<span class="params">age: <span class="type">Long</span>, name: <span class="type">String</span></span>)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">val</span> <span class="title">ds</span> </span>= df.as[<span class="type">Person</span>]</span><br><span class="line">ds.filter(_.age &gt;= <span class="number">20</span>).show</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Dataset -&gt; DataFrame</span></span><br><span class="line"><span class="keyword">val</span> df2 = ds.toDF</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.sql.types._</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">df.where($<span class="string">"age"</span> &gt; <span class="number">0</span>).groupBy((($<span class="string">"age"</span> / <span class="number">10</span>) cast <span class="type">IntegerType</span>) * <span class="number">10</span> as <span class="string">"decade"</span>).agg(count(<span class="string">"*"</span>)).orderBy($<span class="string">"decade"</span>).show </span><br><span class="line">  </span><br><span class="line">ds.filter(_.age &gt; <span class="number">0</span>).groupBy(p =&gt; (p.age / <span class="number">10</span>) * <span class="number">10</span>).agg(count(<span class="string">"name"</span>)).toDF().withColumnRenamed(<span class="string">"value"</span>, <span class="string">"decade"</span>).orderBy(<span class="string">"decade"</span>) .show</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> df = sqlContext.read.json(<span class="string">"hdfs://node-1.itcast.cn:9000/student.json"</span>)</span><br><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span>(<span class="params">name: <span class="type">String</span>, age: <span class="type">Long</span>, major: <span class="type">String</span></span>)</span></span><br><span class="line"><span class="class"><span class="title">val</span> <span class="title">studentDS</span> </span>= df.as[<span class="type">Student</span>]</span><br><span class="line">studentDS.select($<span class="string">"name"</span>.as[<span class="type">String</span>], $<span class="string">"age"</span>.as[<span class="type">Long</span>]).filter(_._2 &gt; <span class="number">19</span>).collect()</span><br><span class="line"></span><br><span class="line">studentDS.groupBy(_.major).count().collect()</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.sql.functions._</span><br><span class="line"></span><br><span class="line">studentDS.groupBy(_.major).agg(avg($<span class="string">"age"</span>).as[<span class="type">Double</span>]).collect()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">Major</span>(<span class="params">shortName: <span class="type">String</span>, fullName: <span class="type">String</span></span>)</span></span><br><span class="line"><span class="class"><span class="title">val</span> <span class="title">majors</span> </span>= <span class="type">Seq</span>(<span class="type">Major</span>(<span class="string">"CS"</span>, <span class="string">"Computer Science"</span>), <span class="type">Major</span>(<span class="string">"Math"</span>, <span class="string">"Mathematics"</span>)).toDS()</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> joined = studentDS.joinWith(majors, $<span class="string">"major"</span> === $<span class="string">"shortName"</span>)</span><br><span class="line"></span><br><span class="line">joined.map(s =&gt; (s._1.name, s._2.fullName)).show()</span><br><span class="line"></span><br><span class="line">joined.explain()</span><br></pre></td></tr></table></figure>
+
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+        <! -- 添加捐赠图标 -->
+<div class="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           如果您觉得文章不错，就请我看场ufc直播🤓🤓🤓🤓🤓！
+        </span>
+        <br>
+      </div>  
+    <div id="donate_guide" class="donate_bar center hidden">
+        <!-- 支付宝打赏图案 -->
+        <img src="/css/images/alipay.jpg" alt="支付宝打赏"> 
+        <!-- 微信打赏图案 -->
+        <img src="/css/images/wechatpay.jpg" alt="微信打赏">  
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            if($('#donate_guide').hasClass('hidden')){
+                $('#donate_guide').removeClass('hidden');
+            }else{
+                $('#donate_guide').addClass('hidden');
+            }
+        }
+    </script>
+</div>
+<! -- 添加捐赠图标 -->
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2018/09/06/DataFrame DataSet/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/09/08/ELK流程小实例/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    ELK流程小实例
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/09/06/SparkSql的使用/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">SparkSQL使用</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjM2MS8xMjg5Ng=="></div>
+</section>
+    
+
+</section>
+            
+            
+        </div>
+        <footer id="footer">
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol ==='https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 GTG<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+    </div>
+</footer>
+        
+    
+    
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+
+         if (typeof LivereTower === 'function') { return; }
+
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+    </script>
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+  <!-- City版安装代码已完成 -->
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
