@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://gangtieguo.cn/2018/07/10/Docker-yaosongt:hue%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%85%B6%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4/</loc>
+    <lastmod>2019-03-13</lastmod>
+  </url>  <url>
+    <loc>http://gangtieguo.cn/2019/03/05/Docker-machine%E7%9A%84%E6%90%AD%E5%BB%BA(%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%9C%A8%E5%90%8C%E4%B8%80ip%E6%AE%B5%E4%B8%8B)/</loc>
+    <lastmod>2019-03-13</lastmod>
+  </url>  <url>
     <loc>http://gangtieguo.cn/2019/03/12/mac%E4%B8%8Evirtualbox%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%8C%E6%8C%82%E8%BD%BD%E5%88%B0docker%E5%AE%B9%E5%99%A8%E4%B8%AD%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90%E8%A7%A3%E5%86%B3/</loc>
     <lastmod>2019-03-13</lastmod>
   </url>  <url>
@@ -42,9 +48,6 @@
   </url>  <url>
     <loc>http://gangtieguo.cn/2018/07/08/Docker-yaosong5:elk%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/</loc>
     <lastmod>2019-03-06</lastmod>
-  </url>  <url>
-    <loc>http://gangtieguo.cn/2019/03/05/Docker-machine%E7%9A%84%E6%90%AD%E5%BB%BA(%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%9C%A8%E5%90%8C%E4%B8%80ip%E6%AE%B5%E4%B8%8B)/</loc>
-    <lastmod>2019-03-05</lastmod>
   </url>  <url>
     <loc>http://gangtieguo.cn/2018/08/15/Hadoop-%E6%9E%84%E6%88%90%E5%8F%8AHA-/</loc>
     <lastmod>2018-12-25</lastmod>
@@ -179,9 +182,6 @@
     <lastmod>2018-08-10</lastmod>
   </url>  <url>
     <loc>http://gangtieguo.cn/2018/05/30/json-tool%E4%BD%BF%E7%94%A8/</loc>
-    <lastmod>2018-08-10</lastmod>
-  </url>  <url>
-    <loc>http://gangtieguo.cn/2018/07/10/Docker-yaosongt:hue%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%85%B6%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4/</loc>
     <lastmod>2018-08-10</lastmod>
   </url>  <url>
     <loc>http://gangtieguo.cn/2018/07/09/Docker-yaosong5:flink%E5%88%B6%E4%BD%9C%E5%8F%8A%E5%85%B6%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4/</loc>

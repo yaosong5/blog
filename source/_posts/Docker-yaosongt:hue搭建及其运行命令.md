@@ -1,5 +1,5 @@
 ---
-title:  Hue搭建
+title:  Docker-yaosong5/Hue搭建及运行命令
 date: 2018年06月21日 22时15分52秒
 tags:  [Docker,Hue]
 categories: 安装部署
