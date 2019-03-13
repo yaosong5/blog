@@ -76,6 +76,10 @@ ln -s  /Users/yaosong/Yao/DockerSource/sparkSource/kafkaall/kafka2 /Users/yaoson
 ln -s  /Users/yaosong/Yao/DockerSource/sparkSource/kafkaall/kafka3 /Users/yaosong/Yao/share/source/
 
 
+ln -s /Users/yaosong/Yao/DockerSource/elkSource/es1/ /Users/yaosong/Yao/share/source/
+ln -s /Users/yaosong/Yao/DockerSource/elkSource/es2/ /Users/yaosong/Yao/share/source/
+ln -s /Users/yaosong/Yao/DockerSource/elkSource/es3/ /Users/yaosong/Yao/share/source/
+
 
 
 ln -s /Users/yaosong/Yao/启动脚本/kafka-start-all.sh /Users/yaosong/Yao/share/shell/kafka-start-all.sh

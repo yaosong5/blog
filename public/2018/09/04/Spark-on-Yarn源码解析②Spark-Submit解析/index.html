@@ -6,20 +6,22 @@
     <meta charset="utf-8">
     
 
-    <title>FLINK容器的搭建 | 钢铁锅</title>
+    <title>Spark-on-Yarn源码解析(二)Spark-Submit解析 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="[TOC] 来源容器  flk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小">
-<meta name="keywords" content="Docker,FLINK">
+    <meta name="description" content="[TOC] spark-on-yarn系列 Spark-on-Yarn 源码解析①Yarn 任务解析Spark-on-Yarn 源码解析②Spark-Submit 解析Spark-on-Yarn 源码解析③client 做的事情Spark-on-Yarn 源码解析④Spark 业务代码的执行及其任务分配调度 stage 划分 上文我们了解到了yarn的架构和执行任务的流程，接下来我们看看 spar">
+<meta name="keywords" content="原理,Spark">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FLINK容器的搭建">
-<meta property="og:url" content="http://gangtieguo.cn/2018/07/09/flink容器搭建/index.html">
+<meta property="og:title" content="Spark-on-Yarn源码解析(二)Spark-Submit解析">
+<meta property="og:url" content="http://gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析②Spark-Submit解析/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] 来源容器  flk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小">
+<meta property="og:description" content="[TOC] spark-on-yarn系列 Spark-on-Yarn 源码解析①Yarn 任务解析Spark-on-Yarn 源码解析②Spark-Submit 解析Spark-on-Yarn 源码解析③client 做的事情Spark-on-Yarn 源码解析④Spark 业务代码的执行及其任务分配调度 stage 划分 上文我们了解到了yarn的架构和执行任务的流程，接下来我们看看 spar">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-07T02:52:58.322Z">
+<meta property="og:image" content="http://img.gangtieguo.cn/15359432887877.jpg">
+<meta property="og:updated_time" content="2019-03-11T07:44:48.567Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FLINK容器的搭建">
-<meta name="twitter:description" content="[TOC] 来源容器  flk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小">
+<meta name="twitter:title" content="Spark-on-Yarn源码解析(二)Spark-Submit解析">
+<meta name="twitter:description" content="[TOC] spark-on-yarn系列 Spark-on-Yarn 源码解析①Yarn 任务解析Spark-on-Yarn 源码解析②Spark-Submit 解析Spark-on-Yarn 源码解析③client 做的事情Spark-on-Yarn 源码解析④Spark 业务代码的执行及其任务分配调度 stage 划分 上文我们了解到了yarn的架构和执行任务的流程，接下来我们看看 spar">
+<meta name="twitter:image" content="http://img.gangtieguo.cn/15359432887877.jpg">
     
 
     
@@ -207,11 +209,11 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                65
+                67
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                44
+                45
                 <span>标签</span>
             </div>
         </div>
@@ -247,7 +249,7 @@ var _hmt = _hmt || [];
 
             
 
-            <section id="main"><article id="post-flink容器搭建" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Spark-on-Yarn源码解析②Spark-Submit解析" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -255,7 +257,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            FLINK容器的搭建
+            Spark-on-Yarn源码解析(二)Spark-Submit解析
         </h1>
     
 
@@ -264,8 +266,8 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/07/09/flink容器搭建/">
-            <time datetime="2018-07-08T16:00:22.635Z" itemprop="datePublished">2018-07-09</time>
+        <a href="/2018/09/04/Spark-on-Yarn源码解析②Spark-Submit解析/">
+            <time datetime="2018-09-04T08:03:50.700Z" itemprop="datePublished">2018-09-04</time>
         </a>
     </div>
 
@@ -273,13 +275,13 @@ var _hmt = _hmt || [];
                         
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/安装部署/">安装部署</a>
+        <a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/FLINK/">FLINK</a>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/原理/">原理</a>
     </div>
 
                     </div>
@@ -304,7 +306,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article " class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#来源容器-flk"><span class="toc-number">1.</span> <span class="toc-text">来源容器  flk</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#复制源包"><span class="toc-number">1.1.</span> <span class="toc-text">复制源包</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置home"><span class="toc-number">2.</span> <span class="toc-text">配置home</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#保存镜像"><span class="toc-number">3.</span> <span class="toc-text">保存镜像</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#获得flk-容器"><span class="toc-number">4.</span> <span class="toc-text">获得flk 容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#停止-删除flk-容器"><span class="toc-number">5.</span> <span class="toc-text">停止/删除flk 容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#官方：wordcount"><span class="toc-number">6.</span> <span class="toc-text">官方：wordcount</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#flink测试命令"><span class="toc-number">6.1.</span> <span class="toc-text">flink测试命令</span></a></li></ol></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#spark-submit命令"><span class="toc-number">1.</span> <span class="toc-text">spark-submit命令</span></a></li></ol>
             </div>
 
 
@@ -332,43 +334,84 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
-<h1 id="来源容器-flk"><a href="#来源容器-flk" class="headerlink" title="来源容器  flk"></a>来源容器  flk</h1><p>新建容器，为减少工作量，引用的是有ssh服务的Docker镜像<strong>kinogmt/centos-ssh:6.7</strong>，生成容器os为基准。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --name flk --hostname flk kinogmt/centos-ssh:6.7 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个小bug</p>
-</blockquote>
-<a id="more"></a>
-<p>在容器中下载需要的elk的源包。做解压就不赘述，很多案例教程。</p>
-<blockquote>
-<p>我是采用的下载到宿主机，解压后，用 “docker cp 解压包目录  os:/usr/loca/“来传到容器内，比在容器内下载速度更快</p>
-<h2 id="复制源包"><a href="#复制源包" class="headerlink" title="复制源包"></a>复制源包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; docker cp /Users/yaosong/Yao/hadoop  flk:/usr/</span><br><span class="line">&gt; docker cp /Users/yaosong/Yao/flink  flk:/usr/</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h1 id="配置home"><a href="#配置home" class="headerlink" title="配置home"></a>配置home</h1><pre><code>export JAVA_HOME=/usr/java/jdk1.8.0_144/
-export PATH=$JAVA_HOME/bin:$PATH
-export FLINK_HOME=/usr/flink
-export HADOOP_HOME=/usr/hadoop
-export HADOOP_CONFIG_HOME=$HADOOP_HOME/etc/hadoop
-export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
-export PATH=$PATH:$HADOOP_HOME/bin
-export PATH=$PATH:$HADOOP_HOME/sbin
-export PATH=$PATH:$FLINK_HOME/bin
-</code></pre><p><strong>配置hadoop</strong>  参考：</p>
-<p>[]: <a href="http://gangtieguo.cn/2018/07/20/Docker%E4%B8%ADhadoop%20spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/">http://gangtieguo.cn/2018/07/20/Docker%E4%B8%ADhadoop%20spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</a>    “Docker 中 hadoop，spark 镜像搭建”</p>
-<p><strong>flink.yml</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> high-availability: zookeeper</span><br><span class="line"></span><br><span class="line"># The path where metadata for master recovery is persisted. While ZooKeeper stores</span><br><span class="line"># the small ground truth for checkpoint and leader election, this location stores</span><br><span class="line"># the larger objects, like persisted dataflow graphs.</span><br><span class="line"># </span><br><span class="line"># Must be a durable file system that is accessible from all nodes</span><br><span class="line"># (like HDFS, S3, Ceph, nfs, ...) </span><br><span class="line">#</span><br><span class="line"> high-availability.storageDir: hdfs:///flink/ha/</span><br><span class="line"></span><br><span class="line"># The list of ZooKeeper quorum peers that coordinate the high-availability</span><br><span class="line"># setup. This must be a list of the form:</span><br><span class="line"># &quot;host1:clientPort,host2:clientPort,...&quot; (default clientPort: 2181)</span><br><span class="line">#</span><br><span class="line">high-availability.zookeeper.quorum: zk1:2181,zk2:2181,zk3:2181</span><br></pre></td></tr></table></figure>
-<p><strong>Master</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">master:8081</span><br></pre></td></tr></table></figure>
-<p><strong>slave</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slave01</span><br><span class="line">slave02</span><br></pre></td></tr></table></figure>
-<p><strong>zoo.cfg</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server.1=zk1:2888:3888</span><br><span class="line">server.2=zk2:2888:3888</span><br><span class="line">server.3=zk3:2888:3888</span><br></pre></td></tr></table></figure>
-<p><strong>需要在yarn-site.xml中配置</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"> 	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.am.max-attempts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>4<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.cpu-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>8<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h1 id="保存镜像"><a href="#保存镜像" class="headerlink" title="保存镜像"></a>保存镜像</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit -m <span class="string">"bigdata:flink,hadoop"</span>  --author=<span class="string">"yaosong"</span>  flk  yao/flinkonyarn:1.0</span><br></pre></td></tr></table></figure>
-<h1 id="获得flk-容器"><a href="#获得flk-容器" class="headerlink" title="获得flk 容器"></a>获得flk 容器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd --net=br --name flk1 --hostname flk1 yao/flinkonyarn:1.0 &amp;&gt; /dev/null</span><br><span class="line">docker run -itd --net=br --name flk2 --hostname flk2 yao/flinkonyarn:1.0 &amp;&gt; /dev/null</span><br><span class="line">docker run -itd --net=br --name flk3 --hostname flk3 yao/flinkonyarn:1.0 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
-<h1 id="停止-删除flk-容器"><a href="#停止-删除flk-容器" class="headerlink" title="停止/删除flk 容器"></a>停止/删除flk 容器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker stop flk1</span><br><span class="line">docker stop flk2</span><br><span class="line">docker stop flk3</span><br><span class="line">docker rm flk1</span><br><span class="line">docker rm flk2</span><br><span class="line">docker rm flk3</span><br></pre></td></tr></table></figure>
-<h1 id="官方：wordcount"><a href="#官方：wordcount" class="headerlink" title="官方：wordcount"></a>官方：wordcount</h1><h2 id="flink测试命令"><a href="#flink测试命令" class="headerlink" title="flink测试命令"></a>flink测试命令</h2><p>由于在本地搭建，机器配置有限，故设置不同参数命令来运行官方wordcount</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">flink run -m yarn-cluster <span class="variable">$FLINK_HOME</span>/examples/batch/WordCount.jar</span><br><span class="line"></span><br><span class="line">flink run -m yarn-cluster -ynd 2 <span class="variable">$FLINK_HOME</span>/examples/batch/WordCount.jar</span><br><span class="line"></span><br><span class="line">flink run -m yarn-cluster -yn 4  <span class="variable">$FLINK_HOME</span>/examples/batch/WordCount.jar</span><br><span class="line"></span><br><span class="line">flink run -m yarn-cluster -yn 6  <span class="variable">$FLINK_HOME</span>/examples/batch/WordCount.jar</span><br><span class="line"></span><br><span class="line">flink run -m yarn-cluster -yn 8  <span class="variable">$FLINK_HOME</span>/examples/batch/WordCount.jar</span><br><span class="line"></span><br><span class="line">flink run -m yarn-cluster -yn 10  <span class="variable">$FLINK_HOME</span>/examples/batch/WordCount.jar</span><br></pre></td></tr></table></figure>
+<p>spark-on-yarn系列</p>
+<p><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析①Yarn任务解析/" target="_blank" rel="noopener">Spark-on-Yarn 源码解析①Yarn 任务解析</a><br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析②Spark-Submit解析/" target="_blank" rel="noopener">Spark-on-Yarn 源码解析②Spark-Submit 解析</a><br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析③client做的事情/" target="_blank" rel="noopener">Spark-on-Yarn 源码解析③client 做的事情</a><br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析④Spark业务代码的执行及其任务分配调度stage划分/" target="_blank" rel="noopener">Spark-on-Yarn 源码解析④Spark 业务代码的执行及其任务分配调度 stage 划分</a></p>
+<p>上文我们了解到了yarn的架构和执行任务的流程，接下来我们看看</p>
+<h1 id="spark-submit命令"><a href="#spark-submit命令" class="headerlink" title="spark-submit命令"></a>spark-submit命令</h1><pre><code>$SPARK_HOME/bin/spark-submit \
+--master yarn \ //提交模式 yarn
+--deploy-mode cluster \ //运行的模式，还有一种client模式，但大多用于调试，此处使用cluster模式
+--class me.yao.spark.me.yao.spark.WordCount \ //提交的任务
+--name &quot;wc&quot; \ //任务名字
+--queue root.default \ //提交的队列
+--driver-memory 3g \ //为driver申请的内存
+--num-executors 1 \ //executors的数量，可以理解为线程数，对应yarn中的Container个数
+--executor-memory 6g \ //为每一个executor申请的内存
+--executor-cores 4 \ //为每一个executor申请的core
+--conf spark.yarn.driver.memoryOverhead=1g \ //driver可使用的非堆内存，这些内存用于如VM，字符 串常量池以及其他额外本地开销等
+--conf spark.yarn.executor.memoryOverhead=2g \ //每个executor可使用的非堆内存，这些内存用于如 VM，字符串常量池以及其他额外本地开销等
+</code></pre><p>这是通常我们提交spark程序的submit命令，以此为切入点，对spark程序的运行流程做一个跟踪和分析。<br><a id="more"></a><br>查看spark-submit脚本<br><img src="http://img.gangtieguo.cn/15359432887877.jpg" alt></p>
+<p>查看spark-submit脚本的信息，初步可以看到submit启动的类为org.apache.spark.deploy.SparkSubmit，更多细节其实不重要（开个开玩，极客可以求甚解）如果觉得要深究一下为什么是submit的main方法的可以参考一下spark on yarn 作业提交源码分析</p>
+<p>接下来查看该类内部的处理逻辑</p>
+<p>SparkSumbmit的类（为了简洁和文章篇幅，只保留了关键流程的信息）</p>
+<pre><code>  def main(args: Array[String]): Unit = {
+    val appArgs = new SparkSubmitArguments(args)
+    if (appArgs.verbose) {
+      printStream.println(appArgs)
+    }
+    appArgs.action match {
+      case SparkSubmitAction.SUBMIT =&gt; submit(appArgs)
+      case SparkSubmitAction.KILL =&gt; kill(appArgs)
+      case SparkSubmitAction.REQUEST_STATUS =&gt; requestStatus(appArgs)
+    }
+  }
+......
+
+  private[spark] def submit(args: SparkSubmitArguments): Unit = {
+    val (childArgs, childClasspath, sysProps, childMainClass) = 
+prepareSubmitEnvironment(args)
+.....
+.....
+ runMain(childArgs, childClasspath, sysProps, childMainClass, args.verbose)
+}
+
+ private[spark] def prepareSubmitEnvironment(args: SparkSubmitArguments)
+      : (Seq[String], Seq[String], Map[String, String], String) = {
+      ......
+      // In yarn-cluster mode, use yarn.Client as a wrapper around the user class
+    if (isYarnCluster) {
+      childMainClass = &quot;org.apache.spark.deploy.yarn.Client&quot;
+      .......
+      }
+//在submit方法中最终调用的是
+runMain(childArgs, childClasspath, sysProps, childMainClass, args.verbose)
+try {
+      mainClass = Class.forName(childMainClass, true, loader)
+    } catch {
+    ......
+    System.exit(CLASS_NOT_FOUND_EXIT_STATUS)
+    }
+    // SPARK-4170
+    private def runMain(
+      childArgs: Seq[String],
+      childClasspath: Seq[String],
+      sysProps: Map[String, String],
+      childMainClass: String,
+      verbose: Boolean): Unit = {
+    ... ...
+
+    mainClass = Class.forName(childMainClass, true, loader)
+    ... ...
+    val mainMethod = mainClass.getMethod(&quot;main&quot;, new Array[String](0).getClass)
+    ... ...
+    mainMethod.invoke(null, childArgs.toArray)
+    ... ...
+    }
+</code></pre><p>通过上面的流程可以看到，这样一个调用链(未特殊表明类名，表明为该步上一步的同一类)，我们代码简化一下，看得舒心明了，再配上解说</p>
+<pre><code>submit.main()
+    -&gt;submit()模式匹配到该方法，因为我们就是submit提交任务
+        -&gt;prepareSubmitEnvironment()该方法中指明了要启动的类，就是大明湖畔的Client
+        -&gt;runMain()通过上步指定的类，然后通过反射调用main方法
+</code></pre><p>既然我们的线路走到org.apache.spark.deploy.yarn.Client        ，那我们再去这个类一看究竟，且听下回分解</p>
 
             
 
@@ -447,7 +490,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/07/09/flink容器搭建/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析②Spark-Submit解析/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -456,19 +499,19 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/07/09/hbasezk容器的搭建/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/09/04/Spark-on-Yarn源码解析③client做的事情/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    HBase容器的搭建
+                    Spark-on-Yarn源码解析(三)client做的事情
                 
             </div>
         </a>
     
     
-        <a href="/2018/07/08/kafka启动脚本及命令/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/09/04/Spark-on-Yarn源码解析①Yarn任务解析/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">kafka的启动及常用命令</div>
+            <div class="article-nav-title">Spark-on-Yarn源码解析(一)Yarn任务解析</div>
         </a>
     
 </nav>

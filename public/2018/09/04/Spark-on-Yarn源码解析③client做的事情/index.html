@@ -6,22 +6,20 @@
     <meta charset="utf-8">
     
 
-    <title>Spark-on-Yarn源码解析(二)Spark-Submit解析 | 钢铁锅</title>
+    <title>Spark-on-Yarn源码解析(三)client做的事情 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="[TOC] spark-on-yarn系列 Spark-on-Yarn 源码解析 (一)Yarn 任务解析Yarn任务解析/)Spark-on-Yarn 源码解析 (二)Spark-Submit 解析Spark-Submit解析/)Spark-on-Yarn 源码解析 (三)client 做的事情client做的事情/)Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务">
+    <meta name="description" content="[TOC] spark-on-yarn系列 Spark-on-Yarn 源码解析①Yarn 任务解析Spark-on-Yarn 源码解析②Spark-Submit 解析Spark-on-Yarn 源码解析③client 做的事情Spark-on-Yarn 源码解析④Spark 业务代码的执行及其任务分配调度 stage 划分 org.apache.spark.deploy.yarn.Client">
 <meta name="keywords" content="原理,Spark">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spark-on-Yarn源码解析(二)Spark-Submit解析">
-<meta property="og:url" content="http://gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/index.html">
+<meta property="og:title" content="Spark-on-Yarn源码解析(三)client做的事情">
+<meta property="og:url" content="http://gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析③client做的事情/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] spark-on-yarn系列 Spark-on-Yarn 源码解析 (一)Yarn 任务解析Yarn任务解析/)Spark-on-Yarn 源码解析 (二)Spark-Submit 解析Spark-Submit解析/)Spark-on-Yarn 源码解析 (三)client 做的事情client做的事情/)Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务">
+<meta property="og:description" content="[TOC] spark-on-yarn系列 Spark-on-Yarn 源码解析①Yarn 任务解析Spark-on-Yarn 源码解析②Spark-Submit 解析Spark-on-Yarn 源码解析③client 做的事情Spark-on-Yarn 源码解析④Spark 业务代码的执行及其任务分配调度 stage 划分 org.apache.spark.deploy.yarn.Client">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://img.gangtieguo.cn/15359432887877.jpg">
-<meta property="og:updated_time" content="2018-12-25T03:53:50.216Z">
+<meta property="og:updated_time" content="2019-03-11T07:44:55.663Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spark-on-Yarn源码解析(二)Spark-Submit解析">
-<meta name="twitter:description" content="[TOC] spark-on-yarn系列 Spark-on-Yarn 源码解析 (一)Yarn 任务解析Yarn任务解析/)Spark-on-Yarn 源码解析 (二)Spark-Submit 解析Spark-Submit解析/)Spark-on-Yarn 源码解析 (三)client 做的事情client做的事情/)Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务">
-<meta name="twitter:image" content="http://img.gangtieguo.cn/15359432887877.jpg">
+<meta name="twitter:title" content="Spark-on-Yarn源码解析(三)client做的事情">
+<meta name="twitter:description" content="[TOC] spark-on-yarn系列 Spark-on-Yarn 源码解析①Yarn 任务解析Spark-on-Yarn 源码解析②Spark-Submit 解析Spark-on-Yarn 源码解析③client 做的事情Spark-on-Yarn 源码解析④Spark 业务代码的执行及其任务分配调度 stage 划分 org.apache.spark.deploy.yarn.Client">
     
 
     
@@ -209,11 +207,11 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                65
+                67
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                44
+                45
                 <span>标签</span>
             </div>
         </div>
@@ -249,7 +247,7 @@ var _hmt = _hmt || [];
 
             
 
-            <section id="main"><article id="post-Spark-on-Yarn源码解析(二)Spark-Submit解析" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Spark-on-Yarn源码解析③client做的事情" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -257,7 +255,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            Spark-on-Yarn源码解析(二)Spark-Submit解析
+            Spark-on-Yarn源码解析(三)client做的事情
         </h1>
     
 
@@ -266,8 +264,8 @@ var _hmt = _hmt || [];
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/">
-            <time datetime="2018-09-04T08:03:50.700Z" itemprop="datePublished">2018-09-04</time>
+        <a href="/2018/09/04/Spark-on-Yarn源码解析③client做的事情/">
+            <time datetime="2018-09-04T08:13:34.283Z" itemprop="datePublished">2018-09-04</time>
         </a>
     </div>
 
@@ -306,7 +304,7 @@ var _hmt = _hmt || [];
             <div id="toc toc-article " class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#spark-submit命令"><span class="toc-number">1.</span> <span class="toc-text">spark-submit命令</span></a></li></ol>
+                
             </div>
 
 
@@ -335,84 +333,252 @@ var _hmt = _hmt || [];
 
                 <p>[TOC]</p>
 <p>spark-on-yarn系列</p>
-<p><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(一" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (一)Yarn 任务解析</a>Yarn任务解析/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(二" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (二)Spark-Submit 解析</a>Spark-Submit解析/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(三" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (三)client 做的事情</a>client做的事情/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(四" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务分配调度 stage 划分</a>Spark业务代码的执行及其任务分配调度stage划分/)</p>
-<p>上文我们了解到了yarn的架构和执行任务的流程，接下来我们看看</p>
-<h1 id="spark-submit命令"><a href="#spark-submit命令" class="headerlink" title="spark-submit命令"></a>spark-submit命令</h1><pre><code>$SPARK_HOME/bin/spark-submit \
---master yarn \ //提交模式 yarn
---deploy-mode cluster \ //运行的模式，还有一种client模式，但大多用于调试，此处使用cluster模式
---class me.yao.spark.me.yao.spark.WordCount \ //提交的任务
---name &quot;wc&quot; \ //任务名字
---queue root.default \ //提交的队列
---driver-memory 3g \ //为driver申请的内存
---num-executors 1 \ //executors的数量，可以理解为线程数，对应yarn中的Container个数
---executor-memory 6g \ //为每一个executor申请的内存
---executor-cores 4 \ //为每一个executor申请的core
---conf spark.yarn.driver.memoryOverhead=1g \ //driver可使用的非堆内存，这些内存用于如VM，字符 串常量池以及其他额外本地开销等
---conf spark.yarn.executor.memoryOverhead=2g \ //每个executor可使用的非堆内存，这些内存用于如 VM，字符串常量池以及其他额外本地开销等
-</code></pre><p>这是通常我们提交spark程序的submit命令，以此为切入点，对spark程序的运行流程做一个跟踪和分析。<br><a id="more"></a><br>查看spark-submit脚本<br><img src="http://img.gangtieguo.cn/15359432887877.jpg" alt></p>
-<p>查看spark-submit脚本的信息，初步可以看到submit启动的类为org.apache.spark.deploy.SparkSubmit，更多细节其实不重要（开个开玩，极客可以求甚解）如果觉得要深究一下为什么是submit的main方法的可以参考一下spark on yarn 作业提交源码分析</p>
-<p>接下来查看该类内部的处理逻辑</p>
-<p>SparkSumbmit的类（为了简洁和文章篇幅，只保留了关键流程的信息）</p>
-<pre><code>  def main(args: Array[String]): Unit = {
-    val appArgs = new SparkSubmitArguments(args)
-    if (appArgs.verbose) {
-      printStream.println(appArgs)
-    }
-    appArgs.action match {
-      case SparkSubmitAction.SUBMIT =&gt; submit(appArgs)
-      case SparkSubmitAction.KILL =&gt; kill(appArgs)
-      case SparkSubmitAction.REQUEST_STATUS =&gt; requestStatus(appArgs)
-    }
-  }
-......
+<p><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析①Yarn任务解析/" target="_blank" rel="noopener">Spark-on-Yarn 源码解析①Yarn 任务解析</a><br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析②Spark-Submit解析/" target="_blank" rel="noopener">Spark-on-Yarn 源码解析②Spark-Submit 解析</a><br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析③client做的事情/" target="_blank" rel="noopener">Spark-on-Yarn 源码解析③client 做的事情</a><br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析④Spark业务代码的执行及其任务分配调度stage划分/" target="_blank" rel="noopener">Spark-on-Yarn 源码解析④Spark 业务代码的执行及其任务分配调度 stage 划分</a></p>
+<p>org.apache.spark.deploy.yarn.Client</p>
+<p>话不多说，先上源码，当然还是简洁版本的</p>
+<p>这儿我先上一下最简洁的调用链。</p>
+<pre><code>Client.main()
+    -&gt;new Client().run()
+         -&gt;monitorApplication(submitApplication())
+            -&gt;submitApplication()
+                -&gt;createContainerLaunchContext()会封装一些启动信息如我们启动的类 --class
+                    -&gt;userClass
+                    -&gt;amArgs
+                    -&gt;commands
+                    -&gt;printableCommands
+                    -&gt;amClass applicationMaster启动的真实类
 
-  private[spark] def submit(args: SparkSubmitArguments): Unit = {
-    val (childArgs, childClasspath, sysProps, childMainClass) = 
-prepareSubmitEnvironment(args)
-.....
-.....
- runMain(childArgs, childClasspath, sysProps, childMainClass, args.verbose)
+                -&gt;createApplicationSubmissionContext()
+                    -&gt;Records.newRecord(classOf[Resource])启动
+                -&gt;yarnClientImpl.submitApplication(appContext)                
+</code></pre><a id="more"></a>
+<p>最终是调用的client里面main方法-&gt;run-&gt;</p>
+<p>monitorApplication(submitApplication())</p>
+<pre><code>object Client extends Logging {
+  def main(argStrings: Array[String]) {
+    ... ...
+    val sparkConf = new SparkConf
+    val args = new ClientArguments(argStrings, sparkConf)
+    new Client(args, sparkConf).run()
+    ... ...
+  }
 }
 
- private[spark] def prepareSubmitEnvironment(args: SparkSubmitArguments)
-      : (Seq[String], Seq[String], Map[String, String], String) = {
-      ......
-      // In yarn-cluster mode, use yarn.Client as a wrapper around the user class
-    if (isYarnCluster) {
-      childMainClass = &quot;org.apache.spark.deploy.yarn.Client&quot;
-      .......
+... ...
+def run(): Unit = {
+    val (yarnApplicationState, finalApplicationStatus) = monitorApplication(submitApplication())
+    }
+... ...
+def submitApplication(): ApplicationId = {
+    // TODO: 初始化并且启动client
+    yarnClient.init(yarnConf)
+    yarnClient.start()
+    // TODO: 准备提交请求到resouceManager
+    val newApp = yarnClient.createApplication()
+    val newAppResponse = newApp.getNewApplicationResponse()
+    val appId = newAppResponse.getApplicationId()
+    // TODO: 检查集群的内存是否满足当前的任务要求
+    verifyClusterResources(newAppResponse)
+    // TODO:  设置适当上下文环境来启动applicationMaster
+    val containerContext = createContainerLaunchContext(newAppResponse)
+    val appContext = createApplicationSubmissionContext(newApp, containerContext)
+    // TODO: 提交application
+    yarnClient.submitApplication(appContext)
+    appId
+  }
+   private def createContainerLaunchContext(newAppResponse: GetNewApplicationResponse)
+    : ContainerLaunchContext = {
+    ... ...
+          val userClass =
+      if (isClusterMode) {
+        Seq(&quot;--class&quot;, YarnSparkHadoopUtil.escapeForShell(args.userClass))
+      } else {
+        Nil
       }
-//在submit方法中最终调用的是
-runMain(childArgs, childClasspath, sysProps, childMainClass, args.verbose)
-try {
-      mainClass = Class.forName(childMainClass, true, loader)
-    } catch {
-    ......
-    System.exit(CLASS_NOT_FOUND_EXIT_STATUS)
-    }
-    // SPARK-4170
-    private def runMain(
-      childArgs: Seq[String],
-      childClasspath: Seq[String],
-      sysProps: Map[String, String],
-      childMainClass: String,
-      verbose: Boolean): Unit = {
-    ... ...
+      ...
+       val amClass =
+      if (isClusterMode) {
+Class.forName(&quot;org.apache.spark.deploy.yarn.ApplicationMaster&quot;).getName
+      } else {
+Class.forName(&quot;org.apache.spark.deploy.yarn.ExecutorLauncher&quot;).getName
+      }
+          val amArgs =
+      Seq(amClass) ++ userClass ++ userJar ++ primaryPyFile ++ pyFiles ++ userArgs ++
+        Seq(
+          &quot;--executor-memory&quot;, args.executorMemory.toString + &quot;m&quot;,
+          &quot;--executor-cores&quot;, args.executorCores.toString,
+          &quot;--num-executors &quot;, args.numExecutors.toString)
 
-    mainClass = Class.forName(childMainClass, true, loader)
+    val commands = prefixEnv ++ Seq(YarnSparkHadoopUtil.expandEnvironment(Environment.JAVA_HOME) + &quot;/bin/java&quot;, &quot;-server&quot;
+      ) ++
+      javaOpts ++ amArgs ++
     ... ...
-    val mainMethod = mainClass.getMethod(&quot;main&quot;, new Array[String](0).getClass)
-    ... ...
-    mainMethod.invoke(null, childArgs.toArray)
-    ... ...
+     val printableCommands = commands.map(s =&gt; if (s == null) &quot;null&quot; else s).toList
+    amContainer.setCommands(printableCommands)
     }
-</code></pre><p>通过上面的流程可以看到，这样一个调用链(未特殊表明类名，表明为该步上一步的同一类)，我们代码简化一下，看得舒心明了，再配上解说</p>
-<pre><code>submit.main()
-    -&gt;submit()模式匹配到该方法，因为我们就是submit提交任务
-        -&gt;prepareSubmitEnvironment()该方法中指明了要启动的类，就是大明湖畔的Client
-        -&gt;runMain()通过上步指定的类，然后通过反射调用main方法
-</code></pre><p>既然我们的线路走到org.apache.spark.deploy.yarn.Client        ，那我们再去这个类一看究竟，且听下回分解</p>
+    ... ...
+def createApplicationSubmissionContext(
+      newApp: YarnClientApplication,
+      containerContext: ContainerLaunchContext): ApplicationSubmissionContext = {
+    val appContext = newApp.getApplicationSubmissionContext
+    appContext.setApplicationName(args.appName)
+    appContext.setQueue(args.amQueue)
+    appContext.setAMContainerSpec(containerContext)
+    appContext.setApplicationType(&quot;SPARK&quot;)
+    sparkConf.getOption(&quot;spark.yarn.maxAppAttempts&quot;).map(_.toInt) match {
+      case Some(v) =&gt; appContext.setMaxAppAttempts(v)
+      case None =&gt; logDebug(&quot;spark.yarn.maxAppAttempts is not set. &quot; +
+          &quot;Cluster&apos;s default value will be used.&quot;)
+    }
 
+    val capability = Records.newRecord(classOf[Resource])
+    capability.setMemory(args.amMemory + amMemoryOverhead)
+    capability.setVirtualCores(args.amCores)
+    appContext.setResource(capability)
+    appContext
+  }
+
+//yarnClient.submitApplication(appContext)提交的真实处  
+@Override
+  public ApplicationId
+      submitApplication(ApplicationSubmissionContext appContext)
+          throws YarnException, IOException {
+...
+//此处通过yarn的协议对applicationMaster进行提交和启动 （此处为个人理解有疑惑，如有错误，还望留言分享，会立即作出更正）
+    SubmitApplicationRequest request =
+        Records.newRecord(SubmitApplicationRequest.class);
+    request.setApplicationSubmissionContext(appContext);
+...
+</code></pre><p>此处client的事情都已经做完了，请摄影师将镜头切换到applicationMaster</p>
+<p>小细节用户业务代码信息的封装及流转</p>
+<p>我们提交的class的封装流程</p>
+<p>​    </p>
+<pre><code>-&gt;sublimit的prepareSubmitEnvironment中封装到childArgs中--class
+-&gt;传入到client的构造函数里面作为clientArgs，将其封装到userClass属性里面
+
+在submitApplication中createContainerLaunchContext会将其通过重新封到userClass
+    userClass-&gt;amArgs-&gt;commands-&gt;printableCommands
+    -&gt;amContainer.setCommands(printableCommands)
+    在此，createContainerLaunchContext方法接收到amContainer赋名为containerContext传递给createApplicationSubmissionContext(..,containerContext)
+
+那么在createApplicationSubmissionContext中又有哪些惊天变化（其实并没有）
+
+appContext.setAMContainerSpec(containerContext)
+那么appContext作为createApplicationSubmissionContext方法返回值，由appContext接收，看码
+
+appContext = createApplicationSubmissionContext(newApp, containerContext)
+最后，由yarnClientImpl提交
+yarnClient.submitApplication(appContext)
+码又来了，最终执行的是
+SubmitApplicationRequest request =Records.newRecord(SubmitApplicationRequest.class);
+</code></pre><p>启动applicationMaster</p>
+<p>对于client的封装，对于applicationMaster需要启动的信息(如资源信息)及用户提交的业务代码（wordcount的类信息）信息都已经封装到appContext，并且传递到applicationmaster，那么来看看applicationMaster的执行流程。</p>
+<p>程序调用结构</p>
+<pre><code>ApplicationMaster.main()
+    -&gt;run()
+        -&gt;runDriver()
+            -&gt;run()
+                -&gt;startUserApplication()
+                    //启动userClass
+                    -&gt;userClassLoader.loadClass(args.userClass)
+      .getMethod(&quot;main&quot;, classOf[Array[String]])
+                     -&gt;mainMethod.invoke(null, mainArgs)
+                runAMActor()
+                registerAM()
+                    -&gt;yarnRmClient.register()-&gt;return new YarnAllocater(......)
+                    -&gt;yarnAllocator.allocateResources()
+                        -&gt;yarnAllocator.handleAllocatedContainers()
+                        //启动executor
+                        -&gt;yarnAllocator.runAllocatedContainers(containersToUse)
+</code></pre><p>runAllocatedContainers(containersToUse)是去启动 executor，最终真正执行启动Container的是在 ExecutorRunnable.run()中。</p>
+<p>创建了 NMClient 客户端调用提供的 API 最终实现在 NM 上启动 Container，具体如何启动 Container 将在后文中进行介绍。</p>
+<p>​    </p>
+<p>launcherPool线程池会将container，driver等相关信息封装成ExecutorRunnable对象，通过ExecutorRunnable启动新的container以运行executor。在此过程中，指定启动executor的类是</p>
+<p>org.apache.spark.executor.CoarseGrainedExecutorBackend。spark yarn cluster 模式下任务提交和计算流程分析</p>
+<p>程序的细节</p>
+<pre><code>def main(args: Array[String]) = {
+    SignalLogger.register(log)
+    val amArgs = new ApplicationMasterArguments(args)
+    SparkHadoopUtil.get.runAsSparkUser { () =&gt;
+      master = new ApplicationMaster(amArgs, new YarnRMClient(amArgs))
+      System.exit(master.run())
+    }
+  }
+
+
+  ......
+  final def run(): Int = {
+  ....
+    if (isClusterMode) {
+        runDriver(securityMgr)
+      } else {
+        runExecutorLauncher(securityMgr)
+      }
+...
+}
+
+  private def runDriver(securityMgr: SecurityManager): Unit = {
+    addAmIpFilter()
+    // TODO:  启动我们自定的类，也就是启动submit里面的--class的东西
+    userClassThread = startUserApplication()
+    val sc = waitForSparkContextInitialized()
+...
+  actorSystem = sc.env.actorSystem
+  runAMActor(
+    sc.getConf.get(&quot;spark.driver.host&quot;),
+    sc.getConf.get(&quot;spark.driver.port&quot;),
+    isClusterMode = true)
+  registerAM(sc.ui.map(_.appUIAddress).getOrElse(&quot;&quot;), securityMgr)
+  userClassThread.join()
+    ...
+  }
+</code></pre><p>在ApplicationMasterArguments设置了要启动的信息</p>
+<pre><code>class ApplicationMasterArguments(val args: Array[String]) {
+  var userJar: String = null
+  var userClass: String = null
+  var primaryPyFile: String = null
+  var pyFiles: String = null
+  var userArgs: Seq[String] = Seq[String]()
+  var executorMemory = 1024
+  var executorCores = 1
+  var numExecutors = DEFAULT_NUMBER_EXECUTORS
+  ......
+  }
+</code></pre><p>startUserApplication 主要执行了调用用户的代码，以及创建了一个 spark driver 的进程。 </p>
+<p>Start the user class, which contains the spark driver, in a separate Thread.</p>
+<pre><code>private def startUserApplication(): Thread = {
+  val classpath = Client.getUserClasspath(sparkConf)
+val urls = classpath.map { entry =&gt;
+  new URL(&quot;file:&quot; + new File(entry.getPath()).getAbsolutePath())
+}
+val userClassLoader =
+...
+// TODO:  userClass就是submit里面的--class 提交的类
+val mainMethod = userClassLoader.loadClass(args.userClass)
+  .getMethod(&quot;main&quot;, classOf[Array[String]])
+userThread.setContextClassLoader(userClassLoader)
+userThread.setName(&quot;Driver&quot;)
+userThread.start()
+userThread
+}
+</code></pre><p>从userThread.setName(“Driver”)也可以看出创建的是名为driver的进程</p>
+<p>registerAM 向 resourceManager 中正式注册 applicationMaster。注册applicationMaster 以后，并且分配资源，这样，用户代码就可以执行了，任务切分、调度、执行。</p>
+<p>然后，用户代码中的 action 会调用 SparkContext 的 runJob，SparkContext 中有很多个 runJob，但最后都是调用 DAGScheduler 的 runJob</p>
+<pre><code>  // registerAM
+   private def registerAM(uiAddress: String, securityMgr: SecurityManager) = {
+   .....
+  allocator = client.register(yarnConf,
+    if (sc != null) sc.getConf else sparkConf,
+    if (sc != null) sc.preferredNodeLocationData else Map(),
+    uiAddress,
+    historyAddress,
+    securityMgr)
+    //为exector分配资源
+  allocator.allocateResources()
+  reporterThread = launchReporterThread()
+  ......
+}
+</code></pre>
             
 
         </div>
@@ -490,7 +656,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析③client做的事情/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -499,19 +665,19 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/09/04/Spark-on-Yarn源码解析(三)client做的事情/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/09/04/Spark-on-Yarn源码解析④Spark业务代码的执行及其任务分配调度stage划分/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    Spark-on-Yarn源码解析(三)client做的事情
+                    Spark-on-Yarn源码解析(四)Spark业务代码的执行及其任务分配调度stage划分
                 
             </div>
         </a>
     
     
-        <a href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/09/04/Spark-on-Yarn源码解析②Spark-Submit解析/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Spark-on-Yarn源码解析(一)Yarn任务解析</div>
+            <div class="article-nav-title">Spark-on-Yarn源码解析(二)Spark-Submit解析</div>
         </a>
     
 </nav>

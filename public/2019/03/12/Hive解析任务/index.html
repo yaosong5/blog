@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta name="baidu-site-verification" content="WHXmBFaAkY">
+    <meta name="google-site-verification" content="vDyi3jVPymP4jOpfzY4F1zG4-FXD1T-A5unnDJuNxhs">
+    <meta charset="utf-8">
+    
+
+    <title>Hive解析任务-将json的多个属性拆分成多条记录 | 钢铁锅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="[TOC] 需求环境： 在hive表dwb.dwb_r_thrid_data中，data字段存放有json字符串">
+<meta name="keywords" content="Hive,数仓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hive解析任务-将json的多个属性拆分成多条记录">
+<meta property="og:url" content="http://gangtieguo.cn/2019/03/12/Hive解析任务/index.html">
+<meta property="og:site_name" content="钢铁锅">
+<meta property="og:description" content="[TOC] 需求环境： 在hive表dwb.dwb_r_thrid_data中，data字段存放有json字符串">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g10yhuqk6bj32jc0e4wfy.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g1100n1r1pj32s20d8t9o.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g110nazcuwj329c032aa3.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1g110qkjxjij31yk03gmx6.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g1115ip6uyj328m0bkjrw.jpg">
+<meta property="og:updated_time" content="2019-03-13T06:48:11.468Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hive解析任务-将json的多个属性拆分成多条记录">
+<meta name="twitter:description" content="[TOC] 需求环境： 在hive表dwb.dwb_r_thrid_data中，data字段存放有json字符串">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g10yhuqk6bj32jc0e4wfy.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/Basketball-icon.png">
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+     <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e304a23572827f3ea779e13779ddb9b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">钢铁锅</span>
+            </a>
+            <nav id="main-nav">
+            <a class="main-nav-link" href="/."><i class="fa fa-home"></i>主页</a>
+            <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i>归档</a>
+            <a class="main-nav-link" href="/categories"><i class="fa fa-folder"></i>分类</a>
+            <a class="main-nav-link" href="/tags"><i class="fa fa-tags"></i>标签</a>
+            <a class="main-nav-link" href="/about"><i class="fa fa-user"></i>关于</a>
+
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/.">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     主页  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/archives">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     归档  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/categories">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     分类  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/tags">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     标签  -->
+               <!--     </a>  -->
+               <!--   -->
+               <!--     <a class="main-nav-link" href="/about">  -->
+               <!--     <i class="fa fa-home"></i>  -->
+               <!--     关于  -->
+               <!--     </a>  -->
+               <!--   -->
+
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/venum.gif">
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+         <!-- <button type="submit" class="search-form-submit"></button> -->
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+             
+
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/venum.gif">
+            <h2 id="name">GTG</h2>
+            <h3 id="title">Nothing</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>四海为家</span>
+           
+        </div>
+      <div class="article-info profile-block">
+            <div class="article-info-block">
+                67
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                45
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/yaosong5" target="_blank" title="github" class="tooltip">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/gangtieguo/" target="_blank" title="weibo" class="tooltip">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+
+        
+        
+    </div>
+
+
+</aside>
+
+
+            
+
+            <section id="main"><article id="post-Hive解析任务" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Hive解析任务-将json的多个属性拆分成多条记录
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2019/03/12/Hive解析任务/">
+            <time datetime="2019-03-12T08:07:30.918Z" itemprop="datePublished">2019-03-12</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/实际问题/">实际问题</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Hive/">Hive</a>, <a class="tag-link" href="/tags/数仓/">数仓</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+       
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article " class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如果是json数组-可以很方便拆分"><span class="toc-number">1.</span> <span class="toc-text">如果是json数组,可以很方便拆分</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#顺着json数组思路，改造json样式"><span class="toc-number">2.</span> <span class="toc-text">顺着json数组思路，改造json样式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-通过get-json-object方法"><span class="toc-number">2.1.</span> <span class="toc-text">1.通过get_json_object方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-拼接获取的D360和D90字段"><span class="toc-number">2.2.</span> <span class="toc-text">2.拼接获取的D360和D90字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-最终通过分隔符进行切分"><span class="toc-number">2.3.</span> <span class="toc-text">3. 最终通过分隔符进行切分</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#完整样例"><span class="toc-number">3.</span> <span class="toc-text">完整样例</span></a></li></ol>
+            </div>
+
+
+            
+            <script type="text/javascript">
+                            function showBtn(){
+                             if($('.toc-article').hasClass('hidden')){
+                                    $('.toc-article').removeClass('hidden');
+                                }else{
+                                    $('.toc-article').addClass('hidden');
+                                }
+                                 $('.show-toc-btn').removeClass('hidden');  
+                            };
+                            function showToc(){
+                              if($('.show-toc-btn').hasClass('hidden')){
+                                      $('.show-toc-btn').removeClass('hidden');
+
+
+                                  }else{
+                                      $('.show-toc-btn').addClass('hidden');
+
+                                  }
+                                   $('.toc-article').removeClass('hidden');
+                            };
+             </script>
+
+                <p>[TOC]</p>
+<p>需求环境：</p>
+<p>在hive表dwb.dwb_r_thrid_data中，data字段存放有json字符串</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1g10yhuqk6bj32jc0e4wfy.jpg" alt></p>
+<a id="more"></a>
+<p>需要从json字符串中，解析到需要的字段：将一个json里面的属性data.loanInfo.mobile.timeScopes.D360、data.loanInfo.mobile.timeScopes.D90所包含的字段分别解析成一条记录，并且将D360、D90也作为字段timeScope的值解析到该条记录中。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"code"</span>:<span class="string">"0"</span>,</span><br><span class="line">    <span class="attr">"data"</span>:&#123;</span><br><span class="line">        <span class="attr">"loanInfo"</span>:&#123;</span><br><span class="line">            <span class="attr">"mobile"</span>:&#123;</span><br><span class="line">                <span class="attr">"timeScopes"</span>:&#123;</span><br><span class="line">                    <span class="attr">"D360"</span>:&#123;</span><br><span class="line">                        <span class="attr">"maxOverdueDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"loanTenantCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"monthsFromFirstLoan"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"averageLoanGapDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"averageLoanAmount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"averageTenantGapDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"loanCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"maxLoanAmount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"daysFromLastLoan"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"overdueTenantCount"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"queryCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"monthsFromLastOverdue"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"maxLoanPeriodDays"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"remainingAmount"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"monthsForNormalRepay"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"overdueLoanCount"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"overdueFor2TermTenantCount"</span>:<span class="number">-1</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="attr">"D90"</span>:&#123;</span><br><span class="line">                        <span class="attr">"maxOverdueDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"loanTenantCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"averageLoanGapDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"averageLoanAmount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"averageTenantGapDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"overdueLoanCount"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"overdueFor2TermTenantCount"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"loanCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"maxLoanAmount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"overdueTenantCount"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"queryCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"maxLoanPeriodDays"</span>:<span class="number">0</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"pid"</span>:&#123;</span><br><span class="line">                <span class="attr">"timeScopes"</span>:&#123;</span><br><span class="line">                    <span class="attr">"D360"</span>:&#123;</span><br><span class="line">                        <span class="attr">"maxOverdueDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"loanTenantCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"monthsFromFirstLoan"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"averageLoanGapDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"averageLoanAmount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"averageTenantGapDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"loanCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"maxLoanAmount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"daysFromLastLoan"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"overdueTenantCount"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"queryCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"monthsFromLastOverdue"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"maxLoanPeriodDays"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"remainingAmount"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"monthsForNormalRepay"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"overdueLoanCount"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"overdueFor2TermTenantCount"</span>:<span class="number">-1</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="attr">"D90"</span>:&#123;</span><br><span class="line">                        <span class="attr">"maxOverdueDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"loanTenantCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"averageLoanGapDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"averageLoanAmount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"averageTenantGapDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"overdueLoanCount"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"overdueFor2TermTenantCount"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"loanCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"maxLoanAmount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"overdueTenantCount"</span>:<span class="number">-1</span>,</span><br><span class="line">                        <span class="attr">"queryCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"maxLoanPeriodDays"</span>:<span class="number">0</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"deviceId"</span>:&#123;</span><br><span class="line">                <span class="attr">"timeScopes"</span>:&#123;</span><br><span class="line">                    <span class="attr">"D360"</span>:&#123;</span><br><span class="line">                        <span class="attr">"loanTenantCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"loanCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"queryCount"</span>:<span class="number">0</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="attr">"D90"</span>:&#123;</span><br><span class="line">                        <span class="attr">"loanTenantCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"loanCount"</span>:<span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"queryCount"</span>:<span class="number">0</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"blacklist"</span>:&#123;</span><br><span class="line">            <span class="attr">"mobile"</span>:&#123;</span><br><span class="line">                <span class="attr">"lastConfirmAtDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                <span class="attr">"lastConfirmStatus"</span>:<span class="string">""</span>,</span><br><span class="line">                <span class="attr">"blackLevel"</span>:<span class="string">"none"</span>,</span><br><span class="line">                <span class="attr">"last6MTenantCount"</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">"last6MQueryCount"</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">"last12MMaxConfirmStatus"</span>:<span class="string">""</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"pid"</span>:&#123;</span><br><span class="line">                <span class="attr">"lastConfirmAtDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                <span class="attr">"lastConfirmStatus"</span>:<span class="string">""</span>,</span><br><span class="line">                <span class="attr">"blackLevel"</span>:<span class="string">"none"</span>,</span><br><span class="line">                <span class="attr">"last6MTenantCount"</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">"last6MQueryCount"</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">"last12MMaxConfirmStatus"</span>:<span class="string">""</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"deviceId"</span>:&#123;</span><br><span class="line">                <span class="attr">"lastConfirmAtDays"</span>:<span class="number">-1</span>,</span><br><span class="line">                <span class="attr">"lastConfirmStatus"</span>:<span class="string">""</span>,</span><br><span class="line">                <span class="attr">"blackLevel"</span>:<span class="string">"none"</span>,</span><br><span class="line">                <span class="attr">"last6MTenantCount"</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">"last6MQueryCount"</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">"last12MMaxConfirmStatus"</span>:<span class="string">""</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"message"</span>:<span class="string">"请求成功"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>表结构形如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> dwb.dwb_r_morpho_loaninfo_mobile(</span><br><span class="line">       apply_risk_id                        <span class="keyword">string</span> <span class="keyword">comment</span>  <span class="string">"风控ID"</span>,</span><br><span class="line">       dp_data_id                           <span class="keyword">string</span> <span class="keyword">comment</span>  <span class="string">"dp_dataID"</span>,</span><br><span class="line">       maxOverdueDays                       <span class="keyword">string</span>,</span><br><span class="line">       loanTenantCount                      <span class="keyword">string</span>,</span><br><span class="line">       monthsFromFirstLoan                  <span class="keyword">string</span>,</span><br><span class="line">       averageLoanGapDays                   <span class="keyword">string</span>,</span><br><span class="line">       averageLoanAmount                    <span class="keyword">string</span>,</span><br><span class="line">       averageTenantGapDays                 <span class="keyword">string</span>,</span><br><span class="line">       loanCount                            <span class="keyword">string</span>,</span><br><span class="line">       maxLoanAmount                        <span class="keyword">string</span>,</span><br><span class="line">       daysFromLastLoan                     <span class="keyword">string</span>,</span><br><span class="line">       overdueTenantCount                   <span class="keyword">string</span>,</span><br><span class="line">       queryCount                           <span class="keyword">string</span>,</span><br><span class="line">       monthsFromLastOverdue                <span class="keyword">string</span>,</span><br><span class="line">       maxLoanPeriodDays                    <span class="keyword">string</span>,</span><br><span class="line">       remainingAmount                      <span class="keyword">string</span>,</span><br><span class="line">       monthsForNormalRepay                 <span class="keyword">string</span>,</span><br><span class="line">       overdueLoanCount                     <span class="keyword">string</span>,</span><br><span class="line">       overdueFor2TermTenantCount           <span class="keyword">string</span>,</span><br><span class="line">       timeScope                            <span class="keyword">string</span> <span class="keyword">comment</span>  <span class="string">"时间期限"</span>,</span><br><span class="line">       morpho_created_at                    <span class="keyword">string</span> <span class="keyword">comment</span>  <span class="string">"创建时间"</span>,</span><br><span class="line">       etl_time                             <span class="keyword">string</span> <span class="keyword">comment</span>  <span class="string">"etl处理时间"</span></span><br><span class="line">) <span class="keyword">comment</span> <span class="string">'moblie'</span> </span><br><span class="line"> PARTITIONED <span class="keyword">BY</span> (dt <span class="keyword">string</span>  <span class="keyword">comment</span> <span class="string">'分区日期'</span>)</span><br><span class="line"> <span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">'\001'</span></span><br><span class="line"> <span class="literal">NULL</span> DEFINED <span class="keyword">AS</span> <span class="string">''</span></span><br><span class="line"> <span class="keyword">stored</span> <span class="keyword">as</span> orc;</span><br></pre></td></tr></table></figure>
+<p>接下来就开始表演吧。</p>
+<h1 id="如果是json数组-可以很方便拆分"><a href="#如果是json数组-可以很方便拆分" class="headerlink" title="如果是json数组,可以很方便拆分"></a>如果是json数组,可以很方便拆分</h1><p>我们都知道对于一条json里面值为json数组的属性，hive可以将其获取到并且进行拆分成多条记录：</p>
+<p>如以下infoquerybean属性：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"overduemoreamt"</span>:<span class="string">"0"</span>,</span><br><span class="line">    <span class="attr">"loancount"</span>:<span class="string">"0"</span>,</span><br><span class="line">    <span class="attr">"loanbal"</span>:<span class="string">"0"</span>,</span><br><span class="line">    <span class="attr">"outstandcount"</span>:<span class="string">"0"</span>,</span><br><span class="line">    <span class="attr">"queryatotalorg"</span>:<span class="string">"最近***********"</span>,</span><br><span class="line">    <span class="attr">"loanamt"</span>:<span class="string">"0"</span>,</span><br><span class="line">    <span class="attr">"overdueamt"</span>:<span class="string">"0"</span>,</span><br><span class="line">    <span class="attr">"generationcount"</span>:<span class="string">"0"</span>,</span><br><span class="line">    <span class="attr">"msgContent"</span>:<span class="string">"成功!"</span>,</span><br><span class="line">    <span class="attr">"generationamount"</span>:<span class="string">"0"</span>,</span><br><span class="line">    <span class="attr">"overduemorecount"</span>:<span class="string">"0"</span>,</span><br><span class="line">    <span class="attr">"totalorg"</span>:<span class="string">"*************"</span>,</span><br><span class="line">    <span class="attr">"infoquerybean"</span>:[</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"s_value"</span>:<span class="string">"审批"</span>,</span><br><span class="line">            <span class="attr">"ddate"</span>:<span class="string">"2018-09-10"</span>,</span><br><span class="line">            <span class="attr">"ordernum"</span>:<span class="string">"1"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"s_value"</span>:<span class="string">"审批"</span>,</span><br><span class="line">            <span class="attr">"ddate"</span>:<span class="string">"2018-09-06"</span>,</span><br><span class="line">            <span class="attr">"ordernum"</span>:<span class="string">"2"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"s_value"</span>:<span class="string">"审批"</span>,</span><br><span class="line">            <span class="attr">"ddate"</span>:<span class="string">"2018-08-21"</span>,</span><br><span class="line">            <span class="attr">"ordernum"</span>:<span class="string">"3"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"s_value"</span>:<span class="string">"审批"</span>,</span><br><span class="line">            <span class="attr">"ddate"</span>:<span class="string">"2018-08-09"</span>,</span><br><span class="line">            <span class="attr">"ordernum"</span>:<span class="string">"4"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"s_value"</span>:<span class="string">"审批"</span>,</span><br><span class="line">            <span class="attr">"ddate"</span>:<span class="string">"2018-07-28"</span>,</span><br><span class="line">            <span class="attr">"ordernum"</span>:<span class="string">"5"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"s_value"</span>:<span class="string">"审批"</span>,</span><br><span class="line">            <span class="attr">"ddate"</span>:<span class="string">"2018-07-27"</span>,</span><br><span class="line">            <span class="attr">"ordernum"</span>:<span class="string">"6"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"overduecount"</span>:<span class="string">"0"</span>,</span><br><span class="line">    <span class="attr">"msgCode"</span>:<span class="string">"200"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以通过split拆分成结果,插入到形状如下的表中：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> dwb.dwb_r_nifa_share_detail_n(</span><br><span class="line">       apply_risk_id                        <span class="keyword">string</span> <span class="keyword">comment</span>  <span class="string">"风控ID"</span>,</span><br><span class="line">       dp_data_id                           <span class="keyword">string</span> <span class="keyword">comment</span>  <span class="string">"dp_dataID"</span>,</span><br><span class="line">       nifa_share_detail_ordernum <span class="keyword">string</span> <span class="keyword">comment</span> <span class="string">'序号'</span>,</span><br><span class="line">       nifa_share_detail_ddate <span class="keyword">string</span> <span class="keyword">comment</span> <span class="string">'查询日期'</span>,</span><br><span class="line">       nifa_share_detail_s_value <span class="keyword">string</span> <span class="keyword">comment</span> <span class="string">'查询原因'</span>,</span><br><span class="line">       nifa_share_created_at                <span class="keyword">string</span> <span class="keyword">comment</span>  <span class="string">"创建时间"</span>,</span><br><span class="line">       etl_time                             <span class="keyword">string</span> <span class="keyword">comment</span>  <span class="string">"etl处理时间"</span></span><br><span class="line">) <span class="keyword">comment</span> <span class="string">'table test'</span> </span><br><span class="line"> PARTITIONED <span class="keyword">BY</span> (dt <span class="keyword">string</span>  <span class="keyword">comment</span> <span class="string">'分区日期'</span>)</span><br><span class="line"> <span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">'\001'</span></span><br><span class="line"> <span class="literal">NULL</span> DEFINED <span class="keyword">AS</span> <span class="string">''</span></span><br><span class="line"> <span class="keyword">stored</span> <span class="keyword">as</span> orc;</span><br></pre></td></tr></table></figure>
+<p>通过 </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explode(split(default.get_json_path(a.data,'infoquerybean'),'@\\|@'))</span><br></pre></td></tr></table></figure>
+<p>将其拆分成多条记录，完整sql见下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">dt=$1</span><br><span class="line">hive&lt;&lt;!</span><br><span class="line"><span class="keyword">set</span> mapreduce.job.queuename=root.dw;</span><br><span class="line"><span class="keyword">set</span> hive.support.concurrency=<span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> overwrite <span class="keyword">table</span> dwb.dwb_r_nifa_share_detail_n <span class="keyword">partition</span>(dt=<span class="string">'$dt'</span>)</span><br><span class="line"><span class="keyword">select</span> </span><br><span class="line">      a.apply_risk_id,</span><br><span class="line">      a.dp_data_id,</span><br><span class="line">      nifa_share_detail_ordernum,</span><br><span class="line">      nifa_share_detail_ddate,</span><br><span class="line">      nifa_share_detail_s_value,</span><br><span class="line">      from_unixtime(<span class="keyword">cast</span>(a.timestamp/<span class="number">1000</span> <span class="keyword">as</span> <span class="built_in">bigint</span>),<span class="string">'yyyy-MM-dd HH:mm:ss'</span>) <span class="keyword">as</span> nifa_share_created_at,</span><br><span class="line">      <span class="keyword">current_timestamp</span>() <span class="keyword">as</span> etl_time</span><br><span class="line"><span class="keyword">from</span> (<span class="keyword">select</span> dwb_r_thrid_data.apply_risk_id,dwb_r_thrid_data.dp_data_id,dwb_r_thrid_data.data,dwb_r_thrid_data.timestamp </span><br><span class="line">       <span class="keyword">from</span> dwb.dwb_r_thrid_data   <span class="keyword">where</span>  channel_name = <span class="string">'nifa_prod'</span> <span class="keyword">and</span> interface_name = <span class="string">'share'</span> <span class="keyword">and</span> get_json_object(<span class="keyword">data</span>,<span class="string">'$.msgCode'</span>) = <span class="string">'200'</span> <span class="keyword">and</span> dwb_r_thrid_data.dt=<span class="string">'$dt'</span></span><br><span class="line"> ) a </span><br><span class="line"> lateral <span class="keyword">view</span> explode(<span class="keyword">split</span>(default.get_json_path(a.data,<span class="string">'infoquerybean'</span>),<span class="string">'@\\\\|@'</span>)) b <span class="keyword">as</span> infoquerybean</span><br><span class="line"> lateral <span class="keyword">view</span> default.json_tuple2(b.infoquerybean,<span class="string">'ordernum'</span>,<span class="string">'ddate'</span>,<span class="string">'ordernum'</span>) c <span class="keyword">as</span> nifa_share_detail_ordernu,nifa_share_detail_ddate, nifa_share_detail_s_value</span><br><span class="line">;</span><br><span class="line">!</span><br></pre></td></tr></table></figure>
+<p>得到结果：</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1g1100n1r1pj32s20d8t9o.jpg" alt="得到结果"></p>
+<h1 id="顺着json数组思路，改造json样式"><a href="#顺着json数组思路，改造json样式" class="headerlink" title="顺着json数组思路，改造json样式"></a>顺着json数组思路，改造json样式</h1><p>通过get_json_object()方法，得到两个json属性，通过concat拼接成json数组，就可以像上面那样拆分成多条记录。（测试阶段的样例都使用了设定分区dt,限制条数，因为这样测试起来很快，只需要三秒!!!!😁😁😁😁）</p>
+<h2 id="1-通过get-json-object方法"><a href="#1-通过get-json-object方法" class="headerlink" title="1.通过get_json_object方法"></a>1.通过get_json_object方法</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> get_json_object(td.data,<span class="string">"$.data.loanInfo.mobile.timeScopes.D360"</span>) d3,get_json_object(td.data,<span class="string">"$.data.loanInfo.mobile.timeScopes.D90"</span>)  d9  <span class="keyword">from</span> dwb.dwb_r_thrid_data td  <span class="keyword">where</span> channel_name =<span class="string">'morpho'</span> <span class="keyword">and</span> interface_name =<span class="string">'query'</span> <span class="keyword">and</span> dt=<span class="string">'20190218'</span> <span class="keyword">limit</span> <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>得到</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1g110nazcuwj329c032aa3.jpg" alt></p>
+<h2 id="2-拼接获取的D360和D90字段"><a href="#2-拼接获取的D360和D90字段" class="headerlink" title="2.拼接获取的D360和D90字段"></a>2.拼接获取的D360和D90字段</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> td.*,<span class="keyword">concat</span>(regexp_replace(get_json_object(td.data,<span class="string">"$.data.loanInfo.mobile.timeScopes.D360"</span>),<span class="string">'&#125;'</span>,<span class="string">',"timeScope":"D360"&#125;'</span>),<span class="string">"|"</span>,regexp_replace(get_json_object(td.data,<span class="string">"$.data.loanInfo.mobile.timeScopes.D90"</span>),<span class="string">'&#125;'</span>,<span class="string">',"timeScope":"D90"&#125;'</span>)) ts  <span class="keyword">from</span> dwb.dwb_r_thrid_data td  <span class="keyword">where</span>  channel_name =<span class="string">'morpho'</span> <span class="keyword">and</span> interface_name =<span class="string">'query'</span> <span class="keyword">and</span> dt=<span class="string">'20190218'</span> <span class="keyword">limit</span> <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1g110qkjxjij31yk03gmx6.jpg" alt></p>
+<p>拼接的字符串样式，通过”|”分隔两个对象 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;"maxOverdueDays":-1,"monthsFromFirstLoan":-1,"loanTenantCount":0,"averageLoanGapDays":-1,"averageTenantGapDays":-1,"averageLoanAmount":0,"loanCount":0,"maxLoanAmount":0,"overdueTenantCount":-1,"daysFromLastLoan":-1,"queryCount":0,"monthsFromLastOverdue":-1,"maxLoanPeriodDays":0,"remainingAmount":-1,"monthsForNormalRepay":-1,"overdueLoanCount":-1,"overdueFor2TermTenantCount":-1,"timeScope":"D360"&#125;|&#123;"maxOverdueDays":-1,"loanTenantCount":0,"averageLoanGapDays":-1,"averageTenantGapDays":-1,"averageLoanAmount":0,"overdueLoanCount":-1,"overdueFor2TermTenantCount":-1,"loanCount":0,"overdueTenantCount":-1,"maxLoanAmount":0,"queryCount":0,"maxLoanPeriodDays":0,"timeScope":"D90"&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-最终通过分隔符进行切分"><a href="#3-最终通过分隔符进行切分" class="headerlink" title="3. 最终通过分隔符进行切分"></a>3. 最终通过分隔符进行切分</h2><p>对于涉及到分隔符，转义字符的个数，请参考该文章<a href="https://yaosong5.gitbook.io/yao/shi-ji-wen-ti-jie-jue/shu-cang-jie-jue-hive-chu-li-yi-chang-json-ming-ling-hang-zhuan-yi-zi-fu-de-wen-ti" target="_blank" rel="noopener">数仓-解决hive处理异常json命令行转义字符的问题</a></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">      a.apply_risk_id,</span><br><span class="line">      a.dp_data_id,</span><br><span class="line">      c.*,</span><br><span class="line">      from_unixtime(<span class="keyword">cast</span>(a.timestamp/<span class="number">1000</span> <span class="keyword">as</span> <span class="built_in">bigint</span>),<span class="string">'yyyy-MM-dd HH:mm:ss'</span>) <span class="keyword">as</span> morpho_created_at,</span><br><span class="line">      <span class="keyword">current_timestamp</span>() <span class="keyword">as</span> etl_time</span><br><span class="line"><span class="keyword">from</span> (<span class="keyword">select</span> td.*,<span class="keyword">concat</span>(regexp_replace(get_json_object(td.data,<span class="string">"$.data.loanInfo.mobile.timeScopes.D360"</span>),<span class="string">'&#125;'</span>,<span class="string">',"timeScope":"D360"&#125;'</span>),<span class="string">"|"</span>,regexp_replace(get_json_object(td.data,<span class="string">"$.data.loanInfo.mobile.timeScopes.D90"</span>),<span class="string">'&#125;'</span>,<span class="string">',"timeScope":"D90"&#125;'</span>)) ts</span><br><span class="line">           <span class="keyword">from</span> dwb.dwb_r_thrid_data td</span><br><span class="line">           <span class="keyword">where</span></span><br><span class="line">             channel_name =<span class="string">'morpho'</span> <span class="keyword">and</span> interface_name =<span class="string">'query'</span> <span class="keyword">and</span> td.dt=<span class="string">'20190218'</span> <span class="keyword">limit</span> <span class="number">5</span></span><br><span class="line">     ) a</span><br><span class="line">lateral <span class="keyword">view</span> explode(<span class="keyword">split</span>(a.ts,<span class="string">'\\\\|'</span>)) b <span class="keyword">as</span> <span class="keyword">list</span></span><br><span class="line">lateral <span class="keyword">view</span> default.json_tuple2(b.list,<span class="string">'maxOverdueDays'</span>,<span class="string">'loanTenantCount'</span>,<span class="string">'monthsFromFirstLoan'</span>,<span class="string">'averageLoanGapDays'</span>,<span class="string">'averageLoanAmount'</span>,<span class="string">'averageTenantGapDays'</span>,<span class="string">'loanCount'</span>,<span class="string">'maxLoanAmount'</span>,<span class="string">'daysFromLastLoan'</span>,<span class="string">'overdueTenantCount'</span>,<span class="string">'queryCount'</span>,<span class="string">'monthsFromLastOverdue'</span>,<span class="string">'maxLoanPeriodDays'</span>,<span class="string">'remainingAmount'</span>,<span class="string">'monthsForNormalRepay'</span>,<span class="string">'overdueLoanCount'</span>,<span class="string">'overdueFor2TermTenantCount'</span>,<span class="string">'timeScope'</span>) </span><br><span class="line">c <span class="keyword">as</span> maxOverdueDays,loanTenantCount,monthsFromFirstLoan,averageLoanGapDays,averageLoanAmount,averageTenantGapDays,loanCount,maxLoanAmount,daysFromLastLoan,overdueTenantCount,queryCount,monthsFromLastOverdue,maxLoanPeriodDays,remainingAmount,monthsForNormalRepay,overdueLoanCount,overdueFor2TermTenantCount,timeScope</span><br></pre></td></tr></table></figure>
+<p>搞定</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1g1115ip6uyj328m0bkjrw.jpg" alt="得到结果"></p>
+<h1 id="完整样例"><a href="#完整样例" class="headerlink" title="完整样例"></a>完整样例</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">dt=$1</span><br><span class="line"></span><br><span class="line">hive&lt;&lt;!</span><br><span class="line"><span class="keyword">set</span> mapreduce.job.queuename=root.dw;</span><br><span class="line"><span class="keyword">set</span> hive.support.concurrency=<span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> overwrite <span class="keyword">table</span> dwb.dwb_r_morpho_loaninfo_mobile <span class="keyword">partition</span>(dt=<span class="string">'$dt'</span>)</span><br><span class="line"><span class="keyword">select</span> </span><br><span class="line">      a.apply_risk_id,</span><br><span class="line">      a.dp_data_id,</span><br><span class="line">      c.*,</span><br><span class="line">      from_unixtime(<span class="keyword">cast</span>(a.timestamp/<span class="number">1000</span> <span class="keyword">as</span> <span class="built_in">bigint</span>),<span class="string">'yyyy-MM-dd HH:mm:ss'</span>) <span class="keyword">as</span> morpho_created_at,</span><br><span class="line">      <span class="keyword">current_timestamp</span>() <span class="keyword">as</span> etl_time</span><br><span class="line"><span class="keyword">from</span> (<span class="keyword">select</span> td.*,<span class="keyword">concat</span>(regexp_replace(get_json_object(td.data,<span class="string">"$.data.loanInfo.mobile.timeScopes.D360"</span>),<span class="string">'&#125;'</span>,<span class="string">',"timeScope":"D360"&#125;'</span>),<span class="string">"|"</span>,regexp_replace(get_json_object(td.data,<span class="string">"$.data.loanInfo.mobile.timeScopes.D90"</span>),<span class="string">'&#125;'</span>,<span class="string">',"timeScope":"D90"&#125;'</span>)) ts</span><br><span class="line">           <span class="keyword">from</span> dwb.dwb_r_thrid_data td</span><br><span class="line">           <span class="keyword">where</span></span><br><span class="line">             channel_name =<span class="string">'morpho'</span> <span class="keyword">and</span> interface_name =<span class="string">'query'</span> <span class="keyword">and</span> td.dt=<span class="string">'20190218'</span> <span class="keyword">limit</span> <span class="number">5</span></span><br><span class="line">     ) a</span><br><span class="line">lateral <span class="keyword">view</span> explode(<span class="keyword">split</span>(a.ts,<span class="string">'\\\\|'</span>)) b <span class="keyword">as</span> <span class="keyword">list</span></span><br><span class="line">lateral <span class="keyword">view</span> default.json_tuple2(b.list,<span class="string">'maxOverdueDays'</span>,<span class="string">'loanTenantCount'</span>,<span class="string">'monthsFromFirstLoan'</span>,<span class="string">'averageLoanGapDays'</span>,<span class="string">'averageLoanAmount'</span>,<span class="string">'averageTenantGapDays'</span>,<span class="string">'loanCount'</span>,<span class="string">'maxLoanAmount'</span>,<span class="string">'daysFromLastLoan'</span>,<span class="string">'overdueTenantCount'</span>,<span class="string">'queryCount'</span>,<span class="string">'monthsFromLastOverdue'</span>,<span class="string">'maxLoanPeriodDays'</span>,<span class="string">'remainingAmount'</span>,<span class="string">'monthsForNormalRepay'</span>,<span class="string">'overdueLoanCount'</span>,<span class="string">'overdueFor2TermTenantCount'</span>,<span class="string">'timeScope'</span>) </span><br><span class="line">c <span class="keyword">as</span> maxOverdueDays,loanTenantCount,monthsFromFirstLoan,averageLoanGapDays,averageLoanAmount,averageTenantGapDays,loanCount,maxLoanAmount,daysFromLastLoan,overdueTenantCount,queryCount,monthsFromLastOverdue,maxLoanPeriodDays,remainingAmount,monthsForNormalRepay,overdueLoanCount,overdueFor2TermTenantCount,timeScope</span><br><span class="line">;</span><br><span class="line">!</span><br></pre></td></tr></table></figure>
+<p>参考：<a href="http://www.lilysui.cn/tech/2017/11/02/row-to-column" target="_blank" rel="noopener">HIVE: lateral view explode &amp; json_turpe 实现 json数组行转列&amp;字段拆分</a></p>
+
+            
+
+        </div>
+
+        <footer class="article-footer">
+
+        
+        <! -- 添加捐赠图标 -->
+<div class="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           如果您觉得文章不错，就请我看场ufc直播🤓🤓🤓🤓🤓！
+        </span>
+        <br>
+      </div>  
+    <div id="donate_guide" class="donate_bar center hidden">
+        <!-- 支付宝打赏图案 -->
+        <img src="/css/images/alipay.jpg" alt="支付宝打赏"> 
+        <!-- 微信打赏图案 -->
+        <img src="/css/images/wechatpay.jpg" alt="微信打赏">  
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            if($('#donate_guide').hasClass('hidden')){
+                $('#donate_guide').removeClass('hidden');
+            }else{
+                $('#donate_guide').addClass('hidden');
+            }
+        }
+    </script>
+</div>
+<! -- 添加捐赠图标 -->
+        
+            <div class="share-container">
+
+
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+    <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+</div>
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<style>
+    .bdshare_popup_box {
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .bdshare-button-style0-16 a,
+    .bdshare-button-style0-16 .bds_more {
+        padding-left: 20px;
+        margin: 6px 10px 6px 0;
+    }
+    .bdshare_dialog_list a,
+    .bdshare_popup_list a,
+    .bdshare_popup_bottom a {
+        font-family: 'Microsoft Yahei';
+    }
+    .bdshare_popup_top {
+        display: none;
+    }
+    .bdshare_popup_bottom {
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+
+</div>
+
+            
+    
+        <a href="http://gangtieguo.cn/2019/03/12/Hive解析任务/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/03/12/mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title"></div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjM2MS8xMjg5Ng=="></div>
+</section>
+    
+
+</section>
+            
+            
+        </div>
+        <footer id="footer">
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol ==='https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 GTG<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>Analyse with <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273739152'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273739152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+    </div>
+</footer>
+        
+    
+    
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+
+         if (typeof LivereTower === 'function') { return; }
+
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+    </script>
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+  <!-- City版安装代码已完成 -->
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

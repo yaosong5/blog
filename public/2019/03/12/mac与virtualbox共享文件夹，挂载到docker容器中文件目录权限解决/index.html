@@ -6,23 +6,26 @@
     <meta charset="utf-8">
     
 
-    <title>Spark-on-Yarn源码解析(一)Yarn任务解析 | 钢铁锅</title>
+    <title>钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="[TOC] spark-on-yarn系列Spark-on-Yarn 源码解析 (一)Yarn 任务解析Yarn任务解析/)Spark-on-Yarn 源码解析 (二)Spark-Submit 解析Spark-Submit解析/)Spark-on-Yarn 源码解析 (三)client 做的事情client做的事情/)Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务分">
-<meta name="keywords" content="原理,Spark,Yarn">
+    <meta name="description" content="[TOC] 共享文件夹的权限问题参考：Virtualbox设置共享文件夹 由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。 手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 chmod chown 等命令是无法改变的。 如果想要配置挂载目录的权限，需要在手动挂载的时候指定一些选项： 12345// uid gid指定挂载目录的所属用">
+<meta name="keywords" content="Nothing">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spark-on-Yarn源码解析(一)Yarn任务解析">
-<meta property="og:url" content="http://gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/index.html">
+<meta property="og:title" content="钢铁锅">
+<meta property="og:url" content="http://gangtieguo.cn/2019/03/12/mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] spark-on-yarn系列Spark-on-Yarn 源码解析 (一)Yarn 任务解析Yarn任务解析/)Spark-on-Yarn 源码解析 (二)Spark-Submit 解析Spark-Submit解析/)Spark-on-Yarn 源码解析 (三)client 做的事情client做的事情/)Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务分">
+<meta property="og:description" content="[TOC] 共享文件夹的权限问题参考：Virtualbox设置共享文件夹 由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。 手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 chmod chown 等命令是无法改变的。 如果想要配置挂载目录的权限，需要在手动挂载的时候指定一些选项： 12345// uid gid指定挂载目录的所属用">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://img.gangtieguo.cn/15358192541466.jpg">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fuaxd9man3j31020o60w1.jpg">
-<meta property="og:updated_time" content="2018-12-25T03:53:51.568Z">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g0zs97hho1j3130078gph.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g0zsdwrv03j30ma0160st.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1g0zsbf3r1kj312u07odjp.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1g0ztcg8e6jj30w20eu0yg.jpg">
+<meta property="og:updated_time" content="2019-03-12T02:56:05.193Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spark-on-Yarn源码解析(一)Yarn任务解析">
-<meta name="twitter:description" content="[TOC] spark-on-yarn系列Spark-on-Yarn 源码解析 (一)Yarn 任务解析Yarn任务解析/)Spark-on-Yarn 源码解析 (二)Spark-Submit 解析Spark-Submit解析/)Spark-on-Yarn 源码解析 (三)client 做的事情client做的事情/)Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务分">
-<meta name="twitter:image" content="http://img.gangtieguo.cn/15358192541466.jpg">
+<meta name="twitter:title" content="钢铁锅">
+<meta name="twitter:description" content="[TOC] 共享文件夹的权限问题参考：Virtualbox设置共享文件夹 由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。 手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 chmod chown 等命令是无法改变的。 如果想要配置挂载目录的权限，需要在手动挂载的时候指定一些选项： 12345// uid gid指定挂载目录的所属用">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg">
     
 
     
@@ -210,11 +213,11 @@ var _hmt = _hmt || [];
         </div>
       <div class="article-info profile-block">
             <div class="article-info-block">
-                65
+                67
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                44
+                45
                 <span>标签</span>
             </div>
         </div>
@@ -250,67 +253,14 @@ var _hmt = _hmt || [];
 
             
 
-            <section id="main"><article id="post-Spark-on-Yarn源码解析(一)Yarn任务解析" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
-        
-            <header class="article-header">
-                
-    
-        <h1 class="article-title" itemprop="name">
-            Spark-on-Yarn源码解析(一)Yarn任务解析
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/">
-            <time datetime="2018-09-04T07:44:58.661Z" itemprop="datePublished">2018-09-04</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Spark-On-Yarn/">Spark-On-Yarn</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/Yarn/">Yarn</a>, <a class="tag-link" href="/tags/原理/">原理</a>
-    </div>
-
-                    </div>
-                
-            </header>
         
        
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-
-
-
-
-            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
-                    <i class="fa fa-align-justify" aria-hidden="true"></i>
-                    <span class="btn-text"> 文章目录</span>
-            </p>
-
-
-            <div id="toc toc-article " class="toc-article">
-                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
-                <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#yarn任务的提交"><span class="toc-number">1.</span> <span class="toc-text">yarn任务的提交</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Spark-On-Yarn的流程提交"><span class="toc-number">2.</span> <span class="toc-text">Spark-On-Yarn的流程提交</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ApplicationMaster和Driver的区别"><span class="toc-number">3.</span> <span class="toc-text">ApplicationMaster和Driver的区别</span></a></li></ol>
-            </div>
-
-
             
             <script type="text/javascript">
                             function showBtn(){
@@ -335,35 +285,48 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
-<p>spark-on-yarn系列<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(一" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (一)Yarn 任务解析</a>Yarn任务解析/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(二" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (二)Spark-Submit 解析</a>Spark-Submit解析/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(三" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (三)client 做的事情</a>client做的事情/)<br><a href="http://www.gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(四" target="_blank" rel="noopener">Spark-on-Yarn 源码解析 (四)Spark 业务代码的执行及其任务分配调度 stage 划分</a>Spark业务代码的执行及其任务分配调度stage划分/)</p>
-<p>了解spark-on-yarn,首先我们了解一下yarn提交的流程，俗话说，欲练此功，错了，我们还是先看吧</p>
-<h1 id="yarn任务的提交"><a href="#yarn任务的提交" class="headerlink" title="yarn任务的提交"></a>yarn任务的提交</h1><p>YARN 的基本架构和工作流程</p>
-<p><img src="http://img.gangtieguo.cn/15358192541466.jpg" alt></p>
-<p>YARN 的基本架构如上图所示，由三大功能模块组成，分别是 1) RM (ResourceManager) 2) NM (Node Manager) 3) AM(Application Master)<br><a id="more"></a><br>作业提交</p>
-<ol>
-<li>用户通过 Client 向 ResourceManager 提交 Application， ResourceManager 根据用户请求分配合适的 Container, 然后在指定的 NodeManager 上运行 Container 以启动 ApplicationMaster</li>
-<li>ApplicationMaster 启动完成后，向 ResourceManager 注册自己</li>
-<li>对于用户的 Task，ApplicationMaster 需要首先跟 ResourceManager 进行协商以获取运行用户 Task 所需要的 Container，在获取成功后，ApplicationMaster 将任务发送给指定的 NodeManager</li>
-<li>NodeManager 启动相应的 Container，并运行用户 Task</li>
-</ol>
-<!--more-->
-<h1 id="Spark-On-Yarn的流程提交"><a href="#Spark-On-Yarn的流程提交" class="headerlink" title="Spark-On-Yarn的流程提交"></a>Spark-On-Yarn的流程提交</h1><p>在 <strong>yarn-cluster 模式下，Spark driver 运行在 application master 进程中</strong>，这个进程被集群中的 YARN 所管理，客户端会在初始化应用程序 之后关闭。在 yarn-client 模式下，driver 运行在客户端进程中，application master 仅仅用来向 YARN 请求资源</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fuaxd9man3j31020o60w1.jpg" alt></p>
-<p>Spark Driver首先作为一个ApplicationMaster在YARN集群中启动，客户端提交给ResourceManager的时候，每一个job都会在集群的NodeManager节点上分配一个唯一的ApplicationMaster，由该ApplicationMaster管理全生命周期的应用。具体过程：</p>
-<ol>
-<li>由client向ResourceManager提交请求，并上传jar到HDFS上<br>这期间包括四个步骤：<br>a).连接到RM<br>b).从RM的ASM（ApplicationsManager ）中获得metric、queue和resource等信息。<br>c). upload app jar and spark-assembly jar<br>d).设置运行环境和container上下文（launch-container.sh等脚本)</li>
-<li>ResouceManager向NodeManager申请资源，创建Spark ApplicationMaster（每个SparkContext都有一个ApplicationMaster）</li>
-<li>NodeManager启动ApplicationMaster，并向ResourceManager AsM注册</li>
-<li>ApplicationMaster从HDFS中找到jar文件，启动SparkContext、DAGscheduler和YARN Cluster Scheduler</li>
-<li>ResourceManager向ResourceManager AsM注册申请container资源</li>
-<li>ResourceManager通知NodeManager分配Container，这时可以收到来自ASM关于container的报告。（每个container对应一个executor）</li>
-<li>Spark ApplicationMaster直接和container（executor）进行交互，完成这个分布式任务。</li>
-</ol>
-<h1 id="ApplicationMaster和Driver的区别"><a href="#ApplicationMaster和Driver的区别" class="headerlink" title="ApplicationMaster和Driver的区别"></a>ApplicationMaster和Driver的区别</h1><p>首先区分下 AppMaster 和 Driver，任何一个 yarn 上运行的任务都必须有一个 AppMaster，而任何一个 Spark 任务都会有一个 Driver，Driver 就是运行 SparkContext(它会构建 TaskScheduler 和 DAGScheduler) 的进程，当然在 Driver 上你也可以做很多非 Spark 的事情，这些事情只会在 Driver 上面执行，而由 SparkContext 上牵引出来的代码则会由 DAGScheduler 分析，并形成 Job 和 Stage 交由 TaskScheduler，再由 TaskScheduler 交由各 Executor 分布式执行。</p>
-<p>所以 Driver 和 AppMaster 是两个完全不同的东西，Driver 是控制 Spark 计算和任务资源的，而 AppMaster 是控制 yarn app 运行和任务资源的，只不过在 Spark on Yarn 上，这两者就出现了交叉，而在 standalone 模式下，资源则由 Driver 管理。在 Spark on Yarn 上，Driver 会和 AppMaster 通信，资源的申请由 AppMaster 来完成，而任务的调度和执行则由 Driver 完成，Driver 会通过与 AppMaster 通信来让 Executor 的执行具体的任务。</p>
+<h1 id="共享文件夹的权限问题"><a href="#共享文件夹的权限问题" class="headerlink" title="共享文件夹的权限问题"></a>共享文件夹的权限问题</h1><p>参考：<a href="http://yukai.space/2018/05/02/VirtualBox%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9/" target="_blank" rel="noopener">Virtualbox设置共享文件夹</a></p>
+<p>由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。</p>
+<p>手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 <code>chmod chown</code> 等命令是无法改变的。</p>
+<p>如果想要配置挂载目录的权限，需要在手动挂载的时候指定一些选项：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// uid gid指定挂载目录的所属用户和组</span><br><span class="line">sudo mount -t vboxsf -o uid=500,gid=500  &lt;folder name given in VirtualBox&gt;</span><br><span class="line">// fmode指定文件权限，dmode指定目录权限</span><br><span class="line">// 注意，若同时指定挂载目录的所属用户和组，则fmode和dmode选项失效</span><br><span class="line">sudo mount -t vboxsf -o fmode=700,dmode=700  &lt;folder name given in VirtualBox&gt;</span><br></pre></td></tr></table></figure>
+<p>我使用的命令为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount -t vboxsf -o uid=500,gid=500 Y  /Users/yaosong/Yao</span><br></pre></td></tr></table></figure>
+<p>此处Y为我设置的共享路径</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg" alt="共享路径"></p>
+<p>踩过的坑：</p>
 <blockquote>
-<p><a href="https://www.cnblogs.com/hseagle/p/3728713.html" target="_blank" rel="noopener">Spark on Yarn</a></p>
+<p>之前由于在挂载时，使用的 <strong>sudo mount -t vboxsf  Yao  /Users/yaosong/Yao</strong></p>
+<p>并未设置所属用户组及所属用户，然后在虚拟机中使用chown，无论如何都未成功，</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1g0zs97hho1j3130078gph.jpg" alt="使用sudo mount -t vboxsf  Yao  /Users/yaosong/Yao"></p>
+<p>看到上一篇博文，茅塞顿开</p>
+<p>使用<strong>sudo mount -t vboxsf -o uid=500,gid=500 Y  /Users/yaosong/Yao</strong>过后</p>
+<blockquote>
+<p>由于elk用户对应用户id，用户组id为500，</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1g0zsdwrv03j30ma0160st.jpg" alt="elk用户对应用户id，用户组id为500"></p>
 </blockquote>
+<p>可以得到一下所属用户和用户组：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1g0zsbf3r1kj312u07odjp.jpg" alt="挂载时设置用户和组过后"></p>
+<p>此处设置用户id和组id，下文也要用到</p>
+</blockquote>
+<h1 id="挂载到容器的文件目录与宿主机的设置关系"><a href="#挂载到容器的文件目录与宿主机的设置关系" class="headerlink" title="挂载到容器的文件目录与宿主机的设置关系"></a>挂载到容器的文件目录与宿主机的设置关系</h1><p>   参考：<a href="https://www.cnblogs.com/ivictor/p/4834864.html" target="_blank" rel="noopener">关于Docker目录挂载的总结</a>，<a href="https://kebingzao.com/2019/02/25/docker-volume/" target="_blank" rel="noopener">Docker Volume - 目录挂载以及文件共享</a></p>
+<p>   之所以设置共享文件夹权限时设置用户id和组id，还有一个重要原因：</p>
+<p>   ​    原来，宿主与容器的UID有关系，UID，即“用户标识号”，是一个整数，系统内部用它来标识用户。一般情况下它与用户名是一一对应的。即为：在宿主中UID为多少，那么在容器中的所属用户所属组就为容器中和宿主UID相对应的用户。</p>
+<ol>
+<li><p>启动容器时挂载目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd --net=br --name elk1 --privileged=true -v /Users/yaosong/Yao/share/source/es1:/usr/es  --hostname elk1 --ip=192.168.33.16 yaosong5/elk:1.0 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
+<p>可知宿主机/Users/yaosong/Yao/share/source/es1目录挂载到容器/usr/es中</p>
+<p>​</p>
+</li>
+<li><p>在容器内设置权限：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R elk.elk $ES_HOME</span><br></pre></td></tr></table></figure>
+<p>注意是点不是冒号，区别我还没研究</p>
+</li>
+</ol>
+<h1 id="查看结果"><a href="#查看结果" class="headerlink" title="查看结果"></a>查看结果</h1><p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1g0ztcg8e6jj30w20eu0yg.jpg" alt="大功告成"></p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="http://yukai.space/2018/05/02/VirtualBox%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9/" target="_blank" rel="noopener">Virtualbox设置共享文件夹</a></p>
+<p><a href="https://www.cnblogs.com/ivictor/p/4834864.html" target="_blank" rel="noopener">关于Docker目录挂载的总结</a></p>
+<p><a href="https://kebingzao.com/2019/02/25/docker-volume/" target="_blank" rel="noopener">Docker Volume - 目录挂载以及文件共享</a></p>
 
             
 
@@ -442,7 +405,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
 
             
     
-        <a href="http://gangtieguo.cn/2018/09/04/Spark-on-Yarn源码解析(一)Yarn任务解析/#comments" class="article-comment-link">评论</a>
+        <a href="http://gangtieguo.cn/2019/03/12/mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决/#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -451,19 +414,19 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
 <nav id="article-nav">
     
-        <a href="/2018/09/04/Spark-on-Yarn源码解析(二)Spark-Submit解析/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2019/03/12/Hive解析任务/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    Spark-on-Yarn源码解析(二)Spark-Submit解析
+                    Hive解析任务-将json的多个属性拆分成多条记录
                 
             </div>
         </a>
     
     
-        <a href="/2018/08/20/MapReduce中Shuffle中的机制/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2019/03/05/Docker-machine的搭建(与宿主机在同一ip段下)/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">MapReduce中Shuffle中的机制</div>
+            <div class="article-nav-title">Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下</div>
         </a>
     
 </nav>

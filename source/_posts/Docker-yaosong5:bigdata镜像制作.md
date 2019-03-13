@@ -344,3 +344,4 @@ docker rm slave01
 docker rm slave02
 ```
 
+w

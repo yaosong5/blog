@@ -93,7 +93,7 @@ docker run -it -v /test:/soft centos /bin/bash
 >
 > sudo mount -t vboxsf vagrant /Users/yaosong
 >
-> sudo mount -t vboxsf share /Users/yaosong/Yao/share
+> sudo mount -t vboxsf Yao /Users/yaosong/Yao/
 >
 > 取消挂载
 >
@@ -183,7 +183,7 @@ docker build -f Dockerfile -t hadoop:v1 . 此命令也可
 ## 一键启动docker-compose.yml编排的所有服务
 
 ```shell
-docker-compose -f docker-compose.yml up d
+docker-compose -f docker-compose.yml up -d
 ```
 
 ## Docker改变标签
@@ -243,7 +243,55 @@ docker import filename [newname]
 通过容器保存的镜像不会保存操作历史，所以文件小一点。
 如果要运行通过容器加载的镜像， 需要在运行的时候加上相关命令。
 
+
+
+
+
+# 高阶命令
+
+参考：[清理Docker占用的磁盘空间](https://kiwenlau.com/2018/01/10/how-to-clean-docker-disk/)
+
+
+
+- 删除所有关闭的容器
+
+```shell
+docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs docker rm
+```
+
+- 删除所有dangling镜像(即无tag的镜像)：
+
+```shell
+docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+```
+
+- 删除所有dangling数据卷(即无用的volume)：
+
+```shell
+docker volume rm $(docker volume ls -qf dangling=true)
+```
+
+
+
+## docker system 
+
+它可以用于管理磁盘空间
+
+- 磁盘使用情况
+
+  docker system df 
+  命令，类似于Linux上的df命令，用于查看Docker的磁盘使用情况
+
+- 清理磁盘
+
+  docker system prune   命令可以用于清理磁盘，删除关闭的容器、无用的数据卷和网络，以及dangling镜像(即无tag的镜像)。docker system prune -a命令清理得更加彻底，可以将没有容器使用Docker镜像都删掉。注意，这两个命令会把你暂时关闭的容器，以及暂时没有用到的Docker镜像都删掉了…所以使用之前一定要想清楚吶。
+
+
+
+
+
 #  Docker-machine命令
+
 ## 列出docker-machine
 
 ```shell

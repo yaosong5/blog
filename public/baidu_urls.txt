@@ -1,1 +1,1 @@
-http://gangtieguo.cn/2019/03/05/Docker-machine的搭建(与宿主机在同一ip段下)/
+http://gangtieguo.cn/2019/03/12/Hive解析任务/
