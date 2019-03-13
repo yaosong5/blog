@@ -367,9 +367,7 @@ select
       from_unixtime(cast(a.timestamp/1000 as bigint),'yyyy-MM-dd HH:mm:ss') as morpho_created_at,
       current_timestamp() as etl_time
 from (select td.*,concat(regexp_replace(get_json_object(td.data,"$.data.loanInfo.mobile.timeScopes.D360"),'}',',"timeScope":"D360"}'),"|",regexp_replace(get_json_object(td.data,"$.data.loanInfo.mobile.timeScopes.D90"),'}',',"timeScope":"D90"}')) ts
-           from dwb.dwb_r_thrid_data td
-           where
-             channel_name ='morpho' and interface_name ='query' and td.dt='20190218' limit 5
+           from dwb.dwb_r_thrid_data td   where channel_name ='morpho' and interface_name ='query' 
      ) a
 lateral view explode(split(a.ts,'\\\\|')) b as list
 lateral view default.json_tuple2(b.list,'maxOverdueDays','loanTenantCount','monthsFromFirstLoan','averageLoanGapDays','averageLoanAmount','averageTenantGapDays','loanCount','maxLoanAmount','daysFromLastLoan','overdueTenantCount','queryCount','monthsFromLastOverdue','maxLoanPeriodDays','remainingAmount','monthsForNormalRepay','overdueLoanCount','overdueFor2TermTenantCount','timeScope') 

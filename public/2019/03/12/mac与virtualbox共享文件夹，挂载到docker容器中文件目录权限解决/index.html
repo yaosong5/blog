@@ -6,25 +6,25 @@
     <meta charset="utf-8">
     
 
-    <title>钢铁锅</title>
+    <title>mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="[TOC] 共享文件夹的权限问题参考：Virtualbox设置共享文件夹 由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。 手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 chmod chown 等命令是无法改变的。 如果想要配置挂载目录的权限，需要在手动挂载的时候指定一些选项： 12345// uid gid指定挂载目录的所属用">
-<meta name="keywords" content="Nothing">
+    <meta name="description" content="[TOC]">
+<meta name="keywords" content="Docker,Mac">
 <meta property="og:type" content="article">
-<meta property="og:title" content="钢铁锅">
+<meta property="og:title" content="mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决">
 <meta property="og:url" content="http://gangtieguo.cn/2019/03/12/mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC] 共享文件夹的权限问题参考：Virtualbox设置共享文件夹 由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。 手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 chmod chown 等命令是无法改变的。 如果想要配置挂载目录的权限，需要在手动挂载的时候指定一些选项： 12345// uid gid指定挂载目录的所属用">
+<meta property="og:description" content="[TOC]">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g0zs97hho1j3130078gph.jpg">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g0zsdwrv03j30ma0160st.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1g0zsbf3r1kj312u07odjp.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1g0ztcg8e6jj30w20eu0yg.jpg">
-<meta property="og:updated_time" content="2019-03-12T02:56:05.193Z">
+<meta property="og:updated_time" content="2019-03-13T06:51:27.576Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="钢铁锅">
-<meta name="twitter:description" content="[TOC] 共享文件夹的权限问题参考：Virtualbox设置共享文件夹 由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。 手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 chmod chown 等命令是无法改变的。 如果想要配置挂载目录的权限，需要在手动挂载的时候指定一些选项： 12345// uid gid指定挂载目录的所属用">
+<meta name="twitter:title" content="mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决">
+<meta name="twitter:description" content="[TOC]">
 <meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg">
     
 
@@ -257,10 +257,63 @@ var _hmt = _hmt || [];
     <div class="article-inner">
         
         
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2019/03/12/mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决/">
+            <time datetime="2019-03-12T01:49:35.656Z" itemprop="datePublished">2019-03-12</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/问题解决/">问题解决</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Mac/">Mac</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
        
         
         <div class="article-entry" itemprop="articleBody">
         
+            
+
+
+
+
+            <p class="show-toc-btn hidden" id="show-toc-btn" onclick="showToc();">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i>
+                    <span class="btn-text"> 文章目录</span>
+            </p>
+
+
+            <div id="toc toc-article " class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <strong class="toc-title">目录</strong>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#共享文件夹的权限问题"><span class="toc-number">1.</span> <span class="toc-text">共享文件夹的权限问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#挂载到容器的文件目录与宿主机的设置关系"><span class="toc-number">2.</span> <span class="toc-text">挂载到容器的文件目录与宿主机的设置关系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看结果"><span class="toc-number">3.</span> <span class="toc-text">查看结果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文章"><span class="toc-number">4.</span> <span class="toc-text">参考文章</span></a></li></ol>
+            </div>
+
+
             
             <script type="text/javascript">
                             function showBtn(){
@@ -285,6 +338,7 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
+<a id="more"></a>
 <h1 id="共享文件夹的权限问题"><a href="#共享文件夹的权限问题" class="headerlink" title="共享文件夹的权限问题"></a>共享文件夹的权限问题</h1><p>参考：<a href="http://yukai.space/2018/05/02/VirtualBox%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9/" target="_blank" rel="noopener">Virtualbox设置共享文件夹</a></p>
 <p>由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。</p>
 <p>手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 <code>chmod chown</code> 等命令是无法改变的。</p>

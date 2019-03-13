@@ -1,4 +1,18 @@
+---
+title: mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决
+date: 2018年08月06日 22时15分52秒
+tags: [Docker,Mac]
+categories: 问题解决
+toc: true
+---
+
 [TOC]
+
+
+
+<!-- more -->
+
+
 
 # 共享文件夹的权限问题
 
