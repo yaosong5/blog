@@ -400,7 +400,10 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p></p><p>[TOC]</p><p></p>
+            <p></p><p>[TOC]</p>
+<h1 id="共享文件夹的权限问题"><a href="#共享文件夹的权限问题" class="headerlink" title="共享文件夹的权限问题"></a>共享文件夹的权限问题</h1><p>参考：<a href="http://yukai.space/2018/05/02/VirtualBox%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9/" target="_blank" rel="noopener">Virtualbox设置共享文件夹</a></p>
+<p>由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。</p>
+<p>手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 <code>chmod chown</code> 等命令是无法改变的。<br></p>
             <p class="article-more-link">
                 <a href="/2019/03/12/mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决/#more">查看更多</a>
             </p>

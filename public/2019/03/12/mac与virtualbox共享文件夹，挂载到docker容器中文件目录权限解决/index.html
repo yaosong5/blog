@@ -8,23 +8,23 @@
 
     <title>mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="[TOC]">
+    <meta name="description" content="[TOC] 共享文件夹的权限问题参考：Virtualbox设置共享文件夹 由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。 手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 chmod chown 等命令是无法改变的。">
 <meta name="keywords" content="Docker,Mac">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决">
 <meta property="og:url" content="http://gangtieguo.cn/2019/03/12/mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决/index.html">
 <meta property="og:site_name" content="钢铁锅">
-<meta property="og:description" content="[TOC]">
+<meta property="og:description" content="[TOC] 共享文件夹的权限问题参考：Virtualbox设置共享文件夹 由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。 手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 chmod chown 等命令是无法改变的。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g0zs97hho1j3130078gph.jpg">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g0zsdwrv03j30ma0160st.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1g0zsbf3r1kj312u07odjp.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1g0ztcg8e6jj30w20eu0yg.jpg">
-<meta property="og:updated_time" content="2019-03-13T06:51:27.576Z">
+<meta property="og:updated_time" content="2019-03-13T06:53:14.601Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决">
-<meta name="twitter:description" content="[TOC]">
+<meta name="twitter:description" content="[TOC] 共享文件夹的权限问题参考：Virtualbox设置共享文件夹 由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。 手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 chmod chown 等命令是无法改变的。">
 <meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg">
     
 
@@ -338,10 +338,9 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
-<a id="more"></a>
 <h1 id="共享文件夹的权限问题"><a href="#共享文件夹的权限问题" class="headerlink" title="共享文件夹的权限问题"></a>共享文件夹的权限问题</h1><p>参考：<a href="http://yukai.space/2018/05/02/VirtualBox%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9/" target="_blank" rel="noopener">Virtualbox设置共享文件夹</a></p>
 <p>由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。</p>
-<p>手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 <code>chmod chown</code> 等命令是无法改变的。</p>
+<p>手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 <code>chmod chown</code> 等命令是无法改变的。<br><a id="more"></a></p>
 <p>如果想要配置挂载目录的权限，需要在手动挂载的时候指定一些选项：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// uid gid指定挂载目录的所属用户和组</span><br><span class="line">sudo mount -t vboxsf -o uid=500,gid=500  &lt;folder name given in VirtualBox&gt;</span><br><span class="line">// fmode指定文件权限，dmode指定目录权限</span><br><span class="line">// 注意，若同时指定挂载目录的所属用户和组，则fmode和dmode选项失效</span><br><span class="line">sudo mount -t vboxsf -o fmode=700,dmode=700  &lt;folder name given in VirtualBox&gt;</span><br></pre></td></tr></table></figure>
 <p>我使用的命令为：</p>
