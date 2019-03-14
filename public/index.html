@@ -583,7 +583,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/09/08/ELK流程小实例/">ELK流程小实例</a>
+            <a class="article-title" href="/2018/09/08/ELK流程小实例/">ELK-Logstash-&gt;kafka-&gt;es流程实例</a>
         </h1>
     
 
@@ -619,7 +619,10 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         <div class="article-entry" itemprop="articleBody">
         
             <p></p><p>elk流程实例</p>
-<h1 id="将日志写入到kafka"><a href="#将日志写入到kafka" class="headerlink" title="将日志写入到kafka"></a>将日志写入到kafka</h1><h2 id="准备工作创建topic"><a href="#准备工作创建topic" class="headerlink" title="准备工作创建topic"></a>准备工作创建topic</h2><p>先创建对应topic，（按照机器配置，集群情况配置，不然默认创建的话，不是最优效果）</p><p></p>
+<p>[TOC]</p>
+<p>前言：一般日志收集，我们通过logstash来接入，写入到kafka，再通过logstash将kafka的数据写入到es</p>
+<p>那么就通过一个菜的抠脚的实例来看看</p>
+<h1 id="LOGSTASH-gt-KAFKA-gt-ES"><a href="#LOGSTASH-gt-KAFKA-gt-ES" class="headerlink" title="LOGSTASH-&gt;KAFKA-&gt;ES"></a>LOGSTASH-&gt;KAFKA-&gt;ES</h1><h2 id="1-启动logstash将日志写入到kafka"><a href="#1-启动logstash将日志写入到kafka" class="headerlink" title="1.启动logstash将日志写入到kafka"></a>1.启动logstash将日志写入到kafka</h2><h3 id="①准备工作创建topic"><a href="#①准备工作创建topic" class="headerlink" title="①准备工作创建topic"></a>①准备工作创建topic</h3><p>先创建对应topic，（按照机器配置，集群情况配置，不然默认创建的话，不是最优效果）</p><p></p>
             <p class="article-more-link">
                 <a href="/2018/09/08/ELK流程小实例/#more">查看更多</a>
             </p>
@@ -1417,7 +1420,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/大数据/">大数据</a></p>
-                            <p class="item-title"><a href="/2018/09/08/ELK流程小实例/" class="title">ELK流程小实例</a></p>
+                            <p class="item-title"><a href="/2018/09/08/ELK流程小实例/" class="title">ELK-Logstash-&gt;kafka-&gt;es流程实例</a></p>
                             <p class="item-date"><time datetime="2018-09-08T14:30:24.772Z" itemprop="datePublished">2018-09-08</time></p>
                         </div>
                     </li>

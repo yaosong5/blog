@@ -115,27 +115,37 @@ bootstrap.system_call_filter: false
 
 #### 创建用户elk
 
-	useradd elk
-	groupadd elk
-	usermod -a -G elk elk
-	echo elk | passwd --stdin elk
+```bash
+useradd elk
+groupadd elk
+usermod -a -G elk elk
+echo elk | passwd --stdin elk
+```
 
 #### 将elk添加到sudoers
 
-	echo "elk ALL = (root) NOPASSWD:ALL" | tee /etc/sudoers.d/elk
-	chmod 0440 /etc/sudoers.d/elk
+```bash
+echo "elk ALL = (root) NOPASSWD:ALL" | tee /etc/sudoers.d/elk
+chmod 0440 /etc/sudoers.d/elk
+```
 
 解决sudo: sorry, you must have a tty to run sudo问题，在/etc/sudoer注释掉 Default requiretty 一行
-	sudo sed -i 's/Defaults requiretty/Defaults:elk !requiretty/' /etc/sudoers
+```bash
+sudo sed -i 's/Defaults requiretty/Defaults:elk !requiretty/' /etc/sudoers
+```
 
 #### 修改文件所有者为elk用户
-`chown -R elk:elk /usr/es/`
+```bash
+chown -R elk:elk /usr/es/
+```
+
+
 
 ### **设置资源参数**
 
 由于es启动会有资源要求
 
-```
+```bash
 sudo vim  /etc/security/limits.d/90-nproc.conf
 添加
 elk     soft    nproc     4096
@@ -143,9 +153,9 @@ elk     soft    nproc     4096
 
 再在docker-machine设置参数
 
-```
+```bash
 docker-machine ssh
-sysctl -w vm.max_map_count=655360
+sudo sysctl -w vm.max_map_count=655360
 ```
 
 ### es启动脚本
@@ -195,14 +205,14 @@ export PATH=$NODE_HOME/bin:$PATH
 看当前 head 插件目录下有无 node_modules/grunt 目录： 
 没有：执行命令创建：
 
-```
+```bash
 npm install grunt --save
 ```
 
 安装 grunt： 
 grunt 是基于 Node.js 的项目构建工具，可以进行打包压缩、测试、执行等等的工作，head 插件就是通过 grunt 启动
 
-```
+```bash
 npm install -g grunt-cli
 ```
 
@@ -210,7 +220,7 @@ npm install -g grunt-cli
 
  npm install 安装所下载的header包 
 
-```
+```bash
 npm install
 ```
 
@@ -219,13 +229,13 @@ npm install
 修改服务器监听地址: Gruntfile.js 
 **vi $HEADER_HOME/Gruntfile.js** 在第 93 行添加：
 
-```
+```bash
 hostname:'*',
 ```
 
 g) 修改连接地址：vim $HEADER_HOME/_site/app.js  1285行
 
-```
+```bash
 this.base_uri = this.config.base_uri || this.prefs.get("app-base_uri") || "http://192.168.33.16:9200"
 ```
 
@@ -233,7 +243,7 @@ this.base_uri = this.config.base_uri || this.prefs.get("app-base_uri") || "http:
 
 在 elasticsearch-head-master 目录下
 
-```
+```bash
 grunt server  或者 npm run start
 ```
 
@@ -253,7 +263,7 @@ header的默认端口为9100
 
 ### elasticSearch脚本启动
 
-脚本 `vim  es-start.sh`
+脚本 **vim  es-start.sh**
 
 ```bash
 #!/bin/bash
@@ -281,8 +291,14 @@ ssh root@elk3 "sed -i '3c   http://elk3:9200 ' $KIBANA_HOME/config/kibana.yml"
 ssh root@elk3 "nohup $KIBANA_HOME/bin/kibana & "
 ```
 ### logstash脚本启动
-单机启动   `$LOGSTASH_HOME/bin/logstash -f logstash.conf`
- `$LOGSTASH_HOME/bin/logstash -f 配置文件的目录`
+单机启动  
+
+```bash
+#$LOGSTASH_HOME/bin/logstash -f 配置文件的目录
+$LOGSTASH_HOME/bin/logstash -f logstash.conf
+```
+
+
 
 
 集群启动脚本 **logstash-start.sh**
