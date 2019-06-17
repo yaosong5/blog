@@ -8,7 +8,7 @@ toc: true
 
 [TOC]
 
-![](https://img.gangtieguo.cn/006tNbRwgy1fu5599pvv8j30y60b0dfw.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fu5599pvv8j30y60b0dfw.jpg)
 
 hbase使用命令行操作，简单直接，方便快捷，掌握一点必备的基础命令。
 

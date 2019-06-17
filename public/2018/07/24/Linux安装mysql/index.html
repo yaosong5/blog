@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="在linux yum安装mysql">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fu550945khj318w0n4wgq.jpg">
-<meta property="og:updated_time" content="2019-06-17T04:32:09.668Z">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tNbRwgy1fu550945khj318w0n4wgq.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:40:09.391Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux安装mysql">
 <meta name="twitter:description" content="在linux yum安装mysql">
-<meta name="twitter:image" content="https://img.gangtieguo.cn/006tNbRwgy1fu550945khj318w0n4wgq.jpg">
+<meta name="twitter:image" content="http://img.gangtieguo.cn/006tNbRwgy1fu550945khj318w0n4wgq.jpg">
     
 
     
@@ -333,7 +333,7 @@ var _hmt = _hmt || [];
                             };
              </script>
 
-                <p><img src="https://img.gangtieguo.cn/006tNbRwgy1fu550945khj318w0n4wgq.jpg" alt></p>
+                <p><img src="http://img.gangtieguo.cn/006tNbRwgy1fu550945khj318w0n4wgq.jpg" alt></p>
 <p>在linux yum安装mysql</p>
 <a id="more"></a>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">yum install -y mysql-server</span><br><span class="line">chkconfig --add mysqld</span><br><span class="line">chkconfig mysqld on</span><br><span class="line">chkconfig --list mysqld</span><br><span class="line">service mysqld start</span><br><span class="line">mysql -u root -p</span><br><span class="line">Enter password:           //默认密码为空，输入后回车即可</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@localhost=password(<span class="string">'root'</span>); 　　密码设置为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@=password(<span class="string">'root'</span>);</span><br><span class="line">默认情况下Mysql只允许本地登录，所以只需配置root@localhost就好</span><br><span class="line">设置所有ip访问密码为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@%=password(<span class="string">'root'</span>); 　　　　　　密码设置为root （其实这一步可以不配）</span><br><span class="line">设置master访问密码为root</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@master=password(<span class="string">'root'</span>); 　　密码设置为root （其实这一步可以不配）</span><br><span class="line">查询密码</span><br><span class="line">select user,host,password from mysql.user;  　　查看密码是否设置成功</span><br><span class="line">设置所有ip可以通过root访问</span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">'root'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'root'</span> WITH GRANT OPTION;</span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">'hive'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'hive'</span> WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>

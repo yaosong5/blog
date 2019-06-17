@@ -16,15 +16,15 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC] 官方的shuffle流程  shuffle原理提到MapReduce，就不得不提一下shuffle。 MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map 任务完成后">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fuhbuwapflj30zc0j4mxv.jpg">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fuhbdybylfj30z40hyq3f.jpg">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fufyt54ouvj30cq03c0so.jpg">
-<meta property="og:updated_time" content="2019-06-17T04:32:09.672Z">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tNbRwgy1fuhbuwapflj30zc0j4mxv.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tNbRwgy1fuhbdybylfj30z40hyq3f.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tNbRwgy1fufyt54ouvj30cq03c0so.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:40:09.393Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MapReduce中Shuffle中的机制">
 <meta name="twitter:description" content="[TOC] 官方的shuffle流程  shuffle原理提到MapReduce，就不得不提一下shuffle。 MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map 任务完成后">
-<meta name="twitter:image" content="https://img.gangtieguo.cn/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg">
+<meta name="twitter:image" content="http://img.gangtieguo.cn/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg">
     
 
     
@@ -338,12 +338,12 @@ var _hmt = _hmt || [];
 
                 <p>[TOC]</p>
 <p>官方的shuffle流程</p>
-<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg" alt></p>
+<p><img src="http://img.gangtieguo.cn/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg" alt></p>
 <h1 id="shuffle原理"><a href="#shuffle原理" class="headerlink" title="shuffle原理"></a>shuffle原理</h1><p>提到MapReduce，就不得不提一下shuffle。</p>
 <p>MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map 任务完成后，它会生成一些中间文件，这些中间文件将会作为Reduce 任务的输入数据。Reduce 任务的主要目标就是把前面若干个Map 的输出汇总到一起并输出。</p>
 <a id="more"></a>
 <p> 我们知道每个reduce task输入的key都是按照key排序的。但是每个map的输出只是简单的key-value而非key-valuelist，所以shuffle的工作就是将map输出转化为reducer的输入的过程。Shuffle过程是指map产生输出结果开始，包括系统执行分区partition，排序sort，聚合Combiner（如有）以及传送map的输出到Reducer作为输入的过程。</p>
-<h2 id="shuffle过程分析"><a href="#shuffle过程分析" class="headerlink" title="shuffle过程分析"></a>shuffle过程分析</h2><p><img src="https://img.gangtieguo.cn/006tNbRwgy1fuhbuwapflj30zc0j4mxv.jpg" alt></p>
+<h2 id="shuffle过程分析"><a href="#shuffle过程分析" class="headerlink" title="shuffle过程分析"></a>shuffle过程分析</h2><p><img src="http://img.gangtieguo.cn/006tNbRwgy1fuhbuwapflj30zc0j4mxv.jpg" alt></p>
 <h2 id="map端"><a href="#map端" class="headerlink" title="map端"></a>map端</h2><ol>
 <li><p>从map段开始分析，当Map开始产生输出的时候，并不是简单吧数据写到磁盘，因为频繁的操作会导致性能严重下降，首先将数据写入到一个环形缓冲区（每个maptask都会有一个环形缓冲区，默认100M，可以通过io.sort.mb属性来设置具体的大小）并做一些预排序，以提升效率，当缓冲区中的数据量达到一个特定的阀值(io.sort.mb * io.sort.spill.percent，其中io.sort.spill.percent 默认是0.80，即默认为 80MB），溢写线程启动。</p>
 </li>
@@ -357,7 +357,7 @@ var _hmt = _hmt || [];
 </ol>
 <h2 id="map端与reduce端的交互"><a href="#map端与reduce端的交互" class="headerlink" title="map端与reduce端的交互"></a>map端与reduce端的交互</h2><p>Reduce是怎么知道从哪些TaskTrackers中获取Map的输出呢？当Map任务完成之后，会通知他们的父TaskTracker，告知状态更新，然后TaskTracker再转告JobTracker，这些通知信息是通过心跳通信机制传输的，因此针对以一个特定的作业，jobtracker知道Map输出与tasktrackers的映射关系。Reducer中有一个线程会间歇的向JobTracker询问Map输出的地址，直到把所有的数据都取到。在Reducer取走了Map输出之后，TaskTracker不会立即删除这些数据，因为Reducer可能会失败，他们会在整个作业完成之后，JobTracker告知他们要删除的时候才去删除</p>
 <p>map端的所有工作结束后，最终生成的这个文件也存放在TaskTracker够得着的某个本地目录内。每个reduce task不断地通过RPC从JobTracker那里获取map task是否完成的信息，如果reduce task得到通知，获知某台TaskTracker上的map task执行完成，Shuffle的后半段过程开始启动。<br>简单地说，reduce task在执行之前的工作就是不断地拉取当前job里每个map task的最终结果，然后对从不同地方拉取过来的数据不断地做merge，也最终形成一个文件作为reduce task的输入文件。</p>
-<h2 id="reduce端过程"><a href="#reduce端过程" class="headerlink" title="reduce端过程"></a>reduce端过程</h2><p><img src="https://img.gangtieguo.cn/006tNbRwgy1fuhbdybylfj30z40hyq3f.jpg" alt></p>
+<h2 id="reduce端过程"><a href="#reduce端过程" class="headerlink" title="reduce端过程"></a>reduce端过程</h2><p><img src="http://img.gangtieguo.cn/006tNbRwgy1fuhbdybylfj30z40hyq3f.jpg" alt></p>
 <ol>
 <li>Copy过程，简单地拉取数据。Reduce进程启动一些数据copy线程(Fetcher)，通过HTTP方式请求map task所在的TaskTracker获取map task的输出文件。因为map task早已结束，这些文件就归TaskTracker管理在本地磁盘中。</li>
 <li>Merge阶段。这里的merge如map端的merge动作，只是数组中存放的是不同map端copy来的数值。Copy过来的数据会先放入内存缓冲区中，这里的缓冲区大小要比map端的更为灵活，它基于JVM的heap size设置，因为Shuffle阶段Reducer不运行，所以应该把绝大部分的内存都给Shuffle用。这里需要强调的是，merge有三种形式：1)内存到内存 （默认不启用） 2)内存到磁盘  3)磁盘到磁盘。当内存中的数据量到达一定阈值，就启动内存到磁盘的merge，这个过程中如果你设置有Combiner，也是会启用的，然后在磁盘中生成了众多的溢写文件。第二种merge方式一直在运行，直到没有map端的数据时才结束，然后启动第三种磁盘到磁盘的merge方式生成最终的那个文件。</li>
@@ -383,7 +383,7 @@ var _hmt = _hmt || [];
 </ol>
 <ol start="3">
 <li><p>遍历完成后，将切片信息splitList序列化到一个split描述文件中</p>
-<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fufyt54ouvj30cq03c0so.jpg" alt></p>
+<p><img src="http://img.gangtieguo.cn/006tNbRwgy1fufyt54ouvj30cq03c0so.jpg" alt></p>
 </li>
 </ol>
 <p>默认情况下，默认的TextInputFormat对任务切片是按文件规划切片，不管文件多小，都会是一个单独的切片，这样如果有大量小文件，就会产生大量的maptask，处理效率极其低下</p>

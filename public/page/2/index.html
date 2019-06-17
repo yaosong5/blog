@@ -292,7 +292,7 @@ var _hmt = _hmt || [];
         
             <p></p><p>[TOC]</p>
 <p>官方的shuffle流程</p>
-<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg" alt></p>
+<p><img src="http://img.gangtieguo.cn/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg" alt></p>
 <h1 id="shuffle原理"><a href="#shuffle原理" class="headerlink" title="shuffle原理"></a>shuffle原理</h1><p>提到MapReduce，就不得不提一下shuffle。</p>
 <p>MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独立并发，一个是汇聚。当你向MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map 任务，然后分配到不同的节点上去执行，每一个Map 任务处理输入数据中的一部分，当Map 任务完成后，它会生成一些中间文件，这些中间文件将会作为Reduce 任务的输入数据。Reduce 任务的主要目标就是把前面若干个Map 的输出汇总到一起并输出。</p><p></p>
             <p class="article-more-link">
@@ -620,8 +620,8 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         
             <p></p><p>[TOC]</p>
 <p>大数据领域，分为离线计算和实时计算 </p>
-<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fuaxkz7halj30i6057dfw.jpg" alt></p>
-<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fuaxl270fuj30kj034jrd.jpg" alt></p><p></p>
+<p><img src="http://img.gangtieguo.cn/006tNbRwgy1fuaxkz7halj30i6057dfw.jpg" alt></p>
+<p><img src="http://img.gangtieguo.cn/006tNbRwgy1fuaxl270fuj30kj034jrd.jpg" alt></p><p></p>
             <p class="article-more-link">
                 <a href="/2018/08/16/SparkStreaming介绍/#more">查看更多</a>
             </p>
@@ -1167,7 +1167,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMin
         <div class="article-entry" itemprop="articleBody">
         
             <p></p><p>[TOC]</p>
-<h1 id="spark的架构模型"><a href="#spark的架构模型" class="headerlink" title="spark的架构模型"></a>spark的架构模型</h1><p><img src="https://img.gangtieguo.cn/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg" alt></p>
+<h1 id="spark的架构模型"><a href="#spark的架构模型" class="headerlink" title="spark的架构模型"></a>spark的架构模型</h1><p><img src="http://img.gangtieguo.cn/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg" alt></p>
 <h1 id="角色功能"><a href="#角色功能" class="headerlink" title="角色功能"></a>角色功能</h1><p>Driver：以spark-submit提交程序为例，执行该命令的主机为driver（在任意一台安装了spark（spark submit）的机器上启动一个任务的客户端也就是Driver 。客户端与集群需要建立链接，建立的这个链接对象叫做sparkContext，只有这个对象创建成功才标志这这个客户端与spark集群链接成功。SparkContext是driver进程中的一个对象，提交任务的时候，指定了每台机器需要多少个核cores，需要的内存 ）</p>
 <p>Master: 给任务提供资源，分配资源，master跟worker通信，报活和更新资源 </p>
 <p>Worker:  以子进程的方式启动executor</p>

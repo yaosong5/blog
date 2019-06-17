@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC] spark的架构模型 角色功能Driver：以spark-submit提交程序为例，执行该命令的主机为driver（在任意一台安装了spark（spark submit）的机器上启动一个任务的客户端也就是Driver 。客户端与集群需要建立链接，建立的这个链接对象叫做sparkContext，只有这个对象创建成功才标志这这个客户端与spark集群链接成功。SparkContext是dr">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwly1fuhtcjutpej30e007hmxg.jpg">
-<meta property="og:updated_time" content="2019-06-17T04:32:09.684Z">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tNbRwly1fuhtcjutpej30e007hmxg.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:40:09.400Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark启动流程及一些小总结">
 <meta name="twitter:description" content="[TOC] spark的架构模型 角色功能Driver：以spark-submit提交程序为例，执行该命令的主机为driver（在任意一台安装了spark（spark submit）的机器上启动一个任务的客户端也就是Driver 。客户端与集群需要建立链接，建立的这个链接对象叫做sparkContext，只有这个对象创建成功才标志这这个客户端与spark集群链接成功。SparkContext是dr">
-<meta name="twitter:image" content="https://img.gangtieguo.cn/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg">
+<meta name="twitter:image" content="http://img.gangtieguo.cn/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg">
     
 
     
@@ -335,7 +335,7 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
-<h1 id="spark的架构模型"><a href="#spark的架构模型" class="headerlink" title="spark的架构模型"></a>spark的架构模型</h1><p><img src="https://img.gangtieguo.cn/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg" alt></p>
+<h1 id="spark的架构模型"><a href="#spark的架构模型" class="headerlink" title="spark的架构模型"></a>spark的架构模型</h1><p><img src="http://img.gangtieguo.cn/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg" alt></p>
 <h1 id="角色功能"><a href="#角色功能" class="headerlink" title="角色功能"></a>角色功能</h1><p>Driver：以spark-submit提交程序为例，执行该命令的主机为driver（在任意一台安装了spark（spark submit）的机器上启动一个任务的客户端也就是Driver 。客户端与集群需要建立链接，建立的这个链接对象叫做sparkContext，只有这个对象创建成功才标志这这个客户端与spark集群链接成功。SparkContext是driver进程中的一个对象，提交任务的时候，指定了每台机器需要多少个核cores，需要的内存 ）</p>
 <p>Master: 给任务提供资源，分配资源，master跟worker通信，报活和更新资源 </p>
 <p>Worker:  以子进程的方式启动executor</p>
@@ -355,7 +355,7 @@ var _hmt = _hmt || [];
 <p>在executor创建成功后，就会和driver建立连接，而不再与Master通信，这样是为了减少Master压力，也不让Master成为性能瓶颈。</p>
 <p>由于executor有可能在很多台机器上启动，driver无法知晓在哪台机器上启动有exector，所以需要executor和driver进行rpc通信（netty或者akka）主动建立连接。建立通信后exector向driver汇报状态及其执行进度，driver向executor提交计算任务，然后在executor中执行，只有当RDD触发action的时候，driver才将taskset以stage的形式提交任务给executor，任务的最细粒度是task</p>
 <p>然后executor就跟driver进行通信，Rdd执行逻辑的时候就不再通过Master，这是为了减少Master压力，也不让Master成为性能瓶颈。</p>
-<h1 id="RDD的构建详细阶段"><a href="#RDD的构建详细阶段" class="headerlink" title="RDD的构建详细阶段"></a>RDD的构建详细阶段</h1><p><img src="https://img.gangtieguo.cn/006tNbRwly1fuhtcjutpej30e007hmxg.jpg" alt></p>
+<h1 id="RDD的构建详细阶段"><a href="#RDD的构建详细阶段" class="headerlink" title="RDD的构建详细阶段"></a>RDD的构建详细阶段</h1><p><img src="http://img.gangtieguo.cn/006tNbRwly1fuhtcjutpej30e007hmxg.jpg" alt></p>
 <h2 id="第一阶段-rdd创建"><a href="#第一阶段-rdd创建" class="headerlink" title="第一阶段 rdd创建"></a>第一阶段 rdd创建</h2><p>rdd创建都是在driver中执行，只有运行时有数据流向rdd才会提交到executor。如hdfs中读取数据，会产生很多的RDD….，RDD之间存在着依赖关系， RDD之间的<strong>转换</strong>都是由transformation产生的（故transformation返回对象为RDD），<strong>在action触发后</strong>，DAG就确定了RDD就形成了数据的流向hdfs-&gt;RDD1-&gt;RDD2-&gt;RDD3….-&gt;RDDn</p>
 <h2 id="第二阶段-DAGScheduler"><a href="#第二阶段-DAGScheduler" class="headerlink" title="第二阶段 DAGScheduler"></a>第二阶段 DAGScheduler</h2><p>stage的划分，也就是DAGScheduler的执行</p>
 <p>stage切分依据：有宽依赖（后面对宽窄依赖有说明）就会切分，更明确的说就是有shuffle的时候切分</p>

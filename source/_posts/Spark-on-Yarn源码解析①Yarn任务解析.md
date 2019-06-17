@@ -38,7 +38,7 @@ YARN 的基本架构如上图所示，由三大功能模块组成，分别是 1)
 
 
 
-![](https://img.gangtieguo.cn/006tNbRwgy1fuaxd9man3j31020o60w1.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fuaxd9man3j31020o60w1.jpg)
 
 Spark Driver首先作为一个ApplicationMaster在YARN集群中启动，客户端提交给ResourceManager的时候，每一个job都会在集群的NodeManager节点上分配一个唯一的ApplicationMaster，由该ApplicationMaster管理全生命周期的应用。具体过程：
 

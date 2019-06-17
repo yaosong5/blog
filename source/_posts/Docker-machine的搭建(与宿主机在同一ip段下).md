@@ -100,7 +100,7 @@ sudo docker network create \
 
 
 创建网桥配置文件docker1
-![A82E4EE8-9517-4B66-A6CB-FE3C964B6D99](https://img.gangtieguo.cn/006tKfTcgy1ftom0jyp9vj30kl07l76c.jpg)
+![A82E4EE8-9517-4B66-A6CB-FE3C964B6D99](http://img.gangtieguo.cn/006tKfTcgy1ftom0jyp9vj30kl07l76c.jpg)
 
 `vim /etc/sysconfig/network-scripts/ifcfg-docker1`
 
@@ -134,7 +134,7 @@ TYPE=Ethernet
 
 `ip -4 addr`
 
-![E77B4516-B852-4E7F-A876-FCF01FDB93BC](https://img.gangtieguo.cn/006tKfTcgy1ftom2nhzd3j31ey0luqhe.jpg)
+![E77B4516-B852-4E7F-A876-FCF01FDB93BC](http://img.gangtieguo.cn/006tKfTcgy1ftom2nhzd3j31ey0luqhe.jpg)
 
 
 

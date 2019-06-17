@@ -9,7 +9,7 @@ toc: true
 
 [TOC]
 
-![](https://img.gangtieguo.cn/006tNbRwgy1fu55ayb4i7j31kw0c73yz.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fu55ayb4i7j31kw0c73yz.jpg)
 
 简单命令测试和展示es的功能
 

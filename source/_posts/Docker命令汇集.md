@@ -7,7 +7,7 @@ toc: true
 
 ---
 
-![](https://img.gangtieguo.cn/006tNbRwgy1fu55c5h3g1j319i0eu0tg.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fu55c5h3g1j319i0eu0tg.jpg)
 
 [TOC]
 
@@ -89,7 +89,7 @@ docker run -it -v /test:/soft centos /bin/bash
 > 如果是mac或者win机器，需要在virtualbox虚拟机中设置共享文件夹的share名称对应mac的目录
 > 虚拟机中的目录
 >
-> ![](https://img.gangtieguo.cn/006tKfTcgy1g0ryyzp0vrj30zi0bm0t9.jpg)
+> ![](http://img.gangtieguo.cn/006tKfTcgy1g0ryyzp0vrj30zi0bm0t9.jpg)
 >
 > sudo mount -t vboxsf vagrant /Users/yaosong
 >

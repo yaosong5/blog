@@ -16,16 +16,16 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC] 共享文件夹的权限问题参考：Virtualbox设置共享文件夹 由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。 手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 chmod chown 等命令是无法改变的。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tKfTcgy1g0zs97hho1j3130078gph.jpg">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tKfTcgy1g0zsdwrv03j30ma0160st.jpg">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tKfTcgy1g0zsbf3r1kj312u07odjp.jpg">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tKfTcgy1g0ztcg8e6jj30w20eu0yg.jpg">
-<meta property="og:updated_time" content="2019-06-17T04:32:09.670Z">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tKfTcgy1g0zs97hho1j3130078gph.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tKfTcgy1g0zsdwrv03j30ma0160st.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tKfTcgy1g0zsbf3r1kj312u07odjp.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tKfTcgy1g0ztcg8e6jj30w20eu0yg.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:40:09.392Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mac与virtualbox共享文件夹，挂载到docker容器中文件目录权限解决">
 <meta name="twitter:description" content="[TOC] 共享文件夹的权限问题参考：Virtualbox设置共享文件夹 由于共享文件夹并不是虚拟机的本地目录，我们在虚拟机中可以配置共享文件夹的权限是有限的。 手动挂载或自动挂载的目录，所属用户默认为root，组为vboxsf，并且使用 chmod chown 等命令是无法改变的。">
-<meta name="twitter:image" content="https://img.gangtieguo.cn/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg">
+<meta name="twitter:image" content="http://img.gangtieguo.cn/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg">
     
 
     
@@ -346,20 +346,20 @@ var _hmt = _hmt || [];
 <p>我使用的命令为：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount -t vboxsf -o uid=500,gid=500 Y  /Users/yaosong/Yao</span><br></pre></td></tr></table></figure>
 <p>此处Y为我设置的共享路径</p>
-<p><img src="https://img.gangtieguo.cn/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg" alt="共享路径"></p>
+<p><img src="http://img.gangtieguo.cn/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg" alt="共享路径"></p>
 <p>踩过的坑：</p>
 <blockquote>
 <p>之前由于在挂载时，使用的 <strong>sudo mount -t vboxsf  Yao  /Users/yaosong/Yao</strong></p>
 <p>并未设置所属用户组及所属用户，然后在虚拟机中使用chown，无论如何都未成功，</p>
-<p><img src="https://img.gangtieguo.cn/006tKfTcgy1g0zs97hho1j3130078gph.jpg" alt="使用sudo mount -t vboxsf  Yao  /Users/yaosong/Yao"></p>
+<p><img src="http://img.gangtieguo.cn/006tKfTcgy1g0zs97hho1j3130078gph.jpg" alt="使用sudo mount -t vboxsf  Yao  /Users/yaosong/Yao"></p>
 <p>看到上一篇博文，茅塞顿开</p>
 <p>使用<strong>sudo mount -t vboxsf -o uid=500,gid=500 Y  /Users/yaosong/Yao</strong>过后</p>
 <blockquote>
 <p>由于elk用户对应用户id，用户组id为500，</p>
-<p><img src="https://img.gangtieguo.cn/006tKfTcgy1g0zsdwrv03j30ma0160st.jpg" alt="elk用户对应用户id，用户组id为500"></p>
+<p><img src="http://img.gangtieguo.cn/006tKfTcgy1g0zsdwrv03j30ma0160st.jpg" alt="elk用户对应用户id，用户组id为500"></p>
 </blockquote>
 <p>可以得到一下所属用户和用户组：</p>
-<p><img src="https://img.gangtieguo.cn/006tKfTcgy1g0zsbf3r1kj312u07odjp.jpg" alt="挂载时设置用户和组过后"></p>
+<p><img src="http://img.gangtieguo.cn/006tKfTcgy1g0zsbf3r1kj312u07odjp.jpg" alt="挂载时设置用户和组过后"></p>
 <p>此处设置用户id和组id，下文也要用到</p>
 </blockquote>
 <h1 id="挂载到容器的文件目录与宿主机的设置关系"><a href="#挂载到容器的文件目录与宿主机的设置关系" class="headerlink" title="挂载到容器的文件目录与宿主机的设置关系"></a>挂载到容器的文件目录与宿主机的设置关系</h1><p>   参考：<a href="https://www.cnblogs.com/ivictor/p/4834864.html" target="_blank" rel="noopener">关于Docker目录挂载的总结</a>，<a href="https://kebingzao.com/2019/02/25/docker-volume/" target="_blank" rel="noopener">Docker Volume - 目录挂载以及文件共享</a></p>
@@ -376,7 +376,7 @@ var _hmt = _hmt || [];
 <p>注意是点不是冒号，区别我还没研究</p>
 </li>
 </ol>
-<h1 id="查看结果"><a href="#查看结果" class="headerlink" title="查看结果"></a>查看结果</h1><p><img src="https://img.gangtieguo.cn/006tKfTcgy1g0ztcg8e6jj30w20eu0yg.jpg" alt="大功告成"></p>
+<h1 id="查看结果"><a href="#查看结果" class="headerlink" title="查看结果"></a>查看结果</h1><p><img src="http://img.gangtieguo.cn/006tKfTcgy1g0ztcg8e6jj30w20eu0yg.jpg" alt="大功告成"></p>
 <h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="http://yukai.space/2018/05/02/VirtualBox%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9/" target="_blank" rel="noopener">Virtualbox设置共享文件夹</a></p>
 <p><a href="https://www.cnblogs.com/ivictor/p/4834864.html" target="_blank" rel="noopener">关于Docker目录挂载的总结</a></p>
 <p><a href="https://kebingzao.com/2019/02/25/docker-volume/" target="_blank" rel="noopener">Docker Volume - 目录挂载以及文件共享</a></p>

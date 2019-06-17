@@ -29,7 +29,7 @@ elk流程实例
 $KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper zk1:2181,zk2:2181,zk3:2181 --replication-factor 2 --partitions 3 --topic gamekafka
 ```
 
-![](https://img.gangtieguo.cn/0069RVTdgy1fv2f6t8yo2j31kw028q64.jpg)
+![](http://img.gangtieguo.cn/0069RVTdgy1fv2f6t8yo2j31kw028q64.jpg)
 
 查看topic是否创建成功
 
@@ -37,7 +37,7 @@ $KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper zk1:2181,zk2:2181,zk3:2181 
 $KAFKA_HOME/bin/kafka-topics.sh --list --zookeeper  zk1:2181,zk2:2181,zk3:2181
 ```
 
-![](https://img.gangtieguo.cn/0069RVTdgy1fv34y8la2jj31ha0380uq.jpg)
+![](http://img.gangtieguo.cn/0069RVTdgy1fv34y8la2jj31ha0380uq.jpg)
 
 
 
@@ -92,7 +92,7 @@ sh logstash-start.sh logstash-game-kafka.conf
 
 若启动成功
 
-![](https://img.gangtieguo.cn/006tNbRwgy1fv2i380wmgj31kw0ig1kx.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fv2i380wmgj31kw0ig1kx.jpg)
 
 
 
@@ -102,7 +102,7 @@ sh logstash-start.sh logstash-game-kafka.conf
 $KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server   "kafka1:9092,kafka2:9092,kafka3:9092" --topic gamekafka --from-beginning --group testGroup
 ```
 
-![](https://img.gangtieguo.cn/0069RVTdgy1fv34s3tayyj31kw02w78p.jpg)
+![](http://img.gangtieguo.cn/0069RVTdgy1fv34s3tayyj31kw02w78p.jpg)
 
 
 
@@ -182,7 +182,7 @@ $LOGSTASH_HOME/bin/logstash  -f $LOGSTASH_HOME/conf/logstash-game-kafka-es.conf
 
 ### 查看es里面是否有数据 
 
-![](https://img.gangtieguo.cn/0069RVTdgy1fv34r53q6tj31kw09840a.jpg)
+![](http://img.gangtieguo.cn/0069RVTdgy1fv34r53q6tj31kw09840a.jpg)
 
 如果是介个样子，那么大功告成
 

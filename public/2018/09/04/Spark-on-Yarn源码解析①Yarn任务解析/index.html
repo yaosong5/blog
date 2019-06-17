@@ -17,8 +17,8 @@
 <meta property="og:description" content="[TOC] spark-on-yarn系列Spark-on-Yarn 源码解析①Yarn 任务解析Spark-on-Yarn 源码解析②Spark-Submit 解析Spark-on-Yarn 源码解析③client 做的事情Spark-on-Yarn 源码解析④Spark 业务代码的执行及其任务分配调度 stage 划分 了解spark-on-yarn,首先我们了解一下yarn提交的流程，俗话说">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://img.gangtieguo.cn/15358192541466.jpg">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fuaxd9man3j31020o60w1.jpg">
-<meta property="og:updated_time" content="2019-06-17T04:32:09.679Z">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tNbRwgy1fuaxd9man3j31020o60w1.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:40:09.397Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark-on-Yarn源码解析(一)Yarn任务解析">
 <meta name="twitter:description" content="[TOC] spark-on-yarn系列Spark-on-Yarn 源码解析①Yarn 任务解析Spark-on-Yarn 源码解析②Spark-Submit 解析Spark-on-Yarn 源码解析③client 做的事情Spark-on-Yarn 源码解析④Spark 业务代码的执行及其任务分配调度 stage 划分 了解spark-on-yarn,首先我们了解一下yarn提交的流程，俗话说">
@@ -348,7 +348,7 @@ var _hmt = _hmt || [];
 </ol>
 <!--more-->
 <h1 id="Spark-On-Yarn的流程提交"><a href="#Spark-On-Yarn的流程提交" class="headerlink" title="Spark-On-Yarn的流程提交"></a>Spark-On-Yarn的流程提交</h1><p>在 <strong>yarn-cluster 模式下，Spark driver 运行在 application master 进程中</strong>，这个进程被集群中的 YARN 所管理，客户端会在初始化应用程序 之后关闭。在 yarn-client 模式下，driver 运行在客户端进程中，application master 仅仅用来向 YARN 请求资源</p>
-<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fuaxd9man3j31020o60w1.jpg" alt></p>
+<p><img src="http://img.gangtieguo.cn/006tNbRwgy1fuaxd9man3j31020o60w1.jpg" alt></p>
 <p>Spark Driver首先作为一个ApplicationMaster在YARN集群中启动，客户端提交给ResourceManager的时候，每一个job都会在集群的NodeManager节点上分配一个唯一的ApplicationMaster，由该ApplicationMaster管理全生命周期的应用。具体过程：</p>
 <ol>
 <li>由client向ResourceManager提交请求，并上传jar到HDFS上<br>这期间包括四个步骤：<br>a).连接到RM<br>b).从RM的ASM（ApplicationsManager ）中获得metric、queue和resource等信息。<br>c). upload app jar and spark-assembly jar<br>d).设置运行环境和container上下文（launch-container.sh等脚本)</li>

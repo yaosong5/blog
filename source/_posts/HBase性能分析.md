@@ -10,7 +10,7 @@ toc: true
 
 
 
-![](https://img.gangtieguo.cn/0069RVTdgy1fuap8gxtquj31ca0ncdij.jpg)
+![](http://img.gangtieguo.cn/0069RVTdgy1fuap8gxtquj31ca0ncdij.jpg)
 
 # HBase介绍
 
@@ -85,7 +85,7 @@ Region按大小分割的，随着数据增多，Region不断增大，当增大�
 ### ROOT表和META表
 
 HBase的所有Region元数据被存储在.META.表中，随着Region的增多，.META.表中的数据也会增大，并分裂成多个新的Region。为了定位.META.表中各个Region的位置，把.META.表中所有Region的元数据保存在-ROOT-表中，最后由Zookeeper记录-ROOT-表的位置信息。所有客户端访问用户数据前，需要首先访问Zookeeper获得-ROOT-的位置，然后访问-ROOT-表获得.META.表的位置，最后根据.META.表中的信息确定用户数据存放的位置，如下图所示。
-![](https://img.gangtieguo.cn/006tNbRwgy1fuag5ugi8yj30y60ds0tw.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fuag5ugi8yj30y60ds0tw.jpg)
 
 -ROOT-表永远不会被分割，它只有一个Region，这样可以保证最多只需要三次跳转就可以定位任意一个Region。为了加快访问速度，.META.表的所有Region全部保存在内存中。客户端会将查询过的位置信息缓存起来，且缓存不会主动失效。如果客户端根据缓存信息还访问不到数据，则询问相关.META.表的Region服务器，试图获取数据的位置，如果还是失败，则询问-ROOT-表相关的.META.表在哪里。最后，如果前面的信息全部失效，则通过ZooKeeper重新定位Region的信息。所以如果客户端上的缓存全部是失效，则需要进行6次网络来回，才能定位到正确的Region。
 

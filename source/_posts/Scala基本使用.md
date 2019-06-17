@@ -8,7 +8,7 @@ toc: true
 
 [TOC]
 
-![](https://img.gangtieguo.cn/006tNbRwgy1fukx028pz0j313t0op400.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fukx028pz0j313t0op400.jpg)
 
 Var和val
 

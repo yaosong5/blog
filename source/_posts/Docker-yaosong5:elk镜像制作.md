@@ -9,7 +9,7 @@ typora-copy-images-to: ipic
 
 [TOC]
 
-![](https://img.gangtieguo.cn/006tNbRwgy1fu54yue2cxj31g20q875x.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fu54yue2cxj31g20q875x.jpg)
 
 ## 来源容器  elk
 

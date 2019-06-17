@@ -12,7 +12,7 @@ toc: true
 
 在hive表dwb.dwb_r_thrid_data中，data字段存放有json字符串
 
-![](https://img.gangtieguo.cn/006tKfTcgy1g10yhuqk6bj32jc0e4wfy.jpg)
+![](http://img.gangtieguo.cn/006tKfTcgy1g10yhuqk6bj32jc0e4wfy.jpg)
 
 <!-- more -->
 
@@ -288,7 +288,7 @@ from (select dwb_r_thrid_data.apply_risk_id,dwb_r_thrid_data.dp_data_id,dwb_r_th
 
 得到结果：
 
-![得到结果](https://img.gangtieguo.cn/006tKfTcgy1g1100n1r1pj32s20d8t9o.jpg)
+![得到结果](http://img.gangtieguo.cn/006tKfTcgy1g1100n1r1pj32s20d8t9o.jpg)
 
 
 
@@ -306,7 +306,7 @@ select get_json_object(td.data,"$.data.loanInfo.mobile.timeScopes.D360") d3,get_
 
 得到
 
-![](https://img.gangtieguo.cn/006tKfTcgy1g110nazcuwj329c032aa3.jpg)
+![](http://img.gangtieguo.cn/006tKfTcgy1g110nazcuwj329c032aa3.jpg)
 
 ## 2.拼接获取的D360和D90字段
 
@@ -314,7 +314,7 @@ select get_json_object(td.data,"$.data.loanInfo.mobile.timeScopes.D360") d3,get_
 select td.*,concat(regexp_replace(get_json_object(td.data,"$.data.loanInfo.mobile.timeScopes.D360"),'}',',"timeScope":"D360"}'),"|",regexp_replace(get_json_object(td.data,"$.data.loanInfo.mobile.timeScopes.D90"),'}',',"timeScope":"D90"}')) ts  from dwb.dwb_r_thrid_data td  where  channel_name ='morpho' and interface_name ='query' and dt='20190218' limit 5
 ```
 
-![](https://img.gangtieguo.cn/006tKfTcgy1g110qkjxjij31yk03gmx6.jpg)
+![](http://img.gangtieguo.cn/006tKfTcgy1g110qkjxjij31yk03gmx6.jpg)
 
 拼接的字符串样式，通过"|"分隔两个对象 
 
@@ -346,7 +346,7 @@ c as maxOverdueDays,loanTenantCount,monthsFromFirstLoan,averageLoanGapDays,avera
 
 搞定
 
-![得到结果](https://img.gangtieguo.cn/006tKfTcgy1g1115ip6uyj328m0bkjrw.jpg)
+![得到结果](http://img.gangtieguo.cn/006tKfTcgy1g1115ip6uyj328m0bkjrw.jpg)
 
 
 

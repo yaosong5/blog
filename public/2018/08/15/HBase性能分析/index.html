@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC]  HBase介绍HBase表很大：一个表可以有数十亿行，上百万列； HBase的表将会分成很多个分区，每个分区部分会存在不同的机器上分区是为了便于查询，放在不同机器上，io也增大，假如一个机器的io的是100m，两个就为200m，读取速度就变快了==&amp;gt;多台机器的io能得到充分利用">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://img.gangtieguo.cn/0069RVTdgy1fuap8gxtquj31ca0ncdij.jpg">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fuag5ugi8yj30y60ds0tw.jpg">
-<meta property="og:updated_time" content="2019-06-17T04:32:09.650Z">
+<meta property="og:image" content="http://img.gangtieguo.cn/0069RVTdgy1fuap8gxtquj31ca0ncdij.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tNbRwgy1fuag5ugi8yj30y60ds0tw.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:40:09.381Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="钢铁锅">
 <meta name="twitter:description" content="[TOC]  HBase介绍HBase表很大：一个表可以有数十亿行，上百万列； HBase的表将会分成很多个分区，每个分区部分会存在不同的机器上分区是为了便于查询，放在不同机器上，io也增大，假如一个机器的io的是100m，两个就为200m，读取速度就变快了==&amp;gt;多台机器的io能得到充分利用">
-<meta name="twitter:image" content="https://img.gangtieguo.cn/0069RVTdgy1fuap8gxtquj31ca0ncdij.jpg">
+<meta name="twitter:image" content="http://img.gangtieguo.cn/0069RVTdgy1fuap8gxtquj31ca0ncdij.jpg">
     
 
     
@@ -300,7 +300,7 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
-<p><img src="https://img.gangtieguo.cn/0069RVTdgy1fuap8gxtquj31ca0ncdij.jpg" alt></p>
+<p><img src="http://img.gangtieguo.cn/0069RVTdgy1fuap8gxtquj31ca0ncdij.jpg" alt></p>
 <h1 id="HBase介绍"><a href="#HBase介绍" class="headerlink" title="HBase介绍"></a>HBase介绍</h1><p>HBase表很大：一个表可以有数十亿行，上百万列；</p>
 <p>HBase的表将会分成很多个分区，每个分区部分会存在不同的机器上<br>分区是为了便于查询，放在不同机器上，io也增大，假如一个机器的io的是100m，两个就为200m，读取速度就变快了==&gt;<strong>多台机器的io能得到充分利用</strong></p>
 <a id="more"></a>
@@ -319,7 +319,7 @@ var _hmt = _hmt || [];
 <h3 id="HLog"><a href="#HLog" class="headerlink" title="HLog"></a>HLog</h3><p>HLog最终是放在hdfs上。</p>
 <p>当我们客户端上传一个表名，一个列簇，一个值，这条命令的值会原封不动的将其写入到HLog里面， 这个是一个appendLog,只可以从底部追加，不允许修改，写到HLog之后，再将数据写入到内存（memstore）当中，HLog里面是存储的操作信息的数据 写在HLog中是因为，防止在写入到内存中的时候，宕机</p>
 <h2 id="Region的划分"><a href="#Region的划分" class="headerlink" title="Region的划分"></a>Region的划分</h2><p>Region按大小分割的，随着数据增多，Region不断增大，当增大到一个阀值（默认256m）的时候，Region就会分成两个新的Region</p>
-<h2 id="HRegion的存储"><a href="#HRegion的存储" class="headerlink" title="HRegion的存储"></a>HRegion的存储</h2><h3 id="ROOT表和META表"><a href="#ROOT表和META表" class="headerlink" title="ROOT表和META表"></a>ROOT表和META表</h3><p>HBase的所有Region元数据被存储在.META.表中，随着Region的增多，.META.表中的数据也会增大，并分裂成多个新的Region。为了定位.META.表中各个Region的位置，把.META.表中所有Region的元数据保存在-ROOT-表中，最后由Zookeeper记录-ROOT-表的位置信息。所有客户端访问用户数据前，需要首先访问Zookeeper获得-ROOT-的位置，然后访问-ROOT-表获得.META.表的位置，最后根据.META.表中的信息确定用户数据存放的位置，如下图所示。<br><img src="https://img.gangtieguo.cn/006tNbRwgy1fuag5ugi8yj30y60ds0tw.jpg" alt></p>
+<h2 id="HRegion的存储"><a href="#HRegion的存储" class="headerlink" title="HRegion的存储"></a>HRegion的存储</h2><h3 id="ROOT表和META表"><a href="#ROOT表和META表" class="headerlink" title="ROOT表和META表"></a>ROOT表和META表</h3><p>HBase的所有Region元数据被存储在.META.表中，随着Region的增多，.META.表中的数据也会增大，并分裂成多个新的Region。为了定位.META.表中各个Region的位置，把.META.表中所有Region的元数据保存在-ROOT-表中，最后由Zookeeper记录-ROOT-表的位置信息。所有客户端访问用户数据前，需要首先访问Zookeeper获得-ROOT-的位置，然后访问-ROOT-表获得.META.表的位置，最后根据.META.表中的信息确定用户数据存放的位置，如下图所示。<br><img src="http://img.gangtieguo.cn/006tNbRwgy1fuag5ugi8yj30y60ds0tw.jpg" alt></p>
 <p>-ROOT-表永远不会被分割，它只有一个Region，这样可以保证最多只需要三次跳转就可以定位任意一个Region。为了加快访问速度，.META.表的所有Region全部保存在内存中。客户端会将查询过的位置信息缓存起来，且缓存不会主动失效。如果客户端根据缓存信息还访问不到数据，则询问相关.META.表的Region服务器，试图获取数据的位置，如果还是失败，则询问-ROOT-表相关的.META.表在哪里。最后，如果前面的信息全部失效，则通过ZooKeeper重新定位Region的信息。所以如果客户端上的缓存全部是失效，则需要进行6次网络来回，才能定位到正确的Region。</p>
 <p>root表,mate表都不会很大<br>因为root表，只是记录位置，本身就不会太大，<br><strong>meta表，和root表在过程中都会被加载到内存中</strong><br>经过3次来回，总共六次，会得到数据表的位置<br>1，client向zookeeper获取root表的位置 2，zookeeper返回root表地址信息<br>3，client读取root表，获得table1的meta表的地址，4 root表所在机器返回meta表地址<br>5，client向mete表读取table地址，6 client向table插入数据<br>读取和写入都会经历上面的过程</p>
 <h1 id="HBase写数据流程"><a href="#HBase写数据流程" class="headerlink" title="HBase写数据流程"></a>HBase写数据流程</h1><p>client向HRegionserver发送写请求。<br>HRegionserver将<strong>操作信息</strong>数据写到hlog（write ahead log）。为了数据的持久化和恢复。 HLog记录的是操作数据 </p>

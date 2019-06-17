@@ -6,7 +6,7 @@ categories: 框架
 toc: true
 top: true
 ---
-![](https://img.gangtieguo.cn/006tNbRwgy1fu551ai6pij30mm064q3r.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fu551ai6pij30mm064q3r.jpg)
 
 现接触MyBatic记录一些注解
 <!--more-->

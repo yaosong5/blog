@@ -10,7 +10,7 @@ toc: true
 
 官方的shuffle流程
 
-![](https://img.gangtieguo.cn/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fuhbmle6ksj30ff07dglu.jpg)
 
 # shuffle原理
 
@@ -24,7 +24,7 @@ MapReduce 框架的核心步骤主要分两部分：Map 和Reduce，一个是独
 
 ## shuffle过程分析
 
-![](https://img.gangtieguo.cn/006tNbRwgy1fuhbuwapflj30zc0j4mxv.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fuhbuwapflj30zc0j4mxv.jpg)
 
 
 
@@ -59,7 +59,7 @@ map端的所有工作结束后，最终生成的这个文件也存放在TaskTrac
 
 ## reduce端过程
 
-![](https://img.gangtieguo.cn/006tNbRwgy1fuhbdybylfj30z40hyq3f.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fuhbdybylfj30z40hyq3f.jpg)
 
 1. Copy过程，简单地拉取数据。Reduce进程启动一些数据copy线程(Fetcher)，通过HTTP方式请求map task所在的TaskTracker获取map task的输出文件。因为map task早已结束，这些文件就归TaskTracker管理在本地磁盘中。
 2. Merge阶段。这里的merge如map端的merge动作，只是数组中存放的是不同map端copy来的数值。Copy过来的数据会先放入内存缓冲区中，这里的缓冲区大小要比map端的更为灵活，它基于JVM的heap size设置，因为Shuffle阶段Reducer不运行，所以应该把绝大部分的内存都给Shuffle用。这里需要强调的是，merge有三种形式：1)内存到内存 （默认不启用） 2)内存到磁盘  3)磁盘到磁盘。当内存中的数据量到达一定阈值，就启动内存到磁盘的merge，这个过程中如果你设置有Combiner，也是会启用的，然后在磁盘中生成了众多的溢写文件。第二种merge方式一直在运行，直到没有map端的数据时才结束，然后启动第三种磁盘到磁盘的merge方式生成最终的那个文件。
@@ -114,7 +114,7 @@ splitSize = Math.max(miniSize,Math.min(maxSize,blockSize))
 
 3. 遍历完成后，将切片信息splitList序列化到一个split描述文件中
 
-   ![](https://img.gangtieguo.cn/006tNbRwgy1fufyt54ouvj30cq03c0so.jpg)
+   ![](http://img.gangtieguo.cn/006tNbRwgy1fufyt54ouvj30cq03c0so.jpg)
 
 
 

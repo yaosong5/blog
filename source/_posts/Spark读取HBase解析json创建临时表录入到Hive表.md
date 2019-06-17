@@ -8,7 +8,7 @@ toc: true
 
 [TOC]
 
-![](https://img.gangtieguo.cn/0069RVTdgy1fu81r6j5e5j30ji09c3z1.jpg)
+![](http://img.gangtieguo.cn/0069RVTdgy1fu81r6j5e5j30ji09c3z1.jpg)
 
 介绍：主要是读取通过mysql查到关联关系然后读取HBASE里面存放的Json，通过解析json将json数组对象里的元素拆分成单条json,再将json映射成临时表，查询临时表将数据落入到hive表中
 
@@ -24,7 +24,7 @@ spark读取本地HBase
 
 # json样例
 
-![](https://img.gangtieguo.cn/006tNbRwgy1fu53tng462j31721e6afd.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fu53tng462j31721e6afd.jpg)
 
 
 

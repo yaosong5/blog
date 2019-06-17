@@ -6,7 +6,7 @@ categories: 安装部署
 toc: true
 ---
 
-![](https://img.gangtieguo.cn/006tNbRwgy1fu550945khj318w0n4wgq.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fu550945khj318w0n4wgq.jpg)
 
 在linux yum安装mysql
 

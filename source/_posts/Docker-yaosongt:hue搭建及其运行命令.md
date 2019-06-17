@@ -6,7 +6,7 @@ categories: 安装部署
 toc: true
 ---
 [TOC]
-![](https://img.gangtieguo.cn/006tNbRwgy1fu54s2yk2aj30z40dcmyl.jpg)
+![](http://img.gangtieguo.cn/006tNbRwgy1fu54s2yk2aj30z40dcmyl.jpg)
 # 本次采用的ant maven来编译hue
 
 ## 启动一个基础容器

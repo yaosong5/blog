@@ -36,7 +36,7 @@ sudo mount -t vboxsf -o uid=500,gid=500 Y  /Users/yaosong/Yao
 
 此处Y为我设置的共享路径
 
-![共享路径](https://img.gangtieguo.cn/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg)
+![共享路径](http://img.gangtieguo.cn/006tKfTcgy1g0ztnzxosnj310o09wgm5.jpg)
 
 
 
@@ -48,7 +48,7 @@ sudo mount -t vboxsf -o uid=500,gid=500 Y  /Users/yaosong/Yao
 >
 > 并未设置所属用户组及所属用户，然后在虚拟机中使用chown，无论如何都未成功，
 >
-> ![使用sudo mount -t vboxsf  Yao  /Users/yaosong/Yao](https://img.gangtieguo.cn/006tKfTcgy1g0zs97hho1j3130078gph.jpg)
+> ![使用sudo mount -t vboxsf  Yao  /Users/yaosong/Yao](http://img.gangtieguo.cn/006tKfTcgy1g0zs97hho1j3130078gph.jpg)
 >
 > 看到上一篇博文，茅塞顿开
 >
@@ -56,11 +56,11 @@ sudo mount -t vboxsf -o uid=500,gid=500 Y  /Users/yaosong/Yao
 >
 > > 由于elk用户对应用户id，用户组id为500，
 > >
-> > ![elk用户对应用户id，用户组id为500](https://img.gangtieguo.cn/006tKfTcgy1g0zsdwrv03j30ma0160st.jpg)
+> > ![elk用户对应用户id，用户组id为500](http://img.gangtieguo.cn/006tKfTcgy1g0zsdwrv03j30ma0160st.jpg)
 >
 > 可以得到一下所属用户和用户组：
 >
-> ![挂载时设置用户和组过后](https://img.gangtieguo.cn/006tKfTcgy1g0zsbf3r1kj312u07odjp.jpg)
+> ![挂载时设置用户和组过后](http://img.gangtieguo.cn/006tKfTcgy1g0zsbf3r1kj312u07odjp.jpg)
 >
 > 此处设置用户id和组id，下文也要用到
 >
@@ -96,7 +96,7 @@ sudo mount -t vboxsf -o uid=500,gid=500 Y  /Users/yaosong/Yao
 
 # 查看结果
 
-![大功告成](https://img.gangtieguo.cn/006tKfTcgy1g0ztcg8e6jj30w20eu0yg.jpg)
+![大功告成](http://img.gangtieguo.cn/006tKfTcgy1g0ztcg8e6jj30w20eu0yg.jpg)
 
 
 

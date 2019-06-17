@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC] 在 hive 做统计的时候，总是涉及到做累计的报表处理，下面案列就是来做相应处理 准备创建数据文件（在hadoop所在的机器） vim /usr/hadoop/hivedata/t_sales.dat 12345678910舒肤佳,2018-06,5舒肤佳,2018-06,15美姿,2018-06,5舒肤佳,2018-06,8美姿,2018-06,25舒肤佳,2018-06,5舒肤佳,">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://img.gangtieguo.cn/0069RVTdgy1fu87l2nswej31500smq3k.jpg">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fu88kcmiosj31ik0zgq4y.jpg">
-<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fu88tmmjfqj31ag0vamyy.jpg">
-<meta property="og:updated_time" content="2019-06-17T04:32:09.659Z">
+<meta property="og:image" content="http://img.gangtieguo.cn/0069RVTdgy1fu87l2nswej31500smq3k.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tNbRwgy1fu88kcmiosj31ik0zgq4y.jpg">
+<meta property="og:image" content="http://img.gangtieguo.cn/006tNbRwgy1fu88tmmjfqj31ag0vamyy.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:40:09.385Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hive累计报表">
 <meta name="twitter:description" content="[TOC] 在 hive 做统计的时候，总是涉及到做累计的报表处理，下面案列就是来做相应处理 准备创建数据文件（在hadoop所在的机器） vim /usr/hadoop/hivedata/t_sales.dat 12345678910舒肤佳,2018-06,5舒肤佳,2018-06,15美姿,2018-06,5舒肤佳,2018-06,8美姿,2018-06,25舒肤佳,2018-06,5舒肤佳,">
-<meta name="twitter:image" content="https://img.gangtieguo.cn/0069RVTdgy1fu87l2nswej31500smq3k.jpg">
+<meta name="twitter:image" content="http://img.gangtieguo.cn/0069RVTdgy1fu87l2nswej31500smq3k.jpg">
     
 
     
@@ -346,13 +346,13 @@ var _hmt = _hmt || [];
 <h2 id="创建表及读取数据"><a href="#创建表及读取数据" class="headerlink" title="创建表及读取数据"></a>创建表及读取数据</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_sales(brandname <span class="keyword">string</span>,<span class="keyword">month</span> <span class="keyword">string</span>,sales <span class="built_in">int</span>)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span>;</span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> inpath <span class="string">'/local/hivedata/t_sales.dat'</span> <span class="keyword">into</span> <span class="keyword">table</span> t_sales;</span><br></pre></td></tr></table></figure>
 <p>如果是上传本地文件（如果在hive所在主机上） 则在load  data 后加 local，如 <code>load data local inpath &#39;/usr/hadoop/hivedata/t_sales.dat&#39; into table t_sales;</code></p>
 <h1 id="1、先求每个品牌的月总金额"><a href="#1、先求每个品牌的月总金额" class="headerlink" title="1、先求每个品牌的月总金额"></a>1、先求每个品牌的月总金额</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select brandname,month,sum(sales) as all_sales from t_sales group by brandname,month</span><br></pre></td></tr></table></figure>
-<p><img src="https://img.gangtieguo.cn/0069RVTdgy1fu87l2nswej31500smq3k.jpg" alt></p>
+<p><img src="http://img.gangtieguo.cn/0069RVTdgy1fu87l2nswej31500smq3k.jpg" alt></p>
 <h1 id="2、将月总金额自连接"><a href="#2、将月总金额自连接" class="headerlink" title="2、将月总金额自连接"></a>2、将月总金额自连接</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span>  (<span class="keyword">select</span> brandname,<span class="keyword">month</span>,<span class="keyword">sum</span>(sales) <span class="keyword">as</span> sal <span class="keyword">from</span> t_sales <span class="keyword">group</span> <span class="keyword">by</span> brandname,<span class="keyword">month</span>) A </span><br><span class="line">    <span class="keyword">inner</span> <span class="keyword">join</span> </span><br><span class="line">   (<span class="keyword">select</span> brandname,<span class="keyword">month</span>,<span class="keyword">sum</span>(sales) <span class="keyword">as</span> sal <span class="keyword">from</span> t_sales <span class="keyword">group</span> <span class="keyword">by</span> brandname,<span class="keyword">month</span>) B</span><br><span class="line">    <span class="keyword">on</span></span><br><span class="line">A.brandname=B.brandname</span><br><span class="line"><span class="keyword">where</span> </span><br><span class="line">B.month &lt;= A.month;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fu88kcmiosj31ik0zgq4y.jpg" alt></p>
+<p><img src="http://img.gangtieguo.cn/006tNbRwgy1fu88kcmiosj31ik0zgq4y.jpg" alt></p>
 <h1 id="3、从上一步的结果中进行分组查询"><a href="#3、从上一步的结果中进行分组查询" class="headerlink" title="3、从上一步的结果中进行分组查询"></a>3、从上一步的结果中进行分组查询</h1><p>分组的字段是 a.brandname a.month</p>
 <p>求月累计值： 将 b.month &lt;= a.month 的所有 b.sals求和即可</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">select A.brandname,A.month,max(A.sales) as sales,sum(B.sales) as accumulate</span><br><span class="line">from </span><br><span class="line">(select brandname,month,sum(sales) as sales from t_sales group by brandname,month) A </span><br><span class="line">inner join </span><br><span class="line">(select brandname,month,sum(sales) as sales from t_sales group by brandname,month) B</span><br><span class="line">on</span><br><span class="line">A.brandname=B.brandname</span><br><span class="line">where B.month &lt;= A.month</span><br><span class="line">group by A.brandname,A.month</span><br><span class="line">order by A.brandname,A.month;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fu88tmmjfqj31ag0vamyy.jpg" alt></p>
+<p><img src="http://img.gangtieguo.cn/006tNbRwgy1fu88tmmjfqj31ag0vamyy.jpg" alt></p>
 
             
 
