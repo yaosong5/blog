@@ -1,7 +1,7 @@
 ---
 title:  Docker-yaosong5/elk镜像-ELK容器的搭建
 date: 2018年08月06日 22时15分52秒
-tags:  [ELK,Docker]
+tags:  [ELK,Docker,es]
 categories: 安装部署
 toc: true
 typora-copy-images-to: ipic
@@ -9,7 +9,7 @@ typora-copy-images-to: ipic
 
 [TOC]
 
-![](https://ws3.sinaimg.cn/large/006tNbRwgy1fu54yue2cxj31g20q875x.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu54yue2cxj31g20q875x.jpg)
 
 ## 来源容器  elk
 

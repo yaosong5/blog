@@ -90,7 +90,7 @@ Producer客户端负责消息的分发
 5. 计算倍数: M = [P0,P1,P2,P3].size / [C0,C1].size,本例值M=2(向上取整)
 6. 然后依次分配partitions: C0 = [P0,P1],C1=[P2,P3],即Ci = [P(i * M),P((i + 1) * M -1)]
 
-![](https://ws3.sinaimg.cn/large/0069RVTdly1fu9a7zzwdrj31540lvjtv.jpg)
+![](https://img.gangtieguo.cn/0069RVTdly1fu9a7zzwdrj31540lvjtv.jpg)
 
 
 
@@ -100,27 +100,27 @@ Producer客户端负责消息的分发
 
 在Kafka文件存储中，同一个topic下有多个不同partition，每个partition为一个目录，partiton命名规则为topic名称+有序序号，第一个partiton序号从0开始，序号最大值为partitions数量减1。
 
-![](https://ws4.sinaimg.cn/large/0069RVTdly1fu9abi7beaj312e04agng.jpg)
+![](https://img.gangtieguo.cn/0069RVTdly1fu9abi7beaj312e04agng.jpg)
 
 每个partion(目录)相当于一个巨型文件被平均分配到多个大小相等segment(段)数据文件中。**但每个段****segmentfile****消息数量不一定相等**，这种特性方便oldsegment file快速被删除。默认保留7天的数据。
 
-![](https://ws2.sinaimg.cn/large/0069RVTdly1fu9ajs8d4dj30rs0dgwj3.jpg)
+![](https://img.gangtieguo.cn/0069RVTdly1fu9ajs8d4dj30rs0dgwj3.jpg)
 
 每个partiton只需要支持顺序读写就行了，segment文件生命周期由服务端配置参数决定。（什么时候创建，什么时候删除）
 
-![](https://ws1.sinaimg.cn/large/0069RVTdly1fu9ajsxr9bj30tt0ektai.jpg)
+![](https://img.gangtieguo.cn/0069RVTdly1fu9ajsxr9bj30tt0ektai.jpg)
 
 ### Kafka Partition Segment
 
 Segment file组成：由2大部分组成，分别为index file和data file，此2个文件一一对应，成对出现，后缀".index"和“.log”分别表示为segment索引文件、数据文件。
 
-![](https://ws4.sinaimg.cn/large/0069RVTdly1fu9ai5p7amj30nv0f0gre.jpg)
+![](https://img.gangtieguo.cn/0069RVTdly1fu9ai5p7amj30nv0f0gre.jpg)
 
 l Segment文件命名规则：partion全局的第一个segment从0开始，后续每个segment文件名为上一个segment文件最后一条消息的offset值。数值最大为64位long大小，19位数字字符长度，没有数字用0填充。
 
 l 索引文件存储大量元数据，数据文件存储大量消息，索引文件中元数据指向对应数据文件中message的物理偏移地址。
 
-![](https://ws2.sinaimg.cn/large/0069RVTdly1fu9ai52pxmj30sx0hetdm.jpg)
+![](https://img.gangtieguo.cn/0069RVTdly1fu9ai52pxmj30sx0hetdm.jpg)
 
 3，497：当前log文件中的第几条信息，存放在磁盘上的那个地方
 

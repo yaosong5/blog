@@ -21,7 +21,7 @@ JMS干什么用：用来异构系统 集成通信，缓解系统瓶颈，提高�
 
 通过什么方式：生产消费者模式（生产者、服务器、消费者）
 
-![](https://ws2.sinaimg.cn/large/006tNbRwgy1fu895melcpj30zd0ckdgd.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu895melcpj30zd0ckdgd.jpg)
 
 jdk，kafka，activemq……
 
@@ -37,7 +37,7 @@ jdk，kafka，activemq……
 
 发布订阅模型则是一个基于推送的消息传送模型。发布订阅模型可以有多种不同的订阅者，临时订阅者只在主动监听主题时才接收消息，而持久订阅者则监听主题的所有消息，**即时当前订阅者不可用，处于离线状态**。
 
-![](https://ws2.sinaimg.cn/large/0069RVTdgy1fu894keo4oj310n0hd0tv.jpg)
+![](https://img.gangtieguo.cn/0069RVTdgy1fu894keo4oj310n0hd0tv.jpg)
 
 queue.put（object）  数据生产
 
@@ -72,7 +72,7 @@ Consumer：消息接受者
 broker：每个kafka实例(server)
 Zookeeper：依赖集群保存meta信息。
 
-![](https://ws3.sinaimg.cn/large/006tNbRwgy1fu89ajoxc5j30mf0fnt9d.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu89ajoxc5j30mf0fnt9d.jpg)
 
 
 

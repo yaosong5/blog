@@ -17,9 +17,9 @@
 <meta property="og:description" content="此文纯属命令记录，后续更新原理解说">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.github.com/yaosong5/tuchuang/raw/master/mdtc/2018/7/20/1532027033015.jpg">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1ftom0jyp9vj30kl07l76c.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1ftom2nhzd3j31ey0luqhe.jpg">
-<meta property="og:updated_time" content="2019-03-13T07:38:36.024Z">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tKfTcgy1ftom0jyp9vj30kl07l76c.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tKfTcgy1ftom2nhzd3j31ey0luqhe.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:32:09.632Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker-machine的创建，mac宿主机和docker容器网络互通Docker容器与宿主机在同一ip段下">
 <meta name="twitter:description" content="此文纯属命令记录，后续更新原理解说">
@@ -351,13 +351,13 @@ var _hmt = _hmt || [];
 <p>vagrant ssh<br>ip -4 addr</p>
 <p>创建 docker network br</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo docker network create \</span><br><span class="line">    --driver bridge \</span><br><span class="line">    --subnet=192.168.33.0/24 \</span><br><span class="line">    --gateway=192.168.33.1 \</span><br><span class="line">    --opt <span class="string">"com.docker.network.bridge.enable_icc"</span>=<span class="string">"true"</span> \</span><br><span class="line">    --opt <span class="string">"com.docker.network.bridge.enable_ip_masquerade"</span>=<span class="string">"true"</span> \</span><br><span class="line">    --opt <span class="string">"com.docker.network.bridge.name"</span>=<span class="string">"docker1"</span> \</span><br><span class="line">    --opt <span class="string">"com.docker.network.driver.mtu"</span>=<span class="string">"1500"</span> \</span><br><span class="line">    br</span><br></pre></td></tr></table></figure>
-<p>创建网桥配置文件docker1<br><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1ftom0jyp9vj30kl07l76c.jpg" alt="A82E4EE8-9517-4B66-A6CB-FE3C964B6D99"></p>
+<p>创建网桥配置文件docker1<br><img src="https://img.gangtieguo.cn/006tKfTcgy1ftom0jyp9vj30kl07l76c.jpg" alt="A82E4EE8-9517-4B66-A6CB-FE3C964B6D99"></p>
 <p><code>vim /etc/sysconfig/network-scripts/ifcfg-docker1</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DEVICE=docker1</span><br><span class="line">TYPE=Bridge</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">ONBOOT=yes</span><br><span class="line">STP=on</span><br><span class="line">IPADDR=</span><br><span class="line">NETMASK=</span><br><span class="line">GATEWAY=</span><br><span class="line">DNS1=</span><br></pre></td></tr></table></figure>
 <h2 id="修改网卡配置-eth1"><a href="#修改网卡配置-eth1" class="headerlink" title="修改网卡配置 eth1 :"></a>修改网卡配置 eth1 :</h2><p><code>sudo vi /etc/sysconfig/network-scripts/ifcfg-eth1</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DEVICE=eth1</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">HWADDR=</span><br><span class="line">ONBOOT=yes</span><br><span class="line">NETMASK=</span><br><span class="line">GATEWAY=</span><br><span class="line">BRIDGE=docker1</span><br><span class="line">TYPE=Ethernet</span><br></pre></td></tr></table></figure>
 <p><code>ip -4 addr</code></p>
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1ftom2nhzd3j31ey0luqhe.jpg" alt="E77B4516-B852-4E7F-A876-FCF01FDB93BC"></p>
+<p><img src="https://img.gangtieguo.cn/006tKfTcgy1ftom2nhzd3j31ey0luqhe.jpg" alt="E77B4516-B852-4E7F-A876-FCF01FDB93BC"></p>
 <p>初始化docker-machine变量</p>
 <p>提示报错Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running? </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> $(docker-machine env default) </span><br><span class="line">如果要取消变量 </span><br><span class="line"> <span class="built_in">eval</span> $(docker-machine env -u)</span><br></pre></td></tr></table></figure>

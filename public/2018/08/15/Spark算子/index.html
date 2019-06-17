@@ -16,19 +16,19 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC] HelloWord？WorldCount1sc.textfile(&quot;hdfs://master:9000/wc&quot;).flatMap(_.split(&quot;分隔符&quot;)).map((_,1)).reduceByKey(_+_).saveAsTextFile(&quot;hdfs://master:9000/wcResult&quot;) 数据最开始在Driver，计算的时候数据会流入worker当rdd形成过程中">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fucjpo4afaj31ik056whp.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fuck6fl2chj30kg02ut96.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fuck87fxhij30ju02gt92.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fuck95wu88j30qo02o74x.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fucouprhcjj30s402yjs5.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fucpd6axxej30os034wf7.jpg">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fucpvxoentj31gw03276d.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fucpwdi27nj31g8032abq.jpg">
-<meta property="og:updated_time" content="2018-08-20T01:44:42.481Z">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fucjpo4afaj31ik056whp.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fuck6fl2chj30kg02ut96.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fuck87fxhij30ju02gt92.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fuck95wu88j30qo02o74x.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fucouprhcjj30s402yjs5.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fucpd6axxej30os034wf7.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fucpvxoentj31gw03276d.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fucpwdi27nj31g8032abq.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:32:09.687Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark算子案例">
 <meta name="twitter:description" content="[TOC] HelloWord？WorldCount1sc.textfile(&quot;hdfs://master:9000/wc&quot;).flatMap(_.split(&quot;分隔符&quot;)).map((_,1)).reduceByKey(_+_).saveAsTextFile(&quot;hdfs://master:9000/wcResult&quot;) 数据最开始在Driver，计算的时候数据会流入worker当rdd形成过程中">
-<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fucjpo4afaj31ik056whp.jpg">
+<meta name="twitter:image" content="https://img.gangtieguo.cn/006tNbRwgy1fucjpo4afaj31ik056whp.jpg">
     
 
     
@@ -358,7 +358,7 @@ var _hmt = _hmt || [];
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> func(index,<span class="type">Int</span>,iter:<span class="type">Interator</span>[(<span class="type">Int</span>)]):<span class="type">Interator</span>[<span class="type">String</span>] = &#123;</span><br><span class="line">iter.toList.map(x =&gt; <span class="string">"[partID:"</span> +  index + <span class="string">", val: "</span> + x + <span class="string">"]"</span>).iterator</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>会转换成函数<br>函数的形式</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> func = (index: <span class="type">Int</span>, iter: <span class="type">Iterator</span>[(<span class="type">Int</span>)]) =&gt; &#123;</span><br><span class="line">  iter.toList.map(x =&gt; <span class="string">"[partID:"</span> +  index + <span class="string">", val: "</span> + x + <span class="string">"]"</span>).iterator</span><br><span class="line">&#125;</span><br><span class="line">rdd1.mapPartitionsWithIndex(func).collect</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fucjpo4afaj31ik056whp.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fucjpo4afaj31ik056whp.jpg" alt></p>
 <h2 id="aggregate-action"><a href="#aggregate-action" class="headerlink" title="aggregate (action)"></a>aggregate (action)</h2><p>aggregate是一个action操作</p>
 <p>源码定义</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">aggregate</span></span>[<span class="type">U</span>](zeroValue: <span class="type">U</span>)(seqOp: (<span class="type">U</span>, <span class="type">T</span>) ⇒ <span class="type">U</span>, combOp: (<span class="type">U</span>, <span class="type">U</span>) ⇒ <span class="type">U</span>)(<span class="keyword">implicit</span> arg0: <span class="type">ClassTag</span>[<span class="type">U</span>]): <span class="type">U</span></span><br></pre></td></tr></table></figure>
@@ -371,24 +371,24 @@ var _hmt = _hmt || [];
 </blockquote>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdd1.aggregate(<span class="number">0</span>)(_+_, _+_)</span><br></pre></td></tr></table></figure>
 <p><strong>0 + (0+1+2+3+4 + 0+5+6+7+8+9)</strong></p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fuck6fl2chj30kg02ut96.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fuck6fl2chj30kg02ut96.jpg" alt></p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdd1.aggregate(<span class="number">7</span>)(_+_, _+_)</span><br></pre></td></tr></table></figure>
 <p><strong>7 + (7+1+2+3+4 + 7+5+6+7+8+9)</strong></p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fuck87fxhij30ju02gt92.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fuck87fxhij30ju02gt92.jpg" alt></p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdd1.aggregate(<span class="number">0</span>)(math.max(_, _), _ + _)</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fuck95wu88j30qo02o74x.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fuck95wu88j30qo02o74x.jpg" alt></p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdd1.aggregate(<span class="number">5</span>)(math.max(_, _), _ + _)</span><br></pre></td></tr></table></figure>
 <p><strong>5和1比, 得5再和234比得5 –&gt; 5和6789比,得9 –&gt; 5 + (5+9)</strong></p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fucouprhcjj30s402yjs5.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fucouprhcjj30s402yjs5.jpg" alt></p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd2 = sc.parallelize(<span class="type">List</span>(<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>,<span class="string">"r"</span>,<span class="string">"t"</span>,<span class="string">"y"</span>,<span class="string">"u"</span>,<span class="string">"i"</span>,<span class="string">"o"</span>,<span class="string">"p"</span>),<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 <p>可以用更加直接的方式验证操作</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span></span>(index: <span class="type">Int</span>, iter: <span class="type">Iterator</span>[(<span class="type">String</span>)]) : <span class="type">Iterator</span>[<span class="type">String</span>] = &#123;</span><br><span class="line">  iter.toList.map(x =&gt; <span class="string">"[partID:"</span> +  index + <span class="string">", val: "</span> + x + <span class="string">"]"</span>).iterator</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rdd2.aggregate(<span class="string">""</span>)(_ + _, _ + _)</span><br><span class="line">rdd2.aggregate(<span class="string">"="</span>)(_ + _, _ + _)</span><br><span class="line">rdd2.aggregate(<span class="string">"|"</span>)(_ + _, _ + _)</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fucpd6axxej30os034wf7.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fucpd6axxej30os034wf7.jpg" alt></p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd3 = sc.parallelize(<span class="type">List</span>(<span class="string">"qazqqw7"</span>,<span class="string">"jishhrwe9"</span>,<span class="string">"sdfwezsddf12"</span>,<span class="string">"12esdww8"</span>),<span class="number">2</span>)</span><br><span class="line">rdd3.aggregate(<span class="string">""</span>)((x,y) =&gt; math.max(x.length, y.length).toString, (x,y) =&gt; x + y)</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fucpvxoentj31gw03276d.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fucpvxoentj31gw03276d.jpg" alt></p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd4 = sc.parallelize(<span class="type">List</span>(<span class="string">"qazqqw7"</span>,<span class="string">"jishhrwe9"</span>,<span class="string">"sdfwezsddf12"</span>,<span class="string">""</span>),<span class="number">2</span>)</span><br><span class="line">rdd4.aggregate(<span class="string">""</span>)((x,y) =&gt; math.min(x.length, y.length).toString, (x,y) =&gt; x + y)</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fucpwdi27nj31g8032abq.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fucpwdi27nj31g8032abq.jpg" alt></p>
 <h2 id="aggregateByKey"><a href="#aggregateByKey" class="headerlink" title="aggregateByKey"></a>aggregateByKey</h2><p>对每个分区进行计算</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> pairRDD = sc.parallelize(<span class="type">List</span>( (<span class="string">"a"</span>,<span class="number">1</span>), (<span class="string">"a"</span>, <span class="number">12</span>), (<span class="string">"b"</span>, <span class="number">4</span>),(<span class="string">"c"</span>, <span class="number">17</span>), (<span class="string">"c"</span>, <span class="number">12</span>), (<span class="string">"b"</span>, <span class="number">2</span>)), <span class="number">2</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span></span>(index: <span class="type">Int</span>, iter: <span class="type">Iterator</span>[(<span class="type">String</span>, <span class="type">Int</span>)]) : <span class="type">Iterator</span>[<span class="type">String</span>] = &#123;</span><br><span class="line">  iter.toList.map(x =&gt; <span class="string">"[partID:"</span> +  index + <span class="string">", val: "</span> + x + <span class="string">"]"</span>).iterator</span><br><span class="line">&#125;</span><br><span class="line">pairRDD.mapPartitionsWithIndex(func2).collect</span><br></pre></td></tr></table></figure>
 <h2 id="combineByKey"><a href="#combineByKey" class="headerlink" title="combineByKey"></a>combineByKey</h2><p>reduceByKey aggregateByKey底层都是依赖的combineByKey，combineByKey比较底层的算子<br>和reduceByKey是相同的效果</p>

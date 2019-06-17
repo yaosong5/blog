@@ -9,19 +9,19 @@
     <title>Docker-yaosong5/elk镜像-ELK容器的搭建 | 钢铁锅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="[TOC]  来源容器  elk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name elk --hostname elk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个">
-<meta name="keywords" content="Docker,ELK">
+<meta name="keywords" content="Docker,ELK,es">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker-yaosong5&#x2F;elk镜像-ELK容器的搭建">
 <meta property="og:url" content="http://gangtieguo.cn/2018/07/08/Docker-yaosong5:elk镜像制作/index.html">
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC]  来源容器  elk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name elk --hostname elk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fu54yue2cxj31g20q875x.jpg">
-<meta property="og:updated_time" content="2019-03-14T16:48:47.569Z">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fu54yue2cxj31g20q875x.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:32:09.634Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker-yaosong5&#x2F;elk镜像-ELK容器的搭建">
 <meta name="twitter:description" content="[TOC]  来源容器  elk新建容器，为减少工作量，引用的是有ssh服务的Docker镜像kinogmt/centos-ssh:6.7，生成容器os为基准。 1docker run -itd  --name elk --hostname elk kinogmt/centos-ssh:6.7 &amp;amp;&amp;gt; /dev/null  注意必须要以-d方式启动，不然sshd服务不会启动，这算是一个">
-<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fu54yue2cxj31g20q875x.jpg">
+<meta name="twitter:image" content="https://img.gangtieguo.cn/006tNbRwgy1fu54yue2cxj31g20q875x.jpg">
     
 
     
@@ -281,7 +281,7 @@ var _hmt = _hmt || [];
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/ELK/">ELK</a>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/ELK/">ELK</a>, <a class="tag-link" href="/tags/es/">es</a>
     </div>
 
                     </div>
@@ -334,7 +334,7 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fu54yue2cxj31g20q875x.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fu54yue2cxj31g20q875x.jpg" alt></p>
 <h2 id="来源容器-elk"><a href="#来源容器-elk" class="headerlink" title="来源容器  elk"></a>来源容器  elk</h2><p>新建容器，为减少工作量，引用的是有ssh服务的Docker镜像<strong>kinogmt/centos-ssh:6.7</strong>，生成容器os为基准。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --name elk --hostname elk kinogmt/centos-ssh:6.7 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
 <blockquote>

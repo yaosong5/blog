@@ -57,7 +57,7 @@ load data inpath '/local/hivedata/t_sales.dat' into table t_sales;
 select brandname,month,sum(sales) as all_sales from t_sales group by brandname,month
 ```
 
-![](https://ws1.sinaimg.cn/large/0069RVTdgy1fu87l2nswej31500smq3k.jpg)
+![](https://img.gangtieguo.cn/0069RVTdgy1fu87l2nswej31500smq3k.jpg)
 
 
 
@@ -73,7 +73,7 @@ where
 B.month <= A.month;
 ```
 
-![](https://ws1.sinaimg.cn/large/006tNbRwgy1fu88kcmiosj31ik0zgq4y.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu88kcmiosj31ik0zgq4y.jpg)
 
 
 
@@ -98,4 +98,4 @@ group by A.brandname,A.month
 order by A.brandname,A.month;
 ```
 
-![](https://ws4.sinaimg.cn/large/006tNbRwgy1fu88tmmjfqj31ag0vamyy.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu88tmmjfqj31ag0vamyy.jpg)

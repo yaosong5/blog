@@ -10,7 +10,7 @@ toc: true
 
 [TOC]
 
-![](https://ws2.sinaimg.cn/large/006tNbRwgy1fu562ur7pxj317o0s2qfq.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu562ur7pxj317o0s2qfq.jpg)
 
 由于在生产环境中进行调试spark程序需要进行打包和各种跳板机跳转，最好在本地搭一套集群来进行一些代码基础检查。
 

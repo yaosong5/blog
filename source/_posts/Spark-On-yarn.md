@@ -68,7 +68,7 @@ spark-shell必须使用client模式
 
 ## cluster模式：
 
-![](https://ws3.sinaimg.cn/large/006tNbRwgy1fuaxd9man3j31020o60w1.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fuaxd9man3j31020o60w1.jpg)
 
 Spark Driver首先作为一个ApplicationMaster在YARN集群中启动，客户端提交给ResourceManager的每一个job都会在集群的NodeManager节点上分配一个唯一的ApplicationMaster，由该ApplicationMaster管理全生命周期的应用。具体过程：
 
@@ -88,7 +88,7 @@ Spark Driver首先作为一个ApplicationMaster在YARN集群中启动，客户�
 
 ## client模式
 
-![](https://ws2.sinaimg.cn/large/006tNbRwgy1fuaxdd9n3tj310c0jbq5y.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fuaxdd9n3tj310c0jbq5y.jpg)
 
 在client模式下，Driver运行在Client上，通过ApplicationMaster向RM获取资源。本地Driver负责与所有的executor container进行交互，并将最后的结果汇总。结束掉终端，相当于kill掉这个spark应用。一般来说，如果运行的结果仅仅返回到terminal上时需要配置这个。
 

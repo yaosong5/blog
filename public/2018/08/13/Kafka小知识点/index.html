@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC]   Kafka是一个分布式消息队列：生产者、消费者的功能。它提供了类似于JMS的特性，但是在设计实现上完全不同，此外它并不是JMS规范的实现。 Kafka对消息保存时根据Topic进行归类，发送消息者称为Producer,消息接受者称为Consumer,此外kafka集群有多个kafka实例组成，每个实例(server)成为broker。 无论是kafka集群，还是producer和c">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu895melcpj30zd0ckdgd.jpg">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/0069RVTdgy1fu894keo4oj310n0hd0tv.jpg">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fu89ajoxc5j30mf0fnt9d.jpg">
-<meta property="og:updated_time" content="2018-08-15T03:54:57.767Z">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fu895melcpj30zd0ckdgd.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/0069RVTdgy1fu894keo4oj310n0hd0tv.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fu89ajoxc5j30mf0fnt9d.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:32:09.665Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka初步总结">
 <meta name="twitter:description" content="[TOC]   Kafka是一个分布式消息队列：生产者、消费者的功能。它提供了类似于JMS的特性，但是在设计实现上完全不同，此外它并不是JMS规范的实现。 Kafka对消息保存时根据Topic进行归类，发送消息者称为Producer,消息接受者称为Consumer,此外kafka集群有多个kafka实例组成，每个实例(server)成为broker。 无论是kafka集群，还是producer和c">
-<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu895melcpj30zd0ckdgd.jpg">
+<meta name="twitter:image" content="https://img.gangtieguo.cn/006tNbRwgy1fu895melcpj30zd0ckdgd.jpg">
     
 
     
@@ -342,14 +342,14 @@ var _hmt = _hmt || [];
 <h3 id="JMS的基础"><a href="#JMS的基础" class="headerlink" title="JMS的基础"></a>JMS的基础</h3><p>JMS是什么：JMS是Java提供的一套技术规范</p>
 <p>JMS干什么用：用来异构系统 集成通信，缓解系统瓶颈，提高系统的伸缩性增强系统用户体验，使得系统模块化和组件化变得可行并更加灵活</p>
 <p>通过什么方式：生产消费者模式（生产者、服务器、消费者）</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fu895melcpj30zd0ckdgd.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fu895melcpj30zd0ckdgd.jpg" alt></p>
 <p>jdk，kafka，activemq……</p>
 <a id="more"></a>
 <h3 id="JMS消息传输模型"><a href="#JMS消息传输模型" class="headerlink" title="JMS消息传输模型"></a>JMS消息传输模型</h3><p>点对点模式<strong>（一对一，消费者主动拉取数据，消息收到后消息清除）</strong></p>
 <p>点对点模型通常是一个基于拉取或者轮询的消息传送模型，这种模型从队列中请求信息，而不是将消息推送到客户端。这个模型的特点是发送到队列的消息被<strong>一个且只有一个接收者接收处理</strong>，即使有多个消息监听者也是如此。</p>
 <p>发布/订阅模式<strong>（一对多，数据生产后，推送给所有订阅者）</strong></p>
 <p>发布订阅模型则是一个基于推送的消息传送模型。发布订阅模型可以有多种不同的订阅者，临时订阅者只在主动监听主题时才接收消息，而持久订阅者则监听主题的所有消息，<strong>即时当前订阅者不可用，处于离线状态</strong>。</p>
-<p><img src="https://ws2.sinaimg.cn/large/0069RVTdgy1fu894keo4oj310n0hd0tv.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/0069RVTdgy1fu894keo4oj310n0hd0tv.jpg" alt></p>
 <p>queue.put（object）  数据生产</p>
 <p>queue.take(object)    数据消费</p>
 <p><strong>kafka是采用的类jms模式，与类jms模式区别是</strong>： </p>
@@ -367,7 +367,7 @@ Topic:目标发送的目的地，这是一个逻辑上的概念，落到磁盘�
 ConsumerGroup：数据消费者组，ConsumerGroup可以有多个，每个ConsumerGroup消费的数据都是一样的。
                可以把多个consumer线程划分为一个组，组里面所有成员共同消费一个topic的数据，组员之间不能重复消费。
 </code></pre><h2 id="Kafka核心组件"><a href="#Kafka核心组件" class="headerlink" title="Kafka核心组件"></a>Kafka核心组件</h2><p>Topic ：消息根据Topic进行归类<br>Producer：发送消息者<br>Consumer：消息接受者<br>broker：每个kafka实例(server)<br>Zookeeper：依赖集群保存meta信息。</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fu89ajoxc5j30mf0fnt9d.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fu89ajoxc5j30mf0fnt9d.jpg" alt></p>
 <h2 id="为什么需要消息队列"><a href="#为什么需要消息队列" class="headerlink" title="为什么需要消息队列"></a>为什么需要消息队列</h2><p>消息系统的核心作用就是三点：解耦，异步和并行</p>
 <p>以用户注册的案列来说明消息系统的作用</p>
 <h2 id="消息队列和rpc调用区别"><a href="#消息队列和rpc调用区别" class="headerlink" title="消息队列和rpc调用区别"></a>消息队列和rpc调用区别</h2><p>​    消息队列并不关心是哪个消费者消费了数据，发布成功后就不必管消息队列的内容是否被消费，但是rpc调用的话，必须要给调用的系统返回一个状态码</p>

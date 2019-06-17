@@ -10,7 +10,7 @@ toc: true
 
 # spark的架构模型
 
-![](https://ws3.sinaimg.cn/large/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg)
+![](https://img.gangtieguo.cn/006tNbRwly1fuhrnmk1skj310i0ssgma.jpg)
 
 # 角色功能
 
@@ -76,7 +76,7 @@ spark任务资源分配有两种策略：尽量打散 和尽量集中
 
 
 
-![](https://ws2.sinaimg.cn/large/006tNbRwly1fuhtcjutpej30e007hmxg.jpg)
+![](https://img.gangtieguo.cn/006tNbRwly1fuhtcjutpej30e007hmxg.jpg)
 
 
 

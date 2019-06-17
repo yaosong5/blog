@@ -4,12 +4,12 @@ date: 2018年08月06日 22时15分52秒
 tags:  [ELK,Docker,es]
 categories: 安装部署
 toc: true
-typora-copy-images-to: ipic
+
 ---
 
 [TOC]
 
-![](https://ws1.sinaimg.cn/large/006tNbRwgy1fu55ayb4i7j31kw0c73yz.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu55ayb4i7j31kw0c73yz.jpg)
 
 简单命令测试和展示es的功能
 
@@ -96,7 +96,7 @@ curl -H "Content-Type: application/json"  -XPUT 'http://elk1:9200/store/books/1'
 
 
 ```
-curl -H "Content-Type: application/json" -XPUT 'http://127.0.0.1:9200/kc22k2_test’ -d ‘
+curl -H "Content-Type: application/json" -XPUT 'http://127.0.0.1:9200/kc22k2_test' -d 
 ```
 
 

@@ -42,10 +42,10 @@ wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war
    输入 http:// 服务器地址: 8000
 
 注意：在启动日志中会出现初始密码，这个用来首次登陆Jenkins使用
-![](https://ws4.sinaimg.cn/large/006tNbRwgy1fu5j2mlpouj31d60lwtfs.jpg)
+![](https://ws4.img.cn/large/006tNbRwgy1fu5j2mlpouj31d60lwtfs.jpg)
 
 
-![](https://ws3.sinaimg.cn/large/006tNbRwgy1fu5j4it7u3j31600nawfp.jpg)
+![](https://ws3.img.cn/large/006tNbRwgy1fu5j4it7u3j31600nawfp.jpg)
 
 参考
 [在 Centos7 上搭建 jenkins](https://blog.csdn.net/python_tty/article/details/52884314)

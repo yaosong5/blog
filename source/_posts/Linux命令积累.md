@@ -48,7 +48,13 @@ sshfs  root@master:/usr/hadoop  /usr/hive/hadoop
 ## 查看端口是否被监听
 
 也可验证对应端口程序是否启动
-`netstat -nl|grep 10000`
+
+```
+netstat -nl|grep 10000
+netstat -antp| grep 1000
+```
+
+
 
 # tree
 
@@ -64,7 +70,19 @@ tree 可以查看目录结构
 虚拟机中的目录
 sudo mount -t vboxsf vagrant /Users/yaosong
 
+## centos查看版本
 
+ cat /etc/redhat-release
+
+
+
+# GLIBC2.14 not found
+
+[libc.so.6: version 'GLIBC_2.14' not found报错提示的解决方案](https://www.cnblogs.com/kevingrace/p/8744417.html)
+
+[【工作】Centos6.5 升级glibc解决“libc.so.6: version GLIBC_2.14 not found”报错问题](http://www.jiagoumi.com/work/811.html)
+
+参考：[Docker-PostgresSQL](https://www.cnblogs.com/zhzhlong/p/9493245.html)
 
 # 其他
 

@@ -76,7 +76,7 @@ val func = (index: Int, iter: Iterator[(Int)]) => {
 rdd1.mapPartitionsWithIndex(func).collect
 ```
 
-![](https://ws3.sinaimg.cn/large/006tNbRwgy1fucjpo4afaj31ik056whp.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fucjpo4afaj31ik056whp.jpg)
 
 ## aggregate (action)
 
@@ -107,7 +107,7 @@ rdd1.aggregate(0)(_+_, _+_)
 
 **0 + (0+1+2+3+4 + 0+5+6+7+8+9)**
 
-![](https://ws4.sinaimg.cn/large/006tNbRwgy1fuck6fl2chj30kg02ut96.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fuck6fl2chj30kg02ut96.jpg)
 
 ```scala
 rdd1.aggregate(7)(_+_, _+_)
@@ -115,7 +115,7 @@ rdd1.aggregate(7)(_+_, _+_)
 
 **7 + (7+1+2+3+4 + 7+5+6+7+8+9)**
 
-![](https://ws4.sinaimg.cn/large/006tNbRwgy1fuck87fxhij30ju02gt92.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fuck87fxhij30ju02gt92.jpg)
 
 
 
@@ -123,7 +123,7 @@ rdd1.aggregate(7)(_+_, _+_)
 rdd1.aggregate(0)(math.max(_, _), _ + _)
 ```
 
-![](https://ws4.sinaimg.cn/large/006tNbRwgy1fuck95wu88j30qo02o74x.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fuck95wu88j30qo02o74x.jpg)
 
 
 
@@ -133,7 +133,7 @@ rdd1.aggregate(5)(math.max(_, _), _ + _)
 
 **5和1比, 得5再和234比得5 --> 5和6789比,得9 --> 5 + (5+9)**
 
-![](https://ws4.sinaimg.cn/large/006tNbRwgy1fucouprhcjj30s402yjs5.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fucouprhcjj30s402yjs5.jpg)
 
 
 
@@ -157,7 +157,7 @@ rdd2.aggregate("=")(_ + _, _ + _)
 rdd2.aggregate("|")(_ + _, _ + _)
 ```
 
-![](https://ws1.sinaimg.cn/large/006tNbRwgy1fucpd6axxej30os034wf7.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fucpd6axxej30os034wf7.jpg)
 
 
 
@@ -168,7 +168,7 @@ val rdd3 = sc.parallelize(List("qazqqw7","jishhrwe9","sdfwezsddf12","12esdww8"),
 rdd3.aggregate("")((x,y) => math.max(x.length, y.length).toString, (x,y) => x + y)
 ```
 
-![](https://ws3.sinaimg.cn/large/006tNbRwgy1fucpvxoentj31gw03276d.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fucpvxoentj31gw03276d.jpg)
 
 
 
@@ -177,7 +177,7 @@ val rdd4 = sc.parallelize(List("qazqqw7","jishhrwe9","sdfwezsddf12",""),2)
 rdd4.aggregate("")((x,y) => math.min(x.length, y.length).toString, (x,y) => x + y)
 ```
 
-![](https://ws1.sinaimg.cn/large/006tNbRwgy1fucpwdi27nj31g8032abq.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fucpwdi27nj31g8032abq.jpg)
 
 
 

@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC]  对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。 分桶依赖于yarn的所以分桶的时候需要启动yarn">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/0069RVTdgy1fu81tzpekzj305z06j3yc.jpg">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu7ufetxnpj30yw06fmx9.jpg">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fu7uk05fz5j30x70a8mxm.jpg">
-<meta property="og:updated_time" content="2018-08-13T09:00:52.971Z">
+<meta property="og:image" content="https://img.gangtieguo.cn/0069RVTdgy1fu81tzpekzj305z06j3yc.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fu7ufetxnpj30yw06fmx9.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fu7uk05fz5j30x70a8mxm.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:32:09.656Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hive分桶表,分区表简单分析">
 <meta name="twitter:description" content="[TOC]  对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。 分桶依赖于yarn的所以分桶的时候需要启动yarn">
-<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/0069RVTdgy1fu81tzpekzj305z06j3yc.jpg">
+<meta name="twitter:image" content="https://img.gangtieguo.cn/0069RVTdgy1fu81tzpekzj305z06j3yc.jpg">
     
 
     
@@ -336,7 +336,7 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
-<p><img src="https://ws2.sinaimg.cn/large/0069RVTdgy1fu81tzpekzj305z06j3yc.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/0069RVTdgy1fu81tzpekzj305z06j3yc.jpg" alt></p>
 <p>对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。</p>
 <p>分桶依赖于yarn的所以分桶的时候需要启动yarn</p>
 <a id="more"></a>
@@ -383,7 +383,7 @@ var _hmt = _hmt || [];
 <p> insert overwirte 也可以</p>
 <h2 id="结果如下"><a href="#结果如下" class="headerlink" title="结果如下"></a>结果如下</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Number of reduce tasks is set to 0 since there&apos;s no reduce operator</span><br><span class="line">INFO  : number of splits:1</span><br><span class="line">INFO  : Submitting tokens for job: job_1502537431423_0011</span><br><span class="line">INFO  : The url to track the job: http://bigdata1:8088/proxy/application_1502537431423_0011/</span><br><span class="line">INFO  : Starting Job = job_1502537431423_0011, Tracking URL = http://bigdata1:8088/proxy/application_1502537431423_0011/</span><br><span class="line">INFO  : Kill Command = /home/bigdata/apps/hadoop/bin/hadoop job  -kill job_1502537431423_0011</span><br><span class="line">INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0</span><br><span class="line">INFO  : 2017-08-15 21:12:15,669 Stage-1 map = 0%,  reduce = 0%</span><br><span class="line">INFO  : 2017-08-15 21:12:32,386 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.27 sec</span><br><span class="line">INFO  : MapReduce Total cumulative CPU time: 1 seconds 270 msec</span><br><span class="line">INFO  : Ended Job = job_1502537431423_0011</span><br><span class="line">INFO  : Stage-4 is selected by condition resolver.</span><br><span class="line">INFO  : Stage-3 is filtered out by condition resolver.</span><br><span class="line">INFO  : Stage-5 is filtered out by condition resolver.</span><br><span class="line">INFO  : Moving data to: hdfs://bigdata1:9000/user/hive/warehouse/t_buk/.hive-staging_hive_2017-08-15_21-12-02_490_4088487413275551800-3/-ext-10000 from hdfs://bigdata1:9000/user/hive/warehouse/t_buk/.hive-staging_hive_2017-08-15_21-12-02_490_4088487413275551800-3/-ext-10002</span><br><span class="line">INFO  : Loading data to table default.t_buk from hdfs://bigdata1:9000/user/hive/warehouse/t_buk/.hive-staging_hive_2017-08-15_21-12-02_490_4088487413275551800-3/-ext-10000</span><br><span class="line">INFO  : Table default.t_buk stats: [numFiles=1, numRows=12, totalSize=167, rawDataSize=155]</span><br></pre></td></tr></table></figure>
 <p>查看hdfs管理页面 50070</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fu7ufetxnpj30yw06fmx9.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fu7ufetxnpj30yw06fmx9.jpg" alt></p>
 <p> 还是只有一文件，表示分桶不成功，没设reduce数量，使用默认的数量1，和我们期望分桶数量不一致</p>
 <h1 id="设置分桶参数"><a href="#设置分桶参数" class="headerlink" title="设置分桶参数"></a>设置分桶参数</h1><p>因为没有启动模式的开关，如下</p>
 <p>设置变量,设置分桶为true, 设置reduce数量是分桶的数量个数</p>
@@ -395,7 +395,7 @@ var _hmt = _hmt || [];
 <p>再试一次select 插入（将t_buk truncate也可，也可使用overwrite关键字）</p>
 <p> <code>insert overwrite table t_buk select id,name from t_p cluster by (id);</code></p>
 <p>再查看hdfs ui页面50070</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fu7uk05fz5j30x70a8mxm.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fu7uk05fz5j30x70a8mxm.jpg" alt></p>
 <h2 id="再分别查看这几个文件"><a href="#再分别查看这几个文件" class="headerlink" title="再分别查看这几个文件"></a>再分别查看这几个文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$HADOOP_HOME/bin/hadoop fs -cat /user/hive/warehouse/t_buk/000000_0</span><br><span class="line">$HADOOP_HOME/bin/hadoop fs -cat /user/hive/warehouse/t_buk/000001_0  </span><br><span class="line">$HADOOP_HOME/bin/hadoop fs -cat /user/hive/warehouse/t_buk/000002_0  </span><br><span class="line">$HADOOP_HOME/bin/hadoop fs -cat /user/hive/warehouse/t_buk/000003_0</span><br></pre></td></tr></table></figure>
 <h2 id="得到结果"><a href="#得到结果" class="headerlink" title="得到结果"></a>得到结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@master hivedata]$  hadoop fs -cat /user/hive/warehouse/t_buk/000000_0  </span><br><span class="line">4,操作系统</span><br><span class="line">8,数据time</span><br><span class="line">12,数据信号</span><br><span class="line">[bigdata@master hivedata]$  hadoop fs -cat /user/hive/warehouse/t_buk/000001_0  </span><br><span class="line">1,数据库</span><br><span class="line">5,数据结构</span><br><span class="line">9,数据操作</span><br><span class="line">[bigdata@master hivedata]$  hadoop fs -cat /user/hive/warehouse/t_buk/000002_0  </span><br><span class="line">2,数学</span><br><span class="line">6,数据no</span><br><span class="line">10,数据挖掘</span><br><span class="line">[bigdata@master hivedata]$  hadoop fs -cat /user/hive/warehouse/t_buk/000003_0</span><br><span class="line">3,信息系统</span><br><span class="line">7,数据other</span><br><span class="line">11,数据挖机</span><br></pre></td></tr></table></figure>
 <h1 id="分桶表疑问"><a href="#分桶表疑问" class="headerlink" title="分桶表疑问"></a>分桶表疑问</h1><h2 id="为什么每个桶里面的数据条数不一样"><a href="#为什么每个桶里面的数据条数不一样" class="headerlink" title="为什么每个桶里面的数据条数不一样"></a>为什么每个桶里面的数据条数不一样</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hash散列的时候数据可能将数据有的分的多，有的分的少</span><br></pre></td></tr></table></figure>

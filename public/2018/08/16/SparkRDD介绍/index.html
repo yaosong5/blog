@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC] 1sc.textfile(&quot;hdfs://master:9000/wc&quot;).flatMap(_.split(&quot;分隔符&quot;)).map((_,1)).reduceByKey(_+_).saveAsTextFile(&quot;hdfs://master:9000/wcResult&quot;)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/0069RVTdgy1fuawo5mvk1j31c20bq3zz.jpg">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fuhtdoo3nvj30gf087jrt.jpg">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fuhu3makagj30af05rmxa.jpg">
-<meta property="og:updated_time" content="2018-08-24T01:34:10.728Z">
+<meta property="og:image" content="https://img.gangtieguo.cn/0069RVTdgy1fuawo5mvk1j31c20bq3zz.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwly1fuhtdoo3nvj30gf087jrt.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwly1fuhu3makagj30af05rmxa.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:32:09.681Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SparkRDD介绍">
 <meta name="twitter:description" content="[TOC] 1sc.textfile(&quot;hdfs://master:9000/wc&quot;).flatMap(_.split(&quot;分隔符&quot;)).map((_,1)).reduceByKey(_+_).saveAsTextFile(&quot;hdfs://master:9000/wcResult&quot;)">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/0069RVTdgy1fuawo5mvk1j31c20bq3zz.jpg">
+<meta name="twitter:image" content="https://img.gangtieguo.cn/0069RVTdgy1fuawo5mvk1j31c20bq3zz.jpg">
     
 
     
@@ -341,7 +341,7 @@ var _hmt = _hmt || [];
 <p>当rdd形成过程中，worker的分区中只是预留了存放数据的位置，只有当action触发的时候，worker的分区中才会存在数据，sparkSubmit submit的命令行默认的是driver ，RDD的创建都是在在driver上创建的 </p>
 <h1 id="spark的分区与hdfs数据块的关系"><a href="#spark的分区与hdfs数据块的关系" class="headerlink" title="spark的分区与hdfs数据块的关系"></a>spark的分区与hdfs数据块的关系</h1><p>Partitioner函数不但决定了RDD本身的分片数量，也决定了parent RDD Shuffle输出时的分片数量。</p>
 <h1 id="SparkRDD"><a href="#SparkRDD" class="headerlink" title="SparkRDD"></a>SparkRDD</h1><p>RDD（ResilientDistributed Dataset）叫做分布式数据集，是Spark中最基本的数据抽象，它代表一个不可变、可分区、里面的元素可并行计算的集合。RDD具有数据流模型的特点：自动容错、位置感知性调度和可伸缩性。RDD允许用户在执行多个查询时显式地将工作集缓存在内存中，后续的查询能够重用工作集，这极大地提升了查询速度。</p>
-<p><img src="https://ws1.sinaimg.cn/large/0069RVTdgy1fuawo5mvk1j31c20bq3zz.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/0069RVTdgy1fuawo5mvk1j31c20bq3zz.jpg" alt></p>
 <p>1）一组分片（Partition），即数据集的基本组成单位。对于RDD来说，每个分片都会被一个计算任务处理，并决定并行计算的粒度。用户可以在创建RDD时指定RDD的分片个数，如果没有指定，那么就会采用默认值。默认值就是程序所分配到的CPU Core的数目。</p>
 <p>2）一个计算每个分区的函数。Spark中RDD的计算是以分片为单位的，每个RDD都会实现compute函数以达到这个目的。compute函数会对迭代器进行复合，不需要保存每次计算的结果。</p>
 <p>3）RDD之间的依赖关系。RDD的每次转换都会生成一个新的RDD，所以RDD之间就会形成类似于流水线一样的前后依赖关系。在部分分区数据丢失时，Spark可以通过这个依赖关系重新计算丢失的分区数据，而不是对RDD的所有分区进行重新计算。</p>
@@ -500,12 +500,12 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-<h1 id="宽依赖窄依赖区分"><a href="#宽依赖窄依赖区分" class="headerlink" title="宽依赖窄依赖区分"></a>宽依赖窄依赖区分</h1><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fuhtdoo3nvj30gf087jrt.jpg" alt></p>
+<h1 id="宽依赖窄依赖区分"><a href="#宽依赖窄依赖区分" class="headerlink" title="宽依赖窄依赖区分"></a>宽依赖窄依赖区分</h1><p><img src="https://img.gangtieguo.cn/006tNbRwly1fuhtdoo3nvj30gf087jrt.jpg" alt></p>
 <h2 id="窄依赖-narrow-dependencies"><a href="#窄依赖-narrow-dependencies" class="headerlink" title="窄依赖 narrow dependencies"></a>窄依赖 narrow dependencies</h2><p>三个小分块是RDD的分区，组合起来的大框是RDD，后面的是子rdd的分区，一个父rdd的分区只对应一个子rdd的分区（类比独生子女） ，一个子可以对应多个父分区（可以类比父母分区）</p>
 <p>如map，filter，union等算子都是操作的原来分区里面的数据,操作之后也在原来的分区<br>join大多数情况下是宽依赖，在一种特殊情况下是窄依赖 (join是针对key value形式的rdd，相同key的会join在一起)</p>
 <h2 id="宽依赖-wide-dependencies"><a href="#宽依赖-wide-dependencies" class="headerlink" title="宽依赖 wide dependencies"></a>宽依赖 wide dependencies</h2><p>父rdd一个分区会流向多个子rdd的分区类比多子女情况</p>
 <p>groupBy ，reduceByKey ，join等</p>
-<p>下图b到g不是一个stage是因为，提前已经分好组，所以是窄依赖，没有stage<br><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fuhu3makagj30af05rmxa.jpg" alt></p>
+<p>下图b到g不是一个stage是因为，提前已经分好组，所以是窄依赖，没有stage<br><img src="https://img.gangtieguo.cn/006tNbRwly1fuhu3makagj30af05rmxa.jpg" alt></p>
 <h3 id="Lineage"><a href="#Lineage" class="headerlink" title="Lineage"></a>Lineage</h3><p>RDD只支持粗粒度转换，即在大量记录上执行的单个操作。将创建RDD的一系列Lineage（即血统）记录下来，以便恢复丢失的分区。RDD的Lineage会记录RDD的元数据信息和转换行为，当该RDD的部分分区数据丢失时，它可以根据这些信息来重新运算和恢复丢失的数据分区。</p>
 <h2 id="RDD的缓存"><a href="#RDD的缓存" class="headerlink" title="RDD的缓存"></a>RDD的缓存</h2><p>Spark速度非常快的原因之一，就是在不同操作中可以在内存中持久化或缓存个数据集。当持久化某个RDD后，每一个节点都将把计算的分片结果保存在内存中，并在对此RDD或衍生出的RDD进行的其他动作中重用。这使得后续的动作变得更加迅速。RDD相关的持久化和缓存，是Spark最重要的特征之一。可以说，缓存是Spark构建迭代式算法和快速交互式查询的关键。</p>
 <h3 id="缓存方式"><a href="#缓存方式" class="headerlink" title="缓存方式"></a>缓存方式</h3><p>RDD通过persist方法或cache方法可以将前面的计算结果缓存，但是并不是这两个方法被调用时立即缓存，而是触发后面的action时，该RDD将会被缓存在计算节点的内存中，并供后面重用。</p>

@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC]  介绍：主要是读取通过mysql查到关联关系然后读取HBASE里面存放的Json，通过解析json将json数组对象里的元素拆分成单条json,再将json映射成临时表，查询临时表将数据落入到hive表中 注意：查询HBASE的时候，HBase集群的HMaster，HRegionServer需要是正常运行 主要将内容拆分成几块，spark读取HBase，spark解析json将json">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/0069RVTdgy1fu81r6j5e5j30ji09c3z1.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fu53tng462j31721e6afd.jpg">
-<meta property="og:updated_time" content="2018-08-13T06:16:38.124Z">
+<meta property="og:image" content="https://img.gangtieguo.cn/0069RVTdgy1fu81r6j5e5j30ji09c3z1.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fu53tng462j31721e6afd.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:32:09.690Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark读取HBase解析json创建临时表录入到Hive表">
 <meta name="twitter:description" content="[TOC]  介绍：主要是读取通过mysql查到关联关系然后读取HBASE里面存放的Json，通过解析json将json数组对象里的元素拆分成单条json,再将json映射成临时表，查询临时表将数据落入到hive表中 注意：查询HBASE的时候，HBase集群的HMaster，HRegionServer需要是正常运行 主要将内容拆分成几块，spark读取HBase，spark解析json将json">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/0069RVTdgy1fu81r6j5e5j30ji09c3z1.jpg">
+<meta name="twitter:image" content="https://img.gangtieguo.cn/0069RVTdgy1fu81r6j5e5j30ji09c3z1.jpg">
     
 
     
@@ -335,14 +335,14 @@ var _hmt = _hmt || [];
              </script>
 
                 <p>[TOC]</p>
-<p><img src="https://ws1.sinaimg.cn/large/0069RVTdgy1fu81r6j5e5j30ji09c3z1.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/0069RVTdgy1fu81r6j5e5j30ji09c3z1.jpg" alt></p>
 <p>介绍：主要是读取通过mysql查到关联关系然后读取HBASE里面存放的Json，通过解析json将json数组对象里的元素拆分成单条json,再将json映射成临时表，查询临时表将数据落入到hive表中</p>
 <p>注意：查询HBASE的时候，HBase集群的HMaster，HRegionServer需要是正常运行</p>
 <p>主要将内容拆分成几块，spark读取HBase，spark解析json将json数组中每个元素拆成一条（比如json数组有10个元素，需要解析平铺成19个json，那么对应临时表中就是19条记录，对应查询插入到hive也就是19条记录）</p>
 <p>spark读取本地HBase</p>
 <a id="more"></a>
 <p>参考 <a href="http://www.gangtieguo.cn/2018/08/11/Spark读取Hbase/" target="_blank" rel="noopener">Spark读取HBase</a></p>
-<h1 id="json样例"><a href="#json样例" class="headerlink" title="json样例"></a>json样例</h1><p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fu53tng462j31721e6afd.jpg" alt></p>
+<h1 id="json样例"><a href="#json样例" class="headerlink" title="json样例"></a>json样例</h1><p><img src="https://img.gangtieguo.cn/006tNbRwgy1fu53tng462j31721e6afd.jpg" alt></p>
 <h1 id="读取hbase"><a href="#读取hbase" class="headerlink" title="读取hbase"></a>读取hbase</h1><p>hbase里面存放的是身份id作为rowkey来存放的数据</p>
 <blockquote>
 <p>JSON、JSONObject类包是引用的com.alibaba.fastjson包下的</p>

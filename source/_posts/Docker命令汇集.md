@@ -7,7 +7,7 @@ toc: true
 
 ---
 
-![](https://ws2.sinaimg.cn/large/006tNbRwgy1fu55c5h3g1j319i0eu0tg.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu55c5h3g1j319i0eu0tg.jpg)
 
 [TOC]
 
@@ -89,7 +89,7 @@ docker run -it -v /test:/soft centos /bin/bash
 > 如果是mac或者win机器，需要在virtualbox虚拟机中设置共享文件夹的share名称对应mac的目录
 > 虚拟机中的目录
 >
-> ![](https://ws4.sinaimg.cn/large/006tKfTcgy1g0ryyzp0vrj30zi0bm0t9.jpg)
+> ![](https://img.gangtieguo.cn/006tKfTcgy1g0ryyzp0vrj30zi0bm0t9.jpg)
 >
 > sudo mount -t vboxsf vagrant /Users/yaosong
 >
@@ -115,7 +115,18 @@ sudo docker exec -it spark bash（进入后台启动的容器）
 docker run -it --net=br  --name spark --hostname spark yaosong5/spark:2.1.0 bash
 ```
 
+## pause暂停恢复容器
+
+```sql
+docker pause 容器名
+恢复数据库容器db01提供服务。
+docker unpause 容器名
+```
+
+
+
 ## exec 进入后台容器
+
 ```Bash
 docker exec -it spark bash
 docker exec -it 容器名 bash

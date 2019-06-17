@@ -16,18 +16,18 @@
 <meta property="og:site_name" content="钢铁锅">
 <meta property="og:description" content="[TOC]  由于线上环境要经过跳板机跳转，并且打包测试，上传jar包步骤多，不然的话，要进行各种端口转发，且有权限控制，不易在本地idea编辑器上进行程序运行及调试 现在想法是，将线上测试环境的数据拷贝小部分到本地自己搭建的集群，进行程序的逻辑和初期调试 此贴就是记录一些操作  这都是要基于本地有HBASE及其依赖组件的。 主要思路是，拷贝线上查询的结果到文件hbaseout1.txt，将hba">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/0069RVTdgy1fu4t1ryqfbj31kw074n4w.jpg">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/0069RVTdgy1fu4s99k250j31g208qgs4.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/0069RVTdgy1fu4shn9bpnj31l203i0tv.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/0069RVTdgy1fu4sp3u3w6j31ak0f27fi.jpg">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/0069RVTdgy1fu4ssvedr6j319a030wel.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fu50q6kl65j31kg0kymxw.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fu515ozpw6j31kw08b7dl.jpg">
-<meta property="og:updated_time" content="2018-08-15T14:29:52.538Z">
+<meta property="og:image" content="https://img.gangtieguo.cn/0069RVTdgy1fu4t1ryqfbj31kw074n4w.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/0069RVTdgy1fu4s99k250j31g208qgs4.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/0069RVTdgy1fu4shn9bpnj31l203i0tv.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/0069RVTdgy1fu4sp3u3w6j31ak0f27fi.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/0069RVTdgy1fu4ssvedr6j319a030wel.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fu50q6kl65j31kg0kymxw.jpg">
+<meta property="og:image" content="https://img.gangtieguo.cn/006tNbRwgy1fu515ozpw6j31kw08b7dl.jpg">
+<meta property="og:updated_time" content="2019-06-17T04:32:09.651Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HBase拷贝生产环境数据到本地Spark解析运行调试">
 <meta name="twitter:description" content="[TOC]  由于线上环境要经过跳板机跳转，并且打包测试，上传jar包步骤多，不然的话，要进行各种端口转发，且有权限控制，不易在本地idea编辑器上进行程序运行及调试 现在想法是，将线上测试环境的数据拷贝小部分到本地自己搭建的集群，进行程序的逻辑和初期调试 此贴就是记录一些操作  这都是要基于本地有HBASE及其依赖组件的。 主要思路是，拷贝线上查询的结果到文件hbaseout1.txt，将hba">
-<meta name="twitter:image" content="https://ws4.sinaimg.cn/large/0069RVTdgy1fu4t1ryqfbj31kw074n4w.jpg">
+<meta name="twitter:image" content="https://img.gangtieguo.cn/0069RVTdgy1fu4t1ryqfbj31kw074n4w.jpg">
     
 
     
@@ -351,7 +351,7 @@ var _hmt = _hmt || [];
 <a id="more"></a>
 <h1 id="1、创建和线上同名通结构的表"><a href="#1、创建和线上同名通结构的表" class="headerlink" title="1、创建和线上同名通结构的表"></a>1、创建和线上同名通结构的表</h1><p>在线上执行 <code>describe &#39;beehive:a_up_rawdata&#39;</code></p>
 <p>得到</p>
-<p><img src="https://ws4.sinaimg.cn/large/0069RVTdgy1fu4t1ryqfbj31kw074n4w.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/0069RVTdgy1fu4t1ryqfbj31kw074n4w.jpg" alt></p>
 <p>在本地执行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hbase shell</span><br><span class="line">create_namespace &apos;beehive&apos;</span><br><span class="line"></span><br><span class="line">create &apos;beehive:a_up_rawdata&apos;,&#123;NAME =&gt; &apos;cf&apos;, BLOOMFILTER =&gt; &apos;ROW&apos;, VERSIONS =&gt; &apos;1&apos;, IN_MEMORY =&gt; &apos;false&apos;, KEEP_DELETED_CELLS =&gt; &apos;FALSE&apos;, DATA_BLOCK_ENCODING =&gt; &apos;NONE&apos;, COMPRESSION =&gt; &apos;NONE&apos;, TTL =&gt; &apos;FOREVER&apos;, MIN_VERSIONS =&gt; &apos;0&apos;, BLOCKCACHE =&gt; &apos;true&apos;, BLOCKSIZE =&gt; &apos;65536&apos;, REPLICATION_SCOPE =&gt; &apos;1&apos;&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="2、拷贝线上hbase数据"><a href="#2、拷贝线上hbase数据" class="headerlink" title="2、拷贝线上hbase数据"></a>2、拷贝线上hbase数据</h1><h2 id="查询结果导入文件"><a href="#查询结果导入文件" class="headerlink" title="查询结果导入文件"></a>查询结果导入文件</h2><p>在线上机器任意目录执行</p>
@@ -359,26 +359,26 @@ var _hmt = _hmt || [];
 <p>解析: <code>get &#39;beehive:a_up_rawdata&#39;,&#39;530111199211287371&#39;,{COLUMN=&gt;&#39;cf:273468436_data&#39;}</code>是执行的hbase的查询语句，将查询的结果存入到当前目录 <strong>hbaseout1.txt</strong>文件中</p>
 <h2 id="查询文件下载到本地"><a href="#查询文件下载到本地" class="headerlink" title="查询文件下载到本地"></a>查询文件下载到本地</h2><p><code>sz hbaseout1.txt</code></p>
 <h2 id="修改文件内容"><a href="#修改文件内容" class="headerlink" title="修改文件内容"></a>修改文件内容</h2><p>可以查看hbaseout1.txt中可以看到会有表头</p>
-<p><img src="https://ws2.sinaimg.cn/large/0069RVTdgy1fu4s99k250j31g208qgs4.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/0069RVTdgy1fu4s99k250j31g208qgs4.jpg" alt></p>
 <p>需要将这部分表头数据删除，组成标准的导入文件</p>
-<h2 id="修改文件编码"><a href="#修改文件编码" class="headerlink" title="修改文件编码"></a>修改文件编码</h2><p><img src="https://ws1.sinaimg.cn/large/0069RVTdgy1fu4shn9bpnj31l203i0tv.jpg" alt></p>
+<h2 id="修改文件编码"><a href="#修改文件编码" class="headerlink" title="修改文件编码"></a>修改文件编码</h2><p><img src="https://img.gangtieguo.cn/0069RVTdgy1fu4shn9bpnj31l203i0tv.jpg" alt></p>
 <p>在通过 hbase shell 查看中文值时, 是 unicode 编码格式，使得直接查看中文值不太方便。如果要查看需要把 unicode 编码进行 decode</p>
 <p>将查询结果导出来</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span> (<span class="string">'需要转码内容'</span>.decode(<span class="string">'utf-8'</span>))</span><br><span class="line"></span><br><span class="line">命令样例</span><br><span class="line">python 2.7 </span><br><span class="line">	<span class="built_in">print</span> (<span class="string">'***\xE4\xBD\xA010009 '</span>.decode(<span class="string">'utf-8'</span>))</span><br><span class="line">python 3 </span><br><span class="line">	<span class="built_in">print</span> <span class="string">'***\xE4\xBD\xA010009 '</span>.decode(<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
 <p>可以有更友好的将内容设置为文件名，然后将转码后重新写入到一个文件，后续会更新</p>
 <p>转码过后，文字显示正确</p>
-<p><img src="https://ws4.sinaimg.cn/large/0069RVTdgy1fu4sp3u3w6j31ak0f27fi.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/0069RVTdgy1fu4sp3u3w6j31ak0f27fi.jpg" alt></p>
 <h2 id="重新组合文件"><a href="#重新组合文件" class="headerlink" title="重新组合文件"></a>重新组合文件</h2><p>由于导入到hbase命令为 **<code>格式：hbase [类][分隔符] [行键，列族][表] [导入文件</code>]</p>
 <p>由于我这次导入的文件里面有“,”，所有将分隔符设置为“|”</p>
 <p>更改后的文件格式为</p>
-<p><img src="https://ws2.sinaimg.cn/large/0069RVTdgy1fu4ssvedr6j319a030wel.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/0069RVTdgy1fu4ssvedr6j319a030wel.jpg" alt></p>
 <p>将文件上传到hdfs</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -put hadoop fs -put hbaseout1.txt /<span class="built_in">local</span>/</span><br></pre></td></tr></table></figure>
 <h2 id="将数据导入到本地hbase"><a href="#将数据导入到本地hbase" class="headerlink" title="将数据导入到本地hbase"></a>将数据导入到本地hbase</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase org.apache.hadoop.hbase.mapreduce.ImportTsv  -Dimporttsv.separator=<span class="string">"|"</span>  -Dimporttsv.columns=HBASE_ROW_KEY,cf:273468436_data beehive:a_up_rawdata /<span class="built_in">local</span>/hbaseout2.txt</span><br></pre></td></tr></table></figure>
 <h1 id="3、校验查看"><a href="#3、校验查看" class="headerlink" title="3、校验查看"></a>3、校验查看</h1><p>在hue上查看hbase内容，显示有数据</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fu50q6kl65j31kg0kymxw.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fu50q6kl65j31kg0kymxw.jpg" alt></p>
 <p>在hbase shell 查看</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fu515ozpw6j31kw08b7dl.jpg" alt></p>
+<p><img src="https://img.gangtieguo.cn/006tNbRwgy1fu515ozpw6j31kw08b7dl.jpg" alt></p>
 
             
 

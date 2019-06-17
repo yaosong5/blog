@@ -8,7 +8,7 @@ typora-copy-images-to: ipic
 ---
 
 [TOC]
-![](https://ws2.sinaimg.cn/large/006tNbRwgy1fu554uqh0pj31660fwta8.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu554uqh0pj31660fwta8.jpg)
 
 在usr目录下下载zk包，并且解压到/usr/目录，改名为zk，所以$ZK_HOME为/usr/zk
 

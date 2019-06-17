@@ -28,7 +28,7 @@ Partitioner函数不但决定了RDD本身的分片数量，也决定了parent RD
 
 RDD（ResilientDistributed Dataset）叫做分布式数据集，是Spark中最基本的数据抽象，它代表一个不可变、可分区、里面的元素可并行计算的集合。RDD具有数据流模型的特点：自动容错、位置感知性调度和可伸缩性。RDD允许用户在执行多个查询时显式地将工作集缓存在内存中，后续的查询能够重用工作集，这极大地提升了查询速度。
 
-![](https://ws1.sinaimg.cn/large/0069RVTdgy1fuawo5mvk1j31c20bq3zz.jpg)
+![](https://img.gangtieguo.cn/0069RVTdgy1fuawo5mvk1j31c20bq3zz.jpg)
 
 1）一组分片（Partition），即数据集的基本组成单位。对于RDD来说，每个分片都会被一个计算任务处理，并决定并行计算的粒度。用户可以在创建RDD时指定RDD的分片个数，如果没有指定，那么就会采用默认值。默认值就是程序所分配到的CPU Core的数目。
 
@@ -109,7 +109,7 @@ RDD中的所有转换都是延迟加载的，也就是说，它们并不会直�
 
 # 宽依赖窄依赖区分
 
-![](https://ws3.sinaimg.cn/large/006tNbRwly1fuhtdoo3nvj30gf087jrt.jpg)
+![](https://img.gangtieguo.cn/006tNbRwly1fuhtdoo3nvj30gf087jrt.jpg)
 
 ## 窄依赖 narrow dependencies
 
@@ -125,7 +125,7 @@ join大多数情况下是宽依赖，在一种特殊情况下是窄依赖 (join�
 groupBy ，reduceByKey ，join等
 
 下图b到g不是一个stage是因为，提前已经分好组，所以是窄依赖，没有stage 
-![](https://ws3.sinaimg.cn/large/006tNbRwly1fuhu3makagj30af05rmxa.jpg)
+![](https://img.gangtieguo.cn/006tNbRwly1fuhu3makagj30af05rmxa.jpg)
 
 ### Lineage
 

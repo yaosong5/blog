@@ -10,7 +10,7 @@ typora-copy-images-to: ipic
 
 [TOC]
 
-![](https://ws1.sinaimg.cn/large/006tNbRwgy1fu56b6k2qjj316y0s0jtg.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu56b6k2qjj316y0s0jtg.jpg)
 
 # 创建hbase镜像
 

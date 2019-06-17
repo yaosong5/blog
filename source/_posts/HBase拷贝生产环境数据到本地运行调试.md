@@ -28,7 +28,7 @@ toc: true
 
 得到
 
-![](https://ws4.sinaimg.cn/large/0069RVTdgy1fu4t1ryqfbj31kw074n4w.jpg)
+![](https://img.gangtieguo.cn/0069RVTdgy1fu4t1ryqfbj31kw074n4w.jpg)
 
 
 
@@ -67,13 +67,13 @@ echo "get 'beehive:a_up_rawdata','530111199211287371',{COLUMN=>'cf:273468436_dat
 
 可以查看hbaseout1.txt中可以看到会有表头
 
-![](https://ws2.sinaimg.cn/large/0069RVTdgy1fu4s99k250j31g208qgs4.jpg)
+![](https://img.gangtieguo.cn/0069RVTdgy1fu4s99k250j31g208qgs4.jpg)
 
 需要将这部分表头数据删除，组成标准的导入文件
 
 ## 修改文件编码
 
-![](https://ws1.sinaimg.cn/large/0069RVTdgy1fu4shn9bpnj31l203i0tv.jpg)
+![](https://img.gangtieguo.cn/0069RVTdgy1fu4shn9bpnj31l203i0tv.jpg)
 
 在通过 hbase shell 查看中文值时, 是 unicode 编码格式，使得直接查看中文值不太方便。如果要查看需要把 unicode 编码进行 decode
 
@@ -97,7 +97,7 @@ python 3
 
 转码过后，文字显示正确
 
-![](https://ws4.sinaimg.cn/large/0069RVTdgy1fu4sp3u3w6j31ak0f27fi.jpg)
+![](https://img.gangtieguo.cn/0069RVTdgy1fu4sp3u3w6j31ak0f27fi.jpg)
 
 
 
@@ -109,7 +109,7 @@ python 3
 
 更改后的文件格式为
 
-![](https://ws2.sinaimg.cn/large/0069RVTdgy1fu4ssvedr6j319a030wel.jpg)
+![](https://img.gangtieguo.cn/0069RVTdgy1fu4ssvedr6j319a030wel.jpg)
 
 将文件上传到hdfs
 
@@ -128,9 +128,9 @@ hbase org.apache.hadoop.hbase.mapreduce.ImportTsv  -Dimporttsv.separator="|"  -D
 
 在hue上查看hbase内容，显示有数据
 
-![](https://ws1.sinaimg.cn/large/006tNbRwgy1fu50q6kl65j31kg0kymxw.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu50q6kl65j31kg0kymxw.jpg)
 
 在hbase shell 查看
 
-![](https://ws4.sinaimg.cn/large/006tNbRwgy1fu515ozpw6j31kw08b7dl.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu515ozpw6j31kw08b7dl.jpg)
 

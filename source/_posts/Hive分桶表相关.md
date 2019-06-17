@@ -8,7 +8,7 @@ toc: true
 
 [TOC]
 
-![](https://ws2.sinaimg.cn/large/0069RVTdgy1fu81tzpekzj305z06j3yc.jpg)
+![](https://img.gangtieguo.cn/0069RVTdgy1fu81tzpekzj305z06j3yc.jpg)
 
 对于每一个表或者是分区，Hive 可以进一步组织成桶，也就是说桶是更为细粒度的数据范围划分。Hive 是针对某一列进行分桶。Hive 采用对列值哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶中。分桶的好处是可以获得更高的查询处理效率。使取样更高效。
 
@@ -206,7 +206,7 @@ INFO  : Table default.t_buk stats: [numFiles=1, numRows=12, totalSize=167, rawDa
 
 查看hdfs管理页面 50070
 
-![](https://ws2.sinaimg.cn/large/006tNbRwgy1fu7ufetxnpj30yw06fmx9.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu7ufetxnpj30yw06fmx9.jpg)
 
  还是只有一文件，表示分桶不成功，没设reduce数量，使用默认的数量1，和我们期望分桶数量不一致
 
@@ -283,7 +283,7 @@ INFO  : Ended Job = job_1502537431423_0012
 
 再查看hdfs ui页面50070
 
-![](https://ws2.sinaimg.cn/large/006tNbRwgy1fu7uk05fz5j30x70a8mxm.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu7uk05fz5j30x70a8mxm.jpg)
 
 ## 再分别查看这几个文件
 

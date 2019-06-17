@@ -8,7 +8,7 @@ toc: true
 
 
 
-![](https://ws2.sinaimg.cn/large/006tNbRwgy1fu566e9ybjj30kg05q0t0.jpg)
+![](https://img.gangtieguo.cn/006tNbRwgy1fu566e9ybjj30kg05q0t0.jpg)
 
 简单记录转移到博客到云服务器
 <!-- more -->
