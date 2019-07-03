@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://img.gangtieguo.cn/006tNbRwgy1fu895melcpj30zd0ckdgd.jpg">
 <meta property="og:image" content="http://img.gangtieguo.cn/0069RVTdgy1fu894keo4oj310n0hd0tv.jpg">
 <meta property="og:image" content="http://img.gangtieguo.cn/006tNbRwgy1fu89ajoxc5j30mf0fnt9d.jpg">
-<meta property="og:updated_time" content="2019-07-03T08:02:52.693Z">
+<meta property="og:updated_time" content="2019-07-03T08:13:07.174Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka初步总结">
 <meta name="twitter:description" content="[TOC]   Kafka是一个分布式消息队列：生产者、消费者的功能。它提供了类似于JMS的特性，但是在设计实现上完全不同，此外它并不是JMS规范的实现。 Kafka对消息保存时根据Topic进行归类，发送消息者称为Producer,消息接受者称为Consumer,此外kafka集群有多个kafka实例组成，每个实例(server)成为broker。 无论是kafka集群，还是producer和c">
@@ -308,8 +308,8 @@ var _hmt = _hmt || [];
             <div id="toc toc-article " class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏目录" onclick="showBtn();"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <strong class="toc-title">目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#JMS的基础"><span class="toc-number">1.</span> <span class="toc-text">JMS的基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JMS消息传输模型"><span class="toc-number">2.</span> <span class="toc-text">JMS消息传输模型</span></a></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka是什么"><span class="toc-number"></span> <span class="toc-text">kafka是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Kafka核心组件"><span class="toc-number"></span> <span class="toc-text">Kafka核心组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么需要消息队列"><span class="toc-number"></span> <span class="toc-text">为什么需要消息队列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#消息队列和rpc调用区别"><span class="toc-number"></span> <span class="toc-text">消息队列和rpc调用区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka生产数据时的分组策略"><span class="toc-number"></span> <span class="toc-text">kafka生产数据时的分组策略</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka如何保证数据的完全生产"><span class="toc-number"></span> <span class="toc-text">kafka如何保证数据的完全生产</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#broker如何保存数据"><span class="toc-number"></span> <span class="toc-text">broker如何保存数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#partition如何分布在不同的broker上"><span class="toc-number"></span> <span class="toc-text">partition如何分布在不同的broker上</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#consumerGroup的组员和partition之间如何做负载均衡"><span class="toc-number"></span> <span class="toc-text">consumerGroup的组员和partition之间如何做负载均衡</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何保证kafka消费者消费数据是全局有序的"><span class="toc-number"></span> <span class="toc-text">如何保证kafka消费者消费数据是全局有序的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#不被完整处理，会造成结果？"><span class="toc-number"></span> <span class="toc-text">不被完整处理，会造成结果？</span></a>
-            </li></div>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JMS的基础"><span class="toc-number">1.</span> <span class="toc-text">JMS的基础</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JMS消息传输模型"><span class="toc-number">2.</span> <span class="toc-text">JMS消息传输模型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka是什么"><span class="toc-number">3.</span> <span class="toc-text">kafka是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Kafka核心组件"><span class="toc-number">3.1.</span> <span class="toc-text">Kafka核心组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么需要消息队列"><span class="toc-number">3.2.</span> <span class="toc-text">为什么需要消息队列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#消息队列和rpc调用区别"><span class="toc-number">3.3.</span> <span class="toc-text">消息队列和rpc调用区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka生产数据时的分组策略"><span class="toc-number">4.</span> <span class="toc-text">kafka生产数据时的分组策略</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka如何保证数据的完全生产"><span class="toc-number">5.</span> <span class="toc-text">kafka如何保证数据的完全生产</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#broker如何保存数据"><span class="toc-number">6.</span> <span class="toc-text">broker如何保存数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#partition如何分布在不同的broker上"><span class="toc-number">7.</span> <span class="toc-text">partition如何分布在不同的broker上</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#consumerGroup的组员和partition之间如何做负载均衡"><span class="toc-number">8.</span> <span class="toc-text">consumerGroup的组员和partition之间如何做负载均衡</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何保证kafka消费者消费数据是全局有序的"><span class="toc-number">9.</span> <span class="toc-text">如何保证kafka消费者消费数据是全局有序的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#不被完整处理，会造成结果？"><span class="toc-number">10.</span> <span class="toc-text">不被完整处理，会造成结果？</span></a></li></ol>
+            </div>
 
 
             
@@ -339,24 +339,39 @@ var _hmt = _hmt || [];
 <blockquote>
 <p> Kafka是一个分布式消息队列：生产者、消费者的功能。它提供了类似于JMS的特性，但是在设计实现上完全不同，此外它并不是JMS规范的实现。<br> Kafka对消息保存时根据Topic进行归类，发送消息者称为Producer,消息接受者称为Consumer,此外kafka集群有多个kafka实例组成，每个实例(server)成为broker。<br> 无论是kafka集群，还是producer和consumer都依赖于zookeeper集群保存一些meta信息，来保证系统可用性</p>
 </blockquote>
-<h3 id="JMS的基础"><a href="#JMS的基础" class="headerlink" title="JMS的基础"></a>JMS的基础</h3><p>JMS是什么：JMS是Java提供的一套技术规范</p>
-<p>JMS干什么用：用来异构系统 集成通信，缓解系统瓶颈，提高系统的伸缩性增强系统用户体验，使得系统模块化和组件化变得可行并更加灵活</p>
-<p>通过什么方式：生产消费者模式（生产者、服务器、消费者）</p>
+<h1 id="JMS的基础"><a href="#JMS的基础" class="headerlink" title="JMS的基础"></a>JMS的基础</h1><p>JMS是什么？：JMS是Java提供的一套技术规范</p>
+<p>JMS做什么？：用来异构系统 集成通信，缓解系统瓶颈，提高系统的伸缩性增强系统用户体验，使得系统模块化和组件化变得可行并更加灵活</p>
+<p>JMS通过什么方式：生产消费者模式（生产者、服务器、消费者）</p>
 <p><img src="http://img.gangtieguo.cn/006tNbRwgy1fu895melcpj30zd0ckdgd.jpg" alt></p>
 <p>jdk，kafka，activemq……</p>
 <a id="more"></a>
-<h3 id="JMS消息传输模型"><a href="#JMS消息传输模型" class="headerlink" title="JMS消息传输模型"></a>JMS消息传输模型</h3><p>点对点模式<strong>（一对一，消费者主动拉取数据，消息收到后消息清除）</strong></p>
-<p>点对点模型通常是一个基于拉取或者轮询的消息传送模型，这种模型从队列中请求信息，而不是将消息推送到客户端。这个模型的特点是发送到队列的消息被<strong>一个且只有一个接收者接收处理</strong>，即使有多个消息监听者也是如此。</p>
-<p>发布/订阅模式<strong>（一对多，数据生产后，推送给所有订阅者）</strong></p>
-<p>发布订阅模型则是一个基于推送的消息传送模型。发布订阅模型可以有多种不同的订阅者，临时订阅者只在主动监听主题时才接收消息，而持久订阅者则监听主题的所有消息，<strong>即时当前订阅者不可用，处于离线状态</strong>。</p>
+<h1 id="JMS消息传输模型"><a href="#JMS消息传输模型" class="headerlink" title="JMS消息传输模型"></a>JMS消息传输模型</h1><p>点对点模式<strong>（一对一，消费者主动拉取数据，消息收到后消息清除）</strong><br>点对点模型通常是一个基于拉取或者轮询的消息传送模型，这种模型从队列中请求信息，而不是将消息推送到客户端。这个模型的特点是发送到队列的消息被<strong>一个且只有一个接收者接收处理</strong>，即使有多个消息监听者也是如此。</p>
+<p>发布/订阅模式<strong>（一对多，数据生产后，推送给所有订阅者）</strong><br>发布订阅模型则是一个基于推送的消息传送模型。发布订阅模型可以有多种不同的订阅者，临时订阅者只在主动监听主题时才接收消息，而持久订阅者则监听主题的所有消息，<strong>即时当前订阅者不可用，处于离线状态</strong>。</p>
 <p><img src="http://img.gangtieguo.cn/0069RVTdgy1fu894keo4oj310n0hd0tv.jpg" alt></p>
 <p>queue.put（object）  数据生产</p>
 <p>queue.take(object)    数据消费</p>
 <p><strong>kafka是采用的类jms模式，与类jms模式区别是</strong>： </p>
-<p>jms两种模式：1，推送的话可以多个，2拉取的话只能一个消费者，因为消费完，消息数据就会不存在了 kafka解决了这种弊端，拉取模式下也可以多个消费者，因为消息可以持久化到硬盘，就算消费了也是存在的。Kafka中ack机制是为了保证消息完整被处理 </p>
+<p>jms两种模式：</p>
+<ol>
+<li>推送的话可以多个</li>
+<li>拉取的话只能一个消费者，因为消费完，消息数据就会不存在了。<br>kafka解决了这种弊端，拉取模式下也可以多个消费者，因为消息可以持久化到硬盘，就算消费了也是存在的。<br>Kafka中ack机制也可以保证消息完整被处理。</li>
+</ol>
 <h1 id="kafka是什么"><a href="#kafka是什么" class="headerlink" title="kafka是什么"></a>kafka是什么</h1><p>类JMS消息队列，结合JMS中的两种模式，可以有多个消费者主动拉取数据，在JMS中只有点对点模式才有消费者主动拉取数据。kafka是一个生产-消费模型。</p>
-<p>Producer：生产者，只负责数据生产，生产者的代码可以集成到任务系统中。<br>数据的分发策略由producer决定，默认是defaultPartition：策略为Utils.abs(key.hashCode) % numPartitions<br>    Broker：当前服务器上的Kafka进程。只管数据存储，不管是谁生产，不管是谁消费。<br>        在集群中每个broker都有一个唯一brokerid，不得重复。<br>    Topic:目标发送的目的地，这是一个逻辑上的概念，落到磁盘上是一个partition的目录。partition的目录中有多个segment组合(index,log)<br>            一个Topic对应多个partition[0,1,2,3]，一个partition对应多个segment组合。一个segment有默认的大小是1G。<br>            每个partition可以设置多个副本(replication-factor 1),会从所有的副本中选取一个leader出来。所有读写操作都是通过leader来进行的。<br>            特别强调，和mysql中主从有区别，mysql做主从是为了读写分离，在kafka中读写操作都是leader。<br>    ConsumerGroup：数据消费者组，ConsumerGroup可以有多个，每个ConsumerGroup消费的数据都是一样的。可以把多个consumer线程划分为一个组，组里面所有成员共同消费一个topic的数据，组员之间不能重复消费。</p>
-<h2 id="Kafka核心组件"><a href="#Kafka核心组件" class="headerlink" title="Kafka核心组件"></a>Kafka核心组件</h2><p>Topic ：消息根据Topic进行归类<br>Producer：发送消息者<br>Consumer：消息接受者<br>broker：每个kafka实例(server)<br>Zookeeper：依赖集群保存meta信息。</p>
+<pre><code>Producer：生产者，只负责数据生产，生产者的代码可以集成到任务系统中。 数据的分发策略由producer决定，默认是defaultPartition：策略为Utils.abs(key.hashCode) % numPartitions
+
+Broker：当前服务器上的Kafka进程。只管数据存储，不管是谁生产，不管是谁消费。
+    在集群中每个broker都有一个唯一brokerid，不得重复。
+
+Topic:
+    1. 目标发送的目的地，这是一个逻辑上的概念，落到磁盘上是一个partition的目录。partition的目录中有多个segment组合(index,log)
+          2. 一个Topic对应多个partition[0,1,2,3]，一个partition对应多个segment组合。一个segment有默认的大小是1G。
+          3. 每个partition可以设置多个副本(replication-factor 1),会从所有的副本中选取一个leader出来。所有读写操作都是通过leader来进行的。
+
+
+ConsumerGroup：数据消费者组，ConsumerGroup可以有多个，每个ConsumerGroup消费的数据都是一样的。可以把多个consumer线程划分为一个组，组里面所有成员共同消费一个topic的数据，组员之间不能重复消费。
+
+        特别强调，和mysql中主从有区别，mysql做主从是为了读写分离，在kafka中读写操作都是leader。
+</code></pre><h2 id="Kafka核心组件"><a href="#Kafka核心组件" class="headerlink" title="Kafka核心组件"></a>Kafka核心组件</h2><p>Topic ：消息根据Topic进行归类<br>Producer：发送消息者<br>Consumer：消息接受者<br>broker：每个kafka实例(server)<br>Zookeeper：依赖集群保存meta信息。</p>
 <p><img src="http://img.gangtieguo.cn/006tNbRwgy1fu89ajoxc5j30mf0fnt9d.jpg" alt></p>
 <h2 id="为什么需要消息队列"><a href="#为什么需要消息队列" class="headerlink" title="为什么需要消息队列"></a>为什么需要消息队列</h2><p>消息系统的核心作用就是三点：解耦，异步和并行</p>
 <h2 id="消息队列和rpc调用区别"><a href="#消息队列和rpc调用区别" class="headerlink" title="消息队列和rpc调用区别"></a>消息队列和rpc调用区别</h2><p>消息队列并不关心是哪个消费者消费了数据，发布成功后就不必管消息队列的内容是否被消费，但是rpc调用的话，必须要给调用的系统返回一个状态码</p>
