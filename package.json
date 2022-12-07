@@ -6,7 +6,7 @@
     "version": "3.8.0"
   },
   "dependencies": {
-    "express": "^4.16.3",
+    "express": "^4.18.2",
     "hexo": "^3.8.0",
     "hexo-baidu-url-submit": "0.0.5",
     "hexo-deployer-git": "^1.0.0",
